@@ -1,0 +1,370 @@
+.textContent {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+
+.scoresTextDiv {
+    display: grid;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-left: 10px;
+}
+
+.aggScore {
+    font-size: 50px;
+    font-weight: 900;
+    width: 30%;
+    margin-right: 10px;
+}
+
+.score {
+    margin-bottom: 0em;
+    color: #535353;
+}
+
+.scoreGrade {
+    font-size: 20px;
+    font-weight: 700;
+    color: #F0B152;
+}
+
+.ant-divider-vertical {
+    height: 7em !important;
+}
+
+.scoresIcons {
+    height: 1.0em;
+    margin-right: 5px
+}
+
+.inputStyle {
+    width: 50%;
+}
+
+@media (max-width:1024px) {
+    .cardDataDiv {
+        display: grid !important;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* @media (max-width: 320px) and (max-width: 375px) {
+    .average-line-1 {
+        height: 18% !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .average-line-1 {
+        height: 20% !important;
+    }
+} */
+
+@media (max-width: 426px) {
+
+    .inputStyle {
+        width: 100%;
+    }
+
+    .scoresIcons {
+        height: 1.2em !important;
+        margin-right: 0px !important;
+        margin-bottom: 5px;
+    }
+
+    .scoresTabText {
+        display: grid !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .scoreDescription {
+        font-size: 12px;
+    }
+
+    .textContent {
+        width: 100%;
+    }
+
+    .cardDataDiv {
+        display: grid !important;
+        align-items: center;
+        justify-content: center
+    }
+
+    .ant-card-body {
+        padding: 2px !important;
+    }
+
+    /* .scoreText {
+        font-size: 15px !important;
+    } */
+
+    .aggScore {
+        font-size: 40px !important;
+    }
+
+    .cardTabStyle {
+        font-size: 0.8rem !important;
+    }
+
+    .scoreGrade {
+        font-size: 15px !important;
+        text-align: center;
+    }
+
+    .score {
+        text-align: center;
+    }
+
+    .dropdownStyle {
+        font-size: 10px !important;
+    }
+
+    .antClassTypo {
+        font-size: 10px !important;
+    }
+
+    .average-line-1 {
+        height: 45% !important;
+    }
+}
+
+.scoreText {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 0.4em;
+    color: #535353;
+}
+
+.scoreGridData0 {
+    color: #535353 !important;
+}
+
+.scoreGridData1 {
+    color: #535353 !important;
+}
+
+.scoreGridData2 {
+    color: #535353 !important;
+}
+
+.scoreGridData3 {
+    color: #535353 !important;
+}
+
+.scoreActiveGrid {
+    background-color: #C54B30 !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+.scoresTabText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ant-divider-vertical.ant-divider-dashed {
+    border-width: 0px 2px 0px 0px !important;
+    border-color: #535353 !important;
+}
+
+.userProgress {
+    margin-top: 20px;
+}
+
+.ant-progress-inner {
+    border-radius: 0px !important;
+}
+
+.ant-progress-bg {
+    border-radius: 0px !important;
+}
+
+.userNameText {
+    font-weight: 600;
+    color: #C54B30;
+}
+
+.headerCard {
+    border-radius: 0px !important
+}
+
+.horizontalDivider {
+    margin: 0px !important;
+}
+
+.headerCard>.ant-card-body {
+    padding: 10px !important;
+}
+
+.ant-card-head-title {
+    color: #535353;
+}
+
+.columnHeaders {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rightHeader {
+    display: contents;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.contentStylingLeft {
+    text-align: left;
+    margin-left: 50px;
+}
+
+.contentStylingRight {
+    text-align: right;
+    margin-right: 15px;
+}
+
+.cardDataDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ant-card-bordered {
+    border: none !important;
+}
+
+.mainCardTitleStyle>.ant-card-head>.ant-card-head-wrapper {
+    flex-direction: row !important
+}
+
+
+.average-line-1 {
+    border-right: 1.5px solid #727272;
+    height: 50%;
+    position: absolute;
+    padding-left: 64%;
+    margin-top: -30px;
+    z-index: 99;
+    opacity: .75;
+}
+
+
+
+/*changes from dilip's css */
+
+.risk-grid {
+    background: #ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1),
+        0px 4px 15px rgba(197, 75, 48, 0.2);
+}
+
+.risk-score-gridStyle {
+    width: 25% !important;
+    text-align: center;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .risk-score-gridStyle {
+        width: 50% !important;
+        text-align: center;
+    }
+
+    .user-score {
+        font-size: 18px;
+    }
+
+    .innerCardValue {
+        font-size: 25px !important;
+    }
+}
+
+.risk-number {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 5em;
+    text-align: center;
+    text-transform: uppercase;
+    color: #535353;
+}
+
+.risk-info {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    margin: 2em 0em;
+}
+
+.risk-info-sub-1 {
+    width: 25%;
+}
+
+.risk-info-sub-2 {
+    width: 75%;
+}
+
+@media screen and (max-width: 1024px) {
+    .risk-info-sub-2 {
+        width: 70%;
+    }
+
+    .risk-info-sub-1 {
+        width: 30%;
+    }
+}
+
+.user-score {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 29px;
+    color: #535353;
+}
+
+.speed-score-average {
+    width: 67%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between !important;
+}
+
+.speed-score-container {
+    display: flex;
+    margin: 20px 0px;
+    padding: 5px 0px;
+    border-top: 1px solid #727272;
+    border-bottom: 1px solid #b4b4b4;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border: none !important;
+}
+
+.ant-progress-text {
+    /* font-family: "Ringside" !important; */
+    font-style: normal;
+    font-weight: 500 !important;
+    font-size: 14px;
+}
+
+.average-line {
+    border-right: 1.5px solid #727272;
+    height: 70%;
+    position: absolute;
+    padding-left: 64%;
+    margin-top: -30px;
+    z-index: 99;
+    opacity: .75;
+}

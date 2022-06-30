@@ -1,0 +1,17 @@
+.boxContainer {
+    /* padding: 0px; */
+}
+
+.textColor {
+    color: #C54B30 !important;
+}
+
+@media (max-width:600px) {
+    .mobileRender {
+        display: none !important;
+    }
+
+    .mobileRenderHead {
+        width: 10vh;
+    }
+}

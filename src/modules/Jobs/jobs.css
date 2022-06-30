@@ -1,0 +1,38 @@
+.editUserButton {
+    color: "#C54B30 !important";
+    font-family: "Montserrat";
+    font-style: "normal";
+    font-weight: "700";
+    height: "30px";
+    padding: "3px 15px";
+    border: "1.5px solid #C54B30";
+}
+
+.ant-table-column-title {
+    font-weight: 700;
+    color: #727272;
+}
+
+.createNewButton {
+    box-shadow: 0px 0px 10px rgba(108, 117, 131, 0.2), 0px 10px 10px rgba(190, 0, 0, 0.1);
+}
+
+@media (max-width: 425px) {
+    .ant-form-item {
+        margin-bottom: 0px !important;
+    }
+}
+
+
+.formInput {
+    height: 50px !important;
+}
+
+/* 
+.ant-select-selection-search {
+    height: 50px !important;
+}
+
+.ant-select-selection-search-input {
+    height: 50px !important;
+} */
