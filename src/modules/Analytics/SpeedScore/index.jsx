@@ -35,7 +35,11 @@ const RiskScore = props => {
 
   const getSpeedScore = async value => {
     const request = await axios.get(
-      "http://localhost:5051/api/user-admin/get-speed-scores",
+      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/scores", {
+      params: {
+        type: "get-speed-scores",
+      }
+    }
     );
     setSpeedScoreData(request?.data?.data || []);
     setSpeedScoreCount(request?.data?.speedScore || 0);
