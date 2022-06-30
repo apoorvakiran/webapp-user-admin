@@ -63,9 +63,13 @@ const CreateUser = (props) => {
 
   async function getJobTitleList() {
     const response = await axios.get(
-      "http://localhost:5051/api/user-admin/get-jobs-list",
+      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail", {
+      params: {
+        type: "get-jobs-list"
+      }
+    }
     );
-    setJobTitleList(response.data.data);
+    setJobTitleList(response.data);
   }
 
   function generatePassword() {
@@ -84,21 +88,22 @@ const CreateUser = (props) => {
     try {
       const pwd = generatePassword();
       console.log(pwd);
+      const attributeVal = {
+        email: values.email,
+        phone_number: values.phone,   // optional - E.164 number convention
+        name: values.firstName,
+        family_name: values.lastName,
+        'custom:role': values.role,
+        'custom:jobtitle': values.jobTitle,
+        'custom:hand': values.hand,
+        'custom:source': 'user-admin'
+      }
       const { user } = await Auth.signUp({
         username: values.email,
         password: pwd,
-        attributes: {
-          email: values.email,
-          phone_number: values.phone,   // optional - E.164 number convention
-          name: values.first_name,
-          family_name: values.last_name,
-          'custom:role': values.role,
-          'custom:jobtitle': values.jobTitle,
-          'custom:hand': values.hand,
-          'custom:source': 'user-admin'
-        }
+        attributes: attributeVal
       });
-      openNotificationWithIcon("success", "Success", `User ${values.first_name} successfully created`);
+      openNotificationWithIcon("success", "Success", `User ${values.firstName} successfully created`);
       props.history.goBack();
     } catch (error) {
       console.log('error signing up:', error);

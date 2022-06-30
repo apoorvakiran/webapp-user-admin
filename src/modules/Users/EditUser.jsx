@@ -15,6 +15,9 @@ import { Link, useLocation } from "react-router-dom";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = "*";
+axios.defaults.headers.post['Access-Control-Allow-Methods'] = "*";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -63,10 +66,6 @@ const EditUser = () => {
   const [loading, setLoading] = useState(true);
   const [jobTitleList, setJobTitleList] = useState([]);
   const [form] = Form.useForm();
-  axios.defaults.headers.post['Content-Type'] = 'application/json';
-  axios.defaults.headers.post['Access-Control-Allow-Origin'] = "*";
-  axios.defaults.headers.post['Access-Control-Allow-Methods'] = "POST";
-
 
   useEffect(() => {
     getJobTitleList();
