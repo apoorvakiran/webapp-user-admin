@@ -246,10 +246,29 @@
     flex-direction: row !important
 }
 
+.progressContainer-1 {
+    position: relative;
+}
+
+.line {
+    width: 4px;
+    background-color: transparent;
+    position: absolute;
+    top: 55px;
+    padding-left: 66%;
+    bottom: 0;
+    border-right: 1.5px solid #727272;
+    z-index: 99;
+}
+
+
+.progressContainer {
+    max-height: 700px;
+}
 
 .average-line-1 {
     border-right: 1.5px solid #727272;
-    height: 50%;
+    height: 100%;
     position: absolute;
     padding-left: 64%;
     margin-top: -30px;

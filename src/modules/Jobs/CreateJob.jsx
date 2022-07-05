@@ -57,8 +57,10 @@ const CreateJob = (props) => {
     setUserList(response.data.data)
   }
 
-  const onClick = (event, value) => {
-
+  const onClick = (event, item) => {
+    setMappedUserList((prevState) =>
+      prevState.filter((prevItem) => prevItem !== item)
+    );
   };
 
   const columns = [
@@ -86,7 +88,9 @@ const CreateJob = (props) => {
             <Button
               shape="round"
               style={{ color: "#C54B30" }}
-              onClick={onClick}
+              onClick={e => {
+                onClick(e, record);
+              }}
               icon={<DeleteOutlined />}
             >
             </Button>
@@ -121,6 +125,36 @@ const CreateJob = (props) => {
     return userArray;
   }
 
+  function saveEditJob(values) {
+    const data = {
+      'job_id': values.id,
+      'job_name': values.name,
+      'description': values.name,
+      'location_id': 4,
+      'users': getIdforMappedUsers()
+    };
+
+    const config = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      mode: 'no-cors',
+      body: JSON.stringify(data),
+    }
+    const url = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail?type=create-new-job'
+    fetch(url, config).
+      then(response => { console.log('response', response.status); })
+      .then(data => {
+        openNotificationWithIcon("success", "Success", `Job created successfully`);
+        props?.history?.goBack();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
   const handleChange = (event, value) => {
     if (value.length !== 0) {
       setMappedUserList((mappedUserList) => [
@@ -136,7 +170,7 @@ const CreateJob = (props) => {
         {...formItemLayout}
         form={form}
         name="create-job"
-        onFinish={handleFinish}
+        onFinish={saveEditJob}
         initialValues={{
           prefix: "1",
         }}

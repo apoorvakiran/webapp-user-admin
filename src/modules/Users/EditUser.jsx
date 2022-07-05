@@ -79,13 +79,47 @@ const EditUser = () => {
       }
     }
     );
-    console.log(response);
     setJobTitleList(response.data);
     setLoading(false);
-    console.log(jobTitleList);
   }
 
-  async function saveEditUser(values) {
+  function saveEditUser(values) {
+    try {
+      const data = {
+        'user_id': location.state.id,
+        'first_name': values.first_name,
+        'last_name': values.last_name,
+        'phone': values.phone,
+        'role': values.role,
+        'job_id': values.job_id,
+        'hand': values.hand,
+      };
+
+      const config = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        mode: 'no-cors',
+        body: JSON.stringify(data),
+      }
+      const url = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user?type=user-edit'
+      fetch(url, config).
+        then(response => { console.log('response', response.status); })
+        .then(data => {
+          console.log('Success:', data);
+          openNotificationWithIcon("success", "Success", `User updated successfully`);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    } catch (error) {
+      return error
+    }
+  }
+
+  async function saveEditUser2(values) {
     const response = await axios.post(
       // "http://localhost:5051/api/user-admin/user-edit",
       "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user",
@@ -108,7 +142,7 @@ const EditUser = () => {
     }
   }
 
-  async function deleteUser() {
+  async function deleteUser1() {
     const response = await axios.post(
       // "http://localhost:5051/api/user-admin/banned-user",
       "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user",
@@ -121,6 +155,32 @@ const EditUser = () => {
     }
     );
     // openNotificationWithIcon("success", "Success", `User deleted/disabled successfully`);
+  }
+
+  function deleteUser() {
+    const data = {
+      'user_id': location.state.id,
+    };
+
+    const config = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      mode: 'no-cors',
+      body: JSON.stringify(data),
+    }
+    const url = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user?type=user-deactivate'
+    fetch(url, config).
+      then(response => { console.log('response', response.status); })
+      .then(data => {
+        console.log('Success:', data);
+        openNotificationWithIcon("success", "Success", `User deleted successfully`);
+      })
+      .catch((error) => {
+        return error
+      });
   }
 
   const onFinish = values => {

@@ -82,8 +82,42 @@ const EditJob = (props) => {
     setUserList(response.data.data)
   }
 
-  const onClick = (event, value) => {
+  function deleteMappedUserList(value) {
+    console.log(value);
+    let userArray = [];
+    var key = value.id;
+    userArray.push(key);
+    console.log(userArray);
+    return userArray;
+  }
 
+  const onClick = (event, value) => {
+    console.log(value);
+    const data = {
+      'job_id': location.state.id,
+      'users': deleteMappedUserList(value)
+    };
+
+    const config = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      mode: 'no-cors',
+      body: JSON.stringify(data),
+    }
+    const url = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail?type=delete-job'
+    fetch(url, config).
+      then(response => { console.log('response', response.status); })
+      .then(data => {
+        console.log('Success:', data);
+        openNotificationWithIcon("success", "Success", `User unassigned successfully`);
+        // props?.history?.goBack();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   const columns = [
@@ -111,7 +145,9 @@ const EditJob = (props) => {
             <Button
               shape="round"
               style={{ color: "#C54B30" }}
-              onClick={onClick}
+              onClick={e => {
+                onClick(e, record);
+              }}
               icon={<DeleteOutlined />}
             >
             </Button>
@@ -137,6 +173,37 @@ const EditJob = (props) => {
     props?.history?.goBack();
   };
 
+  function saveEditJob(values) {
+    const data = {
+      'job_id': values.id,
+      'job_name': values.name,
+      'description': values.name,
+      'location_id': 4,
+      'users': getIdforMappedUsers()
+    };
+
+    const config = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      mode: 'no-cors',
+      body: JSON.stringify(data),
+    }
+    const url = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail?type=create-new-job'
+    fetch(url, config).
+      then(response => { console.log('response', response.status) })
+      .then(data => {
+        console.log('Success:', data);
+        openNotificationWithIcon("success", "Success", `Job updated successfully`);
+        props?.history?.goBack();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
   function getIdforMappedUsers() {
     let userArray = [];
     for (var i = 0; i < mappedUserList.length; i++) {
@@ -161,7 +228,7 @@ const EditJob = (props) => {
         {...formItemLayout}
         form={form}
         name="edit-job"
-        onFinish={handleFinish}
+        onFinish={saveEditJob}
         initialValues={location?.state}
         style={{ margin: "60px 30px" }}
       >

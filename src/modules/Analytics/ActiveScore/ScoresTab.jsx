@@ -49,7 +49,7 @@ export const ScoresTab = props => {
         "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail",
         {
           params: {
-            type: "get-safety-score",
+            type: "get-active-score",
             duration_type: filterBy,
             startdate: "2022-06-29",
           },
