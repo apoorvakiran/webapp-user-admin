@@ -31,19 +31,28 @@ const Dashboard = props => {
   const [riskGraphData, setRiskGraphData] = useState([]);
   const userData = location?.state;
   const getUserScore = async value => {
-    const request = await axios.post(
-      "http://localhost:5051/api/user-admin/get-user-score",
-      { type: value, userId: userData?.id },
+    const request = await axios.get(
+      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail", {
+      params: {
+        "type": "get-user-score",
+        "userId": userData?.id,
+        "duration_type": value
+      }
+    }
     );
     seLoading(false);
     setScores(request?.data?.data || []);
     return request?.data;
   };
   const getActiveScores = async value => {
-    const response = await axios.post(
-      "http://localhost:5051/api/user-admin/get-user-graph-score",
-      { type: value, userId: userData?.id },
-    );
+    const response = await axios.get(
+      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail", {
+      params: {
+        "type": "get-user-graph-score",
+        "userId": userData?.id,
+        "duration_type": value
+      }
+    });
     seLoading(false);
     const data = response?.data?.data;
     let activeLabels = data["activescore"]?.x || [];

@@ -3,6 +3,7 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1),
     0px 4px 15px rgba(197, 75, 48, 0.2);
 }
+
 .risk-score-gridStyle {
   width: 25% !important;
   text-align: center;
@@ -10,7 +11,6 @@
 }
 
 .risk-number {
-  font-family: "Montserrat";
   font-style: normal;
   font-weight: 700;
   font-size: 5em;
@@ -18,28 +18,33 @@
   text-transform: uppercase;
   color: #535353;
 }
+
 .risk-info {
   display: flex;
   align-items: center;
   align-content: center;
   margin: 2em 0em;
 }
+
 .risk-info-sub-1 {
   width: 25%;
 }
+
 .risk-info-sub-2 {
   width: 75%;
 }
+
 @media screen and (max-width: 1024px) {
   .risk-info-sub-2 {
     width: 70%;
   }
+
   .risk-info-sub-1 {
     width: 30%;
   }
 }
+
 .user-score {
-  font-family: "Montserrat";
   font-style: normal;
   font-weight: 700;
   font-size: 22px;
@@ -54,6 +59,7 @@
   align-content: center;
   justify-content: space-between !important;
 }
+
 .speed-score-container {
   display: flex;
   margin: 20px 0px;
@@ -61,15 +67,17 @@
   border-top: 1px solid #727272;
   border-bottom: 1px solid #b4b4b4;
 }
+
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
   border: none !important;
 }
+
 .ant-progress-text {
-  font-family: "Ringside" !important;
   font-style: normal;
   font-weight: 500 !important;
   font-size: 14px;
 }
+
 .average-line {
   border-right: 1.5px solid #727272;
   height: 70%;
@@ -79,27 +87,33 @@
   z-index: 99;
   opacity: 0.75;
 }
+
 .risk-card {
   font-weight: 700 !important;
   font-size: 48px !important;
   text-transform: uppercase !important;
   color: #535353 !important;
 }
+
 @media (max-width: 768px) {
   .risk-score-gridStyle {
     width: 50% !important;
     text-align: center;
   }
+
   .user-score {
     font-size: 18px;
   }
+
   .innerCardValue {
     font-size: 25px !important;
   }
+
   .risk-card {
     font-size: 35px !important;
   }
 }
+
 @media (max-width: 480px) {
   .risk-card {
     font-size: 25px !important;

@@ -37,10 +37,10 @@ const UserProgressScore = (props) => {
     };
 
     return (
-        <div>
+        <div className='progressContainer-1'>
             {/* <HeaderCard date={showDate} /> */}
             <HeaderCard handleChange={handleFilterChange} />
-            <div className="average-line-1"></div>
+            <div className="line"></div>
             <Row style={{ marginTop: "20px" }}>
                 {scores.map((row, index) => (
                     <>
