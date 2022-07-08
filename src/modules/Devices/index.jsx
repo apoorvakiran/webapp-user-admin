@@ -4,13 +4,14 @@ import BasicLayout from "../../layouts/BasicLayout";
 import Table from "../../components/Table";
 import axios from "axios";
 import './devices.css';
+import { baseUrl } from "../../utils/Data/Data";
 
 const columns = [
     {
         title: "Model",
         dataIndex: "id_number",
         key: "id_number",
-        sorter: true,
+        sorter: (a, b) => a.id_number.localeCompare(b.id_number),
         render(item, record) {
             return {
                 props: {
@@ -24,7 +25,7 @@ const columns = [
         title: "Active user",
         dataIndex: "first_name",
         key: "first_name",
-        sorter: true,
+        sorter: (a, b) => a.first_name.localeCompare(b.first_name),
         render(item, record) {
             return {
                 props: {
@@ -38,7 +39,7 @@ const columns = [
         title: "Android ID",
         dataIndex: "mac",
         key: "mac",
-        sorter: true,
+        sorter: (a, b) => a.mac.localeCompare(b.mac),
         render(item, record) {
             return {
                 props: {
@@ -62,7 +63,7 @@ const Devices = props => {
     async function getDevicesList() {
         const response = await axios.get(
             // "http://localhost:5051/api/user-admin/get-device-assign",
-            "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail",
+            baseUrl + "userdetail",
             {
                 params: {
                     type: "get-device-assign"

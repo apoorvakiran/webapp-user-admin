@@ -8,6 +8,7 @@ import {
   Button,
   Card,
   Skeleton,
+  Modal,
 } from "antd";
 import BasicLayout from "../../layouts/BasicLayout";
 import { createUserButton, invertCreateUserButton } from "./style";
@@ -15,6 +16,7 @@ import { Link, useLocation } from "react-router-dom";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { baseUrl } from "../../utils/Data/Data";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = "*";
 axios.defaults.headers.post['Access-Control-Allow-Methods'] = "*";
@@ -61,19 +63,23 @@ const formItemStyle = {
   marginBottom: "0px !important"
 }
 
+const { confirm } = Modal
+
 const EditUser = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [jobTitleList, setJobTitleList] = useState([]);
+  const [initialValues, setInitialValues] = useState([]);
   const [form] = Form.useForm();
 
   useEffect(() => {
+    setInitialValues(location.state);
     getJobTitleList();
   }, []);
 
   async function getJobTitleList() {
     const response = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail", {
+      baseUrl + "userdetail", {
       params: {
         type: "get-jobs-list"
       }
@@ -83,16 +89,16 @@ const EditUser = () => {
     setLoading(false);
   }
 
-  function saveEditUser(values) {
+  async function saveEditUser(values) {
     try {
-      const data = {
+      const userdata = {
         'user_id': location.state.id,
         'first_name': values.first_name,
         'last_name': values.last_name,
         'phone': values.phone,
         'role': values.role,
         'job_id': values.job_id,
-        'hand': values.hand,
+        'hand': values.hand
       };
 
       const config = {
@@ -102,14 +108,18 @@ const EditUser = () => {
           'Content-Type': 'application/json'
         },
         mode: 'no-cors',
-        body: JSON.stringify(data),
+        body: JSON.stringify(userdata),
       }
-      const url = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user?type=user-edit'
-      fetch(url, config).
-        then(response => { console.log('response', response.status); })
+      const url = baseUrl + 'user?type=user-edit'
+      // const url = 'http://localhost:5051/api/user-admin/user-edit';
+      await fetch(url, config).
+        then(response => response.json())
         .then(data => {
-          console.log('Success:', data);
-          openNotificationWithIcon("success", "Success", `User updated successfully`);
+          console.log("data", data);
+          if (data.data.code === 201) {
+            openNotificationWithIcon("success", "Success", `User updated successfully`);
+            setInitialValues(data.data.body);
+          }
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -122,7 +132,7 @@ const EditUser = () => {
   async function saveEditUser2(values) {
     const response = await axios.post(
       // "http://localhost:5051/api/user-admin/user-edit",
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user",
+      baseUrl + "user",
       {
         "user_id": location.state.id,
         "first_name": values.first_name,
@@ -145,7 +155,7 @@ const EditUser = () => {
   async function deleteUser1() {
     const response = await axios.post(
       // "http://localhost:5051/api/user-admin/banned-user",
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user",
+      baseUrl + "user",
       {
         "user_id": location.state.id,
       }, {
@@ -155,6 +165,19 @@ const EditUser = () => {
     }
     );
     // openNotificationWithIcon("success", "Success", `User deleted/disabled successfully`);
+  }
+
+  const openModal = () => {
+    confirm({
+      title: "Delete User",
+      content: "Are you sure you want to Delete user?",
+      onOk() {
+        deleteUser();
+      },
+      onCancel() {
+        // console.log('Cancel');
+      },
+    });
   }
 
   function deleteUser() {
@@ -171,7 +194,7 @@ const EditUser = () => {
       mode: 'no-cors',
       body: JSON.stringify(data),
     }
-    const url = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user?type=user-deactivate'
+    const url = baseUrl + 'user?type=user-deactivate'
     fetch(url, config).
       then(response => { console.log('response', response.status); })
       .then(data => {
@@ -214,7 +237,7 @@ const EditUser = () => {
           form={form}
           name="create-user"
           onFinish={onFinish}
-          initialValues={location?.state}
+          initialValues={initialValues}
           style={{ margin: "60px 30px" }}
         >
           <Row gutter={24}>
@@ -329,7 +352,7 @@ const EditUser = () => {
               htmlType="button"
               shape="round"
               style={invertCreateUserButton}
-              onClick={() => { deleteUser() }}
+              onClick={() => { openModal() }}
               icon={<DeleteOutlined />}
             >
               Delete

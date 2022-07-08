@@ -7,6 +7,7 @@ import {
   Col,
   Button,
   Card,
+  Upload,
 } from "antd";
 import BasicLayout from "../../layouts/BasicLayout";
 import { createUserButton, cardStyle, padding50 } from "./style";
@@ -14,6 +15,8 @@ import { openNotificationWithIcon } from "../../utils/helpers";
 import axios from "axios";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
+import { UploadOutlined } from "@ant-design/icons";
+import { baseUrl } from "../../utils/Data/Data";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -63,7 +66,7 @@ const CreateUser = (props) => {
 
   async function getJobTitleList() {
     const response = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail", {
+      baseUrl + "userdetail", {
       params: {
         type: "get-jobs-list"
       }
@@ -90,21 +93,43 @@ const CreateUser = (props) => {
       console.log(pwd);
       const attributeVal = {
         email: values.email,
-        phone_number: values.phone,   // optional - E.164 number convention
-        name: values.firstName,
-        family_name: values.lastName,
-        'custom:role': values.role,
-        'custom:jobtitle': values.jobTitle,
-        'custom:hand': values.hand,
-        'custom:source': 'user-admin'
+        phone: "+1" + values.phone,   // optional - E.164 number convention
+        first_name: values.firstName,
+        last_name: values.lastName,
+        role: values.role,
+        job_id: values.jobTitle,
+        hand: values.hand
       }
-      const { user } = await Auth.signUp({
-        username: values.email,
-        password: pwd,
-        attributes: attributeVal
-      });
-      openNotificationWithIcon("success", "Success", `User ${values.firstName} successfully created`);
-      props.history.goBack();
+      // const { user } = await Auth.signUp({
+      //   username: values.email,
+      //   password: pwd,
+      //   attributes: attributeVal
+      // });
+
+      const config = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        mode: 'no-cors',
+        body: JSON.stringify(attributeVal),
+      }
+
+      const url = baseUrl + "admin?type=create-user"
+      await fetch(url, config).
+        then(response => console.log(response.status))
+        .then(data => {
+          // if (data.data.code === 201) {
+          openNotificationWithIcon("success", "Success", `User ${values.firstName} successfully created`);
+          props.history.goBack();
+          // }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+
+
     } catch (error) {
       console.log('error signing up:', error);
     }
@@ -227,6 +252,20 @@ const CreateUser = (props) => {
                   <Select.Option value="right">Right </Select.Option>
                 </Select>
               </Form.Item>
+              {/* <Form.Item
+                name="image"
+                style={{ justifyContent: "center" }}
+                className="formStyle"
+              >
+                <Upload
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  listType="picture-card"
+                  maxCount={1}
+
+                >
+                  <Button icon={<UploadOutlined />}>Select Photo</Button>
+                </Upload>
+              </Form.Item> */}
               <Form.Item {...tailFormItemLayout} style={{ marginTop: "25px", justifyContent: "center" }}>
                 <Button
                   style={createUserButton}
@@ -234,7 +273,7 @@ const CreateUser = (props) => {
                   htmlType="submit"
                   shape="round"
                 >
-                  Create User
+                  Create & Send Password Request
                 </Button>
               </Form.Item>
               <Form.Item {...canTailFormItemLayout} style={{ fontSize: 14, justifyContent: "center" }}>

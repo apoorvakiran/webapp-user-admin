@@ -15,7 +15,7 @@ import ProgressBar from "./ProgressBar";
 import ScoreFilter from "./ScoreFilter";
 import { getSpeedScoreColor } from "../../../utils/helpers";
 import routes from "../../../features/Routes/URLs";
-import { ScoresTabData } from "../../../utils/Data/Data";
+import { baseUrl, ScoresTabData } from "../../../utils/Data/Data";
 import CurrActiveIcon from "../../../images/activity-score-icon-white.png";
 import CurrSafetyIcon from "../../../images/safety-score-icon-white.png";
 import CurrSpeedIcon from "../../../images/speed-icon-white.png";
@@ -35,7 +35,7 @@ const RiskScore = props => {
 
   const getSpeedScore = async value => {
     const request = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/scores", {
+      baseUrl + "scores", {
       params: {
         type: "get-speed-scores",
       }

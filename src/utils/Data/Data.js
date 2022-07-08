@@ -4,6 +4,22 @@ import {
     UilClipboardAlt
 } from "@iconscout/react-unicons";
 
+export const baseUrl = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/';
+
+export const formatDate = (date) => {
+    let d = new Date(date);
+    let month = (d.getMonth() + 1).toString();
+    let day = d.getDate().toString();
+    let year = d.getFullYear();
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+    return [year, month, day].join('-');
+}
+
 export const DashboardData = ['Day', 'Week', 'Month', 'Year']
 
 export const ScoresTabData = ['Safety Score', 'Active Score', 'Risk Exposure', 'Speed Score']

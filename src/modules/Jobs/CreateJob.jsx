@@ -16,6 +16,7 @@ import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { Box } from "@mui/system";
 import Table from "../../components/Table/index";
+import { baseUrl } from "../../utils/Data/Data";
 
 const formItemLayout = {
   labelCol: {
@@ -51,7 +52,7 @@ const CreateJob = (props) => {
 
   async function getUserData() {
     const response = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user", {
+      baseUrl + "user", {
       params: { type: "user-list" }
     })
     setUserList(response.data.data)
@@ -127,9 +128,9 @@ const CreateJob = (props) => {
 
   function saveEditJob(values) {
     const data = {
-      'job_id': values.id,
-      'job_name': values.name,
-      'description': values.name,
+      'job_id': null,
+      'job_name': values.jobTitle,
+      'description': values.jobTitle,
       'location_id': 4,
       'users': getIdforMappedUsers()
     };
@@ -143,12 +144,18 @@ const CreateJob = (props) => {
       mode: 'no-cors',
       body: JSON.stringify(data),
     }
-    const url = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail?type=create-new-job'
+    const url = baseUrl + 'userdetail?type=create-new-job'
+    //const url = 'http://localhost:5051/api/user-admin/create-new-job'
     fetch(url, config).
-      then(response => { console.log('response', response.status); })
+      then(response => response.json())
       .then(data => {
-        openNotificationWithIcon("success", "Success", `Job created successfully`);
-        props?.history?.goBack();
+        if (data.data.code === 200) {
+          openNotificationWithIcon("success", "Success", `Job created successfully`);
+          props?.history?.goBack();
+        }
+        if (data.data.code === 409) {
+          openNotificationWithIcon("error", "Error", data.data.message);
+        }
       })
       .catch((error) => {
         console.error('Error:', error);
