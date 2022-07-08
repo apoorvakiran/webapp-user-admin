@@ -105,7 +105,7 @@ const EditJob = (props) => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      mode: 'no-cors',
+      // mode: 'no-cors',
       body: JSON.stringify(data),
     }
     const url = baseUrl + 'userdetail?type=delete-job'
@@ -194,7 +194,6 @@ const EditJob = (props) => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      mode: 'no-cors',
       body: JSON.stringify(data),
     }
     const url = baseUrl + 'userdetail?type=create-new-job'

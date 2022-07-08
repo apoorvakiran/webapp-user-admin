@@ -112,18 +112,17 @@ const CreateUser = (props) => {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        mode: 'no-cors',
+        // mode: 'no-cors',
         body: JSON.stringify(attributeVal),
       }
 
       const url = baseUrl + "admin?type=create-user"
       await fetch(url, config).
-        then(response => console.log(response.status))
-        .then(data => {
-          // if (data.data.code === 201) {
-          openNotificationWithIcon("success", "Success", `User ${values.firstName} successfully created`);
-          props.history.goBack();
-          // }
+        then(response => {
+          if (response.status === 200) {
+            openNotificationWithIcon("success", "Success", `User ${values.firstName} successfully created`);
+            props.history.goBack();
+          }
         })
         .catch((error) => {
           console.error('Error:', error);

@@ -107,7 +107,7 @@ const EditUser = () => {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        mode: 'no-cors',
+        // mode: 'no-cors',
         body: JSON.stringify(userdata),
       }
       const url = baseUrl + 'user?type=user-edit'
@@ -115,11 +115,11 @@ const EditUser = () => {
       await fetch(url, config).
         then(response => response.json())
         .then(data => {
-          console.log("data", data);
-          if (data.data.code === 201) {
-            openNotificationWithIcon("success", "Success", `User updated successfully`);
-            setInitialValues(data.data.body);
-          }
+          // console.log("data", data.rows);
+          // if (data.data.code === 201) {
+          openNotificationWithIcon("success", "Success", `User updated successfully`);
+          setInitialValues(data.rows);
+          // }
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -191,7 +191,7 @@ const EditUser = () => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      mode: 'no-cors',
+      // mode: 'no-cors',
       body: JSON.stringify(data),
     }
     const url = baseUrl + 'user?type=user-deactivate'
