@@ -2,7 +2,7 @@ import { Grid, Paper, styled, Typography } from "@mui/material";
 import { Card, Skeleton, Space, Radio } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../../layouts/BasicLayout";
-import { DashboardData } from "../../../utils/Data/Data";
+import { baseUrl, DashboardData } from "../../../utils/Data/Data";
 import axios from "axios";
 import "../../../components/Dashboard/dashboard.css";
 import "../analytics.css";
@@ -34,7 +34,7 @@ const RiskScore = props => {
   const userData = location?.state;
   const getSpeedScore = async value => {
     const request = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/scores", {
+      baseUrl + "scores", {
       params: {
         type: "get-risk-scores",
       },

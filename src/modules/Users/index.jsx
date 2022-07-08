@@ -7,6 +7,7 @@ import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
 import axios from "axios";
 import { type } from "@testing-library/user-event/dist/type";
+import { baseUrl } from "../../utils/Data/Data";
 
 const Users = props => {
   const [loading, setLoading] = useState(true);
@@ -22,7 +23,7 @@ const Users = props => {
   useEffect(() => {
     async function getData() {
       const response = await axios.get(
-        "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user", {
+        baseUrl + "user", {
         params: { type: "user-list" }
       }
 
@@ -68,7 +69,7 @@ const Users = props => {
       title: "Name",
       dataIndex: "first_name",
       key: "first_name",
-      sorter: true,
+      sorter: (a, b) => a.first_name.localeCompare(b.first_name),
       fixed: "left",
       width: "10rem",
       render(item, record) {
@@ -111,7 +112,7 @@ const Users = props => {
       dataIndex: "email",
       key: "email",
       width: "20rem",
-      sorter: true,
+      sorter: (a, b) => a.email.localeCompare(b.email),
       render(item, record) {
         return {
           props: {

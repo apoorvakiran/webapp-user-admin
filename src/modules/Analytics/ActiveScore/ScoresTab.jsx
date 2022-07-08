@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Paper, styled, Typography } from "@mui/material";
-import { DashboardData, ScoresTabData } from "../../../utils/Data/Data";
+import { DashboardData, ScoresTabData, baseUrl } from "../../../utils/Data/Data";
 import SettingIcon from "../../../images/setting.png";
 import PolygonIcon from "../../../images/risk-icon.svg";
 import StrokeIcon from "../../../images/Stroke.png";
@@ -46,7 +46,7 @@ export const ScoresTab = props => {
     if (type === "Active Score") {
       response = await axios.get(
         // "http://localhost:5051/api/user-admin/get-active-score",
-        "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail",
+        baseUrl + "userdetail",
         {
           params: {
             type: "get-active-score",
@@ -58,7 +58,7 @@ export const ScoresTab = props => {
     } else if (type === "Safety Score") {
       response = await axios.get(
         // "http://localhost:5051/api/user-admin/get-safety-score",
-        "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail",
+        baseUrl + "userdetail",
         {
           params: {
             type: "get-safety-score",

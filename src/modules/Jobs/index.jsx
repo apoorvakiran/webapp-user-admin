@@ -7,6 +7,7 @@ import { createUserButton, newCreateUserButton } from "./../Users/style";
 import './jobs.css';
 import routes from "../../features/Routes/URLs";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
+import { baseUrl } from "../../utils/Data/Data";
 
 const editUserButton = {
     color: "#C54B30",
@@ -32,7 +33,7 @@ const Jobs = props => {
     async function getJobsList() {
         const response = await axios.get(
             // "http://localhost:5051/api/user-admin/get-jobs-list",
-            "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail", {
+            baseUrl + "userdetail", {
             params: {
                 type: "get-jobs-list"
             }

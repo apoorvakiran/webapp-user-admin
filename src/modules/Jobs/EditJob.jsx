@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import {
   Form,
   Input,
-  Select,
   Row,
+  Select,
   Col,
   Button,
   Card
@@ -18,6 +18,7 @@ import { Box } from "@mui/system";
 import Table from "../../components/Table/index";
 import { useLocation } from "react-router-dom";
 import { DeleteOutlined } from "@ant-design/icons";
+import { baseUrl } from "../../utils/Data/Data";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -64,7 +65,7 @@ const EditJob = (props) => {
   async function getJobUserList(jobId) {
     const response = await axios.get(
       // "http://localhost:5051/api/user-admin/get-user-jobs-list", {
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail", {
+      baseUrl + "userdetail", {
       params: {
         id: jobId,
         type: "get-user-jobs-list"
@@ -76,7 +77,7 @@ const EditJob = (props) => {
 
   async function getUserData() {
     const response = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user", {
+      baseUrl + "user", {
       params: { type: "user-list" }
     })
     setUserList(response.data.data)
@@ -107,13 +108,18 @@ const EditJob = (props) => {
       mode: 'no-cors',
       body: JSON.stringify(data),
     }
-    const url = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail?type=delete-job'
+    const url = baseUrl + 'userdetail?type=delete-job'
+    // const url = 'http://localhost:5051/api/user-admin/delete-job';
     fetch(url, config).
-      then(response => { console.log('response', response.status); })
+      then(response => response.json())
       .then(data => {
-        console.log('Success:', data);
-        openNotificationWithIcon("success", "Success", `User unassigned successfully`);
-        // props?.history?.goBack();
+        if (data.data.code === 201) {
+          openNotificationWithIcon("success", "Success", `User unassigned successfully`);
+          // props?.history?.goBack();
+          setMappedUserList((prevState) =>
+            prevState.filter((prevItem) => prevItem !== value)
+          );
+        }
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -191,13 +197,18 @@ const EditJob = (props) => {
       mode: 'no-cors',
       body: JSON.stringify(data),
     }
-    const url = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail?type=create-new-job'
+    const url = baseUrl + 'userdetail?type=create-new-job'
+    // const url = 'http://localhost:5051/api/user-admin/create-new-job'
     fetch(url, config).
-      then(response => { console.log('response', response.status) })
+      then(response => response.json())
       .then(data => {
-        console.log('Success:', data);
-        openNotificationWithIcon("success", "Success", `Job updated successfully`);
-        props?.history?.goBack();
+        if (data.data.code === 201) {
+          openNotificationWithIcon("success", "Success", `Job updated successfully`);
+          props?.history?.goBack();
+        }
+        if (data.data.code === 409) {
+          openNotificationWithIcon("error", "Error", data.data.message);
+        }
       })
       .catch((error) => {
         console.error('Error:', error);

@@ -2,7 +2,7 @@ import { Grid, Paper, styled, Typography } from "@mui/material";
 import { Card, Skeleton, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
-import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc } from "../../utils/Data/Data";
+import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl } from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
 import axios from "axios";
 import "../../components/Dashboard/dashboard.css";
@@ -32,7 +32,7 @@ const Dashboard = props => {
   const userData = location?.state;
   const getUserScore = async value => {
     const request = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail", {
+      baseUrl + "userdetail", {
       params: {
         "type": "get-user-score",
         "userId": userData?.id,
@@ -46,7 +46,7 @@ const Dashboard = props => {
   };
   const getActiveScores = async value => {
     const response = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail", {
+      baseUrl + "userdetail", {
       params: {
         "type": "get-user-graph-score",
         "userId": userData?.id,
