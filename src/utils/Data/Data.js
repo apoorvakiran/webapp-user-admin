@@ -20,6 +20,35 @@ export const formatDate = (date) => {
     return [year, month, day].join('-');
 }
 
+export const getColor = icon => {
+    let type = icon.type;
+    let value = icon.color;
+    if (type !== "Active") {
+        switch (value) {
+            case "LOW":
+                return "#8ECF03";
+            case "MEDIUM":
+                return "#FFA700";
+            case "HIGH":
+                return "#FF0A0A";
+            default:
+                return "#8ECF03";
+        }
+    } else {
+        switch (value) {
+            case "LOW":
+                return "#FF0A0A";
+            case "MEDIUM":
+                return "#FFA700";
+            case "HIGH":
+                return "#8ECF03";
+            default:
+                return "#FF0A0A";
+        }
+    }
+
+};
+
 export const DashboardData = ['Day', 'Week', 'Month', 'Year']
 
 export const ScoresTabData = ['Safety Score', 'Active Score', 'Risk Exposure', 'Speed Score']

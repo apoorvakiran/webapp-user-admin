@@ -133,35 +133,37 @@
     text-transform: uppercase !important;
     font-size: 15px !important;
     font-weight: 900 !important;
-    color: #8ECF03 !important;
 }
 
 .innerCardTitle1 {
     text-transform: uppercase !important;
     font-size: 15px !important;
     font-weight: 900 !important;
-    color: #FFA700 !important;
+}
+
+.innerCardTitle12 {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    color: #C54B30;
 }
 
 .innerCardTitle2 {
     text-transform: uppercase !important;
     font-size: 15px !important;
     font-weight: 900 !important;
-    color: #FF0A0A !important;
 }
 
 .innerCardTitle3 {
     text-transform: uppercase !important;
     font-size: 15px !important;
     font-weight: 900 !important;
-    color: #FF710A !important;
 }
 
 .innerCardTitle4 {
     text-transform: uppercase !important;
     font-size: 15px !important;
     font-weight: 900 !important;
-    color: #C54B30 !important;
 }
 
 .ant-card-head-title {
