@@ -164,7 +164,7 @@ const Dashboard = props => {
                     <span>
                       <img src={getIcon(row?.type)} style={cardIconStyle} />
                     </span>
-                    {row.type}
+                    {row.duration_type}
                   </Typography>
                   <Typography className="innerCardValue">
                     {row.value}

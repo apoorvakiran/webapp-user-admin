@@ -196,16 +196,17 @@ const EditJob = (props) => {
       },
       body: JSON.stringify(data),
     }
+    let responseCode = null;
     const url = baseUrl + 'userdetail?type=create-new-job'
     // const url = 'http://localhost:5051/api/user-admin/create-new-job'
     fetch(url, config).
-      then(response => response.json())
+      then(response => { responseCode = response.status; return response.json() })
       .then(data => {
-        if (data.data.code === 201) {
+        if (responseCode === 200) {
           openNotificationWithIcon("success", "Success", `Job updated successfully`);
           props?.history?.goBack();
         }
-        if (data.data.code === 409) {
+        if (responseCode === 409) {
           openNotificationWithIcon("error", "Error", data.data.message);
         }
       })
