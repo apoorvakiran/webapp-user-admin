@@ -2,7 +2,7 @@ import { Grid, Paper, styled, Typography } from "@mui/material";
 import { Card, Select, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
-import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc } from "../../utils/Data/Data";
+import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate } from "../../utils/Data/Data";
 import Chart from "../Charts/Chart";
 import axios from "axios";
 import "./dashboard.css";
@@ -34,32 +34,21 @@ const Dashboard = (props) => {
   const [selectedJobTitle, setSelectedJobTitle] = useState('');
   const [dataType, setDataType] = useState('Day');
 
-  async function getData(value) {
-    const request = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/summary", {
-      params: {
-        type: "get-scores",
-        datefrom: "2022-06-13",
-        dateto: "2022-07-12"
-      }
-    }
-
-    );
-    setScores(request.data);
-    return request.data;
-  }
-
   async function getActiveScores(value) {
+
+    const current = new Date();
+    const date = formatDate(current);
     const response = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/summary", {
+      "http://localhost:5051/api/user-admin/summary-graph-data", {
+      // baseUrl + "summary-graph-data", {
       params: {
-        type: "score-graph-data",
-        datefrom: "2022-06-29",
-        dateto: "2022-06-30"
+        type: value,
+        startdate: date
       }
     }
     );
-    const data = response?.data;
+    const data = response.data.data;
+    setScores(response.data.card_data);
     let activeLabels = data["activescore"]?.x || [];
     let activeData = data["activescore"]?.y || [];
     let safetyLabels = data["safetyscore"]?.x || [];
@@ -82,7 +71,6 @@ const Dashboard = (props) => {
   useEffect(() => {
     getJobTitleList();
     getUserData();
-    getData("Day");
     getActiveScores("Day");
   }, []);
 
@@ -91,7 +79,7 @@ const Dashboard = (props) => {
     //   "http://localhost:5051/api/user-admin/user-list",
     // );
     const response = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/user", {
+      baseUrl + "user", {
       params: {
         type: "user-list"
       }
@@ -106,7 +94,7 @@ const Dashboard = (props) => {
     //   "http://localhost:5051/api/user-admin/get-jobs-list",
     // );
     const response = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail", {
+      baseUrl + "userdetail", {
       params: {
         type: "get-jobs-list"
       }
@@ -126,7 +114,7 @@ const Dashboard = (props) => {
 
   async function onGridSelection(value) {
     setDataType(value);
-    getData(value);
+    // getData(value);
     getActiveScores(value);
   }
 
@@ -143,6 +131,35 @@ const Dashboard = (props) => {
       default:
         return SettingIcon;
     }
+  };
+
+  const getColor = icon => {
+    let type = icon.type;
+    let value = icon.color;
+    if (type !== "Active") {
+      switch (value) {
+        case "LOW":
+          return "#8ECF03";
+        case "MEDIUM":
+          return "#FFA700";
+        case "HIGH":
+          return "#FF0A0A";
+        default:
+          return "#8ECF03";
+      }
+    } else {
+      switch (value) {
+        case "LOW":
+          return "#FF0A0A";
+        case "MEDIUM":
+          return "#FFA700";
+        case "HIGH":
+          return "#8ECF03";
+        default:
+          return "#FF0A0A";
+      }
+    }
+
   };
 
   const columns = [
@@ -183,7 +200,7 @@ const Dashboard = (props) => {
     // }
     // );
     const response = await axios.get(
-      "https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/userdetail", {
+      baseUrl + "userdetail", {
       params: {
         id: userId,
         type: "get-user-jobs-list"
@@ -259,7 +276,7 @@ const Dashboard = (props) => {
                   </Typography>
 
                   <Typography className="innerCardValue">{row.value}</Typography>
-                  <Typography className={"innerCardTitle" + index}>
+                  <Typography className={"innerCardTitle" + index} style={{ color: getColor(row) }}>
                     {row.color}
                   </Typography>
                 </Card.Grid>
@@ -273,7 +290,7 @@ const Dashboard = (props) => {
                 </Typography>
 
                 <Typography className="innerCardValue">{userCount}</Typography>
-                <Typography className="innerCardTitle1">
+                <Typography className="innerCardTitle12">
                   {/* VIEW ALL  */}
                   USERS
                 </Typography>
