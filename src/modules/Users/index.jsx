@@ -24,9 +24,9 @@ const Users = props => {
     async function getData() {
       const response = await axios.get(
         baseUrl + "user", {
+        // "http://localhost:5051/api/user-admin/user-list"
         params: { type: "user-list" }
       }
-
       );
       setLoading(false);
       setDataSource(response.data.data);
@@ -96,7 +96,7 @@ const Users = props => {
     },
     {
       title: "Job Title",
-      dataIndex: "job_id",
+      dataIndex: "name",
       width: "10rem",
       render(item, record) {
         return {
@@ -131,33 +131,33 @@ const Users = props => {
           props: {
             style: { color: "#C54B30" },
           },
-          children: <div onClick={() => onRow(record, item)}>{item || "TBD"}</div>,
+          children: <div onClick={() => onRow(record, item)}>{item || ""}</div>,
         };
       },
     },
     {
       title: "Device",
-      dataIndex: "device",
+      dataIndex: "id_number",
       width: "15rem",
       render(item, record) {
         return {
           props: {
             style: {},
           },
-          children: <div onClick={() => onRow(record, item)}>{item || "TBD"}</div>,
+          children: <div onClick={() => onRow(record, item)}>{item || ""}</div>,
         };
       },
     },
     {
       title: "Android ID",
-      dataIndex: "macId",
+      dataIndex: "mac",
       width: "15rem",
       render(item, record) {
         return {
           props: {
             style: {},
           },
-          children: <div onClick={() => onRow(record, item)}>{item || "TBD"}</div>,
+          children: <div onClick={() => onRow(record, item)}>{item || ""}</div>,
         };
       },
     },
