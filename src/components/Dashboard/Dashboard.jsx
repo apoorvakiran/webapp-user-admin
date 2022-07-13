@@ -40,9 +40,10 @@ const Dashboard = (props) => {
     const date = formatDate(current);
     const response = await axios.get(
       // "http://localhost:5051/api/user-admin/summary-graph-data", {
-      baseUrl + "summary-graph-data", {
+      baseUrl + "summary", {
       params: {
-        type: value,
+        type: "summary-graph-data",
+        durationType: value,
         startdate: date
       }
     }
