@@ -255,7 +255,7 @@ const EditUser = () => {
                     },
                   ]}
                 >
-                  <Input className="formInput" placeholder="First Name" />
+                  <Input className="formInput" placeholder="First Name *" />
                 </Form.Item>
                 <Form.Item
                   style={{ justifyContent: "center" }}
@@ -268,7 +268,7 @@ const EditUser = () => {
                     },
                   ]}
                 >
-                  <Input className="formInput" placeholder="Last Name" />
+                  <Input className="formInput" placeholder="Last Name *" />
                 </Form.Item>
 
                 <Form.Item
@@ -285,7 +285,7 @@ const EditUser = () => {
                     },
                   ]}
                 >
-                  <Input disabled={true} className="formInput" placeholder="E-mail" />
+                  <Input disabled={true} className="formInput" placeholder="E-mail *" />
                 </Form.Item>
                 <Form.Item
                   style={{ justifyContent: "center", width: "100%" }}
@@ -306,7 +306,7 @@ const EditUser = () => {
                     },
                   ]}
                 >
-                  <Select placeholder="Select Permissions" className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
+                  <Select placeholder="Select Permissions *" className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
                     <Select.Option value={1}>Admin</Select.Option>
                     <Select.Option value={2}>User</Select.Option>
                   </Select>

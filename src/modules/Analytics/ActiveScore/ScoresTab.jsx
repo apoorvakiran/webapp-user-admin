@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Paper, styled, Typography } from "@mui/material";
-import { DashboardData, ScoresTabData, baseUrl } from "../../../utils/Data/Data";
+import { DashboardData, ScoresTabData, baseUrl, formatDate } from "../../../utils/Data/Data";
 import SettingIcon from "../../../images/setting.png";
 import PolygonIcon from "../../../images/risk-icon.svg";
 import StrokeIcon from "../../../images/Stroke.png";
@@ -73,20 +73,6 @@ export const ScoresTab = props => {
     setRating(response?.data?.rating);
     setShowDate(response?.data?.start_date);
     setUserScoreData(response?.data?.users);
-  }
-
-  const formatDate = (date) => {
-    let d = new Date(date);
-    let month = (d.getMonth() + 1).toString();
-    let day = d.getDate().toString();
-    let year = d.getFullYear();
-    if (month.length < 2) {
-      month = '0' + month;
-    }
-    if (day.length < 2) {
-      day = '0' + day;
-    }
-    return [year, month, day].join('-');
   }
 
   const getIcon = icon => {

@@ -93,7 +93,7 @@ const CreateUser = (props) => {
       console.log(pwd);
       const attributeVal = {
         email: values.email,
-        phone: "+1" + values.phone,   // optional - E.164 number convention
+        phone: (values.phone !== undefined) ? "+1" + values.phone : null,   // optional - E.164 number convention
         first_name: values.firstName,
         last_name: values.lastName,
         role: values.role,
@@ -174,7 +174,7 @@ const CreateUser = (props) => {
                   },
                 ]}
               >
-                <Input className="formInput" placeholder="First Name" />
+                <Input className="formInput" placeholder="First Name *" />
               </Form.Item>
               <Form.Item
                 style={{ justifyContent: "center" }}
@@ -187,7 +187,7 @@ const CreateUser = (props) => {
                   },
                 ]}
               >
-                <Input className="formInput" placeholder="Last Name" />
+                <Input className="formInput" placeholder="Last Name *" />
               </Form.Item>
 
               <Form.Item
@@ -204,7 +204,7 @@ const CreateUser = (props) => {
                   },
                 ]}
               >
-                <Input className="formInput" placeholder="E-mail" />
+                <Input className="formInput" placeholder="E-mail *" />
               </Form.Item>
               <Form.Item
                 style={{ justifyContent: "center" }}
@@ -225,7 +225,7 @@ const CreateUser = (props) => {
                   },
                 ]}
               >
-                <Select placeholder="Select Permissions" className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
+                <Select placeholder="Select Permissions *" className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
                   <Select.Option value="1">Admin</Select.Option>
                   <Select.Option value="2">User</Select.Option>
                 </Select>
