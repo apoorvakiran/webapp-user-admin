@@ -129,8 +129,8 @@ const CreateJob = (props) => {
   function saveEditJob(values) {
     const data = {
       'job_id': null,
-      'job_name': values.jobTitle,
-      'description': values.jobTitle,
+      'job_name': values.jobTitle.trim(),
+      'description': values.jobTitle.trim(),
       'location_id': 4,
       'users': getIdforMappedUsers()
     };
