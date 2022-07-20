@@ -107,8 +107,8 @@ const CreateJob = (props) => {
     const response = await axios.post(
       "http://localhost:5051/api/user-admin/create-new-job", {
       job_id: null,
-      job_name: values.jobTitle,
-      description: values.jobTitle,
+      job_name: values.jobTitle.trim(),
+      description: values.jobTitle.trim(),
       location_id: 4,
       users: getIdforMappedUsers()
     }
