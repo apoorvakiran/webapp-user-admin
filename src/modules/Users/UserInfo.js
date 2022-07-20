@@ -49,21 +49,21 @@ const UserInfo = props => {
         >
           <Space>
             <Col style={style} className="gutter-row">
-              <div style={{ fontWeight: "700" }}>Admin</div>
-              <div style={{ color: "#C54B30" }}>{userData?.name || "NA"}</div>
+              <div style={{ fontWeight: "700" }}>{userData.role === 1 ? "Admin" : "User" || ""}</div>
+              <div style={{ color: "#C54B30" }}>{userData?.name || ""}</div>
             </Col>
             <Col style={style} className="gutter-row">
-              <div style={{ color: "#C54B30" }}>{userData?.email || "NA"}</div>
+              <div style={{ color: "#C54B30" }}>{userData?.email || ""}</div>
               <div style={{ color: "#C54B30" }}>
-                Phone: {userData?.phone || "NA"}
+                Phone: {userData?.phone || ""}
               </div>
             </Col>
             <Col style={style} className="gutter-row">
-              <div>Watch: {userData?.id_number || "NA"}</div>
-              <div>Android ID: {userData?.mac || "NA"}</div>
+              <div>Watch: {userData?.id_number || ""}</div>
+              <div>Android ID: {userData?.mac || ""}</div>
             </Col>
             <Col style={style} className="gutter-row">
-              <div>Hand: {userData?.hand || "NA"}</div>
+              <div>Hand: {userData?.hand || ""}</div>
             </Col>
             <Col style={style} className="gutter-row">
               <Button

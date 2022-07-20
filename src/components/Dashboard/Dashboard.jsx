@@ -116,7 +116,13 @@ const Dashboard = (props) => {
   async function onGridSelection(value) {
     setDataType(value);
     // getData(value);
-    getActiveScores(value);
+    if (selectedJobTitle !== "") {
+      const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
+      getJobWiseSummaryGraph(jobId, value)
+    } else {
+      getActiveScores(value);
+    }
+
   }
 
   const getIcon = icon => {
@@ -154,14 +160,53 @@ const Dashboard = (props) => {
 
   const handleChange = (value) => {
     let val = `${value}`;
+    setDataType("Day");
     // console.log("key", `${jobTitleList.filter(data => data.id === key)[0].name}`);
     if (val !== "0") {
       setSelectedJobTitle(`${jobTitleList.filter(data => data.id === value)[0].name}`);
       getJobUserList(`${value}`);
+      getJobWiseSummaryGraph(`${value}`, dataType)
     } else {
       setSelectedJobTitle("");
+      getActiveScores(dataType);
     }
   };
+
+  async function getJobWiseSummaryGraph(value, durationType) {
+
+    const current = new Date();
+    const date = formatDate(current);
+    const response = await axios.get(
+      // "http://localhost:5051/api/user-admin/get-summary-by-job", {
+      baseUrl + "summary", {
+      params: {
+        type: "get-summary-by-job",
+        durationType: durationType,
+        startdate: date,
+        jobId: value
+      }
+    }
+    );
+    const data = response.data.data;
+    setScores(response.data.card_data);
+    let activeLabels = data["activescore"]?.x || [];
+    let activeData = data["activescore"]?.y || [];
+    let safetyLabels = data["safetyscore"]?.x || [];
+    let safetyData = data["safetyscore"]?.y || [];
+    let speedLabels = data["speedscore"]?.x || [];
+    let speedData = data["speedscore"]?.y || [];
+    let riskLabels = data["riskexposures"]?.x || [];
+    let riskData = data["riskexposures"]?.y || [];
+    setActiveGraphLabels(activeLabels);
+    setActiveGraphData(activeData);
+    setSafetyGraphLabels(safetyLabels);
+    setSafetyGraphData(safetyData);
+    setSpeedGraphLabels(speedLabels);
+    setSpeedGraphData(speedData);
+    setRiskGraphLabels(riskLabels);
+    setRiskGraphData(riskData);
+    return response.data;
+  }
 
   async function getJobUserList(userId) {
     // const response = await axios.get(

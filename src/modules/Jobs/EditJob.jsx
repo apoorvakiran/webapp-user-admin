@@ -169,8 +169,8 @@ const EditJob = (props) => {
     const response = await axios.post(
       "http://localhost:5051/api/user-admin/create-new-job", {
       job_id: values.id,
-      job_name: values.name,
-      description: values.name,
+      job_name: values.name.trim(),
+      description: values.name.trim(),
       location_id: 4,
       users: getIdforMappedUsers()
     }
@@ -182,8 +182,8 @@ const EditJob = (props) => {
   function saveEditJob(values) {
     const data = {
       'job_id': values.id,
-      'job_name': values.name,
-      'description': values.name,
+      'job_name': values.name.trim(),
+      'description': values.name.trim(),
       'location_id': 4,
       'users': getIdforMappedUsers()
     };

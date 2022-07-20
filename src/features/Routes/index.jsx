@@ -17,13 +17,14 @@ import AnalyticsSpeedScore from "../../modules/Analytics/SpeedScore";
 import AnalyticsActiveScore from "../../modules/Analytics/ActiveScore/index";
 import AnalyticsSafetyScore from "../../modules/Analytics/SafetyScore/index";
 import Devices from "../../modules/Devices";
-import { Amplify } from 'aws-amplify';
+import { Amplify, Auth } from 'aws-amplify';
 import { Authenticator, View, Image, Text, Heading } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import config from '../Configuration/config';
 import Jobs from "../../modules/Jobs";
 import CreateJob from "../../modules/Jobs/CreateJob";
 import EditJob from "../../modules/Jobs/EditJob";
+import validator from 'validator';
 
 Amplify.configure(config);
 
@@ -94,14 +95,36 @@ const formFields = {
       labelHidden: false,
       label: '',
       placeholder: 'Enter E-mail',
+      type: "email"
     },
   }
 }
-const signOutfn = '';
+
+function isValidEmail(email) {
+  return /\S+@\S+\.\S+/.test(email);
+}
+
+const services = {
+  async handleForgotPassword(formData) {
+    console.log("formData", formData);
+    let username = formData;
+    // custom username
+    // username = username;
+    console.log("username", username);
+    console.log("first", isValidEmail(username))
+
+    if (validator.isEmail(username)) {
+      return Auth.forgotPassword(username);
+    } else {
+      throw Error("Please enter valid email")
+    }
+
+  },
+};
 
 const Routes = () => {
   return (
-    <Authenticator hideSignUp={true} formFields={formFields} components={components}>
+    <Authenticator services={services} hideSignUp={true} formFields={formFields} components={components}>
       <Router history={history}>
         <ErrorBoundary>
           <Switch>
