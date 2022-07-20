@@ -4,8 +4,8 @@ const config = {
     //     'userPoolWebClientId': '1f3qolcmsljqelp0lcu942sqvo',
     // } // mindy
     Auth: {
-        'userPoolId': 'us-east-2_vahTpJjVJ',
-        'userPoolWebClientId': '7mq0vkr4hls2ctqfus8lm2psl',
+        'userPoolId': 'us-east-2_WsbmacZjZ',
+        'userPoolWebClientId': '1498c3m2balflj7hhvde5sakkp',
     } //mentore
 }
 
