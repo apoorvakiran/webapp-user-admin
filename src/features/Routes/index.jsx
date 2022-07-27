@@ -25,6 +25,7 @@ import Jobs from "../../modules/Jobs";
 import CreateJob from "../../modules/Jobs/CreateJob";
 import EditJob from "../../modules/Jobs/EditJob";
 import validator from 'validator';
+import Summary from "../../modules/Summary";
 
 Amplify.configure(config);
 
@@ -141,8 +142,13 @@ const Routes = () => {
             </Route>
             <PrivateRouteWithStore
               exact
-              path={routes.SUMMARY}
+              path={routes.NEW_SUMMARY}
               component={props => <Dashboard />}
+            />
+            <PrivateRouteWithStore
+              exact
+              path={routes.SUMMARY}
+              component={props => <Summary />}
             />
             <PrivateRouteWithStore
               exact

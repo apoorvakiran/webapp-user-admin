@@ -1,0 +1,74 @@
+.canvas-container {
+  position: relative;
+  height: 40vh;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.SettingTitle {
+  display: flex;
+  justify-content: flex-start;
+  color: #535353 !important;
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.Chart {
+  width: 50%;
+  padding: 10px;
+}
+
+.description {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.desc {
+  width: 60%;
+}
+
+.viewBtn {
+  width: 50%;
+}
+
+.viewScoreButton {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .description {
+    display: none;
+  }
+
+  .chart {
+    width: 100%;
+  }
+
+  .Chart {
+    width: 100%;
+  }
+
+  .viewScoreButton {
+    display: block;
+  }
+}
+
+.icon-css {
+  height: 1.5em;
+  /* width: 1.5em; */
+  margin-right: 15px;
+}
+
+@media (max-width: 425px) {
+  .icon-css {
+    margin-top: 5px;
+    margin-right: 5px;
+    height: 1.0em !important;
+  }
+
+  .SettingTitle {
+    font-size: 16px;
+  }
+}

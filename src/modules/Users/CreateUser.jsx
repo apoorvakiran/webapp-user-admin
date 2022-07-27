@@ -90,7 +90,7 @@ const CreateUser = (props) => {
   async function signUp(values) {
     try {
       const pwd = generatePassword();
-      console.log(pwd);
+      // console.log(pwd);
       const attributeVal = {
         email: values.email,
         phone: (values.phone !== undefined) ? "+1" + values.phone : null,   // optional - E.164 number convention
@@ -211,6 +211,7 @@ const CreateUser = (props) => {
                 name="phone"
               >
                 <Input className="formInput"
+                  // addonBefore={prefixSelector}
                   placeholder="Phone"
                 />
               </Form.Item>
@@ -234,6 +235,12 @@ const CreateUser = (props) => {
                 style={{ justifyContent: "center" }}
                 className="formStyle"
                 name="jobTitle"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select Job Title",
+                  },
+                ]}
               >
                 <Select placeholder="Select Job Title" className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
                   {jobTitleList.map((row, index) => (
@@ -245,6 +252,12 @@ const CreateUser = (props) => {
                 name="hand"
                 style={{ justifyContent: "center" }}
                 className="formStyle"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select Hand",
+                  }
+                ]}
               >
                 <Select placeholder="Watch Hand" className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
                   <Select.Option value="left">Left </Select.Option>

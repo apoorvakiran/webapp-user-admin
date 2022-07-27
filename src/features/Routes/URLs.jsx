@@ -6,7 +6,8 @@ export const getRoute = route => {
 
 const routes = {
   LOGIN: getRoute(`login`),
-  SUMMARY: getRoute(`summary`),
+  SUMMARY: getRoute(`jobs-summary`),
+  NEW_SUMMARY: getRoute(`summary`),
   USERS: getRoute(`users/`),
   CREATE_USER: getRoute(`users/create-user`),
   EDIT_USER: getRoute(`users/edit-user`),

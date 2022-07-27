@@ -52,6 +52,7 @@ export const getColor = icon => {
 export const DashboardData = ['Day', 'Week', 'Month', 'Year']
 
 export const ScoresTabData = ['Safety Score', 'Active Score', 'Risk Exposure', 'Speed Score']
+export const ViewBy = ['View by User', 'View by Time']
 
 export const ActiveScoreDesc = "A metric of productivity measured by the ratio measured in percentage of intense active motion vs mild active motion. Value ranges from 0.0 to 1.0. It is an indicator of individual productivity and engagement.";
 export const SafetyScoreDesc = "Measures the risk of injury due to poor ergonomic motion. Value ranges from 0 to 7. The higher the number, the higher the risk of injury. The dominant motion (pitch, yaw, roll) used in this index is speed of pitch. It is a measure of force on the hand and wrist.";

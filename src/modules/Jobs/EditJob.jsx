@@ -84,11 +84,11 @@ const EditJob = (props) => {
   }
 
   function deleteMappedUserList(value) {
-    console.log(value);
+    // console.log(value);
     let userArray = [];
     var key = value.id;
     userArray.push(key);
-    console.log(userArray);
+    // console.log(userArray);
     return userArray;
   }
 

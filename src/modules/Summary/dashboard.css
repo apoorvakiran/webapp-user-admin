@@ -1,0 +1,310 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.gridData {
+    font-weight: bold;
+    color: #535353 !important;
+    cursor: pointer;
+}
+
+.dashboardTitle {
+    color: #535353;
+}
+
+.activeGrid {
+    background-color: #C54B30 !important;
+    color: white !important;
+}
+
+@media (max-width: 1200px) {
+    .dashboard {
+        width: 99%;
+    }
+}
+
+@media (max-width: 425px) {
+    .cardIcon {
+        height: 0.8em !important;
+        margin-right: 4px !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .dashboard {
+        width: 95%;
+        font-size: x-small;
+    }
+}
+
+.rowViewScore .rowCreate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+    max-width: 100%;
+}
+
+.rowViewScore {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.innerCardTitle {
+    text-transform: uppercase;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    color: #535353 !important
+}
+
+.innerCardValue {
+    font-size: 35px !important;
+    font-weight: 900 !important;
+    color: #535353 !important
+}
+
+.innerCardUpperTitle0 {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    color: #535353 !important
+}
+
+.innerCardUpperTitle1 {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    color: #535353 !important
+}
+
+.innerCardUpperTitle2 {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    color: #535353 !important
+}
+
+.innerCardUpperTitle3 {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    color: #535353 !important;
+}
+
+
+@media (max-width:320px) {
+
+    .innerCardUpperTitle0 {
+        text-transform: uppercase !important;
+        font-size: 15px !important;
+        font-weight: 900 !important;
+    }
+
+    .innerCardUpperTitle1 {
+        text-transform: uppercase !important;
+        font-size: 15px !important;
+        font-weight: 900 !important;
+    }
+
+    .innerCardUpperTitle2 {
+        text-transform: uppercase !important;
+        font-size: 15px !important;
+        font-weight: 900 !important;
+    }
+
+    .innerCardUpperTitle3 {
+        text-transform: uppercase !important;
+        font-size: 15px !important;
+        font-weight: 900 !important;
+        display: block;
+    }
+
+    .innerCardUpperTitle4 {
+        display: grid;
+
+    }
+}
+
+
+
+.innerCardTitle0 {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+}
+
+.innerCardTitle1 {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+}
+
+.innerCardTitle12 {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    color: #C54B30;
+}
+
+.innerCardTitle2 {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+}
+
+.innerCardTitle3 {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+}
+
+.innerCardTitle4 {
+    text-transform: uppercase !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+}
+
+.ant-card-head-title {
+    font-weight: 900;
+}
+
+.childCard {
+    margin-top: 15px !important;
+    text-align: center;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.chart {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.gridStyle {
+    width: 20% !important;
+    text-align: center;
+}
+
+.gridUserStyle {
+    width: 25% !important;
+}
+
+.rowViewScore button {
+    display: none;
+}
+
+.rowViewScoreSm button {
+    padding: 0.5em 2em;
+    display: block;
+    font-family: 'Montserrat';
+    border-radius: 25px;
+    width: 100%;
+    /* height: 50px; */
+    color: #C54B30;
+    font-weight: 700;
+    background: white;
+    box-shadow: 0px 0px 10px rgb(108 117 131 / 20%), 0px 10px 10px rgb(190 0 0 / 10%);
+    /* background: linear-gradient(90deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%); */
+    border: 0px;
+    cursor: pointer;
+    transition: opacity 0.25s ease-out;
+}
+
+.jobTitleTeam {
+    font-weight: 900 !important;
+    margin-bottom: 20px !important;
+    color: #535353;
+}
+
+.selectStyle {
+    border: 1px solid #94A3AC;
+    border-radius: 50px;
+    font-weight: 700 !important;
+    max-height: 100px;
+}
+
+input[type="search"] {
+    background-color: #535353 !important;
+    height: 50px !important;
+}
+
+.ant-select-selection-placeholder {
+    line-height: 46px !important;
+}
+
+.selectStyle>.ant-select-selector {
+    height: 32px !important;
+}
+
+
+.selectStyle>.ant-select-selection-item,
+.ant-select-arrow,
+.ant-select-selection-search {
+    font-weight: 600 !important;
+}
+
+.ant-select-selector {
+    /* height: 50px !important; */
+    border-radius: 50px !important;
+}
+
+@media (max-width: 768px) {
+    .userCard {
+        display: none;
+    }
+
+    .chart {
+        width: 100%;
+        display: block;
+    }
+
+    .gridStyle {
+        width: 50% !important;
+        text-align: center;
+    }
+
+    .rowViewScoreSm button {
+        display: none;
+    }
+
+    .rowViewScore button {
+        display: block;
+        font-family: 'Montserrat';
+        border-radius: 25px;
+        width: 100%;
+        height: 35px;
+        font-size: 12px;
+        color: #C54B30;
+        font-weight: 700;
+        background: white;
+        box-shadow: 0px 0px 10px rgba(108, 117, 131, 0.2), 0px 10px 10px rgba(190, 0, 0, 0.1);
+        /* background: linear-gradient(90deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%); */
+        border: 0px;
+        cursor: pointer;
+        transition: opacity 0.25s ease-out;
+    }
+
+}
+
+.css-1hsy9qq-MuiPaper-root {
+    box-shadow: 0px 10px 30px rgb(0 0 0 / 10%) !important;
+}
+
+.css-1eqh0au-MuiGrid-root {
+    cursor: pointer !important;
+}
+
+.ant-layout-content {
+    min-height: auto !important;
+}
+
+.view-by-gridStyle {
+    width: 50% !important;
+    padding: 10px !important;
+    text-align: center;
+    cursor: pointer;
+}

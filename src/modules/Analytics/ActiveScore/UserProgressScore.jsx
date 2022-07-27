@@ -1,17 +1,72 @@
 import { Col, Progress, Row } from 'antd'
+import { countBy, round, toLower } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import HeaderCard from './HeaderCard';
+import { sumBy } from 'lodash';
 
 const UserProgressScore = (props) => {
     const [scores, setScores] = useState([]);
+    const [avgSafetyScore, setAvgSafetyScore] = useState(0);
+    const [avgSpeedScore, setAvgSpeedScore] = useState(0);
+    const [avgRiskScore, setAvgRiskScore] = useState(0);
+    const [avgActiveScore, setAvgActiveScore] = useState(0);
+
     useEffect(() => {
         // setScores(ProgressBarChart);
         setScores(props.userScore);
+
+        if (props.scoreName === "Injury Risk Score") {
+            setAvgSafetyScore(sumBy(scores, 'user_score') / props.userScore.length);
+        } else if (props.scoreName === "Speed Score") {
+            setAvgSpeedScore(sumBy(scores, 'user_score') / props.userScore.length);
+        } else if (props.scoreName === "Risk Frequency Score") {
+            setAvgRiskScore(sumBy(scores, 'user_score') / props.userScore.length);
+        } else if (props.scoreName === "Active Score") {
+            setAvgActiveScore(sumBy(scores, 'user_score') / props.userScore.length);
+        }
+
     }, [props])
+
+    const renderSafetySpeed = {
+        display: (props.scoreName === "Injury Risk Score") || (props.scoreName === "Speed Score") ? "block" : "none",
+    };
+
+    const renderRisk = {
+        display: (props.scoreName === "Risk Frequency Score") ? "block" : "none",
+    };
+
+    const renderActive = {
+        display: (props.scoreName === "Active Score") ? "block" : "none",
+    };
 
     const strokeColor = {
         '0%': '#FFD705',
         '100%': '#45CF03',
+    }
+
+    function calcAverage() {
+
+        // console.log("avgSafetyScore", avgSafetyScore);
+        if (props.scoreName === "Injury Risk Score") {
+            return 33 + 67 * avgSafetyScore / 7 + "%";
+        } else if (props.scoreName === "Speed Score") {
+            return 33 + 67 * avgSpeedScore / 7 + "%";
+        } else if (props.scoreName === "Risk Frequency Score") {
+            return 33 + 67 * avgRiskScore / 10 + "%";
+        } else if (props.scoreName === "Active Score") {
+            return 33 + 67 * avgActiveScore / 1 + "%";
+        }
+    }
+
+    const averageLine = {
+        "width": "4px",
+        "background-color": "transparent",
+        "position": "absolute",
+        "top": "55px",
+        "padding-left": calcAverage(),
+        "bottom": "0",
+        "border-right": "1.5px solid #727272",
+        "z-index": "99",
     }
 
     const handleFilterChange = value => {
@@ -39,8 +94,8 @@ const UserProgressScore = (props) => {
     return (
         <div className='progressContainer-1'>
             {/* <HeaderCard date={showDate} /> */}
-            <HeaderCard handleChange={handleFilterChange} />
-            <div className="line"></div>
+            <HeaderCard maxValue={props.maxValue} minValue={props.minValue} handleChange={handleFilterChange} />
+            <div style={averageLine}></div>
             <Row style={{ marginTop: "20px" }}>
                 {scores.map((row, index) => (
                     <>
@@ -49,8 +104,14 @@ const UserProgressScore = (props) => {
                                 {row?.first_name + " " + row?.last_name}
                             </p>
                         </Col>
-                        <Col className="userProgress" xs={16} xl={16}>
-                            <Progress format={percent => `${percent}`} showInfo={true} strokeWidth={30} percent={row?.user_score} strokeColor={strokeColor} />
+                        <Col className="userProgress" xs={16} xl={16} style={renderSafetySpeed}>
+                            <Progress format={percent => `${row.user_score}`} showInfo={true} strokeWidth={30} percent={round((row.user_score / 7) * 100)} strokeColor={strokeColor} />
+                        </Col>
+                        <Col className="userProgress" xs={16} xl={16} style={renderRisk}>
+                            <Progress format={percent => `${row.user_score}`} showInfo={true} strokeWidth={30} percent={round((row.user_score / 10) * 100)} strokeColor={strokeColor} />
+                        </Col>
+                        <Col className="userProgress" xs={16} xl={16} style={renderActive}>
+                            <Progress format={percent => `${round(row.user_score * 100 / 1)}` + "%"} showInfo={true} strokeWidth={30} percent={round((row.user_score / 1) * 100)} strokeColor={strokeColor} />
                         </Col>
                     </>
                 ))}
