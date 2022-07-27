@@ -135,10 +135,10 @@ const Routes = () => {
               component={(props: any) => <ResetPasswordScreen {...props} />}
             /> */}
             <Route exact path="/">
-              <Redirect to="/user-admin/summary" />
+              <Redirect to="/user-admin/jobs-summary" />
             </Route>
             <Route exact path="/user-admin/logout">
-              <Redirect to="/user-admin/summary" />
+              <Redirect to="/user-admin/jobs-summary" />
             </Route>
             <PrivateRouteWithStore
               exact
