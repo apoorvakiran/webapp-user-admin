@@ -23,6 +23,17 @@ export const newCreateUserButton = {
   marginBottom: "25px"
 };
 
+export const grayUserButton = {
+  color: "#FFFFFF",
+  fontWeight: "700",
+  fontFamily: "Montserrat",
+  fontStyle: "normal",
+  background: "#ADA8A8",
+  boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)",
+  width: "60%",
+  height: "50px"
+};
+
 export const createUserButton = {
   color: "#FFFFFF",
   fontWeight: "700",

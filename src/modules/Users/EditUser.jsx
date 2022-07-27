@@ -11,12 +11,13 @@ import {
   Modal,
 } from "antd";
 import BasicLayout from "../../layouts/BasicLayout";
-import { createUserButton, invertCreateUserButton } from "./style";
-import { Link, useLocation } from "react-router-dom";
+import { createUserButton, grayUserButton, hideBtn, invertCreateUserButton } from "./style";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { baseUrl } from "../../utils/Data/Data";
+import { display } from "@mui/system";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = "*";
 axios.defaults.headers.post['Access-Control-Allow-Methods'] = "*";
@@ -67,6 +68,7 @@ const { confirm } = Modal
 
 const EditUser = () => {
   const location = useLocation();
+  let history = useHistory();
   const [loading, setLoading] = useState(true);
   const [jobTitleList, setJobTitleList] = useState([]);
   const [initialValues, setInitialValues] = useState([]);
@@ -173,6 +175,7 @@ const EditUser = () => {
       content: "Are you sure you want to Delete user?",
       onOk() {
         deleteUser();
+
       },
       onCancel() {
         // console.log('Cancel');
@@ -198,8 +201,9 @@ const EditUser = () => {
     fetch(url, config).
       then(response => { console.log('response', response.status); })
       .then(data => {
-        console.log('Success:', data);
+        // console.log('Success:', data);
         openNotificationWithIcon("success", "Success", `User deleted successfully`);
+        history.push("/user-admin/users/")
       })
       .catch((error) => {
         return error
@@ -340,13 +344,13 @@ const EditUser = () => {
               className="create-user"
               htmlType="submit"
               shape="round"
-              style={createUserButton}
+              style={location.state.banned ? grayUserButton : createUserButton}
               disabled={location.state.banned}
             >
               Save
             </Button>
           </Form.Item>
-          <Form.Item {...tailFormItemLayout} style={{ marginTop: "25px" }}>
+          <Form.Item {...tailFormItemLayout} style={location.state.banned ? { display: "none" } : { marginTop: "25px" }}>
             <Button
               className="create-user"
               htmlType="button"

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Progress, Select, Typography } from "antd";
 import "./analytics.css"
 const { Option } = Select;
 
 const HeaderCard = props => {
     const { handleChange } = props;
+
     return (
         <div className="speed-score-container">
             <div style={{ width: "33%" }}>
@@ -18,9 +19,9 @@ const HeaderCard = props => {
                 </Select>
             </div>
             <div className="speed-score-average">
-                <Typography style={{ width: "33%" }}>{1}</Typography>
+                <Typography style={{ width: "33%" }}>{props.minValue}</Typography>
                 <Typography style={{ width: "34%", textAlign: "center" }}>{"Average"}</Typography>
-                <Typography style={{ width: "33%", textAlign: "end" }}>{100}</Typography>
+                <Typography style={{ width: "33%", textAlign: "end" }}>{props.maxValue}</Typography>
             </div>
         </div>
     );
