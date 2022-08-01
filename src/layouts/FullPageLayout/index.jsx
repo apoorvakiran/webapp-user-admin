@@ -15,6 +15,7 @@ import styled from "styled-components";
 import LayoutComponentStyles, { LogoComponentStyle } from "./style";
 import "./styles.css";
 import Logo from "../../images/mlogo.svg";
+import logoType from "../../images/mentore-logotype.svg";
 
 const { Content, Sider } = Layout;
 
@@ -22,10 +23,9 @@ const TitleMenu = styled(PageHeader)`
   .ant-page-header-heading-title {
     color: #535353;
     font-family: "Montserrat";
-    font-size: 15px;
+    font-size: 12px;
     text-transform: capitalize;
     fontweight: bold;
-    padding: 16px 0px;
   }
 `;
 class LayoutComponent extends React.Component {
@@ -52,11 +52,13 @@ class LayoutComponent extends React.Component {
   showLogoWithTitle = () => (
     <>
       <div className="logo-div">
-        <div className="sider-heading sub-title">Mentore</div>
+        <div className="logoType">
+          <img src={logoType} alt="Mentore" />
+        </div>
         <LogoComponent style={LogoComponentStyle} />
-        <div style={{ marginTop: "-50px" }}>
-          <TitleMenu title={"Circle Tech Inc."} />
-          <div style={{ marginTop: "-22px" }} className="sub-title">
+        <div className="companyTitle" >
+          <div>Acme Inc.</div>
+          <div>
             Tampa, Florida
           </div>
         </div>

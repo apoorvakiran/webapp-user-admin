@@ -408,7 +408,7 @@ const Summary = (props) => {
     }
 
     return (
-        <BasicLayout pageTitle={"Summary"}>
+        <BasicLayout >
             {loading ? (
                 <Skeleton
                     style={{ position: "absolute", zIndex: "99" }}
@@ -416,19 +416,19 @@ const Summary = (props) => {
                     active
                 />
             ) : (
-                <Card style={{ marginLeft: 10 }}>
-                    <div style={{ marginBottom: 2 }}>Tampa, Florida</div>
-                    <div className="user-score" style={{ marginBottom: 20 }}>Dashboard</div>
-                    <Select defaultValue="All Jobs" className="selectStyle" style={{ width: "200px", marginBottom: "20px" }}
-                        onChange={handleChange} >
-                        <Select.Option value={0}> All Jobs </Select.Option>
-                        {jobTitleList.map((row, index) => (
-                            <Select.Option value={row.id}>{row.name} </Select.Option>
-                        ))}
-                    </Select>
+                <Card className="summaryWrappper">
+                    <div>
+                        <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
+                        <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px", marginBottom: "20px" }}
+                            onChange={handleChange} >
+                            <Select.Option value={0}> All Jobs </Select.Option>
+                            {jobTitleList.map((row, index) => (
+                                <Select.Option value={row.id}>{row.name} </Select.Option>
+                            ))}
+                        </Select>
+                    </div>
                     <div className="dashboard">
-                        {/* <h1 className="dashboardTitle">Dashboard</h1> */}
-                        <Grid container spacing={0.2}>
+                        <Grid container className="timeSelect">
                             {DashboardData.map((data, index) => {
                                 return (
                                     <Grid
@@ -454,20 +454,25 @@ const Summary = (props) => {
                                 );
                             })}
                         </Grid>
-                        <Card className="childCard" title="LIVE">
-                            {
-                                selectedJobTitle !== "" & selectedJobTitle !== "0" ?
-                                    <Meta style={{ margin: "10px" }} title={
-                                        <span style={{ fontWeight: "700", color: "#535353" }}>{selectedJobTitle}</span>
-                                    } /> : ""
-                            }
+                        <Card className="scoreBoard childCard">
+
+                            <div className="scoreboardTitle">
+                                {
+                                    selectedJobTitle !== "" & selectedJobTitle !== "0" ?
+                                        <span>
+                                            {selectedJobTitle}
+                                        </span> : ""
+                                }
+
+                                <span>&nbsp; Score Summary </span>
+                            </div>
 
                             {scores.map((row, index) => (
                                 <Card.Grid hoverable={false} className="gridStyle">
                                     <Typography className={"innerCardUpperTitle" + index}>
-                                        <span>
-                                            <img src={getIcon(row?.type)} className="cardIcon" style={cardIconStyle} />
-                                        </span>
+                                        <div>
+                                            <img src={getIcon(row?.type)} className="cardIcon" />
+                                        </div>
                                         {row.type}
                                     </Typography>
 
@@ -479,10 +484,10 @@ const Summary = (props) => {
                             ))}
                             <Card.Grid hoverable={false} className="gridStyle userCard">
                                 <Typography className="innerCardTitle">
-                                    <span>
-                                        <img src={UserIcon} />
-                                    </span>
-                                    &nbsp; USERS
+                                    <div>
+                                        <img src={UserIcon} className="cardIcon" />
+                                    </div>
+                                    <span>USERS</span>
                                 </Typography>
 
                                 <Typography className="innerCardValue">{userCount}</Typography>

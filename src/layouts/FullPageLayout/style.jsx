@@ -1,5 +1,5 @@
 export const SideMenuStyle = {
-  fontSize: "16px",
+  fontSize: "14px",
   fontWeight: 500,
   backgroundColor: "#fcfcfc",
   marginTop: "20px",
@@ -8,13 +8,13 @@ export const SideMenuStyle = {
 }
 
 export const SideMenuItemStyle = {
-  fontSize: "15px"
+  fontSize: "14px"
 }
 
 export const AvatarIconStyle = { backgroundColor: "#fcfcfc" };
 
 export const LogoComponentStyle = { margin: "2em 0 0 2.75em" }
-export const logoStyle = { height: "130px", width: "130px" };
+export const logoStyle = {};
 const LayoutComponentStyles = {
   fixedSider: {
     overflow: "auto",
