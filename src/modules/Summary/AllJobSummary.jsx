@@ -5,6 +5,7 @@ import "./chart.css";
 import { Typography } from "antd";
 import SettingIcon from "../../images/setting.png";
 import UserProgressScore from "../Analytics/ActiveScore/UserProgressScore";
+import { sumBy } from "lodash";
 
 const AllJobSummary = props => {
   const { Icon } = props;
@@ -21,8 +22,8 @@ const AllJobSummary = props => {
       setMinValue(0);
     } else if (props.title === "Active Score") {
       // console.log("Active")
-      setMaxValue(100);
-      setMinValue(0);
+      setMaxValue("100%");
+      setMinValue("0%");
 
     }
   });
@@ -38,24 +39,26 @@ const AllJobSummary = props => {
         <Typography className="desc">
           {props.desc}
         </Typography>
-{/*        <FormButton
+
+        {/* <FormButton
           className="viewBtn"
           id="viewButton"
           title={"View " + props.title}
           changeStyleClass="ViewScoreSm"
-        />*/}
+        /> */}
+
       </div>
       {/* <article className="canvas-container"> */}
       {props.scoreType === "All Jobs" ?
         <Table data={props.data} columns={props.columns} showHeader={props.showHeader} /> :
-        <UserProgressScore scoreName={props.title} minValue={minValue} maxValue={maxValue} userScore={props.data} />
+        <UserProgressScore scoreName={props.title} minValue={minValue} maxValue={maxValue} userScore={props.data} totalAvgScore={sumBy(props.data, 'user_score') / props.data.length} />
       }
       {/* </article> */}
-      <FormButton
+      {/* <FormButton
         id="viewButton"
         title={"View " + props.title}
         changeStyleClass="ViewScore"
-      />
+      /> */}
     </div>
   );
 };

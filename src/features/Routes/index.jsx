@@ -207,7 +207,7 @@ const Routes = () => {
             />
             <PrivateRouteWithStore
               path="/user-admin/logout"
-              component={props => <Dashboard />}
+              component={props => <Summary />}
             />
             <PrivateRouteWithStore
               path="*"

@@ -17,6 +17,7 @@ import Table from "../../components/Table/index";
 import Meta from "antd/lib/card/Meta";
 import AllJobSummary from "./AllJobSummary";
 import UserProgressScore from "../Analytics/ActiveScore/UserProgressScore";
+import { round } from "lodash";
 
 const Summary = (props) => {
     const [loading, setLoading] = useState(true);
@@ -152,7 +153,7 @@ const Summary = (props) => {
         switch (icon) {
             case "Active":
                 return SettingIcon;
-            case "Safety":
+            case "Injury":
                 return Vector2Icon;
             case "Speed":
                 return StrokeIcon;
@@ -246,12 +247,12 @@ const Summary = (props) => {
         setJobTeamList(response.data);
     }
 
-    const columns = [
+    const columns = type => [
         {
             title: "Job Type",
             dataIndex: "name",
             key: "name",
-            sorter: true,
+            sorter: (a, b) => a.name.localeCompare(b.name),
             render(item, record) {
                 return {
                     props: {
@@ -270,7 +271,7 @@ const Summary = (props) => {
                     props: {
                         style: { color: "#C54B30", fontWeight: 700, textAlign: "right" },
                     },
-                    children: <div>{record.job_score}</div>,
+                    children: <div>{type !== "Active Score" ? record.job_score : round((record.job_score * 100) / 1.0) + "%"}</div>,
                 };
             },
         },
@@ -454,6 +455,7 @@ const Summary = (props) => {
                                 );
                             })}
                         </Grid>
+
                         <Card className="scoreBoard childCard">
 
                             <div className="scoreboardTitle">
@@ -470,13 +472,15 @@ const Summary = (props) => {
                             {scores.map((row, index) => (
                                 <Card.Grid hoverable={false} className="gridStyle">
                                     <Typography className={"innerCardUpperTitle" + index}>
+
                                         <div>
                                             <img src={getIcon(row?.type)} className="cardIcon" />
                                         </div>
-                                        {row.type}
+                                        {row.type !== "Risk" ? row.type : "Risk Frequency"}
+
                                     </Typography>
 
-                                    <Typography className="innerCardValue">{row.value}</Typography>
+                                    <Typography className="innerCardValue">{row.type !== "Active" ? row.value : round(row.value * 100 / 1.0) + "%"}</Typography>
                                     <Typography className={"innerCardTitle" + index} style={{ color: getColor(row) }}>
                                         {row.color}
                                     </Typography>
@@ -509,7 +513,7 @@ const Summary = (props) => {
                                             desc={SafetyScoreDesc}
                                             data={safetyGraphData}
                                             labels={safetyGraphLabels}
-                                            Icon={Vector2Icon} columns={columns} showHeader={true}
+                                            Icon={Vector2Icon} columns={columns("Injury Risk Score")} showHeader={true}
                                             scoreType="All Jobs" />
 
                                         <AllJobSummary
@@ -517,7 +521,7 @@ const Summary = (props) => {
                                             desc={RiskScoreDesc}
                                             data={riskGraphData}
                                             labels={riskGraphLabels}
-                                            Icon={PolygonIcon} columns={columns} showHeader={true}
+                                            Icon={PolygonIcon} columns={columns("Risk Frequency Score")} showHeader={true}
                                             scoreType="All Jobs" />
                                     </div>
                                     <div className="chart">
@@ -526,7 +530,7 @@ const Summary = (props) => {
                                             desc={SpeedScoreDesc}
                                             data={speedGraphData}
                                             labels={speedGraphLabels}
-                                            Icon={StrokeIcon} columns={columns} showHeader={true}
+                                            Icon={StrokeIcon} columns={columns("Speed Score")} showHeader={true}
                                             scoreType="All Jobs" />
 
                                         <AllJobSummary
@@ -534,7 +538,7 @@ const Summary = (props) => {
                                             desc={ActiveScoreDesc}
                                             data={activeGraphData}
                                             labels={activeGraphLabels}
-                                            Icon={SettingIcon} columns={columns} showHeader={true}
+                                            Icon={SettingIcon} columns={columns("Active Score")} showHeader={true}
                                             scoreType="All Jobs" />
                                     </div>
                                 </>
@@ -551,11 +555,11 @@ const Summary = (props) => {
                                                     onClick={() => handleScoreCard(row)}
                                                     style={{
                                                         background: scoreType === row ? "#C54B30" : "unset",
-                                                        color: scoreType === row ? "#ffffff" : "unset",
+                                                        color: scoreType === row ? "#ffffff" : "#C54B30",
                                                     }}
                                                     value={scoreType}
                                                 >
-                                                    <Typography>{row}</Typography>
+                                                    <Typography style={{ fontWeight: 600 }}>{row}</Typography>
                                                 </Card.Grid>
                                             ))}
                                         </Card>
@@ -607,11 +611,12 @@ const Summary = (props) => {
                                                     onClick={() => handleScoreCard(row)}
                                                     style={{
                                                         background: scoreType === row ? "#C54B30" : "unset",
-                                                        color: scoreType === row ? "#ffffff" : "unset",
+                                                        color: scoreType === row ? "#ffffff" : "#C54B30",
+                                                        fontWeight: 700
                                                     }}
                                                     value={scoreType}
                                                 >
-                                                    <Typography>{row}</Typography>
+                                                    <Typography style={{ fontWeight: 600 }}>{row}</Typography>
                                                 </Card.Grid>
                                             ))}
                                         </Card>

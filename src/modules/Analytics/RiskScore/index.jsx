@@ -1,8 +1,8 @@
-import { Grid, Paper, styled, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { Card, Skeleton, Space, Radio } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../../layouts/BasicLayout";
-import { baseUrl, DashboardData } from "../../../utils/Data/Data";
+import { baseUrl, DashboardData, formatDate, getCurrIcon, Item } from "../../../utils/Data/Data";
 import axios from "axios";
 import "../../../components/Dashboard/dashboard.css";
 import "../analytics.css";
@@ -19,24 +19,30 @@ import CurrActiveIcon from "../../../images/activity-score-icon-white.png";
 import CurrSafetyIcon from "../../../images/safety-score-icon-white.png";
 import CurrSpeedIcon from "../../../images/speed-icon-white.png";
 import CurrRiskIcon from "../../../images/risk-icon-white.png";
+import ScoreDetails from "../ActiveScore/ScoreDetails";
 
 const RiskScore = props => {
   const location = useLocation();
   const [loading, seLoading] = useState(true);
-  const [scoreType, setScoreType] = useState("Risk Exposure");
+  const [scoreType, setScoreType] = useState("Risk Frequency");
   const [selected, setSelected] = useState(0);
   const [speedScoreData, setSpeedScoreData] = useState([]);
   const [riskScoreCount, setRiskScoreCount] = useState(0);
   const [tabChanged, setTabChanged] = useState(false);
-  const [activeTab, setActiveTab] = useState("Risk Exposure");
+  const [activeTab, setActiveTab] = useState("Risk Frequency");
   const [aggScore, setAggScore] = useState();
 
   const userData = location?.state;
   const getSpeedScore = async value => {
+    const current = new Date();
+    const date = formatDate(current);
     const request = await axios.get(
+      // "http://localhost:5051/api/user-admin/get-risk-scores", {
       baseUrl + "scores", {
       params: {
         type: "get-risk-scores",
+        durationType: value,
+        startdate: date,
       },
     },
     );
@@ -46,30 +52,15 @@ const RiskScore = props => {
     return request?.data;
   };
   useEffect(() => {
-    getSpeedScore();
+    getSpeedScore("Day");
   }, []);
+
   const onGridSelection = value => {
     setTabChanged(true);
     setActiveTab(value);
-    switch (value) {
-      case "Active Score":
-        return props.history.push(routes.ANALYTICS_ACTIVE_SCORE);
-      case "Safety Score":
-        return props.history.push(routes.ANALYTICS_SAFETY_SCORE);
-      case "Speed Score":
-        return props.history?.push(routes.ANALYTICS_SPEED_SCORE);
-      case "Risk Exposure":
-        return props.history?.push(routes.ANALYTICS_RISK_SCORE);
-      default:
-        return props.history?.push(routes.ANALYTICS_SAFETY_SCORE);
-    }
+    getSpeedScore(value);
   };
-  const Item = styled(Paper)(({ theme }) => ({
-    borderColor: "black",
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: "black",
-  }));
+
   const getIcon = icon => {
     switch (icon) {
       case "Active Score":
@@ -79,13 +70,13 @@ const RiskScore = props => {
           return SettingIcon;
         }
 
-      case "Safety Score":
+      case "Injury Risk Score":
         if (props.history.location.pathname === "/user-admin/analytics/safety-score") {
           return CurrSafetyIcon;
         } else {
           return Vector2Icon;
         }
-      case "Risk Exposure":
+      case "Risk Frequency":
         if (props.history.location.pathname === "/user-admin/analytics/risk-score") {
           return CurrRiskIcon;
         } else {
@@ -103,16 +94,16 @@ const RiskScore = props => {
   };
   let scores = [
     {
-      type: "Safety Score",
+      type: "Injury Risk Score",
     },
     {
-      type: "Active Score",
-    },
-    {
-      type: "Risk Exposure",
+      type: "Risk Frequency",
     },
     {
       type: "Speed Score",
+    },
+    {
+      type: "Active Score",
     },
   ];
   const columns = [
@@ -153,7 +144,7 @@ const RiskScore = props => {
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
       case "Speed Score":
         return props?.history?.push(routes.ANALYTICS_SPEED_SCORE);
-      case "Risk Exposure":
+      case "Risk Frequency":
         return props?.history?.push(routes.ANALYTICS_RISK_SCORE);
       default:
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
@@ -174,7 +165,7 @@ const RiskScore = props => {
             {scores.map((row, index) => (
               <Card.Grid
                 hoverable={false}
-                className="risk-score-gridStyle gridStyle"
+                className="risk-score-gridStyle"
                 onClick={() => handleScoreCard(row.type)}
                 style={{
                   background: scoreType === row.type ? "#C54B30" : "unset",
@@ -190,8 +181,8 @@ const RiskScore = props => {
               </Card.Grid>
             ))}
           </Card>
-          <div hoverable={true} className="risk-info">
-            <div className="risk-info-sub-1">
+          {/* <div hoverable={true} className="risk-info"> */}
+          {/* <div className="risk-info-sub-1">
               <Typography
                 className="risk-card"
                 style={{ color: "#535353" }}
@@ -214,16 +205,16 @@ const RiskScore = props => {
                 marginRight: "2em",
                 height: "70px",
               }}
-            ></div>
-            <div className="risk-info-sub-2">
+            ></div> */}
+          {/* <div className="risk-info-sub-2">
               <Typography className="innerCardTitle">
                 <span>
                   <img
-                    src={getIcon("Risk Exposure")}
+                    src={getCurrIcon("Risk Frequency")}
                     style={RiskcardIconStyle}
                   />
                 </span>
-                High Risk Events
+                Risk Frequency
               </Typography>
               <Typography
                 style={{
@@ -238,7 +229,8 @@ const RiskScore = props => {
                 maximum value is capped at 10.
               </Typography>
             </div>
-          </div>
+          </div> */}
+          <ScoreDetails detailsText="Risk Frequency" score={riskScoreCount} />
           <Grid
             container
             spacing={0}

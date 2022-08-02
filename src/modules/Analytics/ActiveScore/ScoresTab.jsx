@@ -16,13 +16,14 @@ import UserProgressScore from "./UserProgressScore";
 import { Option } from "antd/lib/mentions";
 import axios from "axios";
 import routes from "../../../features/Routes/URLs";
+import { sumBy } from "lodash";
 
 
 export const ScoresTab = props => {
   const { history } = props;
   const [tabChanged, setTabChanged] = useState(false);
-  const [activeTab, setActiveTab] = useState("Safety Score");
-  const [scoreType = "Safety Score", setScoreType] = useState();
+  const [activeTab, setActiveTab] = useState("Injury Risk Score");
+  const [scoreType = "Injury Risk Score", setScoreType] = useState();
   const [aggScore, setAggScore] = useState();
   const [rating, setRating] = useState();
   const [showDate, setShowDate] = useState();
@@ -30,10 +31,17 @@ export const ScoresTab = props => {
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(0);
   const [filterBy, setFilterBy] = useState("Day");
+  const [maxValue, setMaxValue] = useState();
+  const [minValue, setMinValue] = useState();
 
   useEffect(() => {
     if (history.location.pathname === "/user-admin/analytics/active-score") {
       setScoreType('Active Score')
+      setMaxValue("100%");
+      setMinValue("0%");
+    } else {
+      setMaxValue(7);
+      setMinValue(0);
     }
     setFilterBy("Day");
     getScoresData(scoreType, filterBy);
@@ -50,29 +58,29 @@ export const ScoresTab = props => {
         {
           params: {
             type: "get-active-score",
-            duration_type: filterBy,
-            startdate: "2022-06-29",
+            durationType: filterBy,
+            startdate: date,
           },
         },
       );
-    } else if (type === "Safety Score") {
+    } else if (type === "Injury Risk Score") {
       response = await axios.get(
         // "http://localhost:5051/api/user-admin/get-safety-score",
         baseUrl + "userdetail",
         {
           params: {
             type: "get-safety-score",
-            duration_type: filterBy,
-            startdate: "2022-06-29",
+            durationType: filterBy,
+            startdate: date,
           },
         },
       );
     }
     setLoading(false);
-    setAggScore(response?.data?.agg_score);
-    setRating(response?.data?.rating);
-    setShowDate(response?.data?.start_date);
-    setUserScoreData(response?.data?.users);
+    setAggScore(response.data.agg_score);
+    setRating(response.data.rating);
+    setShowDate(response.data.start_date);
+    setUserScoreData(response.data.users);
   }
 
   const getIcon = icon => {
@@ -84,13 +92,13 @@ export const ScoresTab = props => {
           return SettingIcon;
         }
 
-      case "Safety Score":
+      case "Injury Risk Score":
         if (history.location.pathname === "/user-admin/analytics/safety-score") {
           return CurrSafetyIcon;
         } else {
           return Vector2Icon;
         }
-      case "Risk Exposure":
+      case "Risk Frequency":
         if (history.location.pathname === "/user-admin/analytics/risk-score") {
           return CurrRiskIcon;
         } else {
@@ -110,14 +118,14 @@ export const ScoresTab = props => {
   const handleScoreCard = async type => {
     setScoreType(() => type)
     switch (type) {
-      case "Safety Score":
+      case "Injury Risk Score":
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
       case "Active Score":
         setScoreType(type);
         return props?.history?.push(routes.ANALYTICS_ACTIVE_SCORE);
       case "Speed Score":
         return props?.history?.push(routes.ANALYTICS_SPEED_SCORE);
-      case "Risk Exposure":
+      case "Risk Frequency":
         return props?.history?.push(routes.ANALYTICS_RISK_SCORE);
       default:
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
@@ -151,7 +159,7 @@ export const ScoresTab = props => {
               {ScoresTabData.map((row, index) => (
                 <Card.Grid
                   hoverable={false}
-                  className="risk-score-gridStyle gridStyle"
+                  className="risk-score-gridStyle"
                   onClick={() => handleScoreCard(row)}
                   style={{
                     background: scoreType === row ? "#C54B30" : "unset",
@@ -221,8 +229,10 @@ export const ScoresTab = props => {
                   <Option value="Meat Grinder">Meat Grinder</Option>
                 </Select>
               </Col>
-            </Row> */}
-            <UserProgressScore userScore={userScoreData} />
+            </Row> 
+            <UserProgressScore scoreName={props.title} minValue={minValue} maxValue={maxValue} userScore={props.data} />
+            */}
+            <UserProgressScore scoreName={scoreType} minValue={minValue} maxValue={maxValue} userScore={userScoreData} totalAvgScore={sumBy(userScoreData, data => Number(data.user_score)) / userScoreData.length} />
           </>
         )}
     </div>
