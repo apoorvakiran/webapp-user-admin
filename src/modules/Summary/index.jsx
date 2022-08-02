@@ -644,7 +644,7 @@ const Summary = (props) => {
                                                 data={speedGraphData}
                                                 labels={speedGraphLabels}
                                                 Icon={StrokeIcon}
-                                                scoreType="Scoresby User" />
+                                                scoreType="Scores by User" />
 
                                             <AllJobSummary
                                                 title="Active Score"
