@@ -24,12 +24,12 @@ export const sideBarNavigator = [
     url: routes.USERS,
     icon: "CaretRightOutlined",
   },
-  // {
-  //   name: "Analytics",
-  //   key: MENU_KEYS.ANALYTICS,
-  //   url: routes.ANALYTICS_SAFETY_SCORE,
-  //   icon: "CaretRightOutlined",
-  // },
+  {
+    name: "Analytics",
+    key: MENU_KEYS.ANALYTICS,
+    url: routes.ANALYTICS_SAFETY_SCORE,
+    icon: "CaretRightOutlined",
+  },
   {
     name: "Jobs",
     key: MENU_KEYS.JOBS,

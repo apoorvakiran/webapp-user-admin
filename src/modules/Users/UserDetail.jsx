@@ -148,7 +148,6 @@ const Dashboard = props => {
             <Card
               className="childCard"
               headStyle={{ fontWeight: "700", padding: "0", marginTop: "-5px" }}
-              title="LIVE"
               extra={
                 <Space style={{ justifyContent: "center" }}>
                   <LiveSession session="1:34:00" />

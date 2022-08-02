@@ -56,9 +56,10 @@
 }
 
 .icon-css {
-  height: 1.5em;
+  height: 1.3em;
   /* width: 1.5em; */
   margin-right: 15px;
+  margin-top: 5px;
 }
 
 @media (max-width: 425px) {
