@@ -35,7 +35,7 @@ const Summary = (props) => {
     const [jobTeamList, setJobTeamList] = useState([]);
     const [selectedJobTitle, setSelectedJobTitle] = useState('0');
     const [dataType, setDataType] = useState('Day');
-    const [scoreType = "View by User", setScoreType] = useState();
+    const [scoreType = "Scores by User", setScoreType] = useState();
 
     async function getActiveScores(value) {
 
@@ -128,7 +128,7 @@ const Summary = (props) => {
         if (selectedJobTitle !== "" && selectedJobTitle !== "0") {
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
             // console.log("scoreType:::::", scoreType);
-            if (scoreType === "View by User") {
+            if (scoreType === "Scores by User") {
                 getUserCardData(jobId, value);
                 getUserSafetyScoreData(jobId, value);
                 getUserRiskScoreData(jobId, value);
@@ -170,7 +170,7 @@ const Summary = (props) => {
         if (val !== "0") {
             setSelectedJobTitle(`${jobTitleList.filter(data => data.id === value)[0].name}`);
             // getJobUserList(`${value}`);
-            if (scoreType === "View by User") {
+            if (scoreType === "Scores by User") {
                 getUserCardData(`${value}`, dataType);
                 getUserSafetyScoreData(`${value}`, dataType);
                 getUserRiskScoreData(`${value}`, dataType);
@@ -279,7 +279,7 @@ const Summary = (props) => {
     const handleScoreCard = async type => {
         setScoreType(() => type)
         // console.log("type", type)
-        if (type === "View by Time") {
+        if (type === "Scores by Time") {
             // console.log("scoreType", type)
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
             getJobWiseSummaryGraph(jobId, dataType)
@@ -460,11 +460,11 @@ const Summary = (props) => {
                                 {
                                     selectedJobTitle !== "" & selectedJobTitle !== "0" ?
                                         <span>
-                                            {selectedJobTitle}
+                                            {selectedJobTitle}&nbsp;
                                         </span> : ""
                                 }
 
-                                <span>&nbsp; Score Summary </span>
+                                <span>Scoreboard</span>
                             </div>
 
                             {scores.map((row, index) => (
@@ -539,11 +539,11 @@ const Summary = (props) => {
                                     </div>
                                 </>
                                 :
-                                (scoreType === "View by Time")
+                                (scoreType === "Scores by Time")
                                     ?
-                                    // view by Time
+                                    // scores by Time
                                     <>
-                                        <Card className="childCard">
+                                        <Card className="childCard viewSelect">
                                             {ViewBy.map((row, index) => (
                                                 <Card.Grid
                                                     hoverable={false}
@@ -597,9 +597,9 @@ const Summary = (props) => {
                                         </div>
                                     </>
                                     :
-                                    // view by User
+                                    // scores by User
                                     <>
-                                        <Card className="childCard">
+                                        <Card className="childCard viewSelect">
                                             {ViewBy.map((row, index) => (
                                                 <Card.Grid
                                                     hoverable={false}
@@ -622,7 +622,7 @@ const Summary = (props) => {
                                                 data={safetyGraphData}
                                                 labels={safetyGraphLabels}
                                                 Icon={Vector2Icon}
-                                                scoreType="View by User" />
+                                                scoreType="Scores by User" />
 
                                             <AllJobSummary
                                                 title="Risk Frequency Score"
@@ -630,7 +630,7 @@ const Summary = (props) => {
                                                 data={riskGraphData}
                                                 labels={riskGraphLabels}
                                                 Icon={PolygonIcon}
-                                                scoreType="View by User" />
+                                                scoreType="Scores by User" />
                                         </div>
                                         <div className="chart">
                                             <AllJobSummary
@@ -639,7 +639,7 @@ const Summary = (props) => {
                                                 data={speedGraphData}
                                                 labels={speedGraphLabels}
                                                 Icon={StrokeIcon}
-                                                scoreType="View by User" />
+                                                scoreType="Scoresby User" />
 
                                             <AllJobSummary
                                                 title="Active Score"
@@ -647,7 +647,7 @@ const Summary = (props) => {
                                                 data={activeGraphData}
                                                 labels={activeGraphLabels}
                                                 Icon={SettingIcon}
-                                                scoreType="View by User" />
+                                                scoreType="Scores by User" />
                                         </div>
                                     </>
                         }

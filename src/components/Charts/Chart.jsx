@@ -94,12 +94,12 @@ const Chart = props => {
         <Typography className="desc">
           {props.desc}
         </Typography>
-        <FormButton
+{/*        <FormButton
           className="viewBtn"
           id="viewButton"
           title={"View " + props.title}
           changeStyleClass="ViewScoreSm"
-        />
+        />*/}
       </div>
       <article className="canvas-container">
         <Line

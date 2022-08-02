@@ -92,14 +92,14 @@ const Barchart = props => {
         {props.title}
       </h3>
       <div className="description">
-        <Typography>
+        <Typography className="desc">
           {props.desc}
         </Typography>
-        <FormButton
+{/*        <FormButton
           id="viewButton"
           title={"View " + props.title}
           changeStyleClass="ViewScoreSm"
-        />
+        />*/}
       </div>
       <article className="canvas-container">
         <Bar

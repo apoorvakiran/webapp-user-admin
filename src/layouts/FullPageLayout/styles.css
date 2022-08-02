@@ -27,6 +27,12 @@
   .ant-result-extra {
   background-color: #ffffff !important;
 }
+.ant-menu-inline {
+ border-right: none !important;
+}
+.ant-menu-inline > .ant-menu-item {
+  height: 25px !important;
+}
 .sider-heading {
   position: absolute;
   font-family: "Montserrat";

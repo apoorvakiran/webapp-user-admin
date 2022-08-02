@@ -317,6 +317,9 @@ input[type="search"] {
     width:  100%;
     display: block;
     padding:  10px 0px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #535353;
 }
 .scoreBoard .cardIcon {
     display:  block;
@@ -334,6 +337,7 @@ input[type="search"] {
 .timeSelect .MuiPaper-root {
     border-radius: 0px;
     box-shadow: none;
+    color: #C54B30;
 }
 
 .timeSelect .MuiGrid-item {
@@ -343,3 +347,19 @@ input[type="search"] {
 .timeSelect .MuiGrid-item:first-of-type {
     border-left: none;
 }
+
+.viewSelect {
+    border-radius: 100px;
+    overflow: hidden;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05)) drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
+    margin-bottom: 10px !important;
+    margin-top: 25px !important;
+    color: #535353 !important;
+}
+.viewSelect .MuiTypography-root {
+    font-size:  14px;
+    font-weight: bold;
+}
+.viewSelect p {
+/*    color: rgb(197, 75, 48);
+*/}
