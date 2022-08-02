@@ -25,6 +25,10 @@
   grid-template-columns: 11rem auto;
 }
 
+.ant-layout {
+  background: none;
+}
+
 .ant-layout-sider {
   background: #fcfcfc !important;
 }
@@ -34,7 +38,7 @@
 }
 
 .ant-card {
-  border-radius: 25px !important;
+  border-radius: 20px !important;
 }
 
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
@@ -103,7 +107,6 @@ thead[class*="ant-table-thead"] th {
 }
 
 .ant-typography {
-  width: 60%;
 }
 
 .ant-card-head-wrapper {

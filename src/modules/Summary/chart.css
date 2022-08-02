@@ -26,7 +26,15 @@
 }
 
 .desc {
-  width: 60%;
+  font-size: 12px;
+  display: block;
+  height: 82px;
+}
+
+@media (max-width: 425px) {
+  .desc {
+    height: auto;
+  }
 }
 
 .viewBtn {

@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    clear: both;
 }
 
 .gridData {
@@ -21,7 +22,7 @@
 
 @media (max-width: 1200px) {
     .dashboard {
-        width: 99%;
+        width: 100%;
     }
 }
 
@@ -132,43 +133,44 @@
 
 .innerCardTitle0 {
     text-transform: uppercase !important;
-    font-size: 15px !important;
+    font-size: 12px !important;
     font-weight: 900 !important;
 }
 
 .innerCardTitle1 {
     text-transform: uppercase !important;
-    font-size: 15px !important;
+    font-size: 12px !important;
     font-weight: 900 !important;
 }
 
 .innerCardTitle12 {
     text-transform: uppercase !important;
-    font-size: 15px !important;
+    font-size: 12px !important;
     font-weight: 900 !important;
     color: #C54B30;
 }
 
 .innerCardTitle2 {
     text-transform: uppercase !important;
-    font-size: 15px !important;
+    font-size: 12px !important;
     font-weight: 900 !important;
 }
 
 .innerCardTitle3 {
     text-transform: uppercase !important;
-    font-size: 15px !important;
+    font-size: 12px !important;
     font-weight: 900 !important;
 }
 
 .innerCardTitle4 {
     text-transform: uppercase !important;
-    font-size: 15px !important;
+    font-size: 12px !important;
     font-weight: 900 !important;
 }
 
 .ant-card-head-title {
     font-weight: 900;
+    padding: 12px 0px !important;
 }
 
 .childCard {
@@ -180,8 +182,6 @@
 .chart {
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .gridStyle {
@@ -225,6 +225,10 @@
     border-radius: 50px;
     font-weight: 700 !important;
     max-height: 100px;
+}
+.selectJob {
+    float: right;
+    display: inline-block;
 }
 
 input[type="search"] {
@@ -290,10 +294,6 @@ input[type="search"] {
 
 }
 
-.css-1hsy9qq-MuiPaper-root {
-    box-shadow: 0px 10px 30px rgb(0 0 0 / 10%) !important;
-}
-
 .css-1eqh0au-MuiGrid-root {
     cursor: pointer !important;
 }
@@ -308,3 +308,58 @@ input[type="search"] {
     text-align: center;
     cursor: pointer;
 }
+.scoreBoard {
+    margin-bottom: 10px;
+    width:  100%;
+    padding: 10px auto;
+}
+.scoreboardTitle {
+    width:  100%;
+    display: block;
+    padding:  10px 0px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #535353;
+}
+.scoreBoard .cardIcon {
+    display:  block;
+    margin: 0 auto 5px;
+    height: 20px;
+}
+
+.timeSelect {
+    border-radius: 100px;
+    overflow: hidden;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05)) drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
+    margin-bottom:  10px;
+}
+
+.timeSelect .MuiPaper-root {
+    border-radius: 0px;
+    box-shadow: none;
+    color: #C54B30;
+}
+
+.timeSelect .MuiGrid-item {
+    border-left: 1px solid #f0f0f0;
+}
+
+.timeSelect .MuiGrid-item:first-of-type {
+    border-left: none;
+}
+
+.viewSelect {
+    border-radius: 100px;
+    overflow: hidden;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05)) drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
+    margin-bottom: 10px !important;
+    margin-top: 25px !important;
+    color: #535353 !important;
+}
+.viewSelect .MuiTypography-root {
+    font-size:  14px;
+    font-weight: bold;
+}
+.viewSelect p {
+/*    color: rgb(197, 75, 48);
+*/}

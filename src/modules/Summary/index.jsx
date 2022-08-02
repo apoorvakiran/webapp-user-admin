@@ -36,7 +36,7 @@ const Summary = (props) => {
     const [jobTeamList, setJobTeamList] = useState([]);
     const [selectedJobTitle, setSelectedJobTitle] = useState('0');
     const [dataType, setDataType] = useState('Day');
-    const [scoreType = "View by User", setScoreType] = useState();
+    const [scoreType = "Scores by User", setScoreType] = useState();
 
     async function getActiveScores(value) {
 
@@ -129,7 +129,7 @@ const Summary = (props) => {
         if (selectedJobTitle !== "" && selectedJobTitle !== "0") {
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
             // console.log("scoreType:::::", scoreType);
-            if (scoreType === "View by User") {
+            if (scoreType === "Scores by User") {
                 getUserCardData(jobId, value);
                 getUserSafetyScoreData(jobId, value);
                 getUserRiskScoreData(jobId, value);
@@ -171,7 +171,7 @@ const Summary = (props) => {
         if (val !== "0") {
             setSelectedJobTitle(`${jobTitleList.filter(data => data.id === value)[0].name}`);
             // getJobUserList(`${value}`);
-            if (scoreType === "View by User") {
+            if (scoreType === "Scores by User") {
                 getUserCardData(`${value}`, dataType);
                 getUserSafetyScoreData(`${value}`, dataType);
                 getUserRiskScoreData(`${value}`, dataType);
@@ -280,7 +280,7 @@ const Summary = (props) => {
     const handleScoreCard = async type => {
         setScoreType(() => type)
         // console.log("type", type)
-        if (type === "View by Time") {
+        if (type === "Scores by Time") {
             // console.log("scoreType", type)
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
             getJobWiseSummaryGraph(jobId, dataType)
@@ -409,7 +409,7 @@ const Summary = (props) => {
     }
 
     return (
-        <BasicLayout pageTitle={"Summary"}>
+        <BasicLayout >
             {loading ? (
                 <Skeleton
                     style={{ position: "absolute", zIndex: "99" }}
@@ -417,19 +417,19 @@ const Summary = (props) => {
                     active
                 />
             ) : (
-                <Card style={{ marginLeft: 10 }}>
-                    <div style={{ marginBottom: 2 }}>Tampa, Florida</div>
-                    <div className="user-score" style={{ marginBottom: 20 }}>Dashboard</div>
-                    <Select defaultValue="All Jobs" className="selectStyle" style={{ width: "200px", marginBottom: "20px" }}
-                        onChange={handleChange} >
-                        <Select.Option value={0}> All Jobs </Select.Option>
-                        {jobTitleList.map((row, index) => (
-                            <Select.Option value={row.id}>{row.name} </Select.Option>
-                        ))}
-                    </Select>
+                <Card className="summaryWrappper">
+                    <div>
+                        <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
+                        <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px", marginBottom: "20px" }}
+                            onChange={handleChange} >
+                            <Select.Option value={0}> All Jobs </Select.Option>
+                            {jobTitleList.map((row, index) => (
+                                <Select.Option value={row.id}>{row.name} </Select.Option>
+                            ))}
+                        </Select>
+                    </div>
                     <div className="dashboard">
-                        {/* <h1 className="dashboardTitle">Dashboard</h1> */}
-                        <Grid container spacing={0.2}>
+                        <Grid container className="timeSelect">
                             {DashboardData.map((data, index) => {
                                 return (
                                     <Grid
@@ -455,21 +455,29 @@ const Summary = (props) => {
                                 );
                             })}
                         </Grid>
-                        <Card className="childCard">
-                            {
-                                selectedJobTitle !== "" & selectedJobTitle !== "0" ?
-                                    <Meta style={{ margin: "10px" }} title={
-                                        <span style={{ fontWeight: "700", color: "#535353" }}>{selectedJobTitle}</span>
-                                    } /> : ""
-                            }
+
+                        <Card className="scoreBoard childCard">
+
+                            <div className="scoreboardTitle">
+                                {
+                                    selectedJobTitle !== "" & selectedJobTitle !== "0" ?
+                                        <span>
+                                            {selectedJobTitle}&nbsp;
+                                        </span> : ""
+                                }
+
+                                <span>Scoreboard</span>
+                            </div>
 
                             {scores.map((row, index) => (
                                 <Card.Grid hoverable={false} className="gridStyle">
                                     <Typography className={"innerCardUpperTitle" + index}>
-                                        <span>
-                                            <img src={getIcon(row?.type)} className="cardIcon" style={cardIconStyle} />
-                                        </span>
+
+                                        <div>
+                                            <img src={getIcon(row?.type)} className="cardIcon" />
+                                        </div>
                                         {row.type !== "Risk" ? row.type : "Risk Frequency"}
+
                                     </Typography>
 
                                     <Typography className="innerCardValue">{row.type !== "Active" ? row.value : round(row.value * 100 / 1.0) + "%"}</Typography>
@@ -480,10 +488,10 @@ const Summary = (props) => {
                             ))}
                             <Card.Grid hoverable={false} className="gridStyle userCard">
                                 <Typography className="innerCardTitle">
-                                    <span>
-                                        <img src={UserIcon} />
-                                    </span>
-                                    &nbsp; USERS
+                                    <div>
+                                        <img src={UserIcon} className="cardIcon" />
+                                    </div>
+                                    <span>USERS</span>
                                 </Typography>
 
                                 <Typography className="innerCardValue">{userCount}</Typography>
@@ -535,11 +543,11 @@ const Summary = (props) => {
                                     </div>
                                 </>
                                 :
-                                (scoreType === "View by Time")
+                                (scoreType === "Scores by Time")
                                     ?
-                                    // view by Time
+                                    // scores by Time
                                     <>
-                                        <Card className="childCard">
+                                        <Card className="childCard viewSelect">
                                             {ViewBy.map((row, index) => (
                                                 <Card.Grid
                                                     hoverable={false}
@@ -593,9 +601,9 @@ const Summary = (props) => {
                                         </div>
                                     </>
                                     :
-                                    // view by User
+                                    // scores by User
                                     <>
-                                        <Card className="childCard">
+                                        <Card className="childCard viewSelect">
                                             {ViewBy.map((row, index) => (
                                                 <Card.Grid
                                                     hoverable={false}
@@ -619,7 +627,7 @@ const Summary = (props) => {
                                                 data={safetyGraphData}
                                                 labels={safetyGraphLabels}
                                                 Icon={Vector2Icon}
-                                                scoreType="View by User" />
+                                                scoreType="Scores by User" />
 
                                             <AllJobSummary
                                                 title="Risk Frequency Score"
@@ -627,7 +635,7 @@ const Summary = (props) => {
                                                 data={riskGraphData}
                                                 labels={riskGraphLabels}
                                                 Icon={PolygonIcon}
-                                                scoreType="View by User" />
+                                                scoreType="Scores by User" />
                                         </div>
                                         <div className="chart">
                                             <AllJobSummary
@@ -636,7 +644,7 @@ const Summary = (props) => {
                                                 data={speedGraphData}
                                                 labels={speedGraphLabels}
                                                 Icon={StrokeIcon}
-                                                scoreType="View by User" />
+                                                scoreType="Scores by User" />
 
                                             <AllJobSummary
                                                 title="Active Score"
@@ -644,7 +652,7 @@ const Summary = (props) => {
                                                 data={activeGraphData}
                                                 labels={activeGraphLabels}
                                                 Icon={SettingIcon}
-                                                scoreType="View by User" />
+                                                scoreType="Scores by User" />
                                         </div>
                                     </>
                         }

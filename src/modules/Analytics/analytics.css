@@ -50,6 +50,7 @@
   font-size: 22px;
   line-height: 29px;
   color: #535353;
+  display:  inline-block;
 }
 
 .speed-score-average {
