@@ -16,13 +16,13 @@ const UserProgressScore = (props) => {
         setScores(props.userScore);
 
         if (props.scoreName === "Injury Risk Score") {
-            setAvgSafetyScore(sumBy(scores, 'user_score') / props.userScore.length);
+            setAvgSafetyScore(props.totalAvgScore);
         } else if (props.scoreName === "Speed Score") {
-            setAvgSpeedScore(sumBy(scores, 'user_score') / props.userScore.length);
+            setAvgSpeedScore(props.totalAvgScore);
         } else if (props.scoreName === "Risk Frequency Score") {
-            setAvgRiskScore(sumBy(scores, 'user_score') / props.userScore.length);
+            setAvgRiskScore(props.totalAvgScore);
         } else if (props.scoreName === "Active Score") {
-            setAvgActiveScore(sumBy(scores, 'user_score') / props.userScore.length);
+            setAvgActiveScore(props.totalAvgScore);
         }
 
     }, [props])
@@ -46,7 +46,7 @@ const UserProgressScore = (props) => {
 
     function calcAverage() {
 
-        // console.log("avgSafetyScore", avgSafetyScore);
+        // console.log("props.scoreName", avgActiveScore);
         if (props.scoreName === "Injury Risk Score") {
             return 33 + 67 * avgSafetyScore / 7 + "%";
         } else if (props.scoreName === "Speed Score") {

@@ -1,5 +1,5 @@
 import { Grid, Paper, styled, Typography } from "@mui/material";
-import { Card, Skeleton, Space, Radio, Row, Col } from "antd";
+import { Card, Skeleton, Space, Radio, Row, Col, Progress } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../../layouts/BasicLayout";
 import axios from "axios";
@@ -15,11 +15,14 @@ import ProgressBar from "./ProgressBar";
 import ScoreFilter from "./ScoreFilter";
 import { getSpeedScoreColor } from "../../../utils/helpers";
 import routes from "../../../features/Routes/URLs";
-import { baseUrl, ScoresTabData } from "../../../utils/Data/Data";
+import { baseUrl, DashboardData, formatDate, getCurrIcon, Item, ScoresTabData } from "../../../utils/Data/Data";
 import CurrActiveIcon from "../../../images/activity-score-icon-white.png";
 import CurrSafetyIcon from "../../../images/safety-score-icon-white.png";
 import CurrSpeedIcon from "../../../images/speed-icon-white.png";
 import CurrRiskIcon from "../../../images/risk-icon-white.png";
+import ScoreDetails from "../ActiveScore/ScoreDetails";
+import { round, sumBy } from "lodash";
+import HeaderCard from "../ActiveScore/HeaderCard";
 
 const RiskScore = props => {
   const location = useLocation();
@@ -34,10 +37,15 @@ const RiskScore = props => {
   const [aggScore, setAggScore] = useState();
 
   const getSpeedScore = async value => {
+    const current = new Date();
+    const date = formatDate(current);
     const request = await axios.get(
+      // "http://localhost:5051/api/user-admin/get-speed-scores", {
       baseUrl + "scores", {
       params: {
         type: "get-speed-scores",
+        durationType: value,
+        startdate: date,
       }
     }
     );
@@ -48,24 +56,13 @@ const RiskScore = props => {
     return request?.data;
   };
   useEffect(() => {
-    getSpeedScore();
+    getSpeedScore("Day");
   }, []);
 
   const onGridSelection = value => {
     setTabChanged(true);
     setActiveTab(value);
-    switch (value) {
-      case "Active Score":
-        return props.history.push(routes.ANALYTICS_ACTIVE_SCORE);
-      case "Safety Score":
-        return props.history.push(routes.ANALYTICS_SAFETY_SCORE);
-      case "Speed Score":
-        return props.history?.push(routes.ANALYTICS_SPEED_SCORE);
-      case "Risk Exposure":
-        return props.history?.push(routes.ANALYTICS_RISK_SCORE);
-      default:
-        return props.history?.push(routes.ANALYTICS_SAFETY_SCORE);
-    }
+    getSpeedScore(value);
   };
   const getIcon = icon => {
     switch (icon) {
@@ -76,13 +73,13 @@ const RiskScore = props => {
           return SettingIcon;
         }
 
-      case "Safety Score":
+      case "Injury Risk Score":
         if (props.history.location.pathname === "/user-admin/analytics/safety-score") {
           return CurrSafetyIcon;
         } else {
           return Vector2Icon;
         }
-      case "Risk Exposure":
+      case "Risk Frequency":
         if (props.history.location.pathname === "/user-admin/analytics/risk-score") {
           return CurrRiskIcon;
         } else {
@@ -100,28 +97,28 @@ const RiskScore = props => {
   };
   let scores = [
     {
-      type: "Safety Score",
+      type: "Injury Risk Score",
     },
     {
-      type: "Active Score",
-    },
-    {
-      type: "Risk Exposure",
+      type: "Risk Frequency",
     },
     {
       type: "Speed Score",
     },
+    {
+      type: "Active Score",
+    }
   ];
   const handleScoreCard = type => {
     setScoreType(type);
     switch (type) {
       case "Active Score":
         return props?.history?.push(routes.ANALYTICS_ACTIVE_SCORE);
-      case "Safety Score":
+      case "Injury Risk Score":
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
       case "Speed Score":
         return props?.history?.push(routes.ANALYTICS_SPEED_SCORE);
-      case "Risk Exposure":
+      case "Risk Frequency":
         return props?.history?.push(routes.ANALYTICS_RISK_SCORE);
       default:
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
@@ -136,6 +133,31 @@ const RiskScore = props => {
       return "#C54B30";
     }
   };
+
+  const strokeColor = {
+    '0%': '#FFD705',
+    '100%': '#45CF03',
+  }
+
+  function calcAverage() {
+    // console.log("props.scoreName", avgActiveScore);
+    const avgSpeedScore = sumBy(speedScoreData, data => Number(data.speedscore)) / speedScoreData.length;
+    return 33 + 67 * avgSpeedScore / 7 + "%";
+
+
+  }
+
+  const averageLine = {
+    "width": "4px",
+    "background-color": "transparent",
+    "position": "absolute",
+    "top": "55px",
+    "padding-left": calcAverage(),
+    "bottom": "0",
+    "border-right": "1.5px solid #727272",
+    "z-index": "99",
+  }
+
   const handleFilterChange = value => {
     const filterSpeedScoreData = speedScoreData;
     if (value === "low") {
@@ -148,7 +170,7 @@ const RiskScore = props => {
       );
     } else {
       filterSpeedScoreData.sort((a, b) =>
-        parseFloat(a.speedScore) < parseFloat(b.speedscore)
+        parseFloat(a.speedscore) < parseFloat(b.speedscore)
           ? 1
           : parseFloat(b.speedscore) < parseFloat(a.speedscore)
             ? -1
@@ -172,7 +194,7 @@ const RiskScore = props => {
             {scores.map((row, index) => (
               <Card.Grid
                 hoverable={false}
-                className="risk-score-gridStyle gridStyle"
+                className="risk-score-gridStyle"
                 onClick={() => handleScoreCard(row.type)}
                 style={{
                   background: scoreType === row.type ? "#C54B30" : "unset",
@@ -188,8 +210,8 @@ const RiskScore = props => {
               </Card.Grid>
             ))}
           </Card>
-          <div hoverable={true} className="risk-info">
-            <div className="risk-info-sub-1">
+          {/* <div hoverable={true} className="risk-info"> */}
+          {/* <div className="risk-info-sub-1">
               <Typography
                 className="risk-card"
                 style={{ color: "#535353" }}
@@ -220,12 +242,12 @@ const RiskScore = props => {
                 marginRight: "2em",
                 height: "70px",
               }}
-            ></div>
-            <div className="risk-info-sub-2">
+            ></div> */}
+          {/* <div className="risk-info-sub-2">
               <Typography className="innerCardTitle">
                 <span>
                   <img
-                    src={getIcon("Risk Exposure")}
+                    src={getCurrIcon("Speed Score")}
                     style={RiskcardIconStyle}
                   />
                 </span>
@@ -245,29 +267,65 @@ const RiskScore = props => {
                 the hand and wrist are moving.
               </Typography>
             </div>
+          </div> */}
+          <ScoreDetails detailsText="Speed Score" score={speedScoreCount} />
+          <Grid
+            container
+            spacing={0}
+            style={{ marginTop: "15px", marginBottom: "25px" }}
+          >
+            {DashboardData.map((data, index) => {
+              return (
+                <Grid
+                  key={index}
+                  item
+                  xs={3}
+                  onClick={() => {
+                    setSelected(index);
+                  }}
+                >
+                  <Item
+                    className={
+                      selected === index ? "gridData activeGrid" : "gridData"
+                    }
+                    onClick={e => {
+                      e.preventDefault();
+                      onGridSelection(data);
+                    }}
+                  >
+                    {data}
+                  </Item>
+                </Grid>
+              );
+            })}
+          </Grid>
+          <div className='progressContainer-1'>
+            {/* <ScoreFilter handleChange={handleFilterChange} /> */}
+            <HeaderCard maxValue={7} minValue={0} handleChange={handleFilterChange} />
+            <div style={averageLine}></div>
+            {speedScoreData?.map(progress => (
+              <div style={{ margin: "15px 0px" }}>
+                <Row gutter={24}>
+                  <Col span={8}>
+                    <Typography style={{ color: "#C54B30", fontSize: "15px" }}>
+                      {`${progress?.first_name} ${progress?.last_name}`}
+                    </Typography>
+                  </Col>
+                  <Col span={16}>
+                    {/* <ProgressBar
+                      format={percent => `${progress.speedscore}`}
+                      percent={round((parseInt(progress.speedscore) / 7) * 100)}
+                      strokeColor={getSpeedScoreColor(
+                        parseInt(progress.speedscore),
+                      )}
+                      strokeWidth={25}
+                    /> */}
+                    <Progress format={percent => `${progress.speedscore}`} showInfo={true} strokeWidth={30} percent={round((parseFloat(progress.speedscore) / 7) * 100)} strokeColor={strokeColor} />
+                  </Col>
+                </Row>
+              </div>
+            ))}
           </div>
-          <ScoreFilter handleChange={handleFilterChange} />
-          <div className="average-line"></div>
-          {speedScoreData?.map(progress => (
-            <div style={{ margin: "15px 0px" }}>
-              <Row gutter={24}>
-                <Col span={8}>
-                  <Typography style={{ color: "#C54B30", fontSize: "15px" }}>
-                    {`${progress?.first_name} ${progress?.last_name}`}
-                  </Typography>
-                </Col>
-                <Col span={16}>
-                  <ProgressBar
-                    percent={progress.speedscore}
-                    strokeColor={getSpeedScoreColor(
-                      parseInt(progress.speedscore),
-                    )}
-                    strokeWidth={25}
-                  />
-                </Col>
-              </Row>
-            </div>
-          ))}
         </Card>
       )}
     </BasicLayout>

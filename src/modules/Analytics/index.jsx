@@ -10,19 +10,19 @@ import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
 
 const AalyticsMain = props => {
-  const [scoreType, setScoreType] = useState("Safety Score");
+  const [scoreType, setScoreType] = useState("Injury Risk Score");
   const scores = [
     {
       type: "Active Score",
     },
     {
-      type: "Safety Score",
+      type: "Injury Risk Score",
     },
     {
       type: "Speed Score",
     },
     {
-      type: "Risk Exposure",
+      type: "Risk Frequency",
     },
   ];
   const handleScoreCard = type => {
@@ -34,7 +34,7 @@ const AalyticsMain = props => {
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
       case "Speed Score":
         return props?.history?.push(routes.ANALYTICS_SPEED_SCORE);
-      case "Risk Exposure":
+      case "Risk Frequency":
         return props?.history?.push(routes.ANALYTICS_RISK_SCORE);
       default:
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
@@ -45,11 +45,11 @@ const AalyticsMain = props => {
     switch (icon) {
       case "Active Score":
         return SettingIcon;
-      case "Safety Score":
+      case "Injury Risk Score":
         return Vector2Icon;
       case "Speed Score":
         return StrokeIcon;
-      case "Risk Exposure":
+      case "Risk Frequency":
         return PolygonIcon;
       default:
         return SettingIcon;

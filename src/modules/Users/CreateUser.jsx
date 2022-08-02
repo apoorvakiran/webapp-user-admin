@@ -242,7 +242,8 @@ const CreateUser = (props) => {
                   },
                 ]}
               >
-                <Select placeholder="Select Job Title" className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
+                <Select placeholder="Select Job Title" defaultValue={0} className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
+                  <Select.Option value={0}>None</Select.Option>
                   {jobTitleList.map((row, index) => (
                     <Select.Option value={row.id}>{row.name} </Select.Option>
                   ))}

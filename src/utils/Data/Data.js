@@ -3,8 +3,35 @@ import {
     UilMoneyWithdrawal,
     UilClipboardAlt
 } from "@iconscout/react-unicons";
+import SettingIcon from "../../images/setting.png";
+import PolygonIcon from "../../images/risk-icon.svg";
+import StrokeIcon from "../../images/Stroke.png";
+import Vector2Icon from "../../images/Vector2.png";
+import { Paper, styled } from "@mui/material";
 
 export const baseUrl = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/';
+
+export const getCurrIcon = icon => {
+    switch (icon) {
+        case "Active Score":
+            return SettingIcon;
+        case "Injury Risk Score":
+            return Vector2Icon;
+        case "Risk Frequency":
+            return PolygonIcon;
+        case "Speed Score":
+            return StrokeIcon;
+        default:
+            return SettingIcon;
+    }
+};
+
+export const Item = styled(Paper)(({ theme }) => ({
+    borderColor: "black",
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: "black",
+}));
 
 export const formatDate = (date) => {
     let d = new Date(date);
@@ -51,13 +78,28 @@ export const getColor = icon => {
 
 export const DashboardData = ['Day', 'Week', 'Month', 'Year']
 
-export const ScoresTabData = ['Safety Score', 'Active Score', 'Risk Exposure', 'Speed Score']
+export const ScoresTabData = ['Injury Risk Score', 'Risk Frequency', 'Speed Score', 'Active Score']
 export const ViewBy = ['View by User', 'View by Time']
 
-export const ActiveScoreDesc = "A metric of productivity measured by the ratio measured in percentage of intense active motion vs mild active motion. Value ranges from 0.0 to 1.0. It is an indicator of individual productivity and engagement.";
+export const ActiveScoreDesc = "A metric of productivity measured by the ratio measured in percentage of intense active motion vs mild active motion. Value ranges from 0% to 100%. It is an indicator of individual productivity and engagement.";
 export const SafetyScoreDesc = "Measures the risk of injury due to poor ergonomic motion. Value ranges from 0 to 7. The higher the number, the higher the risk of injury. The dominant motion (pitch, yaw, roll) used in this index is speed of pitch. It is a measure of force on the hand and wrist.";
 export const SpeedScoreDesc = "Measures the speed (and force) on the hand and wrist. Value ranges from 0 to 7. The higher the number, the higher the force. The speed score takes into account maximum values among pitch, yaw and roll for each sample. It is a measure of how fast the hand and wrist are moving.";
 export const RiskScoreDesc = "A count of the number of times the Risk Index exceeds a safe value during a 2.5 hour period of time. Value ranges from 0 to 10. The higher the number, the higher the risk of injury. The maximum value is capped at 10.";
+
+export const getDescription = activeTab => {
+    switch (activeTab) {
+        case "Active Score":
+            return "A metric of productivity measured by the ratio measured in percentage of intense active motion vs mild active motion. Value ranges from 0% to 100%. It is an indicator of individual productivity and engagement.";
+        case "Injury Risk Score":
+            return "Measures the risk of injury due to poor ergonomic motion. Value ranges from 0 to 7. The higher the number, the higher the risk of injury. The dominant motion (pitch, yaw, roll) used in this index is speed of pitch. It is a measure of force on the hand and wrist.";
+        case "Risk Frequency":
+            return "A count of the number of times the Risk Index exceeds a safe value during a 2.5 hour period of time. Value ranges from 0 to 10. The higher the number, the higher the risk of injury. The maximum value is capped at 10.";
+        case "Speed Score":
+            return "Measures the speed (and force) on the hand and wrist. Value ranges from 0 to 7. The higher the number, the higher the force. The speed score takes into account maximum values among pitch, yaw and roll for each sample. It is a measure of how fast the hand and wrist are moving. ";
+        default:
+            return "A metric of productivity measured by the ratio measured in percentage of intense active motion vs mild active motion. Value ranges from 0% to 100%. It is an indicator of individual productivity and engagement.";
+    }
+};
 
 export const ProgressBarChart = [
 

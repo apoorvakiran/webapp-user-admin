@@ -19,9 +19,9 @@ const HeaderCard = props => {
                 </Select>
             </div>
             <div className="speed-score-average">
-                <Typography style={{ width: "33%" }}>{props.minValue}</Typography>
-                <Typography style={{ width: "34%", textAlign: "center" }}>{"Average"}</Typography>
-                <Typography style={{ width: "33%", textAlign: "end" }}>{props.maxValue}</Typography>
+                <Typography style={{ width: "33%", color: "#00CF15", fontWeight: "700" }}>{props.minValue}</Typography>
+                <Typography style={{ width: "34%", textAlign: "center", color: "#F3AF00", fontWeight: "700" }}>{"Average"}</Typography>
+                <Typography style={{ width: "33%", textAlign: "end", color: "#D10000", fontWeight: "700" }}>{props.maxValue}</Typography>
             </div>
         </div>
     );

@@ -57,7 +57,7 @@ const Chart = props => {
     tension: 0.4,
     elements: {
       point: {
-        radius: 0,
+        radius: 1,
       },
     },
     scales: {
@@ -94,12 +94,12 @@ const Chart = props => {
         <Typography className="desc">
           {props.desc}
         </Typography>
-        <FormButton
+        {/* <FormButton
           className="viewBtn"
           id="viewButton"
           title={"View " + props.title}
           changeStyleClass="ViewScoreSm"
-        />
+        /> */}
       </div>
       <article className="canvas-container">
         <Line
@@ -110,11 +110,11 @@ const Chart = props => {
           options={options}
         />
       </article>
-      <FormButton
+      {/* <FormButton
         id="viewButton"
         title={"View " + props.title}
         changeStyleClass="ViewScore"
-      />
+      /> */}
     </div>
   );
 };

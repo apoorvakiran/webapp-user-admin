@@ -94,6 +94,7 @@ export const RiskcardIconStyle = {
   // width: "1.5em",
   height: "1.2em",
   marginRight: "10px",
+  marginBottom: "5px"
 };
 
 

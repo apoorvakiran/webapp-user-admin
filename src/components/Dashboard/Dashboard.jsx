@@ -275,7 +275,7 @@ const Dashboard = (props) => {
                 );
               })}
             </Grid>
-            <Card className="childCard" title="LIVE">
+            <Card className="childCard">
               {
                 selectedJobTitle !== "" & selectedJobTitle !== "0" ?
                   <Meta style={{ margin: "10px" }} title={

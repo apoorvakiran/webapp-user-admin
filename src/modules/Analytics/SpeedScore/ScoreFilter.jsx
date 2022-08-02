@@ -6,8 +6,8 @@ const { Option } = Select;
 const ScoreFilter = props => {
   const { handleChange } = props;
   return (
-    <div  className="speed-score-container">
-      <div style={{width: "33%"}}>
+    <div className="speed-score-container">
+      <div style={{ width: "33%" }}>
         <Select
           defaultValue="high"
           onChange={handleChange}
@@ -18,9 +18,9 @@ const ScoreFilter = props => {
         </Select>
       </div>
       <div className="speed-score-average">
-        <Typography style={{width: "33%"}}>{1}</Typography>
-        <Typography style={{width: "34%", textAlign: "center"}}>{"Average"}</Typography>
-        <Typography style={{width: "33%", textAlign: "end"}}>{100}</Typography>
+        <Typography style={{ width: "33%" }}>{0}</Typography>
+        <Typography style={{ width: "34%", textAlign: "center" }}>{"Average"}</Typography>
+        <Typography style={{ width: "33%", textAlign: "end" }}>{7}</Typography>
       </div>
     </div>
   );
