@@ -472,7 +472,7 @@ const Summary = (props) => {
                                         {row.type !== "Risk" ? row.type : "Risk Frequency"}
                                     </Typography>
 
-                                    <Typography className="innerCardValue">{row.type !== "Active" ? row.value : round(row.value * 100 / 1.0) + "%"}</Typography>
+                                    <Typography className="innerCardValue">{row.type !== "Active" ? row.value : row.value + "%"}</Typography>
                                     <Typography className={"innerCardTitle" + index} style={{ color: getColor(row) }}>
                                         {row.color}
                                     </Typography>

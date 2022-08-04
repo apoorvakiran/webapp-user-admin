@@ -185,7 +185,8 @@ const EditUser = () => {
 
   function deleteUser() {
     const data = {
-      'user_id': location.state.id,
+      // 'user_id': location.state.id,
+      'email': location.state.email
     };
 
     const config = {
@@ -197,7 +198,7 @@ const EditUser = () => {
       // mode: 'no-cors',
       body: JSON.stringify(data),
     }
-    const url = baseUrl + 'user?type=user-deactivate'
+    const url = baseUrl + 'admin?type=disable-user'
     fetch(url, config).
       then(response => { console.log('response', response.status); })
       .then(data => {
