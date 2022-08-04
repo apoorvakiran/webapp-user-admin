@@ -116,12 +116,22 @@ const CreateUser = (props) => {
         body: JSON.stringify(attributeVal),
       }
 
+      let responseCode = null;
       const url = baseUrl + "admin?type=create-user"
       await fetch(url, config).
         then(response => {
-          if (response.status === 200) {
+          responseCode = response.status;
+          return response.json()
+        })
+        .then(data => {
+          if (responseCode === 200) {
             openNotificationWithIcon("success", "Success", `User ${values.firstName} successfully created`);
             props.history.goBack();
+          }
+          if (responseCode === 400) {
+            if (data.includes("UsernameExistsException")) {
+              openNotificationWithIcon("error", "Error", "User account already exists");
+            }
           }
         })
         .catch((error) => {

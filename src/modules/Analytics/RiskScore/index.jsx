@@ -224,7 +224,7 @@ const RiskScore = props => {
                 }}
               >
                 A count of the number of times the Risk Index exceeds a safe
-                value during a 2.5 hour period of time. Value ranges from 0 to
+                value. Value ranges from 0 to
                 10. The higher the number, the higher the risk of injury. The
                 maximum value is capped at 10.
               </Typography>
