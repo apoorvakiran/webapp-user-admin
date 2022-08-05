@@ -34,11 +34,15 @@ const canTailFormItemLayout = {
   wrapperCol: {
     xs: {
       span: 24,
-      offset: 11,
+      offset: 18,
     },
     sm: {
-      span: 24,
-      offset: 12,
+      span: 18,
+      offset: 8,
+    },
+    md: {
+      span: 18,
+      offset: 10,
     },
   },
 }
@@ -46,9 +50,17 @@ const tailFormItemLayout = {
   wrapperCol: {
     xs: {
       span: 24,
-      offset: 11,
+      offset: 0,
+    },
+    md: {
+      span: 18,
+      offset: 0,
     },
     sm: {
+      span: 24,
+      offset: 8,
+    },
+    lg: {
       span: 24,
       offset: 8,
     },
@@ -292,7 +304,7 @@ const CreateUser = (props) => {
               <Form.Item {...tailFormItemLayout} style={{ marginTop: "25px", justifyContent: "center" }}>
                 <Button
                   style={createUserButton}
-                  className="create-user"
+                  className="createNewUserBtn"
                   htmlType="submit"
                   shape="round"
                 >

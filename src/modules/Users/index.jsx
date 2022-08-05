@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Radio, Skeleton } from "antd";
 import Table from "../../components/Table/index";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
-import { newCreateUserButton, editUserButton, cardStyle } from "./style";
+import { editUserButton, cardStyle } from "./style";
 import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
 import axios from "axios";
 import { type } from "@testing-library/user-event/dist/type";
 import { baseUrl } from "../../utils/Data/Data";
+import "./user.css";
 
 const Users = props => {
   const [loading, setLoading] = useState(true);
@@ -247,9 +248,9 @@ const Users = props => {
         <Card>
           <Button
             shape="round"
-            style={newCreateUserButton}
             onClick={CreateNewUser}
             icon={<PlusOutlined />}
+            className="createNewButton"
           >
             Create New Users
           </Button>

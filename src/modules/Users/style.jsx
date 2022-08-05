@@ -11,18 +11,6 @@ export const invertCreateUserButton = {
   height: "42px"
 };
 
-export const newCreateUserButton = {
-  color: "#C54B30",
-  fontWeight: "700",
-  fontFamily: "Montserrat",
-  fontStyle: "normal",
-  background: "#FFFFFF",
-  boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)",
-  width: "25%",
-  height: "42px",
-  marginBottom: "25px"
-};
-
 export const grayUserButton = {
   color: "#FFFFFF",
   fontWeight: "700",

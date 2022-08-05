@@ -134,10 +134,11 @@ const Jobs = props => {
                 <Card>
                     <div className="user-score" style={{ marginBottom: 20 }}>Job Types</div>
                     <Button
+                        className="createNewButton"
                         shape="round"
-                        style={newCreateUserButton}
                         onClick={CreateNewJob}
-                        icon={<PlusOutlined />}
+                        icon={<PlusOutlined
+                        />}
                     >
                         Create New Job
                     </Button>
