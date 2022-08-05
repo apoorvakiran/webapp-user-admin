@@ -37,8 +37,8 @@ const formItemLayout = {
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
-      span: 24,
-      offset: 11,
+      span: 16,
+      offset: 4,
     },
     sm: {
       span: 24,
@@ -51,7 +51,7 @@ const canTailFormItemLayout = {
   wrapperCol: {
     xs: {
       span: 24,
-      offset: 11,
+      offset: 14,
     },
     sm: {
       span: 24,
@@ -364,7 +364,7 @@ const EditUser = () => {
               Delete
             </Button>
           </Form.Item>
-          <Form.Item {...canTailFormItemLayout} style={{ fontSize: 14, justifyContent: "center" }}>
+          <Form.Item {...canTailFormItemLayout} style={{ fontSize: 14, justifyContent: "center", marginTop: "20px" }}>
             <Link className="cancel-edit" to="/user-admin/users/">
               Cancel
             </Link>

@@ -93,3 +93,51 @@
 .formSelectStyle>.ant-select-selector {
   height: 48px !important;
 }
+
+.createNewButton {
+  color: #C54B30 !important;
+  font-weight: 700 !important;
+  font-family: Montserrat;
+  font-style: normal !important;
+  background: #FFFFFF !important;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1) !important;
+  width: 25% !important;
+  height: 42px !important;
+  margin-bottom: 25px !important;
+}
+
+@media (max-width: 768px) {
+  .createNewButton {
+    margin-top: 10px;
+    width: 50% !important;
+  }
+
+  .createNewUserBtn {
+    margin-top: 10px;
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 425px) {
+  .createNewButton {
+    margin-top: 10px;
+    width: 50% !important;
+    font-size: 13px !important;
+    height: 35px !important;
+  }
+
+  .createNewUserBtn {
+    margin-top: 10px;
+    width: 100% !important;
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .createNewButton {
+    margin-top: 10px;
+    width: 60% !important;
+    font-size: 12px !important;
+    height: 35px !important;
+  }
+}
