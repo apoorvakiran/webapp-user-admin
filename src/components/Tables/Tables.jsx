@@ -60,7 +60,7 @@ export default function Tables() {
                         <StyledTableCell className='mobileRender' align="left">Device</StyledTableCell>
                         <StyledTableCell className='mobileRender' align="left">MAC ID</StyledTableCell>
                         <StyledTableCell className='mobileRender' align="left">Hand</StyledTableCell>
-                        <StyledTableCell className='mobileRenderHead' align="left">Edit</StyledTableCell>
+                        <StyledTableCell className='mobileRenderHead' align="center">Edit</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

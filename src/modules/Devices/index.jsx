@@ -78,16 +78,18 @@ const Devices = props => {
         <BasicLayout>
             {loading ? (
                 <Skeleton
-                    style={{ position: "absolute", zIndex: "99" }}
+                    style={{ position: "absolute", zIndex: "99", padding: "20px" }}
                     loading
                     active
                 />
             ) : (
-                <Card>
-                    <div className="user-score" style={{ marginBottom: 20 }}>Devices</div>
-                    < div id="button" style={{ display: "none", marginBottom: 20 }}>
-                        <button className="createNewButton" style={{ borderRadius: 50, width: 250, height: 40, backgroundColor: "white", color: "#C54B30", fontWeight: 700 }}>+ Create new Device</button>
-                    </div >
+                <Card className="page-content">
+                    <div className="page-content-header">
+                        <div className="user-score">Devices</div>
+                        < div id="button" style={{ display: "none", marginBottom: 20 }}>
+                            <button className="createNewButton" style={{ borderRadius: 50, width: 250, height: 40, backgroundColor: "white", color: "#C54B30", fontWeight: 700 }}>+ Create new Device</button>
+                        </div>
+                    </div>
                     <Table data={devicesList} columns={columns} showHeader={true} />
                 </Card>
             )}

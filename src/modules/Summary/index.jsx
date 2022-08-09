@@ -412,8 +412,8 @@ const Summary = (props) => {
         <BasicLayout >
             {loading ? (
                 <Skeleton
-                    style={{ position: "absolute", zIndex: "99" }}
-                    loading
+                    style={{ position: "absolute", zIndex: "99", padding: "20px"  }}
+                    loadin
                     active
                 />
             ) : (

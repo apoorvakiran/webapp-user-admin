@@ -57,7 +57,6 @@ const Users = props => {
         onClick={EditUser}
         icon={<EditOutlined />}
       >
-        Edit
       </Button>
     );
   };
@@ -177,8 +176,9 @@ const Users = props => {
     },
     {
       title: editButton(),
-      width: "7rem",
+      width: "55px",
       fixed: "right",
+      textAlign: "center",
       render: (item, record) => {
         return (
           <div className="action-div">
@@ -240,26 +240,29 @@ const Users = props => {
     <BasicLayout>
       {loading ? (
         <Skeleton
-          style={{ position: "absolute", zIndex: "99" }}
+          style={{ position: "absolute", zIndex: "99", padding: "20px" }}
           loading
           active
         />
       ) : (
-        <Card>
-          <div className="user-score" style={{ marginBottom: 20 }}>Users</div>
-          <Button
-            shape="round"
-            onClick={CreateNewUser}
-            icon={<PlusOutlined />}
-            className="createNewButton"
-          >
-            Create New Users
-          </Button>
-
-          <Table
-            data={dataSource}
-            columns={parseInt(width) > 480 ? columns : mobileColumns}
-          />
+        <Card className="page-content">
+          <div className="page-content-header">
+            <div className="user-score">Users</div>
+            <Button
+              shape="round"
+              onClick={CreateNewUser}
+              icon={<PlusOutlined />}
+              className="createNewButton"
+            >
+              Create New User
+            </Button>
+          </div>
+          <div className="usersTable">
+            <Table
+              data={dataSource}
+              columns={parseInt(width) > 480 ? columns : mobileColumns}
+            />
+          </div>
         </Card>
       )}
     </BasicLayout>

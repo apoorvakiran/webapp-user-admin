@@ -27,6 +27,7 @@
 
 .ant-layout {
   background: none;
+  overflow: auto;
 }
 
 .ant-layout-sider {
@@ -89,6 +90,9 @@ thead[class*="ant-table-thead"] th {
 .ant-table-cell-fix-right {
   background-color: #f3f3f3 !important;
 } */
+.ant-table-cell-fix-right {
+  width: auto !important;
+}
 
 .create-user {
   padding: 0px 50px;
@@ -212,4 +216,9 @@ fieldset {
 .MuiOutlinedInput-notchedOutline {
   border-color: #535353;
   padding: 0px 86% 0px 8px !important;
+}
+
+.ant-pagination-item-active a, .ant-pagination-item-active {
+  color:  #dc4128;
+  border-color: #dc4128;
 }
