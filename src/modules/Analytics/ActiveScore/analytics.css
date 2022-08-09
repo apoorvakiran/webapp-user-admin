@@ -60,7 +60,7 @@
 }
 
 .timeSelect .MuiGrid-item {
-    border-left: 1px solid #f0f0f0;
+    border-left: 1px solid #DEDEDE;
 }
 
 .timeSelect .MuiGrid-item:first-of-type {
@@ -303,7 +303,7 @@
 
 .risk-grid {
     background: #ffffff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1),
+    box-shadow: 0px 4px 10px #DEDEDE,
         0px 4px 15px rgba(197, 75, 48, 0.2);
 }
 

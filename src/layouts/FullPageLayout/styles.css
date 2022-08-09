@@ -20,6 +20,9 @@
   font-size: 15px;
   text-transform: capitalize;
 }
+.ant-layout-has-sider {
+  padding: 20px 20px 20px 0px;
+}
 .ant-result
   .ant-result-icon
   .ant-result-title

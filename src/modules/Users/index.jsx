@@ -237,7 +237,7 @@ const Users = props => {
     });
   };
   return (
-    <BasicLayout pageTitle="Users">
+    <BasicLayout>
       {loading ? (
         <Skeleton
           style={{ position: "absolute", zIndex: "99" }}
@@ -246,6 +246,7 @@ const Users = props => {
         />
       ) : (
         <Card>
+          <div className="user-score" style={{ marginBottom: 20 }}>Users</div>
           <Button
             shape="round"
             onClick={CreateNewUser}

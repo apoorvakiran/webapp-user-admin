@@ -60,8 +60,8 @@
 }
 
 .innerCardValue {
-    font-size: 35px !important;
-    font-weight: 900 !important;
+    font-size: 30px !important;
+    font-weight: 500 !important;
     color: #535353 !important
 }
 
@@ -173,7 +173,7 @@
 .childCard {
     margin-top: 15px !important;
     text-align: center;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0px 10px 30px #DEDEDE !important;
 }
 
 .chart {

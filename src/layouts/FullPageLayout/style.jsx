@@ -29,7 +29,6 @@ const LayoutComponentStyles = {
   parentLayout: { minHeight: "100vh" },
   mainLayout: {
     height: "100vh",
-    overflow: "auto",
     width:"100%"
   },
   fixedPageHeader: {

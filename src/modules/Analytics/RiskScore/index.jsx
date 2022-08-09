@@ -154,7 +154,7 @@ const RiskScore = props => {
     <BasicLayout>
       {loading ? (
         <Skeleton
-          style={{ position: "absolute", zIndex: "99" }}
+          style={{ position: "absolute", zIndex: "99", padding: "20px" }}
           loading
           active
         />
