@@ -1,7 +1,6 @@
 export const SideMenuStyle = {
   fontSize: "14px",
   fontWeight: 500,
-  backgroundColor: "#fcfcfc",
   marginTop: "20px",
   fontFamily: 'Montserrat',
   color: "#C54B30",
