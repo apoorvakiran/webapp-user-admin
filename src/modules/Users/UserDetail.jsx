@@ -80,7 +80,6 @@ const Dashboard = props => {
     return response.data;
   };
   useEffect(() => {
-    // getUserScore("Day");
     getActiveScores("Day");
   }, []);
 
@@ -91,7 +90,6 @@ const Dashboard = props => {
     color: "black",
   }));
   const onGridSelection = async value => {
-    getUserScore(value);
     getActiveScores(value);
   };
   const getIcon = icon => {
