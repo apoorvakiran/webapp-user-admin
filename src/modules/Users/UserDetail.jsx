@@ -2,7 +2,7 @@ import { Grid, Paper, styled, Typography } from "@mui/material";
 import { Card, Skeleton, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
-import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl } from "../../utils/Data/Data";
+import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor } from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
 import axios from "axios";
 import "../../components/Dashboard/dashboard.css";
@@ -30,6 +30,7 @@ const Dashboard = props => {
   const [riskGraphLabels, setRiskGraphLabels] = useState([]);
   const [riskGraphData, setRiskGraphData] = useState([]);
   const userData = location?.state;
+
   const getUserScore = async value => {
     const request = await axios.get(
       baseUrl + "userdetail", {
@@ -45,15 +46,20 @@ const Dashboard = props => {
     return request?.data;
   };
   const getActiveScores = async value => {
+    const current = new Date();
+    const date = formatDate(current);
     const response = await axios.get(
+      // "http://localhost:5051/api/user-admin/get-user-detail", {
       baseUrl + "userdetail", {
       params: {
-        "type": "get-user-graph-score",
-        "userId": userData?.id,
-        "duration_type": value
+        "type": "get-user-detail",
+        "userId": userData.id,
+        "durationType": value,
+        "startdate": date
       }
     });
     seLoading(false);
+    setScores(response?.data?.card_data || []);
     const data = response?.data?.data;
     let activeLabels = data["activescore"]?.x || [];
     let activeData = data["activescore"]?.y || [];
@@ -74,7 +80,7 @@ const Dashboard = props => {
     return response.data;
   };
   useEffect(() => {
-    getUserScore("Day");
+    // getUserScore("Day");
     getActiveScores("Day");
   }, []);
 
@@ -92,7 +98,7 @@ const Dashboard = props => {
     switch (icon) {
       case "Active":
         return SettingIcon;
-      case "Safety":
+      case "Injury":
         return Vector2Icon;
       case "Speed":
         return StrokeIcon;
@@ -148,11 +154,11 @@ const Dashboard = props => {
             <Card
               className="childCard"
               headStyle={{ fontWeight: "700", padding: "0", marginTop: "-5px" }}
-              extra={
-                <Space style={{ justifyContent: "center" }}>
-                  <LiveSession session="1:34:00" />
-                </Space>
-              }
+            // extra={
+            //   <Space style={{ justifyContent: "center" }}>
+            //     <LiveSession session="1:34:00" />
+            //   </Space>
+            // }
             >
               {scores?.map((row, index) => (
                 <Card.Grid
@@ -161,14 +167,14 @@ const Dashboard = props => {
                 >
                   <Typography className="innerCardTitle">
                     <span>
-                      <img src={getIcon(row?.type)} style={cardIconStyle} />
+                      <img src={getIcon(row.type)} style={cardIconStyle} />
                     </span>
-                    {row.duration_type}
+                    {row.type}
                   </Typography>
                   <Typography className="innerCardValue">
-                    {row.value}
+                    {row.type !== "Active" ? row.value : row.value + "%"}
                   </Typography>
-                  <Typography className={"innerCardTitle" + index}>
+                  <Typography className={"innerCardTitle" + index} style={{ color: getColor(row) }}>
                     {row.color}
                   </Typography>
                 </Card.Grid>
@@ -176,20 +182,19 @@ const Dashboard = props => {
             </Card>
             <div className="chart">
               <Chart
-                title="Active Score"
-                data={activeGraphData}
-                desc={ActiveScoreDesc}
-                labels={activeGraphLabels}
-                Icon={SettingIcon}
-                LinearGradientColor={["#05FF00", "#F3BE00", "#FF0000"]}
-              />
-              <Chart
-                title="Safety Score"
+                title="Injury Risk Score"
                 data={safetyGraphData}
                 desc={SafetyScoreDesc}
                 labels={safetyGraphLabels}
                 Icon={Vector2Icon}
                 LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
+              />
+              <Barchart
+                title="Risk Frequency"
+                desc={RiskScoreDesc}
+                data={riskGraphData}
+                labels={riskGraphLabels}
+                Icon={PolygonIcon}
               />
             </div>
             <div className="chart">
@@ -201,12 +206,13 @@ const Dashboard = props => {
                 Icon={StrokeIcon}
                 LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
               />
-              <Barchart
-                title="Risk Exposures"
-                desc={RiskScoreDesc}
-                data={riskGraphData}
-                labels={riskGraphLabels}
-                Icon={PolygonIcon}
+              <Chart
+                title="Active Score"
+                data={activeGraphData}
+                desc={ActiveScoreDesc}
+                labels={activeGraphLabels}
+                Icon={SettingIcon}
+                LinearGradientColor={["#05FF00", "#F3BE00", "#FF0000"]}
               />
             </div>
           </div>
