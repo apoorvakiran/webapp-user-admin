@@ -151,7 +151,6 @@ const RiskScore = props => {
     "width": "4px",
     "background-color": "transparent",
     "position": "absolute",
-    "top": "55px",
     "padding-left": calcAverage(),
     "bottom": "0",
     "border-right": "1.5px solid #727272",

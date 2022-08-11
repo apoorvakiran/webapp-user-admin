@@ -45,7 +45,6 @@
 }
 .sider-wdth {
   overflow: auto;
-  height: 100vh;
   position: fixed;
   left: 0;
   width: 225px !important;

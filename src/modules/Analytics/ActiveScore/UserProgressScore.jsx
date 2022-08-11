@@ -62,11 +62,11 @@ const UserProgressScore = (props) => {
         "width": "4px",
         "background-color": "transparent",
         "position": "absolute",
-        "top": "55px",
         "padding-left": calcAverage(),
         "bottom": "0",
         "border-right": "1.5px solid #727272",
         "z-index": "99",
+        "top": "45px",
     }
 
     const handleFilterChange = value => {
@@ -95,7 +95,7 @@ const UserProgressScore = (props) => {
         <div className='progressContainer-1'>
             {/* <HeaderCard date={showDate} /> */}
             <HeaderCard maxValue={props.maxValue} minValue={props.minValue} handleChange={handleFilterChange} />
-            <div style={averageLine}></div>
+            <div style={averageLine} class="avgLine"></div>
             <Row style={{ marginTop: "20px" }}>
                 {scores.map((row, index) => (
                     <>

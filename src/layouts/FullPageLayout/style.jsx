@@ -17,7 +17,6 @@ export const logoStyle = {};
 const LayoutComponentStyles = {
   fixedSider: {
     overflow: "auto",
-    height: "100vh",
     position: "fixed",
     left: 0,
   },
@@ -25,21 +24,18 @@ const LayoutComponentStyles = {
     paddingRight: 20,
     marginTop: 10,
   },
-  parentLayout: { minHeight: "100vh" },
+  parentLayout: { },
   mainLayout: {
-    height: "100vh",
     width:"100%"
   },
   fixedPageHeader: {
     zIndex: 100,
     width: "inherit",
     backgroundColor: "#fcfcfc",
-    height: "50px",
   },
   content: {
     width: "inherit",
     background: "#FFFFFF",
-    boxShadow: "10px 20px 30px rgba(0, 0, 0, 0.1)",
     borderRadius: "15px"
   },
   noData: { margin: "20px" }

@@ -90,9 +90,9 @@ thead[class*="ant-table-thead"] th {
 .ant-table-cell-fix-right {
   background-color: #f3f3f3 !important;
 } */
-.ant-table-cell-fix-right {
+/*.ant-table-cell-fix-right {
   width: auto !important;
-}
+}*/
 
 .create-user {
   padding: 0px 50px;
