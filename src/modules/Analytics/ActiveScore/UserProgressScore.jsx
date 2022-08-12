@@ -66,6 +66,7 @@ const UserProgressScore = (props) => {
         "border-right": "1.5px solid #727272",
         "z-index": "99",
         "top": "70px",
+        "bottom": "0px",
     }
 
     const handleFilterChange = value => {
