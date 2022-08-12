@@ -102,6 +102,12 @@
     z-index: 999;
     position: absolute !important;
   }
+  .ant-layout-has-sider {
+    padding: 0px;
+  }
+  .ant-layout-content {
+    border: none !important;
+  }
   .layout-width {
     margin-left: 0px !important;
   }

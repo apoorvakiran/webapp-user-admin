@@ -63,10 +63,9 @@ const UserProgressScore = (props) => {
         "background-color": "transparent",
         "position": "absolute",
         "padding-left": calcAverage(),
-        "bottom": "0",
         "border-right": "1.5px solid #727272",
         "z-index": "99",
-        "top": "45px",
+        "top": "70px",
     }
 
     const handleFilterChange = value => {
