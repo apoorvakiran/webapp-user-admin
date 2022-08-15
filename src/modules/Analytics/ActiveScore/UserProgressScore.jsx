@@ -65,7 +65,7 @@ const UserProgressScore = (props) => {
         "padding-left": calcAverage(),
         "border-right": "1.5px solid #727272",
         "z-index": "99",
-        "top": "70px",
+        "top": "44px",
         "bottom": "0px",
     }
 

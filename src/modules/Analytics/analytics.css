@@ -66,10 +66,11 @@
   margin: 20px 0px;
   padding: 5px 0px;
   border-bottom: 1px solid #b4b4b4;
+  text-align: left;
 }
 
 .avgLine::after {
-  content: "AVG";
+  content: "Avg";
   display: inline-block;
   padding: 4px 2px 0px;
   background-color: #ffffff;
@@ -77,6 +78,10 @@
   font-size: 12px;
   font-weight: bold;
   color: #727272;
+}
+
+.graph {
+  padding: 0px 20px 20px;
 }
 
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
@@ -87,6 +92,7 @@
   font-style: normal;
   font-weight: 500 !important;
   font-size: 14px;
+  text-align: right;
 }
 
 .average-line {
