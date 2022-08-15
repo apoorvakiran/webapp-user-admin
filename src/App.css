@@ -27,11 +27,12 @@
 
 .ant-layout {
   background: none;
-  overflow: auto;
+  padding: 10px 15px 0px 0px;
+  overflow: visible !important;
 }
 
 .ant-layout-sider {
-  background: #ffffff
+  background: #fcfcfc !important;
 }
 
 .ant-result-info .ant-result-icon>.anticon {
@@ -90,9 +91,6 @@ thead[class*="ant-table-thead"] th {
 .ant-table-cell-fix-right {
   background-color: #f3f3f3 !important;
 } */
-/*.ant-table-cell-fix-right {
-  width: auto !important;
-}*/
 
 .create-user {
   padding: 0px 50px;
@@ -126,10 +124,11 @@ thead[class*="ant-table-thead"] th {
 }
 
 .amplify-button[data-variation='primary'] {
-  margin: 10px auto 0px;
+  margin-top: 50px;
+  margin-left: 95px !important;
   border-radius: 2rem;
+  width: 60%;
   height: 50px;
-  max-width: 90%;
   font-size: 20px;
   color: white;
   font-weight: 700;
@@ -152,12 +151,10 @@ thead[class*="ant-table-thead"] th {
 [data-amplify-router] {
   border-width: 0px !important;
   border-radius: 1rem;
-  box-shadow: 0px 10px 30px #DEDEDE !important;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1) !important;
 }
 
 [data-amplify-form] {
-  padding-top:  20px !important;
-  padding-bottom:  10px !important;
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
@@ -168,10 +165,6 @@ thead[class*="ant-table-thead"] th {
   border-left: none;
   border-radius: 0px;
   border-color: #94A3AC;
-}
-
-.amplify-passwordfield input {
-  border-top: none !important;
 }
 
 .amplify-field__show-password {
@@ -189,6 +182,10 @@ thead[class*="ant-table-thead"] th {
   align-items: center;
   color: #535353;
   font-weight: 900;
+}
+
+.amplify-button--primary {
+  margin-left: 30px !important;
 }
 
 .amplify-button[data-variation='link'] {
@@ -216,9 +213,4 @@ fieldset {
 .MuiOutlinedInput-notchedOutline {
   border-color: #535353;
   padding: 0px 86% 0px 8px !important;
-}
-
-.ant-pagination-item-active a, .ant-pagination-item-active {
-  color:  #dc4128;
-  border-color: #dc4128;
 }
