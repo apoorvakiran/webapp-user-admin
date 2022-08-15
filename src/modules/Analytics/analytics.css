@@ -69,6 +69,14 @@
   text-align: left;
 }
 
+.avgLine {
+  margin-top: 25px
+}
+
+.chart .avgLine {
+  margin-top: 5px !important;
+}
+
 .avgLine::after {
   content: "Avg";
   display: inline-block;
