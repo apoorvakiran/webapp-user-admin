@@ -233,7 +233,7 @@ const RiskScore = props => {
           <ScoreDetails detailsText="Risk Frequency" score={riskScoreCount} />
           <Grid
             container
-            spacing={0}
+            spacing={1}
             className="timeSelect"
             style={{ marginTop: "15px", marginBottom: "25px" }}
           >
