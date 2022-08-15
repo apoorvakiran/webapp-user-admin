@@ -7,7 +7,7 @@
 
 .gridData {
     font-weight: bold;
-    color: #C54B30 !important;
+    color: #535353 !important;
     cursor: pointer;
 }
 
@@ -315,7 +315,6 @@ input[type="search"] {
 
 .ant-layout-content {
     min-height: auto !important;
-    border: 1px solid #f0f0f0;
 }
 
 .view-by-gridStyle {
@@ -329,7 +328,6 @@ input[type="search"] {
     margin-bottom: 10px;
     width: 100%;
     padding: 10px auto;
-    border-radius: 15px !important;
 }
 
 .scoreboardTitle {
