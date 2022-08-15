@@ -187,6 +187,7 @@
 }
 .chart .MuiPaper-root {
     padding: 25px;
+    width:  100%;
 }
 
 .gridStyle {
