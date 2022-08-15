@@ -7,7 +7,7 @@
 
 .gridData {
     font-weight: bold;
-    color: #C54B30 !important;
+    color: #535353 !important;
     cursor: pointer;
 }
 
@@ -56,41 +56,41 @@
 
 .innerCardTitle {
     text-transform: uppercase;
-    font-size: 12px !important;
+    font-size: 15px !important;
     font-weight: 900 !important;
     color: #535353 !important
 }
 
 .innerCardValue {
-    font-size: 28px !important;
-    font-weight: 700 !important;
+    font-size: 35px !important;
+    font-weight: 900 !important;
     color: #535353 !important
 }
 
 .innerCardUpperTitle0 {
     text-transform: uppercase !important;
-    font-size: 12px !important;
+    font-size: 15px !important;
     font-weight: 900 !important;
     color: #535353 !important
 }
 
 .innerCardUpperTitle1 {
     text-transform: uppercase !important;
-    font-size: 12px !important;
+    font-size: 14px !important;
     font-weight: 900 !important;
     color: #535353 !important
 }
 
 .innerCardUpperTitle2 {
     text-transform: uppercase !important;
-    font-size: 12px !important;
+    font-size: 15px !important;
     font-weight: 900 !important;
     color: #535353 !important
 }
 
 .innerCardUpperTitle3 {
     text-transform: uppercase !important;
-    font-size: 12px !important;
+    font-size: 15px !important;
     font-weight: 900 !important;
     color: #535353 !important;
 }
@@ -114,25 +114,25 @@
 
     .innerCardUpperTitle0 {
         text-transform: uppercase !important;
-        font-size: 12px !important;
+        font-size: 15px !important;
         font-weight: 900 !important;
     }
 
     .innerCardUpperTitle1 {
         text-transform: uppercase !important;
-        font-size: 12px !important;
+        font-size: 14px !important;
         font-weight: 900 !important;
     }
 
     .innerCardUpperTitle2 {
         text-transform: uppercase !important;
-        font-size: 12px !important;
+        font-size: 15px !important;
         font-weight: 900 !important;
     }
 
     .innerCardUpperTitle3 {
         text-transform: uppercase !important;
-        font-size: 12px !important;
+        font-size: 15px !important;
         font-weight: 900 !important;
         display: block;
     }
@@ -190,7 +190,7 @@
 .childCard {
     margin-top: 15px !important;
     text-align: center;
-    box-shadow: 0px 10px 30px #DEDEDE !important;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1) !important;
 }
 
 .chart {
@@ -315,7 +315,6 @@ input[type="search"] {
 
 .ant-layout-content {
     min-height: auto !important;
-    border: 1px solid #DEDEDE;
 }
 
 .view-by-gridStyle {
@@ -329,7 +328,6 @@ input[type="search"] {
     margin-bottom: 10px;
     width: 100%;
     padding: 10px auto;
-    border-radius: 15px !important;
 }
 
 .scoreboardTitle {
@@ -350,7 +348,7 @@ input[type="search"] {
 .timeSelect {
     border-radius: 100px;
     overflow: hidden;
-    filter: none;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05)) drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
     margin-bottom: 10px;
 }
 
@@ -361,7 +359,7 @@ input[type="search"] {
 }
 
 .timeSelect .MuiGrid-item {
-    border-left: 1px solid #DEDEDE;
+    border-left: 1px solid #f0f0f0;
 }
 
 .timeSelect .MuiGrid-item:first-of-type {
@@ -371,12 +369,10 @@ input[type="search"] {
 .viewSelect {
     border-radius: 100px;
     overflow: hidden;
-    filter: none;
-    box-shadow: none !important;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05)) drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
     margin-bottom: 10px !important;
     margin-top: 25px !important;
     color: #535353 !important;
-    border: 1px solid #dedede !important;
 }
 
 .viewSelect .MuiTypography-root {
