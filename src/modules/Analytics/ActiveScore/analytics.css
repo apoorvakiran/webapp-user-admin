@@ -260,7 +260,7 @@
 }
 
 .ant-card-bordered {
-    border: none !important;
+    border: 1px solid #dedede;
 }
 
 .mainCardTitleStyle>.ant-card-head>.ant-card-head-wrapper {

@@ -417,7 +417,7 @@ const Summary = (props) => {
                     active
                 />
             ) : (
-                <Card className="summaryWrappper">
+                <Card className="summaryWrapper">
                     <div>
                         <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
                         <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px", marginBottom: "20px" }}
