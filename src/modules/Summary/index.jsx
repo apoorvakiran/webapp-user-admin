@@ -598,7 +598,7 @@ const Summary = (props) => {
                                                 />
                                                 </Item>
                                             </Grid>
-                                            <Grid item s={12} lg={6}className="chart">
+                                            <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                 <Chart
                                                     title="Speed Score"
@@ -656,7 +656,7 @@ const Summary = (props) => {
                                                     scoreType="Scores by User" />
                                                 </Item>
                                             </Grid>
-                                            <Grid item s={12} lg={6}className="chart">
+                                            <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                 <AllJobSummary
                                                     title="Risk Frequency Score"
