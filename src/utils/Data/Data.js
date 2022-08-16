@@ -10,7 +10,7 @@ import Vector2Icon from "../../images/Vector2.png";
 import { Paper, styled } from "@mui/material";
 
 export const baseUrl = 'https://p7igg9ijcb.execute-api.us-east-1.amazonaws.com/prod/'; //us-east-1 mindy env
-// export const baseUrl = 'https://xcxbz9sokc.execute-api.us-east-2.amazonaws.com/prod/' //us-east-2 mentore env
+//export const baseUrl = 'https://xcxbz9sokc.execute-api.us-east-2.amazonaws.com/prod/' //us-east-2 mentore env
 
 export const getCurrIcon = icon => {
     switch (icon) {
