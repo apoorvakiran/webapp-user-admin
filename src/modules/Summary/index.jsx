@@ -413,7 +413,7 @@ const Summary = (props) => {
             {loading ? (
                 <Skeleton
                     style={{ position: "absolute", zIndex: "99", padding: "20px"  }}
-                    loadin
+                    loading
                     active
                 />
             ) : (
