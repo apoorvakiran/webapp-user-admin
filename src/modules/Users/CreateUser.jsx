@@ -262,7 +262,16 @@ const CreateUser = (props) => {
                     required: true,
                     message: "Please select Job Title",
                   },
+                  () => ({
+                    validator(_, value) {
+                      if (value === 0) {
+                        return Promise.reject("Job title cannot be None");
+                      }
+                      return Promise.resolve();
+                    },
+                  }),
                 ]}
+                initialValue={0}
               >
                 <Select placeholder="Select Job Title" defaultValue={0} className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
                   <Select.Option value={0}>None</Select.Option>
