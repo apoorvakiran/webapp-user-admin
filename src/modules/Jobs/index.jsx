@@ -14,8 +14,8 @@ const editUserButton = {
     fontFamily: "Montserrat",
     fontStyle: "normal",
     fontWeight: "700",
-    height: "30px",
-    padding: "3px 15px",
+    height: "auto",
+    padding: "3px 6px",
     border: "1.5px solid #C54B30",
 };
 
@@ -131,17 +131,19 @@ const Jobs = props => {
                     active
                 />
             ) : (
-                <Card>
-                    <div className="user-score" style={{ marginBottom: 20 }}>Job Types</div>
-                    <Button
-                        className="createNewButton"
-                        shape="round"
-                        onClick={CreateNewJob}
-                        icon={<PlusOutlined
-                        />}
-                    >
-                        Create New Job
-                    </Button>
+                <Card className="page-content">
+                    <div className="page-content-header">
+                        <div className="user-score">Job Types</div>
+                        <Button
+                            className="createNewButton"
+                            shape="round"
+                            onClick={CreateNewJob}
+                            icon={<PlusOutlined
+                            />}
+                        >
+                            Create New Job
+                        </Button>
+                    </div>
                     <Table data={jobsList} columns={columns} showHeader={false} />
                 </Card>
             )}

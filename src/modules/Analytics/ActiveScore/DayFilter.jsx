@@ -23,7 +23,7 @@ export const DayFilter = (props) => {
     return (
 
         <div className="dashboard" >
-            <Grid container spacing={0.2}>
+            <Grid container  className="timeSelect">
                 {DashboardData.map((data, index) => {
                     return (
                         <Grid

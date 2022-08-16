@@ -47,9 +47,10 @@ export const editUserButton = {
   fontFamily: "Montserrat",
   fontStyle: "normal",
   fontWeight: "700",
-  height: "30px",
-  padding: "3px 15px",
+  height: "auto",
+  padding: "6px 7px",
   border: "1.5px solid #94A3AC",
+  margin: "0 auto;",
 };
 export const padding50 = {
   padding: "0px 50px",

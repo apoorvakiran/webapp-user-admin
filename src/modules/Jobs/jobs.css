@@ -6,6 +6,7 @@
     height: "30px";
     padding: "3px 15px";
     border: "1.5px solid #C54B30";
+    text-align: "center";
 }
 
 .ant-table-column-title {

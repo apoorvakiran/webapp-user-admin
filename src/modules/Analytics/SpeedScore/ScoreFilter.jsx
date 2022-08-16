@@ -13,13 +13,13 @@ const ScoreFilter = props => {
           onChange={handleChange}
           style={{ width: 120 }}
         >
-          <Option value="high">High</Option>
-          <Option value="low">Low</Option>
+          <Option value="high">Sort: High</Option>
+          <Option value="low">Sort: Low</Option>
         </Select>
       </div>
       <div className="speed-score-average">
         <Typography style={{ width: "33%" }}>{0}</Typography>
-        <Typography style={{ width: "34%", textAlign: "center" }}>{"Average"}</Typography>
+{/*        <Typography style={{ width: "34%", textAlign: "center" }}>{"Average"}</Typography>*/}
         <Typography style={{ width: "33%", textAlign: "end" }}>{7}</Typography>
       </div>
     </div>

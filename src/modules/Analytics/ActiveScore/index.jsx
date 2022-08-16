@@ -11,7 +11,7 @@ const UserAnalytics = props => {
     <BasicLayout>
       {loading ? (
         <Skeleton
-          style={{ position: "absolute", zIndex: "99" }}
+          style={{ position: "absolute", zIndex: "99", padding: "40px 20px" }}
           loading
           active
         />

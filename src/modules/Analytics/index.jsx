@@ -59,7 +59,7 @@ const AalyticsMain = props => {
     <BasicLayout pageTitle="Risk Score">
       <Card>
         <div className="user-score">User Scores</div>
-        <Card className="childCard">
+        <Card className="childCard scoreBoard">
           {scores.map((row, index) => (
             <Card.Grid
               hoverable={false}

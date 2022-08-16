@@ -151,7 +151,6 @@ const RiskScore = props => {
     "width": "4px",
     "background-color": "transparent",
     "position": "absolute",
-    "top": "55px",
     "padding-left": calcAverage(),
     "bottom": "0",
     "border-right": "1.5px solid #727272",
@@ -180,17 +179,17 @@ const RiskScore = props => {
     setSpeedScoreData([...filterSpeedScoreData]);
   };
   return (
-    <BasicLayout pageTitle="Speed Score">
+    <BasicLayout>
       {loading ? (
         <Skeleton
-          style={{ position: "absolute", zIndex: "99" }}
+          style={{ position: "absolute", zIndex: "99", padding: "20px" }}
           loading
           active
         />
       ) : (
         <Card>
           <div className="user-score">User Scores</div>
-          <Card className="childCard">
+          <Card className="childCard scoreBoard">
             {scores.map((row, index) => (
               <Card.Grid
                 hoverable={false}
@@ -272,6 +271,7 @@ const RiskScore = props => {
           <Grid
             container
             spacing={0}
+             className="timeSelect"
             style={{ marginTop: "15px", marginBottom: "25px" }}
           >
             {DashboardData.map((data, index) => {

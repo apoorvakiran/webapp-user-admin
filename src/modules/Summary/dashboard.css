@@ -270,7 +270,11 @@ input[type="search"] {
     /* height: 50px !important; */
     border-radius: 50px !important;
 }
-
+@media (max-width: 1199px) {
+    .chart {
+        margin-bottom: 25px !important;
+    }
+}
 @media (max-width: 768px) {
     .userCard {
         display: none;
@@ -279,6 +283,7 @@ input[type="search"] {
     .chart {
         width: 100%;
         display: block;
+        margin-bottom: 25px;
     }
 
     .gridStyle {
@@ -309,6 +314,12 @@ input[type="search"] {
 
 }
 
+@media (max-width: 922px) {
+    .chart: {
+        margin-bottom: 20px;
+    }
+}
+
 .css-1eqh0au-MuiGrid-root {
     cursor: pointer !important;
 }
@@ -325,7 +336,7 @@ input[type="search"] {
 }
 
 .scoreBoard {
-    margin-bottom: 10px;
+    margin-bottom: 25px !important;
     width: 100%;
     padding: 10px auto;
 }
@@ -348,8 +359,9 @@ input[type="search"] {
 .timeSelect {
     border-radius: 100px;
     overflow: hidden;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05)) drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
+    border: 1px solid #dedede;
     margin-bottom: 10px;
+    filter: none;
 }
 
 .timeSelect .MuiPaper-root {
@@ -369,10 +381,12 @@ input[type="search"] {
 .viewSelect {
     border-radius: 100px;
     overflow: hidden;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05)) drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
-    margin-bottom: 10px !important;
-    margin-top: 25px !important;
+    filter: none;
+    box-shadow: none !important;
+    margin-bottom: 25px !important;
+    margin-top: 0px !important;
     color: #535353 !important;
+    border: 1px solid #dedede !important;
 }
 
 .viewSelect .MuiTypography-root {

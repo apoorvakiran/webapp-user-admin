@@ -33,7 +33,7 @@ const components = {
   Header() {
 
     return (
-      <View textAlign="center" paddingTop="60px">
+      <View textAlign="center" paddingTop="60px" paddingBottom="15px">
         <Image
           alt="Mentore"
           src={MentoreLogoIconN}
@@ -50,7 +50,7 @@ const components = {
     Header() {
       return (
         <Heading
-          level={4}
+          level={5}
         >
           Login
         </Heading>

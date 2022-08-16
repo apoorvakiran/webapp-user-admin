@@ -412,12 +412,12 @@ const Summary = (props) => {
         <BasicLayout >
             {loading ? (
                 <Skeleton
-                    style={{ position: "absolute", zIndex: "99" }}
-                    loading
+                    style={{ position: "absolute", zIndex: "99", padding: "20px"  }}
+                    loadin
                     active
                 />
             ) : (
-                <Card className="summaryWrappper">
+                <Card className="summaryWrapper">
                     <div>
                         <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
                         <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px", marginBottom: "20px" }}
@@ -506,8 +506,9 @@ const Summary = (props) => {
                             (selectedJobTitle === "" || selectedJobTitle === "0")
                                 ?
                                 // view all jobs summary
-                                <>
-                                    <div className="chart">
+                                <Grid container spacing={2} className="chartContainer">
+                                    <Grid item s={12} lg={6} className="chart">
+                                        <Item>
                                         <AllJobSummary
                                             title="Injury Risk Score"
                                             desc={SafetyScoreDesc}
@@ -515,7 +516,10 @@ const Summary = (props) => {
                                             labels={safetyGraphLabels}
                                             Icon={Vector2Icon} columns={columns("Injury Risk Score")} showHeader={true}
                                             scoreType="All Jobs" />
-
+                                        </Item>
+                                    </Grid>
+                                    <Grid item s={12} lg={6} className="chart">
+                                        <Item>
                                         <AllJobSummary
                                             title="Risk Frequency Score"
                                             desc={RiskScoreDesc}
@@ -523,8 +527,10 @@ const Summary = (props) => {
                                             labels={riskGraphLabels}
                                             Icon={PolygonIcon} columns={columns("Risk Frequency Score")} showHeader={true}
                                             scoreType="All Jobs" />
-                                    </div>
-                                    <div className="chart">
+                                        </Item>
+                                    </Grid>
+                                    <Grid item s={12} lg={6} className="chart">
+                                        <Item>
                                         <AllJobSummary
                                             title="Speed Score"
                                             desc={SpeedScoreDesc}
@@ -532,7 +538,10 @@ const Summary = (props) => {
                                             labels={speedGraphLabels}
                                             Icon={StrokeIcon} columns={columns("Speed Score")} showHeader={true}
                                             scoreType="All Jobs" />
-
+                                        </Item>
+                                    </Grid>
+                                    <Grid item s={12} lg={6} className="chart">
+                                        <Item>
                                         <AllJobSummary
                                             title="Active Score"
                                             desc={ActiveScoreDesc}
@@ -540,8 +549,9 @@ const Summary = (props) => {
                                             labels={activeGraphLabels}
                                             Icon={SettingIcon} columns={columns("Active Score")} showHeader={true}
                                             scoreType="All Jobs" />
-                                    </div>
-                                </>
+                                        </Item>
+                                    </Grid>
+                                </Grid>
                                 :
                                 (scoreType === "Scores by Time")
                                     ?
@@ -563,42 +573,56 @@ const Summary = (props) => {
                                                 </Card.Grid>
                                             ))}
                                         </Card>
-                                        <div className="chart">
-                                            <Chart
-                                                title="Injury Risk Score"
-                                                desc={SafetyScoreDesc}
-                                                data={safetyGraphData}
-                                                labels={safetyGraphLabels}
-                                                Icon={Vector2Icon}
-                                                LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
-                                            />
-                                            <Barchart
-                                                title="Risk Frequency"
-                                                desc={RiskScoreDesc}
-                                                data={riskGraphData}
-                                                labels={riskGraphLabels}
-                                                Icon={PolygonIcon}
-                                                LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
-                                            />
-                                        </div>
-                                        <div className="chart">
-                                            <Chart
-                                                title="Speed Score"
-                                                desc={SpeedScoreDesc}
-                                                data={speedGraphData}
-                                                labels={speedGraphLabels}
-                                                Icon={StrokeIcon}
-                                                LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
-                                            />
-                                            <Chart
-                                                title="Active Score"
-                                                desc={ActiveScoreDesc}
-                                                data={activeGraphData}
-                                                labels={activeGraphLabels}
-                                                Icon={SettingIcon}
-                                                LinearGradientColor={["#05FF00", "#F3BE00", "#FF0000"]}
-                                            />
-                                        </div>
+                                        <Grid container spacing={2}>
+                                            <Grid item s={12} lg={6} className="chart">
+                                                <Item>
+                                                <Chart
+                                                    title="Injury Risk Score"
+                                                    desc={SafetyScoreDesc}
+                                                    data={safetyGraphData}
+                                                    labels={safetyGraphLabels}
+                                                    Icon={Vector2Icon}
+                                                    LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
+                                                />
+                                                </Item>
+                                            </Grid>
+                                            <Grid item s={12} lg={6} className="chart">
+                                                <Item>
+                                                <Barchart
+                                                    title="Risk Frequency"
+                                                    desc={RiskScoreDesc}
+                                                    data={riskGraphData}
+                                                    labels={riskGraphLabels}
+                                                    Icon={PolygonIcon}
+                                                    LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
+                                                />
+                                                </Item>
+                                            </Grid>
+                                            <Grid item s={12} lg={6}className="chart">
+                                                <Item>
+                                                <Chart
+                                                    title="Speed Score"
+                                                    desc={SpeedScoreDesc}
+                                                    data={speedGraphData}
+                                                    labels={speedGraphLabels}
+                                                    Icon={StrokeIcon}
+                                                    LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
+                                                />
+                                                </Item>
+                                            </Grid>
+                                            <Grid item s={12} lg={6} className="chart">
+                                                <Item>
+                                                <Chart
+                                                    title="Active Score"
+                                                    desc={ActiveScoreDesc}
+                                                    data={activeGraphData}
+                                                    labels={activeGraphLabels}
+                                                    Icon={SettingIcon}
+                                                    LinearGradientColor={["#05FF00", "#F3BE00", "#FF0000"]}
+                                                />
+                                                </Item>
+                                            </Grid>
+                                        </Grid>
                                     </>
                                     :
                                     // scores by User
@@ -620,40 +644,52 @@ const Summary = (props) => {
                                                 </Card.Grid>
                                             ))}
                                         </Card>
-                                        <div className="chart">
-                                            <AllJobSummary
-                                                title="Injury Risk Score"
-                                                desc={SafetyScoreDesc}
-                                                data={safetyGraphData}
-                                                labels={safetyGraphLabels}
-                                                Icon={Vector2Icon}
-                                                scoreType="Scores by User" />
-
-                                            <AllJobSummary
-                                                title="Risk Frequency Score"
-                                                desc={RiskScoreDesc}
-                                                data={riskGraphData}
-                                                labels={riskGraphLabels}
-                                                Icon={PolygonIcon}
-                                                scoreType="Scores by User" />
-                                        </div>
-                                        <div className="chart">
-                                            <AllJobSummary
-                                                title="Speed Score"
-                                                desc={SpeedScoreDesc}
-                                                data={speedGraphData}
-                                                labels={speedGraphLabels}
-                                                Icon={StrokeIcon}
-                                                scoreType="Scores by User" />
-
-                                            <AllJobSummary
-                                                title="Active Score"
-                                                desc={ActiveScoreDesc}
-                                                data={activeGraphData}
-                                                labels={activeGraphLabels}
-                                                Icon={SettingIcon}
-                                                scoreType="Scores by User" />
-                                        </div>
+                                        <Grid container spacing={2}>
+                                            <Grid item s={12} lg={6} className="chart">
+                                                <Item>
+                                                <AllJobSummary
+                                                    title="Injury Risk Score"
+                                                    desc={SafetyScoreDesc}
+                                                    data={safetyGraphData}
+                                                    labels={safetyGraphLabels}
+                                                    Icon={Vector2Icon}
+                                                    scoreType="Scores by User" />
+                                                </Item>
+                                            </Grid>
+                                            <Grid item s={12} lg={6}className="chart">
+                                                <Item>
+                                                <AllJobSummary
+                                                    title="Risk Frequency Score"
+                                                    desc={RiskScoreDesc}
+                                                    data={riskGraphData}
+                                                    labels={riskGraphLabels}
+                                                    Icon={PolygonIcon}
+                                                    scoreType="Scores by User" />
+                                                </Item>
+                                            </Grid>
+                                            <Grid item s={12} lg={6} className="chart">
+                                                <Item>
+                                                <AllJobSummary
+                                                    title="Speed Score"
+                                                    desc={SpeedScoreDesc}
+                                                    data={speedGraphData}
+                                                    labels={speedGraphLabels}
+                                                    Icon={StrokeIcon}
+                                                    scoreType="Scores by User" />
+                                                </Item>
+                                            </Grid>
+                                            <Grid item s={12} lg={6} className="chart">
+                                                <Item>
+                                                <AllJobSummary
+                                                    title="Active Score"
+                                                    desc={ActiveScoreDesc}
+                                                    data={activeGraphData}
+                                                    labels={activeGraphLabels}
+                                                    Icon={SettingIcon}
+                                                    scoreType="Scores by User" />
+                                                </Item>
+                                            </Grid>
+                                        </Grid>
                                     </>
                         }
                     </div>

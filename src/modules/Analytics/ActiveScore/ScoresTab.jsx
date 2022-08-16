@@ -155,7 +155,7 @@ export const ScoresTab = props => {
         (
           <>
             <div className="user-score">User Scores</div>
-            <Card className="childCard">
+            <Card className="childCard scoreBoard">
               {ScoresTabData.map((row, index) => (
                 <Card.Grid
                   hoverable={false}
@@ -178,7 +178,7 @@ export const ScoresTab = props => {
             </Card>
 
             <ScoreDetails detailsText={scoreType} score={aggScore} rating={rating} />
-            <Grid container spacing={0.2}>
+            <Grid container className="timeSelect">
               {DashboardData.map((data, index) => {
                 return (
                   <Grid

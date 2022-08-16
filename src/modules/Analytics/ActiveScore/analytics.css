@@ -46,6 +46,27 @@
     width: 50%;
 }
 
+.timeSelect {
+    border-radius: 100px;
+    overflow: hidden;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05)) drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
+    margin-bottom:  10px;
+}
+
+.timeSelect .MuiPaper-root {
+    border-radius: 0px;
+    box-shadow: none;
+    color: #C54B30;
+}
+
+.timeSelect .MuiGrid-item {
+    border-left: 1px solid #f0f0f0;
+}
+
+.timeSelect .MuiGrid-item:first-of-type {
+    border-left: none;
+}
+
 @media (max-width:1024px) {
     .cardDataDiv {
         display: grid !important;
@@ -178,6 +199,12 @@
 
 .userProgress {
     margin-top: 20px;
+    text-align: left;
+}
+
+.userProgress .ant-progress-text {
+    text-align: right !important;
+    align-items: right !important;
 }
 
 .ant-progress-inner {
@@ -239,7 +266,7 @@
 }
 
 .ant-card-bordered {
-    border: none !important;
+    border: 1px solid #dedede;
 }
 
 .mainCardTitleStyle>.ant-card-head>.ant-card-head-wrapper {
@@ -372,7 +399,6 @@
 }
 
 .ant-progress-text {
-    /* font-family: "Ringside" !important; */
     font-style: normal;
     font-weight: 500 !important;
     font-size: 14px;
