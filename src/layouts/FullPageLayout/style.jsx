@@ -26,7 +26,7 @@ const LayoutComponentStyles = {
   },
   parentLayout: { },
   mainLayout: {
-    width:"100%"
+    width:"0px"
   },
   fixedPageHeader: {
     zIndex: 100,
