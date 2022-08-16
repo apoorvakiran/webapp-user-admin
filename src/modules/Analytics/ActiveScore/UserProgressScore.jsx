@@ -40,8 +40,9 @@ const UserProgressScore = (props) => {
     };
 
     const strokeColor = {
-        '0%': '#FFD705',
-        '100%': '#45CF03',
+        '0%': '#45CF03',
+        '50%': '#FFD705',
+        '100%': '#D10000',
     }
 
     function calcAverage() {
