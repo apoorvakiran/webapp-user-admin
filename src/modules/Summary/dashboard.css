@@ -40,10 +40,6 @@
     }
 }
 
-.summaryWrapper {
-    border: 1px solid #dedede;
-}
-
 .rowViewScore .rowCreate {
     display: flex;
     flex-direction: column;

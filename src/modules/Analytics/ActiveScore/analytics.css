@@ -202,6 +202,11 @@
     text-align: left;
 }
 
+.userProgress .ant-progress-text {
+    text-align: right !important;
+    align-items: right !important;
+}
+
 .ant-progress-inner {
     border-radius: 0px !important;
 }
@@ -394,7 +399,6 @@
 }
 
 .ant-progress-text {
-    /* font-family: "Ringside" !important; */
     font-style: normal;
     font-weight: 500 !important;
     font-size: 14px;
