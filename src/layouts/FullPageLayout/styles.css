@@ -1,9 +1,10 @@
 .logo-div {
   padding-left: 24px;
+  padding-right: 24px;
   margin-top: 25px;
 }
 .logoType {
-  width: 100px;
+  width: 80px;
   position: relative;
   margin-bottom: 15px;
 }

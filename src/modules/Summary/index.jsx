@@ -413,7 +413,7 @@ const Summary = (props) => {
             {loading ? (
                 <Skeleton
                     style={{ position: "absolute", zIndex: "99", padding: "20px"  }}
-                    loadin
+                    loading
                     active
                 />
             ) : (
@@ -473,9 +473,9 @@ const Summary = (props) => {
                                 <Card.Grid hoverable={false} className="gridStyle">
                                     <Typography className={"innerCardUpperTitle" + index}>
 
-                                        <div>
+                                        <span>
                                             <img src={getIcon(row?.type)} className="cardIcon" />
-                                        </div>
+                                        </span>
                                         {row.type !== "Risk" ? row.type : "Risk Frequency"}
 
                                     </Typography>
@@ -488,9 +488,9 @@ const Summary = (props) => {
                             ))}
                             <Card.Grid hoverable={false} className="gridStyle userCard">
                                 <Typography className="innerCardTitle">
-                                    <div>
+                                    <span>
                                         <img src={UserIcon} className="cardIcon" />
-                                    </div>
+                                    </span>
                                     <span>USERS</span>
                                 </Typography>
 
@@ -598,7 +598,7 @@ const Summary = (props) => {
                                                 />
                                                 </Item>
                                             </Grid>
-                                            <Grid item s={12} lg={6}className="chart">
+                                            <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                 <Chart
                                                     title="Speed Score"
@@ -656,7 +656,7 @@ const Summary = (props) => {
                                                     scoreType="Scores by User" />
                                                 </Item>
                                             </Grid>
-                                            <Grid item s={12} lg={6}className="chart">
+                                            <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                 <AllJobSummary
                                                     title="Risk Frequency Score"

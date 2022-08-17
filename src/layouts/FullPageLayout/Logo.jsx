@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../../images/SideBarLogo.svg'
+import Logo from '../../images/Rivian_logo.svg'
 import { logoStyle } from "./style"
 
 export const LogoComponent = (props) => {

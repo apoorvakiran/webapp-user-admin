@@ -57,10 +57,10 @@ class LayoutComponent extends React.Component {
         </div>
         <LogoComponent style={LogoComponentStyle} />
         <div className="companyTitle" >
-          <div>Acme Inc.</div>
+{/*          <div>Company Name</div>
           <div>
-            Tampa, Florida
-          </div>
+            Location, State
+          </div>*/}
         </div>
       </div>
     </>
