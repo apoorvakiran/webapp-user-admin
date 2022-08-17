@@ -31,6 +31,12 @@
   overflow: visible !important;
 }
 
+@media (max-width: 768px) {
+    .ant-layout {
+        padding: 0px;
+    }
+}
+
 .ant-layout-sider {
   background: #fcfcfc !important;
 }
