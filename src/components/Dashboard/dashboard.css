@@ -298,6 +298,10 @@ input[type="search"] {
         transition: opacity 0.25s ease-out;
     }
 
+    .ant-layout {
+        padding: 0px;
+    }
+
 }
 
 
