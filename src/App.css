@@ -118,6 +118,9 @@ thead[class*="ant-table-thead"] th {
 
 .ant-page-header {
   padding: 0px !important;
+  width: 100% !important;
+  position: sticky;
+  top: 0px;
 }
 
 .ant-typography {
