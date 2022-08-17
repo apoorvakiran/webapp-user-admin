@@ -320,7 +320,7 @@ const CreateUser = (props) => {
                   Create & Send Password Request
                 </Button>
               </Form.Item>
-              <Form.Item {...canTailFormItemLayout} style={{ fontSize: 14, justifyContent: "center" }}>
+              <Form.Item {...canTailFormItemLayout} style={{ fontSize: 14, justifyContent: "center", textAlign: "center" }}>
                 <Link className="cancel" to="/user-admin/users/">
                   Cancel
                 </Link>
