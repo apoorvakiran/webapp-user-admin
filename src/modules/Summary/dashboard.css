@@ -104,9 +104,6 @@
 }
 
 .ant-progress-text {
-    position: absolute;
-    left: 86%;
-    top: 8px;
     width:  40px !important;
 }
 
@@ -240,6 +237,7 @@
     border-radius: 50px;
     font-weight: 700 !important;
     max-height: 100px;
+    width: 200px;
 }
 
 .selectJob {
@@ -311,6 +309,10 @@ input[type="search"] {
         border: 0px;
         cursor: pointer;
         transition: opacity 0.25s ease-out;
+    }
+    .summaryWrapper {
+        border: none !important;
+        border-radius: 0px;
     }
 
 }
