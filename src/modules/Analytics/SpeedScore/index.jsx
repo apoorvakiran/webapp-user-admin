@@ -147,14 +147,16 @@ const RiskScore = props => {
 
   }
 
+
   const averageLine = {
     "width": "4px",
     "background-color": "transparent",
     "position": "absolute",
     "padding-left": calcAverage(),
-    "bottom": "0",
-    "border-right": "1.5px solid #727272",
+    "border-right": "1px solid #727272",
     "z-index": "99",
+    "top": "16px",
+    "bottom": "0px",
   }
 
   const handleFilterChange = value => {
@@ -271,7 +273,7 @@ const RiskScore = props => {
           <Grid
             container
             spacing={0}
-             className="timeSelect"
+            className="timeSelect"
             style={{ marginTop: "15px", marginBottom: "25px" }}
           >
             {DashboardData.map((data, index) => {
@@ -302,12 +304,12 @@ const RiskScore = props => {
           <div className='progressContainer-1'>
             {/* <ScoreFilter handleChange={handleFilterChange} /> */}
             <HeaderCard maxValue={7} minValue={0} handleChange={handleFilterChange} />
-            <div style={averageLine}></div>
+            <div style={averageLine} class="avgLine"></div>
             {speedScoreData?.map(progress => (
-              <div style={{ margin: "15px 0px" }}>
+              <div style={{ margin: "25px 0px" }}>
                 <Row gutter={24}>
                   <Col span={8}>
-                    <Typography style={{ color: "#C54B30", fontSize: "15px" }}>
+                    <Typography style={{ color: "#C54B30", fontSize: "15px", fontWeight: "600" }}>
                       {`${progress?.first_name} ${progress?.last_name}`}
                     </Typography>
                   </Col>
@@ -320,7 +322,7 @@ const RiskScore = props => {
                       )}
                       strokeWidth={25}
                     /> */}
-                    <Progress format={percent => `${progress.speedscore}`} showInfo={true} strokeWidth={30} percent={round((parseFloat(progress.speedscore) / 7) * 100)} strokeColor={strokeColor} />
+                    <Progress format={percent => `${progress.speedscore}`} showInfo={true} strokeWidth={30} percent={round(100 - (parseFloat(progress.speedscore) / 7) * 100)} />
                   </Col>
                 </Row>
               </div>
