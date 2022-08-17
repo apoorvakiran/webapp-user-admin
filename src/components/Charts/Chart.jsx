@@ -82,10 +82,10 @@ const Chart = props => {
         display: false,
       },
     },
-  };
+  };ß
 
   return (
-    <div>
+    <div  className="Chart">
       <h3 className="SettingTitle">
         <img className="icon-css" src={Icon ? Icon : SettingIcon} />
         {props.title}
