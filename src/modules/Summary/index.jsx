@@ -473,9 +473,9 @@ const Summary = (props) => {
                                 <Card.Grid hoverable={false} className="gridStyle">
                                     <Typography className={"innerCardUpperTitle" + index}>
 
-                                        <div>
+                                        <span>
                                             <img src={getIcon(row?.type)} className="cardIcon" />
-                                        </div>
+                                        </span>
                                         {row.type !== "Risk" ? row.type : "Risk Frequency"}
 
                                     </Typography>
@@ -488,9 +488,9 @@ const Summary = (props) => {
                             ))}
                             <Card.Grid hoverable={false} className="gridStyle userCard">
                                 <Typography className="innerCardTitle">
-                                    <div>
+                                    <span>
                                         <img src={UserIcon} className="cardIcon" />
-                                    </div>
+                                    </span>
                                     <span>USERS</span>
                                 </Typography>
 
