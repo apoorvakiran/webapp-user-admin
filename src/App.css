@@ -44,6 +44,11 @@
   border-radius: 20px !important;
 }
 
+.ant-menu {
+  background-color: none !important;
+  background: none !important;
+}
+
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: unset !important;
 }
