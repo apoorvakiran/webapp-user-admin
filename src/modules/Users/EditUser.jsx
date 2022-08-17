@@ -320,6 +320,20 @@ const EditUser = () => {
                   style={{ justifyContent: "center" }}
                   className="formStyle"
                   name="job_id"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select Job Title",
+                    },
+                    () => ({
+                      validator(_, value) {
+                        if (value === 0) {
+                          return Promise.reject("Job title cannot be None");
+                        }
+                        return Promise.resolve();
+                      },
+                    }),
+                  ]}
                 >
                   <Select placeholder="Select Job Title" className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
                     <Select.Option value={0}>None </Select.Option>
