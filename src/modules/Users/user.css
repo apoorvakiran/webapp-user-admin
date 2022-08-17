@@ -44,6 +44,11 @@
   padding-left: 2em;
 }
 
+.ant-form-horizontal .ant-form-item-control {
+  margin: 0 auto;
+  max-width: 480px;
+}
+
 @media screen and (max-width: 1024px) {
   .user-info-container {
     padding-bottom: 1em;
@@ -122,9 +127,9 @@
   font-style: normal !important;
   background: #FFFFFF !important;
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1) !important;
-  width: 25% !important;
   height: 42px !important;
   margin-bottom: 25px !important;
+  padding: 4px 20px !important;
 }
 
 .usersTable table {
@@ -156,7 +161,7 @@
 @media (max-width: 425px) {
   .createNewButton {
     margin-top: 10px;
-    width: 50% !important;
+    width: 100% !important;
     font-size: 13px !important;
     height: 35px !important;
   }
@@ -171,7 +176,7 @@
 @media (max-width: 375px) {
   .createNewButton {
     margin-top: 10px;
-    width: 60% !important;
+    width: 100% !important;
     font-size: 12px !important;
     height: 35px !important;
   }

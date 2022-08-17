@@ -18,7 +18,7 @@ export const grayUserButton = {
   fontStyle: "normal",
   background: "#ADA8A8",
   boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)",
-  width: "60%",
+  width: "100%",
   height: "50px"
 };
 
@@ -29,7 +29,7 @@ export const createUserButton = {
   fontStyle: "normal",
   background: "#C54B30",
   boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)",
-  width: "60%",
+  width: "100%",
   height: "50px"
 };
 export const createProfileButton = {
