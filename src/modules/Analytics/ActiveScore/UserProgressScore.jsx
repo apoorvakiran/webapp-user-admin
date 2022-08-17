@@ -39,11 +39,11 @@ const UserProgressScore = (props) => {
         display: (props.scoreName === "Active Score") ? "block" : "none",
     };
 
-    const strokeColor = {
-        '0%': '#45CF03',
-        '50%': '#FFD705',
-        '100%': '#D10000',
-    }
+    // const strokeColor = {
+    //     '0%': '#45CF03',
+    //     '50%': '#FFD705',
+    //     '100%': '#D10000',
+    // }
 
     function calcAverage() {
 
@@ -106,13 +106,13 @@ const UserProgressScore = (props) => {
                             </p>
                         </Col>
                         <Col className="userProgress" xs={16} xl={16} style={renderSafetySpeed}>
-                            <Progress format={percent => `${row.user_score}`} showInfo={true} strokeWidth={30} percent={round((row.user_score / 7) * 100)} strokeColor={strokeColor} />
+                            <Progress format={percent => `${row.user_score}`} showInfo={true} strokeWidth={30} percent={round(100 -(row.user_score / 7) * 100)}  />
                         </Col>
                         <Col className="userProgress" xs={16} xl={16} style={renderRisk}>
-                            <Progress format={percent => `${row.user_score}`} showInfo={true} strokeWidth={30} percent={round((row.user_score / 10) * 100)} strokeColor={strokeColor} />
+                            <Progress format={percent => `${row.user_score}`} showInfo={true} strokeWidth={30} percent={round(100 -(row.user_score / 10) * 100)}  />
                         </Col>
                         <Col className="userProgress" xs={16} xl={16} style={renderActive}>
-                            <Progress format={percent => `${round(row.user_score * 100 / 1)}` + "%"} showInfo={true} strokeWidth={30} percent={round((row.user_score / 1) * 100)} strokeColor={strokeColor} />
+                            <Progress format={percent => `${round(row.user_score * 100 / 1)}` + "%"} showInfo={true} strokeWidth={30} percent={round(100 -(row.user_score / 1) * 100)}  />
                         </Col>
                     </>
                 ))}

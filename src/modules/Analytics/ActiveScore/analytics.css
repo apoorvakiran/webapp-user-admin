@@ -209,10 +209,14 @@
 
 .ant-progress-inner {
     border-radius: 0px !important;
+    background: rgb(69,207,3);
+    background: linear-gradient(90deg, rgba(69,207,3,1) 0%, rgba(255,215,5,1) 50%, rgba(209,0,0,1) 100%);
 }
 
 .ant-progress-bg {
     border-radius: 0px !important;
+    background-color: #DEDEDE !important; 
+    float: right;
 }
 
 .userNameText {
