@@ -53,10 +53,14 @@
     margin-bottom:  10px;
 }
 
-.timeSelect .MuiPaper-root {
+.timeSelect .gridData {
     border-radius: 0px;
     box-shadow: none;
-    color: #C54B30;
+    color: #C54B30 !important;
+}
+
+.timeSelect .activeGrid {
+    color: #FFFFFF !important;
 }
 
 .timeSelect .MuiGrid-item {
