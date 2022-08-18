@@ -265,3 +265,14 @@ fieldset {
     border:  none;
   }
 }
+
+@media screen and (max-width: 480px) {
+  .ant-page-header {
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1) !important;
+  }
+  .ant-card {
+    border-radius: none;
+    border: none;
+  }
+}
+
