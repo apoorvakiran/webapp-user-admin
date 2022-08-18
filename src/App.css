@@ -228,3 +228,40 @@ fieldset {
   border-color: #535353;
   padding: 0px 86% 0px 8px !important;
 }
+
+.ant-pagination-item-active a, .ant-pagination-item-active:hover a, .ant-pagination-item:hover a, .ant-pagination-next .ant-pagination-item-link:hover, .ant-pagination-prev .ant-pagination-item-link:hover {
+  color: #dc4128 !important;
+}
+
+.ant-pagination-item-active, .ant-pagination-item-active:hover {
+  border-color: #dc4128 !important;
+  border-radius: 100px;
+}
+
+.ant-pagination-item:hover, .ant-pagination-item-link:hover {
+  border-color: #dc4128 !important;
+  border-radius: 100px;
+}
+
+.ant-pagination-item, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-prev .ant-pagination-item-link {
+  border-radius: 100px;
+}
+
+.ant-pagination-disabled .ant-pagination-item-link {
+  border-color: #d9d9d9 !important;
+}
+
+.ant-pagination-disabled svg {
+  fill: #d9d9d9;
+}
+
+.anticon-double-right svg, .anticon-double-left svg {
+  fill: #dc4128;
+}
+
+@media screen and (max-width: 768px) {
+  .page-content {
+    border-radius: 0px;
+    border:  none;
+  }
+}
