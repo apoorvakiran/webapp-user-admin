@@ -23,7 +23,7 @@ export const ScoresTab = props => {
   const { history } = props;
   const [tabChanged, setTabChanged] = useState(false);
   const [activeTab, setActiveTab] = useState("Injury Risk Score");
-  const [scoreType = "Injury Risk Score", setScoreType] = useState();
+  const [scoreType, setScoreType] = useState();
   const [aggScore, setAggScore] = useState();
   const [rating, setRating] = useState();
   const [showDate, setShowDate] = useState();
@@ -39,7 +39,8 @@ export const ScoresTab = props => {
       setScoreType('Active Score')
       setMaxValue("100%");
       setMinValue("0%");
-    } else {
+    } else if (history.location.pathname === "/user-admin/analytics/safety-score") {
+      setScoreType('Injury Risk Score')
       setMaxValue(7);
       setMinValue(0);
     }
