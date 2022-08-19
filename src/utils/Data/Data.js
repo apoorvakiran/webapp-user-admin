@@ -9,7 +9,7 @@ import StrokeIcon from "../../images/Stroke.png";
 import Vector2Icon from "../../images/Vector2.png";
 import { Paper, styled } from "@mui/material";
 
-export const baseUrl = 'https://0dvdy96k0j.execute-api.us-west-2.amazonaws.com/prod/' //us-west-2 rivian env
+export const baseUrl = process.env.REACT_APP_API_HOST;
 
 export const getCurrIcon = icon => {
     switch (icon) {
