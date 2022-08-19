@@ -161,7 +161,7 @@ const RiskScore = props => {
       ) : (
         <Card>
           <div className="user-score">User Scores</div>
-          <Card className="childCard scoreBoard">
+          <Card className="childCard scores-nav">
             {scores.map((row, index) => (
               <Card.Grid
                 hoverable={false}

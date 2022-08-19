@@ -635,7 +635,7 @@ const Summary = (props) => {
                                                     onClick={() => handleScoreCard(row)}
                                                     style={{
                                                         background: scoreType === row ? "#C54B30" : "unset",
-                                                        color: scoreType === row ? "#ffffff" : "#C54B30",
+                                                        color: scoreType === row ? "#ffffff" : "#585858",
                                                         fontWeight: 700
                                                     }}
                                                     value={scoreType}

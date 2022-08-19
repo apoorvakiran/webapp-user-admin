@@ -45,12 +45,9 @@
   color: #e6e6e6;
 }
 .sider-wdth {
-  overflow: auto;
+  overflow: hidden;
   position: fixed;
   left: 0;
-  width: 225px !important;
-  max-width: 225px !important;
-  min-width: 200px !important;
 }
 .layout-width {
   /* margin-left: 223px !important; */
@@ -71,9 +68,16 @@
 }
 @media screen and (max-width: 768px) {
   .sider-wdth {
-    width: 175px !important;
-    max-width: 175px !important;
-    min-width: 150px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: hidden;
+  }
+  .pageHeader-container { 
+    box-shadow: none !important;
+  }
+  .ant-layout-sider-children {
+    padding-bottom: 25px;
+    background-color: #FFFFFF;
   }
   .layout-width {
     /* margin-left: 173px !important; */
@@ -102,6 +106,7 @@
     /* display: none; */
     z-index: 999;
     position: absolute !important;
+    padding: 0px;
   }
   .ant-layout-has-sider {
     padding: 0px;

@@ -156,7 +156,7 @@ export const ScoresTab = props => {
         (
           <>
             <div className="user-score">User Scores</div>
-            <Card className="childCard scoreBoard">
+            <Card className="childCard scores-nav">
               {ScoresTabData.map((row, index) => (
                 <Card.Grid
                   hoverable={false}

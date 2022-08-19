@@ -3,7 +3,6 @@
     flex-direction: column;
     justify-content: space-evenly;
 }
-
 .gridData {
     font-weight: bold;
     color: #535353 !important;
@@ -174,7 +173,6 @@
 .childCard {
     margin-top: 15px !important;
     text-align: center;
-    box-shadow: 0px 10px 30px #DEDEDE !important;
 }
 
 .chart {
@@ -182,12 +180,11 @@
     overflow: visible;
     align-items: left;
 }
-
-.chartContainer {}
-
+.chartContainer {
+}
 .chart .MuiPaper-root {
     padding: 25px;
-    width: 100%;
+    width:  100%;
     box-shadow: 0px 10px 30px #DEDEDE;
     border-radius: 15px;
 }
@@ -195,6 +192,7 @@
 .gridStyle {
     width: 20% !important;
     text-align: center;
+    padding: 24px 0px !important;
 }
 
 .gridUserStyle {
@@ -264,7 +262,6 @@ input[type="search"] {
     .chart {
         margin-bottom: 20px;
     }
-
     .chart .MuiPaper-root {
         padding: 15px;
     }
@@ -310,10 +307,4 @@ input[type="search"] {
 
 .ant-layout-content {
     min-height: auto !important;
-}
-
-.scoreBoard .cardIcon {
-    display: block;
-    margin: 0 auto 5px;
-    height: 20px;
 }
