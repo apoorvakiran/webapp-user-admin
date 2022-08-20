@@ -89,6 +89,7 @@ const formFields = {
       labelHidden: false,
       label: '',
       placeholder: 'Email',
+      className: 'email-field',
     },
   },
   resetPassword: {

@@ -138,10 +138,9 @@ thead[class*="ant-table-thead"] th {
 }
 
 .amplify-button[data-variation='primary'] {
-  margin-top: 50px;
-  margin-left: 95px !important;
+  margin: 20px auto 0px;
   border-radius: 2rem;
-  width: 60%;
+  width: 90%;
   height: 50px;
   font-size: 20px;
   color: white;
@@ -155,9 +154,7 @@ thead[class*="ant-table-thead"] th {
 
 @media (max-width: 425px) {
   .amplify-button[data-variation='primary'] {
-    margin-top: 50px;
-    margin-left: 35px !important;
-    width: 70%;
+    margin-top: 10px;
     font-weight: 600 !important;
   }
 }
@@ -196,10 +193,6 @@ thead[class*="ant-table-thead"] th {
   align-items: center;
   color: #535353;
   font-weight: 900;
-}
-
-.amplify-button--primary {
-  margin-left: 30px !important;
 }
 
 .amplify-button[data-variation='link'] {
@@ -257,6 +250,15 @@ fieldset {
 
 .anticon-double-right svg, .anticon-double-left svg {
   fill: #dc4128;
+}
+
+[data-amplify-authenticator] [data-amplify-container] {
+  max-width: 480px;
+  min-width:  320px;
+}
+
+.email-field .amplify-input {
+  border-bottom: none;
 }
 
 @media screen and (max-width: 768px) {
