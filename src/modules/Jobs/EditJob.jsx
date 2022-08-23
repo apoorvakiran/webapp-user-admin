@@ -298,13 +298,13 @@ const EditJob = (props) => {
               </Form.Item>
               <Form.Item
                 name="userList"
-                style={{ justifyContent: "center" }}>
+                className="user-list">
                 {mappedUserList.length !== 0 ?
                   <Table style={{ width: "80%" }} data={mappedUserList} columns={columns} showHeader={false} />
                   : <></>
                 }
               </Form.Item>
-              <Form.Item {...tailFormItemLayout} style={{ marginTop: "25px", justifyContent: "center" }}>
+              <Form.Item className="edit-job-save-item" {...tailFormItemLayout} style={{ marginTop: "25px", justifyContent: "center" }}>
                 <Button
                   className="create-user"
                   htmlType="submit"
