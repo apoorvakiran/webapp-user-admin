@@ -5,15 +5,18 @@
 .page-content .ant-card-body {
   padding: 0px;
 }
+
 .page-content-header {
   padding: 22px 20px;
   border-bottom: 1px solid #dedede;
   position: relative;
 }
+
 .page-content-header .createNewButton {
   margin-bottom: 0px !important;
   margin-top: -5px;
 }
+
 .user-name {
   font-family: "Montserrat";
   font-style: normal;
@@ -121,7 +124,7 @@
   max-height: 100px;
 }
 
-.formSelectStyle > .ant-select-selector {
+.formSelectStyle>.ant-select-selector {
   height: 48px !important;
 }
 
@@ -177,6 +180,14 @@
     margin-top: 10px;
     width: 100% !important;
     font-size: 13px !important;
+  }
+
+  .ant-form-item-control {
+    margin-bottom: 20px !important;
+  }
+
+  .ant-input {
+    margin-bottom: 20px !important;
   }
 }
 
