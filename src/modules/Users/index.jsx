@@ -9,6 +9,7 @@ import axios from "axios";
 import { type } from "@testing-library/user-event/dist/type";
 import { baseUrl } from "../../utils/Data/Data";
 import "./user.css";
+import { openNotificationWithIcon } from "../../utils/helpers";
 
 const Users = props => {
   const [loading, setLoading] = useState(true);
@@ -44,10 +45,14 @@ const Users = props => {
     });
   };
   const EditUser = () => {
-    props?.history?.push({
-      pathname: routes.EDIT_USER,
-      state: userRowData,
-    });
+    if (userRowData.length !== 0) {
+      props?.history?.push({
+        pathname: routes.EDIT_USER,
+        state: userRowData,
+      });
+    } else {
+      openNotificationWithIcon("error", "Error", `Please select any user to edit`);
+    }
   };
   const editButton = () => {
     return (
