@@ -8,7 +8,7 @@ const routes = {
   LOGIN: getRoute(`login`),
   SUMMARY: getRoute(`jobs-summary`),
   NEW_SUMMARY: getRoute(`summary`),
-  USERS: getRoute(`users/`),
+  USERS: getRoute(`users`),
   CREATE_USER: getRoute(`users/create-user`),
   EDIT_USER: getRoute(`users/edit-user`),
   USER_DETAIL: getRoute(`users/user-detail`),
