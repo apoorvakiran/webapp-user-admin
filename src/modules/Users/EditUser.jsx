@@ -355,7 +355,7 @@ const EditUser = () => {
               </Card>
             </Col>
           </Row>
-          <Form.Item {...tailFormItemLayout} style={{ marginTop: "25px" }}>
+          <Form.Item className="edit-job-save-item" {...tailFormItemLayout} style={{ marginTop: "25px" }}>
             <Button
               className="create-user"
               htmlType="submit"
@@ -366,7 +366,7 @@ const EditUser = () => {
               Save
             </Button>
           </Form.Item>
-          <Form.Item {...tailFormItemLayout} style={location.state.banned ? { display: "none" } : { marginTop: "25px" }}>
+          <Form.Item className="edit-job-save-item" {...tailFormItemLayout} style={location.state.banned ? { display: "none" } : { marginTop: "25px" }}>
             <Button
               className="create-user"
               htmlType="button"
@@ -378,7 +378,7 @@ const EditUser = () => {
               Delete
             </Button>
           </Form.Item>
-          <Form.Item {...canTailFormItemLayout} style={{ fontSize: 14, justifyContent: "center", marginTop: "20px" }}>
+          <Form.Item className="edit-job-save-item" {...canTailFormItemLayout} style={{ fontSize: 14, justifyContent: "center", marginTop: "20px" }}>
             <Link className="cancel-edit" to="/user-admin/users/">
               Cancel
             </Link>
