@@ -78,9 +78,9 @@ export const ScoresTab = props => {
       );
     }
     setLoading(false);
-    setAggScore(response?.data?.agg_score);
-    setRating(response?.data?.rating);
-    setShowDate(response?.data?.start_date);
+    setAggScore(response?.data?.agg_score || '');
+    setRating(response?.data?.rating || '');
+    setShowDate(response?.data?.start_date || '');
     setUserScoreData(response?.data?.users || []);
   }
 
