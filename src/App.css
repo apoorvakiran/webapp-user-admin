@@ -32,21 +32,21 @@
 }
 
 @media (max-width: 768px) {
-    .ant-layout {
-        padding: 0px;
-    }
+  .ant-layout {
+    padding: 0px;
+  }
 }
 
 .ant-layout-sider {
   background: #fcfcfc !important;
 }
 
-.ant-result-info .ant-result-icon>.anticon {
+.ant-result-info .ant-result-icon > .anticon {
   color: #c54b30 !important;
 }
 
 .ant-card {
-  overflow:  hidden;
+  overflow: hidden;
   border-radius: 20px !important;
 }
 
@@ -62,6 +62,11 @@
 .ant-menu-item-selected {
   color: #dc4128 !important;
   font-weight: 700;
+}
+
+.selected-menu-item {
+  font-weight: 700;
+  color: #dc4128 !important;
 }
 
 .ant-menu-inline .ant-menu-item::after {
@@ -81,7 +86,7 @@
   cursor: pointer;
 }
 
-.table-row-light>td {
+.table-row-light > td {
   background-color: #f3f3f3 !important;
   cursor: pointer;
 }
@@ -91,9 +96,8 @@
   cursor: pointer;
 }
 
-
 thead[class*="ant-table-thead"] th {
-  background-color: #FFFFFF !important;
+  background-color: #ffffff !important;
   font-weight: 700;
   color: #727272 !important;
 }
@@ -137,15 +141,16 @@ thead[class*="ant-table-thead"] th {
   font-size: 14px;
 }
 
-.amplify-button[data-variation='primary'] {
-  margin: 20px auto 0px;
+.amplify-button[data-variation="primary"] {
+  margin-top: 50px;
+  margin-left: 95px !important;
   border-radius: 2rem;
   width: 90%;
   height: 50px;
   font-size: 20px;
   color: white;
   font-weight: 700;
-  background: #C54B30;
+  background: #c54b30;
   /* background: linear-gradient(90deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%); */
   border: 0px;
   cursor: pointer;
@@ -153,8 +158,10 @@ thead[class*="ant-table-thead"] th {
 }
 
 @media (max-width: 425px) {
-  .amplify-button[data-variation='primary'] {
-    margin-top: 10px;
+  .amplify-button[data-variation="primary"] {
+    margin-top: 50px;
+    margin-left: 35px !important;
+    width: 70%;
     font-weight: 600 !important;
   }
 }
@@ -175,7 +182,7 @@ thead[class*="ant-table-thead"] th {
   border-right: none;
   border-left: none;
   border-radius: 0px;
-  border-color: #94A3AC;
+  border-color: #94a3ac;
 }
 
 .amplify-field__show-password {
@@ -195,8 +202,16 @@ thead[class*="ant-table-thead"] th {
   font-weight: 900;
 }
 
-.amplify-button[data-variation='link'] {
-  color: #C54B30;
+.amplify-button--primary {
+  margin-left: 30px !important;
+}
+
+.amplify-button--primary {
+  margin-left: 30px !important;
+}
+
+.amplify-button[data-variation="link"] {
+  color: #c54b30;
   background-color: #ffffff;
 }
 
@@ -208,7 +223,8 @@ fieldset {
   border-radius: unset !important;
 }
 
-.css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+.css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
   border-color: #535353 !important;
   border-width: 1px !important;
 }
@@ -222,21 +238,29 @@ fieldset {
   padding: 0px 86% 0px 8px !important;
 }
 
-.ant-pagination-item-active a, .ant-pagination-item-active:hover a, .ant-pagination-item:hover a, .ant-pagination-next .ant-pagination-item-link:hover, .ant-pagination-prev .ant-pagination-item-link:hover {
+.ant-pagination-item-active a,
+.ant-pagination-item-active:hover a,
+.ant-pagination-item:hover a,
+.ant-pagination-next .ant-pagination-item-link:hover,
+.ant-pagination-prev .ant-pagination-item-link:hover {
   color: #dc4128 !important;
 }
 
-.ant-pagination-item-active, .ant-pagination-item-active:hover {
+.ant-pagination-item-active,
+.ant-pagination-item-active:hover {
   border-color: #dc4128 !important;
   border-radius: 100px;
 }
 
-.ant-pagination-item:hover, .ant-pagination-item-link:hover {
+.ant-pagination-item:hover,
+.ant-pagination-item-link:hover {
   border-color: #dc4128 !important;
   border-radius: 100px;
 }
 
-.ant-pagination-item, .ant-pagination-next .ant-pagination-item-link, .ant-pagination-prev .ant-pagination-item-link {
+.ant-pagination-item,
+.ant-pagination-next .ant-pagination-item-link,
+.ant-pagination-prev .ant-pagination-item-link {
   border-radius: 100px;
 }
 
@@ -248,7 +272,8 @@ fieldset {
   fill: #d9d9d9;
 }
 
-.anticon-double-right svg, .anticon-double-left svg {
+.anticon-double-right svg,
+.anticon-double-left svg {
   fill: #dc4128;
 }
 
@@ -264,7 +289,7 @@ fieldset {
 @media screen and (max-width: 768px) {
   .page-content {
     border-radius: 0px;
-    border:  none;
+    border: none;
   }
 }
 
@@ -277,4 +302,3 @@ fieldset {
     border: none;
   }
 }
-

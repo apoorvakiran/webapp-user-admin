@@ -1,15 +1,8 @@
 import React, { useState } from "react";
-import {
-  Form,
-  Input,
-  Row,
-  Col,
-  Button,
-  Card
-} from "antd";
+import { Form, Input, Row, Col, Button, Card } from "antd";
 import BasicLayout from "../../layouts/BasicLayout";
 import { createUserButton } from "./../Users/style";
-import { openNotificationWithIcon } from "../../utils/helpers"
+import { openNotificationWithIcon } from "../../utils/helpers";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
@@ -42,13 +35,13 @@ const tailFormItemLayout = {
   },
 };
 
-const CreateJob = (props) => {
+const CreateJob = props => {
   const [userList, setUserList] = useState([]);
   const [mappedUserList, setMappedUserList] = useState([]);
 
   useEffect(() => {
     getUserData();
-  }, [])
+  }, []);
 
   async function getUserData() {
     const idToken = await getAuthData();
@@ -63,8 +56,8 @@ const CreateJob = (props) => {
   }
 
   const onClick = (event, item) => {
-    setMappedUserList((prevState) =>
-      prevState.filter((prevItem) => prevItem !== item)
+    setMappedUserList(prevState =>
+      prevState.filter(prevItem => prevItem !== item),
     );
   };
 
@@ -97,29 +90,33 @@ const CreateJob = (props) => {
                 onClick(e, record);
               }}
               icon={<DeleteOutlined />}
-            >
-            </Button>
+            ></Button>
           </div>
         );
-      }
-    }
+      },
+    },
   ];
 
   const [form] = Form.useForm();
 
   async function handleFinish(values) {
     const response = await axios.post(
-      "http://localhost:5051/api/user-admin/create-new-job", {
-      job_id: null,
-      job_name: values.jobTitle.trim(),
-      description: values.jobTitle.trim(),
-      location_id: 4,
-      users: getIdforMappedUsers()
-    }
+      "http://localhost:5051/api/user-admin/create-new-job",
+      {
+        job_id: null,
+        job_name: values.jobTitle.trim(),
+        description: values.jobTitle.trim(),
+        location_id: 4,
+        users: getIdforMappedUsers(),
+      },
     );
-    openNotificationWithIcon("success", "Success", `New Job ${values.jobTitle} successfully created`);
+    openNotificationWithIcon(
+      "success",
+      "Success",
+      `New Job ${values.jobTitle} successfully created`,
+    );
     props?.history?.goBack();
-  };
+  }
 
   function getIdforMappedUsers() {
     let userArray = [];
@@ -134,15 +131,15 @@ const CreateJob = (props) => {
 
     const idToken = await getAuthData();
     const data = {
-      'job_id': null,
-      'job_name': values.jobTitle.trim(),
-      'description': values.jobTitle.trim(),
-      'location_id': 4,
-      'users': getIdforMappedUsers()
+      job_id: null,
+      job_name: values.jobTitle.trim(),
+      description: values.jobTitle.trim(),
+      location_id: 4,
+      users: getIdforMappedUsers(),
     };
 
     const config = {
-      method: 'POST',
+      method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -150,34 +147,38 @@ const CreateJob = (props) => {
       },
       // mode: 'no-cors',
       body: JSON.stringify(data),
-    }
+    };
     let responseCode = null;
-    const url = baseUrl + 'userdetail?type=create-new-job'
+    const url = baseUrl + "userdetail?type=create-new-job";
     //const url = 'http://localhost:5051/api/user-admin/create-new-job'
-    fetch(url, config).
-      then(response => { responseCode = response.status; return response.json() })
+    fetch(url, config)
+      .then(response => {
+        responseCode = response.status;
+        return response.json();
+      })
       .then(data => {
         if (responseCode === 200) {
-          openNotificationWithIcon("success", "Success", `Job created successfully`);
+          openNotificationWithIcon(
+            "success",
+            "Success",
+            `Job created successfully`,
+          );
           props?.history?.goBack();
         }
         if (responseCode === 409) {
           openNotificationWithIcon("error", "Error", data.data.message);
         }
       })
-      .catch((error) => {
-        console.error('Error:', error);
+      .catch(error => {
+        console.error("Error:", error);
       });
   }
 
   const handleChange = (event, value) => {
     if (value.length !== 0) {
-      setMappedUserList((mappedUserList) => [
-        ...mappedUserList,
-        value,
-      ]);
+      setMappedUserList(mappedUserList => [...mappedUserList, value]);
     }
-  }
+  };
 
   return (
     <BasicLayout>
@@ -193,7 +194,7 @@ const CreateJob = (props) => {
       >
         <Row gutter={24}>
           <Col span={24}>
-            <Card title="Create New Job">
+            <Card title="Create New Job" className="job-card">
               <Form.Item
                 style={{ justifyContent: "center" }}
                 name="jobTitle"
@@ -205,27 +206,28 @@ const CreateJob = (props) => {
                     whitespace: true,
                   },
                 ]}
+                className="job-title-form-item"
               >
                 <Input className="formInput" placeholder="Enter Job Title" />
               </Form.Item>
-              <Form.Item
-                style={{ justifyContent: "center", fontSize: 20, fontWeight: 600, color: "#535353" }}
-                name="label"
-              >
+              <Form.Item className="job-user-heading" name="label">
                 + Assign Users
               </Form.Item>
               <Form.Item
                 name="users"
                 style={{ justifyContent: "center" }}
-              // label="Type User's Name to Add"
-
+                // label="Type User's Name to Add"
               >
                 {/* <Input className="formInput" placeholder="Type User's Name to Add" /> */}
                 <Autocomplete
                   id="asynchronous-demo"
-                  getOptionLabel={(userList) => `${userList.first_name} ${userList.last_name}`}
+                  getOptionLabel={userList =>
+                    `${userList.first_name} ${userList.last_name}`
+                  }
                   options={userList}
-                  isOptionEqualToValue={(option, value) => option.first_name === value.first_name}
+                  isOptionEqualToValue={(option, value) =>
+                    option.first_name === value.first_name
+                  }
                   noOptionsText={"No users"}
                   renderOption={(props, userList) => (
                     <Box component="li" {...props} key={userList.id}>
@@ -233,20 +235,29 @@ const CreateJob = (props) => {
                     </Box>
                   )}
                   value={props | null}
-                  renderInput={(params) => <TextField {...params} label="Enter user name" />}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      className="job-user-input"
+                      label="Enter user name"
+                    />
+                  )}
                   onChange={handleChange}
                 />
               </Form.Item>
-              <Form.Item
-                name="userList"
-                style={{ justifyContent: "center" }}>
-                {mappedUserList.length !== 0 ?
-                  <Table style={{ width: "80%" }} data={mappedUserList} columns={columns} showHeader={false} />
-                  : <></>
-                }
-
+              <Form.Item name="userList" style={{ justifyContent: "center" }}>
+                {mappedUserList.length !== 0 ? (
+                  <Table
+                    style={{ width: "80%" }}
+                    data={mappedUserList}
+                    columns={columns}
+                    showHeader={false}
+                  />
+                ) : (
+                  <></>
+                )}
               </Form.Item>
-              <Form.Item {...tailFormItemLayout} style={{ marginTop: "25px", justifyContent: "center" }}>
+              <Form.Item {...tailFormItemLayout} className="job-save-btn">
                 <Button
                   className="create-user"
                   htmlType="submit"

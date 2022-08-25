@@ -1,9 +1,12 @@
 import React from "react";
 import { Menu } from "antd";
-import { MENU_KEYS, sideBarNavigator } from "../../features/Routes/navigation";
+import {
+  MENU_KEYS,
+  sideBarNavigator,
+} from "../../features/Routes/navigation";
 import { SideMenuStyle } from "./style";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import {LogOut} from "../../modules/Login/Logout"
+import { LogOut } from "../../modules/Login/Logout";
 
 const { SubMenu } = Menu;
 
@@ -44,18 +47,38 @@ class SidebarMenuItems extends React.Component {
       this.props?.history?.push(`${e.key}`);
     }
     if (e.key === "/user-admin/logout") {
-      LogOut()
+      LogOut();
     }
   };
   renderSideMenu = routeMap => {
     return routeMap?.map((menu, i) => {
       return (
-        <Menu.Item key={menu.url} disabled={menu.disabled}>
-          {this.state.selectedKey === menu.url ? (
-            <Icon type={menu.icon} />
-          ) : null}
-          <span>{menu.name}</span>
-        </Menu.Item>
+        <>
+          <Menu.Item
+            key={menu.url}
+            disabled={menu.disabled}
+            className={
+              this.state.selectedKey === menu.url ||
+              "/" + this.state.selectedKey.split("/").slice(1, 3).join("/") ===
+                menu.url ||
+              (menu.url === "/user-admin/analytics/safety-score" &&
+                menu.url.split("/").slice(1, 3).join("/") ===
+                  this.state.selectedKey.split("/").slice(1, 3).join("/"))
+                ? "selected-menu-item"
+                : ""
+            }
+          >
+            {this.state.selectedKey === menu.url ||
+            "/" + this.state.selectedKey.split("/").slice(1, 3).join("/") ===
+              menu.url ||
+            (menu.url === "/user-admin/analytics/safety-score" &&
+              menu.url.split("/").slice(1, 3).join("/") ===
+                this.state.selectedKey.split("/").slice(1, 3).join("/")) ? (
+              <Icon type={menu.icon} />
+            ) : null}
+            <span>{menu.name}</span>
+          </Menu.Item>
+        </>
       );
     });
   };
