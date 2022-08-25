@@ -142,10 +142,10 @@ thead[class*="ant-table-thead"] th {
 }
 
 .amplify-button[data-variation="primary"] {
-  margin-top: 50px;
-  margin-left: 95px !important;
+  margin-top: 40px;
   border-radius: 2rem;
-  width: 90%;
+  width: 50%;
+  margin-left: 0px !important;
   height: 50px;
   font-size: 20px;
   color: white;
@@ -155,12 +155,11 @@ thead[class*="ant-table-thead"] th {
   border: 0px;
   cursor: pointer;
   transition: opacity 0.25s ease-out;
+  align-self: center;
 }
 
 @media (max-width: 425px) {
   .amplify-button[data-variation="primary"] {
-    margin-top: 50px;
-    margin-left: 35px !important;
     width: 70%;
     font-weight: 600 !important;
   }
