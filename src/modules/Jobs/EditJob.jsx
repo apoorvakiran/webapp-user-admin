@@ -18,7 +18,7 @@ import { Box } from "@mui/system";
 import Table from "../../components/Table/index";
 import { useLocation } from "react-router-dom";
 import { DeleteOutlined } from "@ant-design/icons";
-import { baseUrl } from "../../utils/Data/Data";
+import { baseUrl, getAuthData } from "../../utils/Data/Data";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -63,9 +63,13 @@ const EditJob = (props) => {
 
 
   async function getJobUserList(jobId) {
+    const idToken = await getAuthData();
     const response = await axios.get(
       // "http://localhost:5051/api/user-admin/get-user-jobs-list", {
       baseUrl + "userdetail", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         id: jobId,
         type: "get-user-jobs-list"
@@ -76,8 +80,12 @@ const EditJob = (props) => {
   }
 
   async function getUserData() {
+    const idToken = await getAuthData();
     const response = await axios.get(
       baseUrl + "user", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: { type: "user-list" }
     })
     setUserList(response.data.data)
@@ -92,18 +100,19 @@ const EditJob = (props) => {
     return userArray;
   }
 
-  const onClick = (event, value) => {
-    console.log(value);
+  const onClick = async (event, value) => {
+    // console.log(value);
     const data = {
       'job_id': location.state.id,
       'users': deleteMappedUserList(value)
     };
-
+    const idToken = await getAuthData();
     const config = {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`
       },
       // mode: 'no-cors',
       body: JSON.stringify(data),
@@ -179,7 +188,7 @@ const EditJob = (props) => {
     props?.history?.goBack();
   };
 
-  function saveEditJob(values) {
+  async function saveEditJob(values) {
     const data = {
       'job_id': values.id,
       'job_name': values.name.trim(),
@@ -187,12 +196,13 @@ const EditJob = (props) => {
       'location_id': 4,
       'users': getIdforMappedUsers()
     };
-
+    const idToken = await getAuthData();
     const config = {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`
       },
       body: JSON.stringify(data),
     }

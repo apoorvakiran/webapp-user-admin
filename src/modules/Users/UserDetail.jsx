@@ -2,7 +2,7 @@ import { Grid, Paper, styled, Typography } from "@mui/material";
 import { Card, Skeleton, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
-import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor } from "../../utils/Data/Data";
+import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, getAuthData } from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
 import axios from "axios";
 import "../../components/Dashboard/dashboard.css";
@@ -32,8 +32,12 @@ const Dashboard = props => {
   const userData = location?.state;
 
   const getUserScore = async value => {
+    const idToken = await getAuthData();
     const request = await axios.get(
       baseUrl + "userdetail", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         "type": "get-user-score",
         "userId": userData?.id,
@@ -48,9 +52,13 @@ const Dashboard = props => {
   const getActiveScores = async value => {
     const current = new Date();
     const date = formatDate(current);
+    const idToken = await getAuthData();
     const response = await axios.get(
       // "http://localhost:5051/api/user-admin/get-user-detail", {
       baseUrl + "userdetail", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         "type": "get-user-detail",
         "userId": userData.id,

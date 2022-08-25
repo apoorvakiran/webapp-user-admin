@@ -16,7 +16,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { baseUrl } from "../../utils/Data/Data";
+import { baseUrl, getAuthData } from "../../utils/Data/Data";
 import { display } from "@mui/system";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = "*";
@@ -80,8 +80,12 @@ const EditUser = () => {
   }, []);
 
   async function getJobTitleList() {
+    const idToken = await getAuthData();
     const response = await axios.get(
       baseUrl + "userdetail", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         type: "get-jobs-list"
       }
@@ -102,12 +106,13 @@ const EditUser = () => {
         'job_id': values.job_id,
         'hand': values.hand
       };
-
+      const idToken = await getAuthData();
       const config = {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`
         },
         // mode: 'no-cors',
         body: JSON.stringify(userdata),
@@ -132,6 +137,7 @@ const EditUser = () => {
   }
 
   async function saveEditUser2(values) {
+    const idToken = await getAuthData();
     const response = await axios.post(
       // "http://localhost:5051/api/user-admin/user-edit",
       baseUrl + "user",
@@ -144,6 +150,9 @@ const EditUser = () => {
         "job_id": values.job_id,
         "hand": values.hand,
       }, {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         type: "user-edit"
       }
@@ -155,12 +164,16 @@ const EditUser = () => {
   }
 
   async function deleteUser1() {
+    const idToken = await getAuthData();
     const response = await axios.post(
       // "http://localhost:5051/api/user-admin/banned-user",
       baseUrl + "user",
       {
         "user_id": location.state.id,
       }, {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         type: "user-deactivate"
       }
@@ -183,17 +196,18 @@ const EditUser = () => {
     });
   }
 
-  function deleteUser() {
+  async function deleteUser() {
     const data = {
       // 'user_id': location.state.id,
       'email': location.state.email
     };
-
+    const idToken = await getAuthData();
     const config = {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`
       },
       // mode: 'no-cors',
       body: JSON.stringify(data),

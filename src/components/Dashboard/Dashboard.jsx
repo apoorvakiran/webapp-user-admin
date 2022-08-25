@@ -2,7 +2,7 @@ import { Grid, Paper, styled, Typography } from "@mui/material";
 import { Card, Select, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
-import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor } from "../../utils/Data/Data";
+import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, getAuthData } from "../../utils/Data/Data";
 import Chart from "../Charts/Chart";
 import axios from "axios";
 import "./dashboard.css";
@@ -38,9 +38,13 @@ const Dashboard = (props) => {
 
     const current = new Date();
     const date = formatDate(current);
+    const idToken = await getAuthData();
     const response = await axios.get(
       // "http://localhost:5051/api/user-admin/summary-graph-data", {
       baseUrl + "summary", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         type: "summary-graph-data",
         durationType: value,
@@ -79,8 +83,12 @@ const Dashboard = (props) => {
     // const response = await axios.get(
     //   "http://localhost:5051/api/user-admin/user-list",
     // );
+    const idToken = await getAuthData();
     const response = await axios.get(
       baseUrl + "user", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         type: "user-list"
       }
@@ -94,8 +102,12 @@ const Dashboard = (props) => {
     // const response = await axios.get(
     //   "http://localhost:5051/api/user-admin/get-jobs-list",
     // );
+    const idToken = await getAuthData();
     const response = await axios.get(
       baseUrl + "userdetail", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         type: "get-jobs-list"
       }
@@ -176,9 +188,13 @@ const Dashboard = (props) => {
 
     const current = new Date();
     const date = formatDate(current);
+    const idToken = await getAuthData();
     const response = await axios.get(
       // "http://localhost:5051/api/user-admin/get-summary-by-job", {
       baseUrl + "summary", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         type: "get-summary-by-job",
         durationType: durationType,
@@ -216,8 +232,12 @@ const Dashboard = (props) => {
     //   }
     // }
     // );
+    const idToken = await getAuthData();
     const response = await axios.get(
       baseUrl + "userdetail", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         id: userId,
         type: "get-user-jobs-list"

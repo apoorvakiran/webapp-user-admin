@@ -16,7 +16,7 @@ import axios from "axios";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
-import { baseUrl } from "../../utils/Data/Data";
+import { baseUrl, getAuthData } from "../../utils/Data/Data";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -77,8 +77,12 @@ const CreateUser = (props) => {
   }, []);
 
   async function getJobTitleList() {
+    const idToken = await getAuthData();
     const response = await axios.get(
       baseUrl + "userdetail", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         type: "get-jobs-list"
       }
@@ -117,12 +121,13 @@ const CreateUser = (props) => {
       //   password: pwd,
       //   attributes: attributeVal
       // });
-
+      const idToken = await getAuthData();
       const config = {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`
         },
         // mode: 'no-cors',
         body: JSON.stringify(attributeVal),

@@ -8,8 +8,17 @@ import PolygonIcon from "../../images/risk-icon.svg";
 import StrokeIcon from "../../images/Stroke.png";
 import Vector2Icon from "../../images/Vector2.png";
 import { Paper, styled } from "@mui/material";
+import { Auth } from "aws-amplify";
 
 export const baseUrl = process.env.REACT_APP_API_HOST;
+
+export const getAuthData = async () => {
+    const data = await Auth.currentAuthenticatedUser()
+        .then(user => {
+            return user.signInUserSession.idToken.jwtToken;
+        });
+    return data;
+};
 
 export const getCurrIcon = icon => {
     switch (icon) {

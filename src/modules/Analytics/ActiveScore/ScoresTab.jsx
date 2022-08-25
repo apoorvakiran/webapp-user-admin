@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Paper, styled, Typography } from "@mui/material";
-import { DashboardData, ScoresTabData, baseUrl, formatDate } from "../../../utils/Data/Data";
+import { DashboardData, ScoresTabData, baseUrl, formatDate, getAuthData } from "../../../utils/Data/Data";
 import SettingIcon from "../../../images/setting.png";
 import PolygonIcon from "../../../images/risk-icon.svg";
 import StrokeIcon from "../../../images/Stroke.png";
@@ -51,12 +51,16 @@ export const ScoresTab = props => {
   async function getScoresData(type, filterBy) {
     const current = new Date();
     const date = formatDate(current);
+    const idToken = await getAuthData();
     let response = [];
     if (type === "Active Score") {
       response = await axios.get(
         // "http://localhost:5051/api/user-admin/get-active-score",
         baseUrl + "userdetail",
         {
+          headers: {
+            "Authorization": `Bearer ${idToken}`
+          },
           params: {
             type: "get-active-score",
             durationType: filterBy,
@@ -69,6 +73,9 @@ export const ScoresTab = props => {
         // "http://localhost:5051/api/user-admin/get-safety-score",
         baseUrl + "userdetail",
         {
+          headers: {
+            "Authorization": `Bearer ${idToken}`
+          },
           params: {
             type: "get-safety-score",
             durationType: filterBy,
