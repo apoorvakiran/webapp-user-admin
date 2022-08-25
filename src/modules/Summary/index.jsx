@@ -2,7 +2,7 @@ import { Grid, Paper, styled, Typography } from "@mui/material";
 import { Card, Select, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
-import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, ProgressBarChart, ViewBy } from "../../utils/Data/Data";
+import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, ProgressBarChart, ViewBy, getAccessToken, getAccessValueToken, getAuthData } from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
 import axios from "axios";
 import "./dashboard.css";
@@ -18,6 +18,7 @@ import Meta from "antd/lib/card/Meta";
 import AllJobSummary from "./AllJobSummary";
 import UserProgressScore from "../Analytics/ActiveScore/UserProgressScore";
 import { orderBy, round, sortBy } from "lodash";
+import { Auth } from "aws-amplify";
 
 const Summary = (props) => {
     const [loading, setLoading] = useState(true);
@@ -42,9 +43,13 @@ const Summary = (props) => {
 
         const current = new Date();
         const date = formatDate(current);
+        const idToken = await getAuthData();
         const response = await axios.get(
             // "http://localhost:5051/api/user-admin/summary-graph-data", {
             baseUrl + "summary", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
             params: {
                 type: "summary-graph-data",
                 durationType: value,
@@ -88,8 +93,12 @@ const Summary = (props) => {
         // const response = await axios.get(
         //   "http://localhost:5051/api/user-admin/user-list",
         // );
+        const idToken = await getAuthData();
         const response = await axios.get(
             baseUrl + "user", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
             params: {
                 type: "user-list"
             }
@@ -103,8 +112,12 @@ const Summary = (props) => {
         // const response = await axios.get(
         //   "http://localhost:5051/api/user-admin/get-jobs-list",
         // );
+        const idToken = await getAuthData();
         const response = await axios.get(
             baseUrl + "userdetail", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
             params: {
                 type: "get-jobs-list"
             }
@@ -195,9 +208,13 @@ const Summary = (props) => {
 
         const current = new Date();
         const date = formatDate(current);
+        const idToken = await getAuthData();
         const response = await axios.get(
             // "http://localhost:5051/api/user-admin/get-summary-by-job", {
             baseUrl + "summary", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
             params: {
                 type: "get-summary-by-job",
                 durationType: durationType,
@@ -235,8 +252,12 @@ const Summary = (props) => {
         //   }
         // }
         // );
+        const idToken = await getAuthData();
         const response = await axios.get(
             baseUrl + "userdetail", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
             params: {
                 id: userId,
                 type: "get-user-jobs-list"
@@ -298,9 +319,13 @@ const Summary = (props) => {
     async function getUserCardData(value, durationType) {
         const current = new Date();
         const date = formatDate(current);
+        const idToken = await getAuthData();
         const response = await axios.get(
             // "http://localhost:5051/api/user-admin/get-summary-card-detail-by-user", {
             baseUrl + "summary", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
             params: {
                 type: "get-summary-card-detail-by-user",
                 durationType: durationType,
@@ -315,9 +340,13 @@ const Summary = (props) => {
     async function getUserSafetyScoreData(value, durationType) {
         const current = new Date();
         const date = formatDate(current);
+        const idToken = await getAuthData();
         const response = await axios.get(
             // value !== null ? "http://localhost:5051/api/user-admin/get-summary-by-user" : "http://localhost:5051/api/user-admin/get-summary-by-all-job", {
             baseUrl + "summary", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
             params: {
                 type: value !== null ? "get-summary-by-user" : "get-summary-by-all-job",
                 durationType: durationType,
@@ -340,9 +369,13 @@ const Summary = (props) => {
     async function getUserRiskScoreData(value, durationType) {
         const current = new Date();
         const date = formatDate(current);
+        const idToken = await getAuthData();
         const response = await axios.get(
             // value !== null ? "http://localhost:5051/api/user-admin/get-summary-by-user" : "http://localhost:5051/api/user-admin/get-summary-by-all-job", {
             baseUrl + "summary", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
             params: {
                 type: value !== null ? "get-summary-by-user" : "get-summary-by-all-job",
                 durationType: durationType,
@@ -364,9 +397,13 @@ const Summary = (props) => {
     async function getUserSpeedScoreData(value, durationType) {
         const current = new Date();
         const date = formatDate(current);
+        const idToken = await getAuthData();
         const response = await axios.get(
             // value !== null ? "http://localhost:5051/api/user-admin/get-summary-by-user" : "http://localhost:5051/api/user-admin/get-summary-by-all-job", {
             baseUrl + "summary", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
             params: {
                 type: value !== null ? "get-summary-by-user" : "get-summary-by-all-job",
                 durationType: durationType,
@@ -388,9 +425,13 @@ const Summary = (props) => {
     async function getUserActiveScoreData(value, durationType) {
         const current = new Date();
         const date = formatDate(current);
+        const idToken = await getAuthData();
         const response = await axios.get(
             // value !== null ? "http://localhost:5051/api/user-admin/get-summary-by-user" : "http://localhost:5051/api/user-admin/get-summary-by-all-job", {
             baseUrl + "summary", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
             params: {
                 type: value !== null ? "get-summary-by-user" : "get-summary-by-all-job",
                 durationType: durationType,
@@ -474,7 +515,7 @@ const Summary = (props) => {
                                 <Card.Grid hoverable={false} className="gridStyle">
                                     <Typography className={"innerCardUpperTitle" + index}>
 
-                                        <span>
+                                        <span className="imgSpan">
                                             <img src={getIcon(row?.type)} className="cardIcon" />
                                         </span>
                                         {row.type !== "Risk" ? row.type : "Risk Frequency"}

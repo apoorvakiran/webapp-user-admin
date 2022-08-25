@@ -21,7 +21,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { baseUrl } from "../../utils/Data/Data";
+import { baseUrl, getAuthData } from "../../utils/Data/Data";
 import { display } from "@mui/system";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
@@ -85,7 +85,12 @@ const EditUser = () => {
   }, []);
 
   async function getJobTitleList() {
-    const response = await axios.get(baseUrl + "userdetail", {
+    const idToken = await getAuthData();
+    const response = await axios.get(
+      baseUrl + "userdetail", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         type: "get-jobs-list",
       },
@@ -105,12 +110,13 @@ const EditUser = () => {
         job_id: values.job_id,
         hand: values.hand,
       };
-
+      const idToken = await getAuthData();
       const config = {
         method: "POST",
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`
         },
         // mode: 'no-cors',
         body: JSON.stringify(userdata),
@@ -139,23 +145,26 @@ const EditUser = () => {
   }
 
   async function saveEditUser2(values) {
+    const idToken = await getAuthData();
     const response = await axios.post(
       // "http://localhost:5051/api/user-admin/user-edit",
       baseUrl + "user",
       {
-        user_id: location.state.id,
-        first_name: values.first_name,
-        last_name: values.last_name,
-        phone: values.phone,
-        role: values.role,
-        job_id: values.job_id,
-        hand: values.hand,
+        "user_id": location.state.id,
+        "first_name": values.first_name,
+        "last_name": values.last_name,
+        "phone": values.phone,
+        "role": values.role,
+        "job_id": values.job_id,
+        "hand": values.hand,
+      }, {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
       },
-      {
-        params: {
-          type: "user-edit",
-        },
-      },
+      params: {
+        type: "user-edit"
+      }
+    }
     );
     if (response.rowcount === 1) {
       openNotificationWithIcon(
@@ -167,17 +176,20 @@ const EditUser = () => {
   }
 
   async function deleteUser1() {
+    const idToken = await getAuthData();
     const response = await axios.post(
       // "http://localhost:5051/api/user-admin/banned-user",
       baseUrl + "user",
       {
-        user_id: location.state.id,
+        "user_id": location.state.id,
+      }, {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
       },
-      {
-        params: {
-          type: "user-deactivate",
-        },
-      },
+      params: {
+        type: "user-deactivate"
+      }
+    }
     );
     // openNotificationWithIcon("success", "Success", `User deleted/disabled successfully`);
   }
@@ -195,17 +207,18 @@ const EditUser = () => {
     });
   };
 
-  function deleteUser() {
+  async function deleteUser() {
     const data = {
       // 'user_id': location.state.id,
       email: location.state.email,
     };
-
+    const idToken = await getAuthData();
     const config = {
       method: "POST",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`
       },
       // mode: 'no-cors',
       body: JSON.stringify(data),
@@ -387,7 +400,7 @@ const EditUser = () => {
               </Card>
             </Col>
           </Row>
-          <Form.Item {...tailFormItemLayout} style={{ marginTop: "25px" }}>
+          <Form.Item className="edit-job-save-item" {...tailFormItemLayout} style={{ marginTop: "25px" }}>
             <Button
               className="create-user"
               htmlType="submit"
@@ -398,14 +411,8 @@ const EditUser = () => {
               Save
             </Button>
           </Form.Item>
-          <Form.Item
-            {...tailFormItemLayout}
-            style={
-              location.state.banned
-                ? { display: "none" }
-                : { marginTop: "25px" }
-            }
-          >
+
+          <Form.Item className="edit-job-save-item" {...tailFormItemLayout} style={location.state.banned ? { display: "none" } : { marginTop: "25px" }}>
             <Button
               className="create-user"
               htmlType="button"
@@ -419,14 +426,8 @@ const EditUser = () => {
               Delete
             </Button>
           </Form.Item>
-          <Form.Item
-            {...canTailFormItemLayout}
-            style={{
-              fontSize: 14,
-              justifyContent: "center",
-              marginTop: "20px",
-            }}
-          >
+
+          <Form.Item className="edit-job-save-item" {...canTailFormItemLayout} style={{ fontSize: 14, justifyContent: "center", marginTop: "20px" }}>
             <Link className="cancel-edit" to="/user-admin/users/">
               Cancel
             </Link>

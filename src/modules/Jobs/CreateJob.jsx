@@ -9,7 +9,7 @@ import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { Box } from "@mui/system";
 import Table from "../../components/Table/index";
-import { baseUrl } from "../../utils/Data/Data";
+import { baseUrl, getAuthData } from "../../utils/Data/Data";
 
 const formItemLayout = {
   labelCol: {
@@ -44,10 +44,15 @@ const CreateJob = props => {
   }, []);
 
   async function getUserData() {
-    const response = await axios.get(baseUrl + "user", {
-      params: { type: "user-list" },
-    });
-    setUserList(response.data.data);
+    const idToken = await getAuthData();
+    const response = await axios.get(
+      baseUrl + "user", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
+      params: { type: "user-list" }
+    })
+    setUserList(response.data.data)
   }
 
   const onClick = (event, item) => {
@@ -122,7 +127,9 @@ const CreateJob = props => {
     return userArray;
   }
 
-  function saveEditJob(values) {
+  async function saveEditJob(values) {
+
+    const idToken = await getAuthData();
     const data = {
       job_id: null,
       job_name: values.jobTitle.trim(),
@@ -134,8 +141,9 @@ const CreateJob = props => {
     const config = {
       method: "POST",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`
       },
       // mode: 'no-cors',
       body: JSON.stringify(data),

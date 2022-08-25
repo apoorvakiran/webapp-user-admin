@@ -7,8 +7,9 @@ import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
 import axios from "axios";
 import { type } from "@testing-library/user-event/dist/type";
-import { baseUrl } from "../../utils/Data/Data";
+import { baseUrl, getAuthData } from "../../utils/Data/Data";
 import "./user.css";
+import { openNotificationWithIcon } from "../../utils/helpers";
 
 const Users = props => {
   const [loading, setLoading] = useState(true);
@@ -23,9 +24,13 @@ const Users = props => {
   };
   useEffect(() => {
     async function getData() {
+      const idToken = await getAuthData();
       const response = await axios.get(
         baseUrl + "user", {
         // "http://localhost:5051/api/user-admin/user-list"
+        headers: {
+          "Authorization": `Bearer ${idToken}`
+        },
         params: { type: "user-list" }
       }
       );
@@ -44,10 +49,14 @@ const Users = props => {
     });
   };
   const EditUser = () => {
-    props?.history?.push({
-      pathname: routes.EDIT_USER,
-      state: userRowData,
-    });
+    if (userRowData.length !== 0) {
+      props?.history?.push({
+        pathname: routes.EDIT_USER,
+        state: userRowData,
+      });
+    } else {
+      openNotificationWithIcon("error", "Error", `Please select any user to edit`);
+    }
   };
   const editButton = () => {
     return (
