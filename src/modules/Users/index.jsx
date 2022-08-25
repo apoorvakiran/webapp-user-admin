@@ -7,7 +7,7 @@ import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
 import axios from "axios";
 import { type } from "@testing-library/user-event/dist/type";
-import { baseUrl } from "../../utils/Data/Data";
+import { baseUrl, getAuthData } from "../../utils/Data/Data";
 import "./user.css";
 import { openNotificationWithIcon } from "../../utils/helpers";
 
@@ -24,9 +24,13 @@ const Users = props => {
   };
   useEffect(() => {
     async function getData() {
+      const idToken = await getAuthData();
       const response = await axios.get(
         baseUrl + "user", {
         // "http://localhost:5051/api/user-admin/user-list"
+        headers: {
+          "Authorization": `Bearer ${idToken}`
+        },
         params: { type: "user-list" }
       }
       );

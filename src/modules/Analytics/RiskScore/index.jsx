@@ -2,7 +2,7 @@ import { Grid, Typography } from "@mui/material";
 import { Card, Skeleton, Space, Radio } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../../layouts/BasicLayout";
-import { baseUrl, DashboardData, formatDate, getCurrIcon, Item } from "../../../utils/Data/Data";
+import { baseUrl, DashboardData, formatDate, getAuthData, getCurrIcon, Item } from "../../../utils/Data/Data";
 import axios from "axios";
 import "../../../components/Dashboard/dashboard.css";
 import "../analytics.css";
@@ -36,9 +36,13 @@ const RiskScore = props => {
   const getSpeedScore = async value => {
     const current = new Date();
     const date = formatDate(current);
+    const idToken = await getAuthData();
     const request = await axios.get(
       // "http://localhost:5051/api/user-admin/get-risk-scores", {
       baseUrl + "scores", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
       params: {
         type: "get-risk-scores",
         durationType: value,

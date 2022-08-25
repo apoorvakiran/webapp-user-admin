@@ -7,7 +7,7 @@ import { createUserButton, newCreateUserButton } from "./../Users/style";
 import './jobs.css';
 import routes from "../../features/Routes/URLs";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
-import { baseUrl } from "../../utils/Data/Data";
+import { baseUrl, getAuthData } from "../../utils/Data/Data";
 
 const editUserButton = {
     color: "#C54B30",
@@ -31,9 +31,13 @@ const Jobs = props => {
     }, []);
 
     async function getJobsList() {
+        const idToken = await getAuthData();
         const response = await axios.get(
             // "http://localhost:5051/api/user-admin/get-jobs-list",
             baseUrl + "userdetail", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
             params: {
                 type: "get-jobs-list"
             }

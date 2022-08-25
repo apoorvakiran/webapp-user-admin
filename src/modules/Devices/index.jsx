@@ -4,7 +4,7 @@ import BasicLayout from "../../layouts/BasicLayout";
 import Table from "../../components/Table";
 import axios from "axios";
 import './devices.css';
-import { baseUrl } from "../../utils/Data/Data";
+import { baseUrl, getAuthData } from "../../utils/Data/Data";
 
 const columns = [
     {
@@ -61,10 +61,14 @@ const Devices = props => {
     }, []);
 
     async function getDevicesList() {
+        const idToken = await getAuthData();
         const response = await axios.get(
             // "http://localhost:5051/api/user-admin/get-device-assign",
             baseUrl + "userdetail",
             {
+                headers: {
+                    "Authorization": `Bearer ${idToken}`
+                },
                 params: {
                     type: "get-device-assign"
                 }
