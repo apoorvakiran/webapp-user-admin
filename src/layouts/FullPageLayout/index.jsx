@@ -55,7 +55,6 @@ class LayoutComponent extends React.Component {
         <div className="logoType">
           <img src={logoType} alt="Mentore" />
         </div>
-        <LogoComponent style={LogoComponentStyle} />
         <div className="companyTitle" >
 {/*          <div>Company Name</div>
           <div>
