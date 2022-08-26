@@ -11,16 +11,21 @@ import {
   Modal,
 } from "antd";
 import BasicLayout from "../../layouts/BasicLayout";
-import { createUserButton, grayUserButton, hideBtn, invertCreateUserButton } from "./style";
+import {
+  createUserButton,
+  grayUserButton,
+  hideBtn,
+  invertCreateUserButton,
+} from "./style";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { baseUrl, getAuthData } from "../../utils/Data/Data";
 import { display } from "@mui/system";
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = "*";
-axios.defaults.headers.post['Access-Control-Allow-Methods'] = "*";
+axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+axios.defaults.headers.post["Access-Control-Allow-Methods"] = "*";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -58,13 +63,13 @@ const canTailFormItemLayout = {
       offset: 12,
     },
   },
-}
+};
 
 const formItemStyle = {
-  marginBottom: "0px !important"
-}
+  marginBottom: "0px !important",
+};
 
-const { confirm } = Modal
+const { confirm } = Modal;
 
 const EditUser = () => {
   const location = useLocation();
@@ -87,10 +92,9 @@ const EditUser = () => {
         "Authorization": `Bearer ${idToken}`
       },
       params: {
-        type: "get-jobs-list"
-      }
-    }
-    );
+        type: "get-jobs-list",
+      },
+    });
     setJobTitleList(response.data);
     setLoading(false);
   }
@@ -98,17 +102,17 @@ const EditUser = () => {
   async function saveEditUser(values) {
     try {
       const userdata = {
-        'user_id': location.state.id,
-        'first_name': values.first_name,
-        'last_name': values.last_name,
-        'phone': values.phone,
-        'role': values.role,
-        'job_id': values.job_id,
-        'hand': values.hand
+        user_id: location.state.id,
+        first_name: values.first_name,
+        last_name: values.last_name,
+        phone: values.phone,
+        role: values.role,
+        job_id: values.job_id,
+        hand: values.hand,
       };
       const idToken = await getAuthData();
       const config = {
-        method: 'POST',
+        method: "POST",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -116,23 +120,27 @@ const EditUser = () => {
         },
         // mode: 'no-cors',
         body: JSON.stringify(userdata),
-      }
-      const url = baseUrl + 'user?type=user-edit'
+      };
+      const url = baseUrl + "user?type=user-edit";
       // const url = 'http://localhost:5051/api/user-admin/user-edit';
-      await fetch(url, config).
-        then(response => response.json())
+      await fetch(url, config)
+        .then(response => response.json())
         .then(data => {
-          // console.log("data", data.rows);
-          // if (data.data.code === 201) {
-          openNotificationWithIcon("success", "Success", `User updated successfully`);
+          openNotificationWithIcon(
+            "success",
+            "Success",
+            `User updated successfully`,
+          );
           setInitialValues(data.rows);
-          // }
+          setTimeout(() => {
+            history.push("/user-admin/users/");
+          }, 1000);
         })
-        .catch((error) => {
-          console.error('Error:', error);
+        .catch(error => {
+          console.error("Error:", error);
         });
     } catch (error) {
-      return error
+      return error;
     }
   }
 
@@ -159,7 +167,11 @@ const EditUser = () => {
     }
     );
     if (response.rowcount === 1) {
-      openNotificationWithIcon("success", "Success", `User ${values?.first_name} updated successfully`);
+      openNotificationWithIcon(
+        "success",
+        "Success",
+        `User ${values?.first_name} updated successfully`,
+      );
     }
   }
 
@@ -188,22 +200,21 @@ const EditUser = () => {
       content: "Are you sure you want to Delete user?",
       onOk() {
         deleteUser();
-
       },
       onCancel() {
         // console.log('Cancel');
       },
     });
-  }
+  };
 
   async function deleteUser() {
     const data = {
       // 'user_id': location.state.id,
-      'email': location.state.email
+      email: location.state.email,
     };
     const idToken = await getAuthData();
     const config = {
-      method: 'POST',
+      method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -211,17 +222,23 @@ const EditUser = () => {
       },
       // mode: 'no-cors',
       body: JSON.stringify(data),
-    }
-    const url = baseUrl + 'admin?type=disable-user'
-    fetch(url, config).
-      then(response => { console.log('response', response.status); })
+    };
+    const url = baseUrl + "admin?type=disable-user";
+    fetch(url, config)
+      .then(response => {
+        console.log("response", response.status);
+      })
       .then(data => {
         // console.log('Success:', data);
-        openNotificationWithIcon("success", "Success", `User deleted successfully`);
-        history.push("/user-admin/users/")
+        openNotificationWithIcon(
+          "success",
+          "Success",
+          `User deleted successfully`,
+        );
+        history.push("/user-admin/users/");
       })
-      .catch((error) => {
-        return error
+      .catch(error => {
+        return error;
       });
   }
 
@@ -304,15 +321,17 @@ const EditUser = () => {
                     },
                   ]}
                 >
-                  <Input disabled={true} className="formInput" placeholder="E-mail *" />
+                  <Input
+                    disabled={true}
+                    className="formInput"
+                    placeholder="E-mail *"
+                  />
                 </Form.Item>
                 <Form.Item
                   style={{ justifyContent: "center", width: "100%" }}
                   name="phone"
                 >
-                  <Input className="formInput"
-                    placeholder="Phone"
-                  />
+                  <Input className="formInput" placeholder="Phone" />
                 </Form.Item>
                 <Form.Item
                   style={{ justifyContent: "center" }}
@@ -325,7 +344,11 @@ const EditUser = () => {
                     },
                   ]}
                 >
-                  <Select placeholder="Select Permissions *" className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
+                  <Select
+                    placeholder="Select Permissions *"
+                    className="formSelectStyle"
+                    style={{ height: 50, marginBottom: "20px" }}
+                  >
                     <Select.Option value={1}>Admin</Select.Option>
                     <Select.Option value={2}>User</Select.Option>
                   </Select>
@@ -349,7 +372,11 @@ const EditUser = () => {
                     }),
                   ]}
                 >
-                  <Select placeholder="Select Job Title" className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
+                  <Select
+                    placeholder="Select Job Title"
+                    className="formSelectStyle"
+                    style={{ height: 50, marginBottom: "20px" }}
+                  >
                     <Select.Option value={0}>None </Select.Option>
                     {jobTitleList.map((row, index) => (
                       <Select.Option value={row.id}>{row.name} </Select.Option>
@@ -361,7 +388,11 @@ const EditUser = () => {
                   style={{ justifyContent: "center" }}
                   className="formStyle"
                 >
-                  <Select placeholder="Watch Hand" className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
+                  <Select
+                    placeholder="Watch Hand"
+                    className="formSelectStyle"
+                    style={{ height: 50, marginBottom: "20px" }}
+                  >
                     <Select.Option value="left">Left </Select.Option>
                     <Select.Option value="right">Right </Select.Option>
                   </Select>
@@ -380,18 +411,22 @@ const EditUser = () => {
               Save
             </Button>
           </Form.Item>
+
           <Form.Item className="edit-job-save-item" {...tailFormItemLayout} style={location.state.banned ? { display: "none" } : { marginTop: "25px" }}>
             <Button
               className="create-user"
               htmlType="button"
               shape="round"
               style={invertCreateUserButton}
-              onClick={() => { openModal() }}
+              onClick={() => {
+                openModal();
+              }}
               icon={<DeleteOutlined />}
             >
               Delete
             </Button>
           </Form.Item>
+
           <Form.Item className="edit-job-save-item" {...canTailFormItemLayout} style={{ fontSize: 14, justifyContent: "center", marginTop: "20px" }}>
             <Link className="cancel-edit" to="/user-admin/users/">
               Cancel
