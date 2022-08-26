@@ -9,10 +9,9 @@ import {
 import { Link } from "react-router-dom";
 import routes from "../../features/Routes/URLs";
 import { SidebarMenuItemsWithRouter } from "./SideMenuWithRouter";
-import { LogoComponent } from "./Logo";
 import NoData from "./NoData/index";
 import styled from "styled-components";
-import LayoutComponentStyles, { LogoComponentStyle } from "./style";
+import LayoutComponentStyles from "./style";
 import "./styles.css";
 import Logo from "../../images/mlogo.svg";
 import logoType from "../../images/mentore-logotype.svg";
@@ -55,7 +54,6 @@ class LayoutComponent extends React.Component {
         <div className="logoType">
           <img src={logoType} alt="Mentore" />
         </div>
-        <LogoComponent style={LogoComponentStyle} />
         <div className="companyTitle" >
 {/*          <div>Company Name</div>
           <div>
