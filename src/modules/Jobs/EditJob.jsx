@@ -259,12 +259,12 @@ const EditJob = props => {
         <Row gutter={24}>
           <Col span={24}>
             <Card title="Edit Job" className="job-card">
-              {/* <Form.Item
+              <Form.Item
                 style={{ justifyContent: "center" }}
                 name="id"
                 className="edit-job-title-input"
-                // tooltip="What do you want others to call you?"
-              ></Form.Item> */}
+              // tooltip="What do you want others to call you?" -- this field is submitted during form submission and id (job_id) is passed commenting this will not pass job id 
+              ></Form.Item>
               <Form.Item
                 style={{ justifyContent: "center" }}
                 name="name"
@@ -286,7 +286,7 @@ const EditJob = props => {
               <Form.Item
                 name="users"
                 style={{ justifyContent: "center" }}
-                // label="Type User's Name to Add"
+              // label="Type User's Name to Add"
               >
                 {/* <Input className="formInput" placeholder="Type User's Name to Add" /> */}
                 <Autocomplete
