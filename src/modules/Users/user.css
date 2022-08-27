@@ -189,6 +189,18 @@
   .ant-input {
     margin-bottom: 20px !important;
   }
+
+  .page-content-header{
+    padding-bottom: 60px;
+  }
+
+  .page-content-header .createNewButton{
+    margin-top: 5px;
+  }
+
+  .page-content-header .createNewButton .anticon{
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 375px) {
