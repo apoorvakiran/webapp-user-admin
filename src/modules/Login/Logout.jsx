@@ -1,7 +1,6 @@
-import React from 'react';
-import { Button, Modal } from 'antd';
-import { Authenticator } from '@aws-amplify/ui-react';
+import { Modal } from 'antd';
 import { Auth } from 'aws-amplify';
+import history from '../../utils/history';
 
 const { confirm } = Modal
 
@@ -12,12 +11,11 @@ export const LogOut = () => {
             title: "LogOut",
             content: "Are you sure you want to log out?",
             onOk() {
-                Auth.signOut()
-                    .then(data => console.log(data))
-                    .catch(err => console.log(err));
+                Auth.signOut();
+                history.push('/user-admin/logout')
             },
             onCancel() {
-                console.log('Cancel');
+
             },
         });
     }

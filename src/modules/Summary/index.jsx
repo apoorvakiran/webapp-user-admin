@@ -19,6 +19,7 @@ import AllJobSummary from "./AllJobSummary";
 import UserProgressScore from "../Analytics/ActiveScore/UserProgressScore";
 import { orderBy, round, sortBy } from "lodash";
 import { Auth } from "aws-amplify";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 
 const Summary = (props) => {
     const [loading, setLoading] = useState(true);
@@ -38,6 +39,7 @@ const Summary = (props) => {
     const [selectedJobTitle, setSelectedJobTitle] = useState('0');
     const [dataType, setDataType] = useState('Day');
     const [scoreType = "Scores by User", setScoreType] = useState();
+    const { route } = useAuthenticator(context => [context.route]);
 
     async function getActiveScores(value) {
 
@@ -79,14 +81,16 @@ const Summary = (props) => {
     }
 
     useEffect(() => {
-        getJobTitleList();
-        getUserData();
-        // getActiveScores("Day");
-        getUserCardData(null, "Day");
-        getUserSafetyScoreData(null, dataType);
-        getUserRiskScoreData(null, dataType);
-        getUserSpeedScoreData(null, dataType);
-        getUserActiveScoreData(null, dataType);
+        if (route === 'authenticated') {
+            getJobTitleList();
+            getUserData();
+            // getActiveScores("Day");
+            getUserCardData(null, "Day");
+            getUserSafetyScoreData(null, dataType);
+            getUserRiskScoreData(null, dataType);
+            getUserSpeedScoreData(null, dataType);
+            getUserActiveScoreData(null, dataType);
+        }
     }, []);
 
     async function getUserData() {
