@@ -44,11 +44,13 @@ class SidebarMenuItems extends React.Component {
   onMenuItemSelected = e => {
     if (e.key !== this.state.selectedKey) {
       this.setState({ selectedKey: e.key });
-      this.props?.history?.push(`${e.key}`);
+      if (e.key === "/user-admin/logout") {
+        LogOut();
+      } else {
+        this.props?.history?.push(`${e.key}`);
+      }
     }
-    if (e.key === "/user-admin/logout") {
-      LogOut();
-    }
+
   };
   renderSideMenu = routeMap => {
     return routeMap?.map((menu, i) => {
@@ -59,20 +61,20 @@ class SidebarMenuItems extends React.Component {
             disabled={menu.disabled}
             className={
               this.state.selectedKey === menu.url ||
-              "/" + this.state.selectedKey.split("/").slice(1, 3).join("/") ===
+                "/" + this.state.selectedKey.split("/").slice(1, 3).join("/") ===
                 menu.url ||
-              (menu.url === "/user-admin/analytics/safety-score" &&
-                menu.url.split("/").slice(1, 3).join("/") ===
+                (menu.url === "/user-admin/analytics/safety-score" &&
+                  menu.url.split("/").slice(1, 3).join("/") ===
                   this.state.selectedKey.split("/").slice(1, 3).join("/"))
                 ? "selected-menu-item"
                 : ""
             }
           >
             {this.state.selectedKey === menu.url ||
-            "/" + this.state.selectedKey.split("/").slice(1, 3).join("/") ===
+              "/" + this.state.selectedKey.split("/").slice(1, 3).join("/") ===
               menu.url ||
-            (menu.url === "/user-admin/analytics/safety-score" &&
-              menu.url.split("/").slice(1, 3).join("/") ===
+              (menu.url === "/user-admin/analytics/safety-score" &&
+                menu.url.split("/").slice(1, 3).join("/") ===
                 this.state.selectedKey.split("/").slice(1, 3).join("/")) ? (
               <Icon type={menu.icon} />
             ) : null}
