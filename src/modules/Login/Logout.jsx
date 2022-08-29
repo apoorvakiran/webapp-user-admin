@@ -1,15 +1,10 @@
-import React from 'react';
-import { Button, Modal } from 'antd';
-import { Authenticator } from '@aws-amplify/ui-react';
+import { Modal } from 'antd';
 import { Auth } from 'aws-amplify';
-import { useLocation } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import history from '../../utils/history';
 
 const { confirm } = Modal
 
 export const LogOut = () => {
-
-    const history = createBrowserHistory()
 
     const openModal = () => {
         confirm({

@@ -41,13 +41,13 @@ class SidebarMenuItems extends React.Component {
     }
   };
 
-  onMenuItemSelected = e => {
-    if (e.key !== this.state.selectedKey) {
-      this.setState({ selectedKey: e.key });
-      if (e.key === "/user-admin/logout") {
+  onMenuItemSelected = selectedMenu => {
+    if (selectedMenu.key !== this.state.selectedKey) {
+      this.setState({ selectedKey: selectedMenu.key });
+      if (selectedMenu.key === "/user-admin/logout") {
         LogOut();
       } else {
-        this.props?.history?.push(`${e.key}`);
+        this.props?.history?.push(`${selectedMenu.key}`);
       }
     }
 
