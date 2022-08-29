@@ -9,6 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import routes from "../../features/Routes/URLs";
 import { SidebarMenuItemsWithRouter } from "./SideMenuWithRouter";
+import { LogoComponent } from "./Logo";
 import NoData from "./NoData/index";
 import LayoutComponentStyles, { LogoComponentStyle } from "./style";
 import "./styles.css";
