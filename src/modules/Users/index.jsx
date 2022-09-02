@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Button, Card, Radio, Skeleton } from "antd";
 import Table from "../../components/Table/index";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
@@ -10,6 +10,7 @@ import { type } from "@testing-library/user-event/dist/type";
 import { baseUrl, getAuthData } from "../../utils/Data/Data";
 import "./user.css";
 import { openNotificationWithIcon } from "../../utils/helpers";
+import { UserRoleContext } from '../../features/Routes'
 
 const Users = props => {
   const [loading, setLoading] = useState(true);
@@ -17,6 +18,9 @@ const Users = props => {
   const [userRowData, setuserRowData] = useState([]);
   const [dataSource, setDataSource] = useState([]);
   const [width, setWidth] = useState(0)
+
+  
+  const userRole = useContext(UserRoleContext);
 
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
@@ -65,6 +69,7 @@ const Users = props => {
         style={editUserButton}
         onClick={EditUser}
         icon={<EditOutlined />}
+        disabled={userRole.userRole === '2'} //Admin: 1
       >
       </Button>
     );
@@ -196,6 +201,7 @@ const Users = props => {
                 onChange(e, record);
               }}
               value={radioValue}
+              disabled={userRole.userRole === '2'} //Admin: 1
             >
               <Radio value={record?.id} />
             </Radio.Group>
@@ -262,6 +268,7 @@ const Users = props => {
               onClick={CreateNewUser}
               icon={<PlusOutlined />}
               className="createNewButton"
+              disabled={userRole.userRole === '2'} //Admin: 1
             >
               Create New User
             </Button>

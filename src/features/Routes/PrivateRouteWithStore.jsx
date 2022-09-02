@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import routes, { getRoute } from "./URLs";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import { sideBarNavigator } from "./navigation";
+import { userSideBarNavigator, adminSideBarNavigator } from "./navigation";
+import { Auth } from "aws-amplify";
+import { UserRoleContext } from './index'
 
 export const BASE_ROUTE = "/user-admin/";
 const PrivateRouteWithStore = ({
@@ -9,11 +11,15 @@ const PrivateRouteWithStore = ({
   accessToken,
   loggedIn,
   loginModal,
+  userAccess,
   ...rest
 }) => {
+
+  const userRole = useContext(UserRoleContext);
+
   const landingPage = () => {
     try {
-      const route = sideBarNavigator[0];
+      const route = userRole.userRole === '1' ? adminSideBarNavigator : userSideBarNavigator ;
       return route;
     } catch (error) {
       console.error("error in landingPage", error);
@@ -35,7 +41,12 @@ const PrivateRouteWithStore = ({
       />
     );
   }
-  return <Route {...rest} render={props => <Component {...props} />} />;
+  return <Route {...rest} render={props => 
+    userRole.userRole === '1' ? <Component {...props} />
+    :
+    userAccess ? <Component {...props} />
+    :
+    <Redirect from="/" to={landingPage()?.url} /> } />;
 };
 
 export default PrivateRouteWithStore;

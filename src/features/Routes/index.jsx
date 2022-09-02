@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import routes from "./URLs";
 import history from "../../utils/history";
@@ -28,6 +28,8 @@ import validator from 'validator';
 import Summary from "../../modules/Summary";
 
 Amplify.configure(config);
+
+export const UserRoleContext = createContext()
 
 const components = {
   Header() {
@@ -124,100 +126,132 @@ const services = {
   },
 };
 
+
+
 const Routes = () => {
+  const [userRole, setUserRole] = useState(null)
+
+  useEffect(() => {
+    (async() => {
+      await Auth.currentAuthenticatedUser()
+        .then(user => {
+          setUserRole(Object.values(user.attributes)[7] || null)
+          return
+      }).catch((err) => console.log('Error: ', err));
+    })()
+  }, [])
+
   return (
-    <Authenticator services={services} hideSignUp={true} formFields={formFields} components={components}>
-      <Router history={history}>
-        <ErrorBoundary>
-          <Switch>
-            {/* <Route
-              exact
-              path={getRoute("reset-password/:userid")}
-              component={(props: any) => <ResetPasswordScreen {...props} />}
-            /> */}
-            <Route exact path="/">
-              <Redirect to="/user-admin/jobs-summary" />
-            </Route>
-            <Route exact path="/user-admin/logout">
-              <Redirect to="/user-admin/jobs-summary" />
-            </Route>
-            <PrivateRouteWithStore
-              exact
-              path={routes.NEW_SUMMARY}
-              component={props => <Dashboard />}
-            />
-            <PrivateRouteWithStore
-              exact
-              path={routes.SUMMARY}
-              component={props => <Summary />}
-            />
-            <PrivateRouteWithStore
-              exact
-              path={routes.USERS}
-              component={props => <Users {...props} />}
-            />
-            <PrivateRouteWithStore
-              exact
-              path={routes.CREATE_USER}
-              component={props => <CreateUser {...props} />}
-            />
-            <PrivateRouteWithStore
-              exact
-              path={routes.EDIT_USER}
-              component={props => <EditUser {...props} />}
-            />
-            <PrivateRouteWithStore
-              exact
-              path={routes.USER_DETAIL}
-              component={props => <UserDetail {...props} />}
-            />
-            <PrivateRouteWithStore
-              path={routes.ANALYTICS_RISK_SCORE}
-              component={props => <AnalyticsRiskScore {...props} />}
-            />
-            <PrivateRouteWithStore
-              path={routes.ANALYTICS_SPEED_SCORE}
-              component={props => <AnalyticsSpeedScore {...props} />}
-            />
-            <PrivateRouteWithStore
-              path={routes.ANALYTICS_ACTIVE_SCORE}
-              component={props => <AnalyticsActiveScore {...props} />}
-            />
-            <PrivateRouteWithStore
-              path={routes.ANALYTICS_SAFETY_SCORE}
-              component={props => <AnalyticsSafetyScore {...props} />}
-            />
-            <PrivateRouteWithStore
-              path={routes.DEVICES}
-              component={props => <Devices {...props} />}
-            />
-            <PrivateRouteWithStore
-              exact
-              path={routes.JOBS}
-              component={props => <Jobs {...props} />}
-            />
-            <PrivateRouteWithStore
-              exact
-              path={routes.CREATE_JOB}
-              component={props => <CreateJob {...props} />}
-            />
-            <PrivateRouteWithStore
-              exact
-              path={routes.EDIT_JOB}
-              component={props => <EditJob {...props} />}
-            />
-            <PrivateRouteWithStore
-              path="/user-admin/logout"
-              component={props => <Summary />}
-            />
-            <PrivateRouteWithStore
-              path="*"
-              component={props => <PageNotFound />}
-            />
-          </Switch>
-        </ErrorBoundary>
-      </Router>
-    </Authenticator>
+    <UserRoleContext.Provider value={{userRole: userRole}}>
+      <Authenticator services={services} hideSignUp={true} formFields={formFields} components={components}>
+        <Router history={history}>
+          <ErrorBoundary>
+            <Switch>
+              {/* <Route
+                exact
+                path={getRoute("reset-password/:userid")}
+                component={(props: any) => <ResetPasswordScreen {...props} />}
+              /> */}
+              <Route exact path="/">
+                <Redirect to="/user-admin/jobs-summary" />
+              </Route>
+              <Route exact path="/user-admin/logout">
+                <Redirect to="/user-admin/jobs-summary" />
+              </Route>
+              <PrivateRouteWithStore
+                exact
+                path={routes.NEW_SUMMARY}
+                userAccess={true}
+                component={props => <Dashboard />}
+              />
+              <PrivateRouteWithStore
+                exact
+                path={routes.SUMMARY}
+                userAccess={true}
+                component={props => <Summary />}
+              />
+              <PrivateRouteWithStore
+                exact
+                path={routes.USERS}
+                userAccess={true}
+                component={props => <Users {...props} />}
+              />
+              <PrivateRouteWithStore
+                exact
+                path={routes.CREATE_USER}
+                userAccess={false}
+                component={props => <CreateUser {...props} />}
+              />
+              <PrivateRouteWithStore
+                exact
+                path={routes.EDIT_USER}
+                userAccess={false}
+                component={props => <EditUser {...props} />}
+              />
+              <PrivateRouteWithStore
+                exact
+                path={routes.USER_DETAIL}
+                userAccess={true}
+                component={props => <UserDetail {...props} />}
+              />
+              <PrivateRouteWithStore
+                path={routes.ANALYTICS_RISK_SCORE}
+                userAccess={true}
+                component={props => <AnalyticsRiskScore {...props} />}
+              />
+              <PrivateRouteWithStore
+                path={routes.ANALYTICS_SPEED_SCORE}
+                userAccess={true}
+                component={props => <AnalyticsSpeedScore {...props} />}
+              />
+              <PrivateRouteWithStore
+                path={routes.ANALYTICS_ACTIVE_SCORE}
+                userAccess={true}
+                component={props => <AnalyticsActiveScore {...props} />}
+              />
+              <PrivateRouteWithStore
+                path={routes.ANALYTICS_SAFETY_SCORE}
+                userAccess={true}
+                component={props => <AnalyticsSafetyScore {...props} />}
+              />
+              <PrivateRouteWithStore
+                path={routes.DEVICES}
+                userAccess={true}
+                component={props => <Devices {...props} />}
+              />
+              <PrivateRouteWithStore
+                exact
+                path={routes.JOBS}
+                userAccess={false}
+                component={props => <Jobs {...props} />}
+              />
+              <PrivateRouteWithStore
+                exact
+                path={routes.CREATE_JOB}
+                userAccess={false}
+                component={props => <CreateJob {...props} />}
+              />
+              <PrivateRouteWithStore
+                exact
+                path={routes.EDIT_JOB}
+                userAccess={false}
+                component={props => <EditJob {...props} />}
+              />
+              <PrivateRouteWithStore
+                path="/user-admin/logout"
+                userAccess={true}
+                component={props => <Summary />}
+              />
+              <PrivateRouteWithStore
+                path="*"
+                userAccess={true}
+                component={props => <PageNotFound />}
+              />
+            </Switch>
+          </ErrorBoundary>
+        </Router>
+      </Authenticator>
+    </UserRoleContext.Provider>
   );
 };
 
