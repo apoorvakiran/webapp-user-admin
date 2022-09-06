@@ -49,6 +49,10 @@ class SidebarMenuItems extends React.Component {
       } else {
         this.props?.history?.push(`${selectedMenu.key}`);
       }
+    }else{
+      if (selectedMenu.key === "/user-admin/logout") {
+         LogOut()
+      }
     }
 
   };
