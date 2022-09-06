@@ -132,18 +132,18 @@ const Routes = () => {
   const [userRole, setUserRole] = useState(null)
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       await Auth.currentAuthenticatedUser()
         .then(user => {
           setUserRole(Object.values(user.attributes)[7] || null)
           return
-      }).catch((err) => console.log('Error: ', err));
+        }).catch((err) => console.log('Error: ', err));
     })()
   }, [])
 
   return (
-    <UserRoleContext.Provider value={{userRole: userRole}}>
-      <Authenticator services={services} hideSignUp={true} formFields={formFields} components={components}>
+    <Authenticator services={services} hideSignUp={true} formFields={formFields} components={components}>
+      <UserRoleContext.Provider value={{ userRole: userRole }}>
         <Router history={history}>
           <ErrorBoundary>
             <Switch>
@@ -250,8 +250,8 @@ const Routes = () => {
             </Switch>
           </ErrorBoundary>
         </Router>
-      </Authenticator>
-    </UserRoleContext.Provider>
+      </UserRoleContext.Provider>
+    </Authenticator>
   );
 };
 
