@@ -66,6 +66,11 @@ const Chart = props => {
           drawBorder: false,
           lineWidth: 12,
         },
+        ticks: {
+          callback: function (value, index, ticks) {
+            return props.title === "Active Score" ? value + '%' : value;
+          }
+        }
       },
       x: {
         grid: {
