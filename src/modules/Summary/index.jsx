@@ -625,6 +625,9 @@ const Summary = (props) => {
                                                         labels={safetyGraphLabels}
                                                         Icon={Vector2Icon}
                                                         LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
+                                                        yAxisMax={7}
+                                                        yAxisMin={0}
+                                                        yAxisStep={1}
                                                     />
                                                 </Item>
                                             </Grid>
@@ -649,6 +652,9 @@ const Summary = (props) => {
                                                         labels={speedGraphLabels}
                                                         Icon={StrokeIcon}
                                                         LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
+                                                        yAxisMax={7}
+                                                        yAxisMin={0}
+                                                        yAxisStep={1}
                                                     />
                                                 </Item>
                                             </Grid>
@@ -661,6 +667,9 @@ const Summary = (props) => {
                                                         labels={activeGraphLabels}
                                                         Icon={SettingIcon}
                                                         LinearGradientColor={["#05FF00", "#F3BE00", "#FF0000"]}
+                                                        yAxisMax={100}
+                                                        yAxisMin={0}
+                                                        yAxisStep={10}
                                                     />
                                                 </Item>
                                             </Grid>

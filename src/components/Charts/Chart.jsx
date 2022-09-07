@@ -70,7 +70,10 @@ const Chart = props => {
           callback: function (value, index, ticks) {
             return props.title === "Active Score" ? value + '%' : value;
           }
-        }
+        },
+        min: props.yAxisMin,
+        max: props.yAxisMax,
+        stepSize: props.yAxisStep,
       },
       x: {
         grid: {
