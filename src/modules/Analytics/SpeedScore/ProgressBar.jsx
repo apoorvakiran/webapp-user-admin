@@ -6,6 +6,7 @@ const ProgressBar = props => {
   return (
     <>
       <Progress
+        data-testId="progress"
         percent={percent || 0}
         format={percent => percent}
         type="line"
