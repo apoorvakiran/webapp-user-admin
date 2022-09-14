@@ -59,7 +59,9 @@ class LayoutComponent extends React.Component {
         <div className="logoType">
           <img src={logoType} alt="Mentore" />
           <AmplifyS3Image
-            imgKey="mentore.png" />
+            level="public"
+            imgKey="mentore.png"
+            identityId="us-east-2:7e918941-abdd-4be2-bb0d-e34df35f9ffc" />
         </div>
         <div className="companyTitle" >
           {/*          <div>Company Name</div>
