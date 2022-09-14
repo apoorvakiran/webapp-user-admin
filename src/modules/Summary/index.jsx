@@ -21,6 +21,14 @@ import { orderBy, round, sortBy } from "lodash";
 import { Auth } from "aws-amplify";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import { ArrowBackIos } from "@mui/icons-material";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
 const Summary = (props) => {
     const [loading, setLoading] = useState(true);
     const [selected, setSelected] = useState(0);
@@ -40,6 +48,7 @@ const Summary = (props) => {
     const [dataType, setDataType] = useState('Day');
     const [scoreType = "Scores by User", setScoreType] = useState();
     const { route } = useAuthenticator(context => [context.route]);
+    const[calendarDate,setCalendarDate] = useState(new Date())
 
     async function getActiveScores(value) {
 
@@ -454,6 +463,10 @@ const Summary = (props) => {
         }
     }
 
+    const handleChangeDate = (newValue) => {
+        setCalendarDate(newValue)
+    }
+
     return (
         <BasicLayout >
             {loading ? (
@@ -501,7 +514,35 @@ const Summary = (props) => {
                                 );
                             })}
                         </Grid>
-
+                        <div  style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs} style={{width: '33.333%'}}>
+                            <Stack spacing={1} className="datePickerStack">
+                                <ArrowBackIos className="arrowLeft" /> 
+                                <MobileDatePicker
+                                    inputFormat="DD/MM/YYYY"
+                                    value={calendarDate}
+                                    onChange={handleChangeDate}
+                                    className="datePicker"
+                                    InputProps={{
+                                        disableUnderline: true,
+                                    }}
+                                    renderInput={(params) => 
+                                        <TextField 
+                                            {...params}
+                                            inputProps={{
+                                                ...params.inputProps,
+                                            }}
+                                            variant="filled"
+                                        />
+                                    }
+                                />  
+                            </Stack>
+                            </LocalizationProvider>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent:'flex-end', width: '33.333%', color:"#c54b30" }}>
+                                <CalendarMonthIcon /> <span style={{fontWeight: 700, marginLeft: 5, color:'#000', fontSize: 18}}>LIVE</span>
+                            </div>
+                            <div style={{width: '33.333%'}}></div>
+                        </div>
                         <Card className="scoreBoard childCard">
 
                             <div className="scoreboardTitle">
