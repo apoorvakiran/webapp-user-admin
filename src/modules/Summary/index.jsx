@@ -20,6 +20,8 @@ import UserProgressScore from "../Analytics/ActiveScore/UserProgressScore";
 import { orderBy, round, sortBy } from "lodash";
 import { Auth } from "aws-amplify";
 import { useAuthenticator } from "@aws-amplify/ui-react";
+import Calendar from "../../components/Calendar/Calendar";
+
 
 const Summary = (props) => {
     const [loading, setLoading] = useState(true);
@@ -40,6 +42,7 @@ const Summary = (props) => {
     const [dataType, setDataType] = useState('Day');
     const [scoreType = "Scores by User", setScoreType] = useState();
     const { route } = useAuthenticator(context => [context.route]);
+    const[calendarDate,setCalendarDate] = useState(new Date())
 
     async function getActiveScores(value) {
 
@@ -454,6 +457,10 @@ const Summary = (props) => {
         }
     }
 
+    const handleChangeDate = (newValue) => {
+        setCalendarDate(newValue)
+    }
+
     return (
         <BasicLayout >
             {loading ? (
@@ -501,7 +508,7 @@ const Summary = (props) => {
                                 );
                             })}
                         </Grid>
-
+                        <Calendar />
                         <Card className="scoreBoard childCard">
 
                             <div className="scoreboardTitle">

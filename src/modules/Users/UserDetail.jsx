@@ -15,6 +15,7 @@ import StrokeIcon from "../../images/Stroke.png";
 import Vector2Icon from "../../images/Vector2.png";
 import { cardIconStyle } from "./style";
 import LiveSession from "../../components/LiveSession";
+import Calendar from "../../components/Calendar/Calendar";
 
 const Dashboard = props => {
   const location = useLocation();
@@ -157,6 +158,7 @@ const Dashboard = props => {
                 );
               })}
             </Grid>
+            <Calendar />
             <Card
               className="scoreBoard childCard"
               headStyle={{ fontWeight: "700", padding: "0", marginTop: "-5px" }}
