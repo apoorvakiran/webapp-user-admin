@@ -1,0 +1,51 @@
+
+.datePickerRow{
+    display: flex;
+
+}
+.datePickerStack{
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    padding: 0 8px;
+    width: 50%;
+}
+.datePickerStack .arrowLeft{
+    color: #C54B30;
+}
+.datePicker{
+    width: 150px;
+    margin: 0 !important;
+}
+
+.datePicker .MuiInputBase-root{
+    background: #fff;
+    color: #c54b30;
+    font-weight: 600;
+}
+
+.datePicker .MuiInputBase-root input{
+    padding: 8px 0px;
+}
+
+.MuiPickersDay-root.Mui-selected{
+    background-color: #c54b30 !important;
+    border-radius: 0% !important;
+}
+
+.datePickerLive{
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.datePickerLive .liveWord{
+    font-weight: 700;
+    margin-left: 5px;
+    color:#000;
+    font-size: 18px;
+}
+
+.datePickerLive .calendarIcon{
+    color: #C54B30;
+}
