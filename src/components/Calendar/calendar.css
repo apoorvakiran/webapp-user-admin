@@ -1,17 +1,18 @@
 
 .datePickerRow{
     display: flex;
-
+    justify-content: space-between;
 }
-.datePickerStack{
+.previousDatePicker, .nextDatePicker{
     display: flex;
     flex-direction: row !important;
     align-items: center;
     padding: 0 8px;
-    width: 50%;
+    width: 33.3%;
 }
-.datePickerStack .arrowLeft{
+.previousDatePicker .arrowLeft{
     color: #C54B30;
+    cursor: pointer;
 }
 .datePicker{
     width: 150px;
@@ -24,8 +25,13 @@
     font-weight: 600;
 }
 
+.datePicker .MuiInputBase-root:hover{
+    background: none !important;
+}
+
 .datePicker .MuiInputBase-root input{
     padding: 8px 0px;
+    cursor: pointer;
 }
 
 .MuiPickersDay-root.Mui-selected{
@@ -34,9 +40,12 @@
 }
 
 .datePickerLive{
-    width: 50%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 33.3%;
+    height: 40px;
 }
 
 .datePickerLive .liveWord{
