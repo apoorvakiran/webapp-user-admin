@@ -2,13 +2,13 @@ const config = {
     Auth: {
         'userPoolId': process.env.REACT_APP_USER_POOL,
         'userPoolWebClientId': process.env.REACT_APP_WEB_CLIENT,
-        'identityPoolId': 'us-east-2:7e918941-abdd-4be2-bb0d-e34df35f9ffc',
-        'region': 'us-east-2',
+        'identityPoolId': process.env.REACT_APP_IDENTITY_POOL,
+        'region': process.env.REACT_APP_REGION,
     },
     Storage: {
         AWSS3: {
-            'bucket': 'mentore-tenant-images', //REQUIRED -  Amazon S3 bucket name
-            'region': 'us-east-2', //OPTIONAL -  Amazon service region
+            'bucket': process.env.REACT_APP_LOGO_BUCKET, //REQUIRED -  Amazon S3 bucket name
+            'region': process.env.REACT_APP_REGION, //OPTIONAL -  Amazon service region
         }
     }
 }
