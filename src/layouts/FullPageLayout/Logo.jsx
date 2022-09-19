@@ -1,15 +1,17 @@
 import React from 'react'
-import Logo from '../../images/Rivian_logo.svg'
-import { logoStyle } from "./style"
+import { Amplify } from "aws-amplify";
+import { AmplifyS3Image } from "@aws-amplify/ui-react/legacy";
+import config from '../../features/Configuration/config';
+
+Amplify.configure(config);
 
 export const LogoComponent = (props) => {
   return (
-    <img
-      src={Logo}
-      alt={`Logo`}
-      align={'middle'}
-      style={logoStyle}
-      className={'companyLogo'}
-    />
+    process.env.REACT_APP_LOGO_NAME !== null && process.env.REACT_APP_LOGO_NAME !== undefined ?
+      process.env.REACT_APP_LOGO_NAME !== "" ?
+        <AmplifyS3Image
+          imgKey={process.env.REACT_APP_LOGO_NAME} /> :
+        <></>
+      : <></>
   )
 }
