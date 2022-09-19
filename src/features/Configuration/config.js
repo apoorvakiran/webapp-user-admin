@@ -9,7 +9,7 @@ const config = {
     Storage: {
         AWSS3: {
             'bucket': process.env.REACT_APP_LOGO_BUCKET, //REQUIRED -  Amazon S3 bucket name
-            'region': process.env.REACT_APP_REGION, //OPTIONAL -  Amazon service region
+            'region': process.env.REACT_APP_REGION,
         }
     }
 }
