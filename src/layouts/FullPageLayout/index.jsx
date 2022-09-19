@@ -11,15 +11,11 @@ import routes from "../../features/Routes/URLs";
 import { SidebarMenuItemsWithRouter } from "./SideMenuWithRouter";
 import NoData from "./NoData/index";
 import styled from "styled-components";
-import LayoutComponentStyles from "./style";
+import LayoutComponentStyles, { LogoComponentStyle } from "./style";
 import "./styles.css";
 import Logo from "../../images/mlogo.svg";
 import logoType from "../../images/mentore-logotype.svg";
-import { Amplify } from "aws-amplify";
-import { AmplifyS3Image } from "@aws-amplify/ui-react/legacy";
-import config from '../../features/Configuration/config';
-
-Amplify.configure(config);
+import { LogoComponent } from "./Logo";
 
 const { Content, Sider } = Layout;
 
@@ -57,9 +53,9 @@ class LayoutComponent extends React.Component {
     <>
       <div className="logo-div">
         <div className="logoType">
-          <AmplifyS3Image
-            imgKey={process.env.REACT_APP_LOGO_NAME} />
+          <img src={logoType} alt="Mentore" />
         </div>
+        <LogoComponent style={LogoComponentStyle} />
         <div className="companyTitle" >
           {/*          <div>Company Name</div>
           <div>
