@@ -18,7 +18,7 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
     useEffect(() => {
         setCalendarDate(new Date())
     }, [dataType])
-    
+
 
     return (
         <div  className="datePickerRow">
@@ -26,8 +26,8 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                 {
                     dataType === "Day" &&
                         <LocalizationProvider dateAdapter={AdapterDayjs} className="datePickerProvider">
-                            <ArrowBackIos className="arrowLeft" /> 
                             <MobileDatePicker
+                                label={<ArrowBackIos className="arrowLeft" />}
                                 inputFormat="DD/MM/YYYY"
                                 value={calendarDate}
                                 onChange={handleChangeDate}
@@ -45,6 +45,7 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                         variant="filled"
                                     />
                                 }
+                                disableFuture={true}
                             />
                         </LocalizationProvider>
                 }
@@ -93,6 +94,7 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                     variant="filled"
                                 />
                             }
+                            disableFuture={true}
                         />
                     </LocalizationProvider>
                 }
