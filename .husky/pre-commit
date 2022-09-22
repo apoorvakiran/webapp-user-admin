@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx eslint '*/**/*.{js,jsx}' #&& npx react-scripts test
+npx eslint '*/**/*.{js,jsx}' #&& npx react-scripts test //to be fixed
