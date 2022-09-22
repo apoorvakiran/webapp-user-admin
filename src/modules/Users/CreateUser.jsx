@@ -100,8 +100,9 @@ const CreateUser = (props) => {
   };
 
   const handleFinish = values => {
+    const defaultValue = jobTitleList.find((item) => item.name === "Default")
     const newValues = values.jobTitle === undefined ? {
-      ...values, jobTitle: "23"
+      ...values, jobTitle: defaultValue.id
     } : values
     signUp(newValues);
   };

@@ -17,11 +17,28 @@ const Users = props => {
   const [userRowData, setuserRowData] = useState([]);
   const [dataSource, setDataSource] = useState([]);
   const [width, setWidth] = useState(0)
+  const [jobTitleList, setJobTitleList] = useState([])
 
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
     setWidth(width);
   };
+  
+  async function getJobTitleList() {
+    const idToken = await getAuthData();
+    const response = await axios.get(
+      baseUrl + "userdetail", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
+      params: {
+        type: "get-jobs-list"
+      }
+    }
+    );
+    setJobTitleList(response.data);
+  }
+
   useEffect(() => {
     async function getData() {
       const idToken = await getAuthData();
@@ -39,6 +56,7 @@ const Users = props => {
     }
     getData();
     getWindowDimensions();
+    getJobTitleList()
     window.addEventListener("resize", getWindowDimensions);
     return () => window.removeEventListener("resize", getWindowDimensions);
   }, []);
@@ -239,12 +257,13 @@ const Users = props => {
       },
     },
   ]
-  const onRow = (record, rowIndex) => {
 
+  const onRow = (record, rowIndex) => {
+    const defaultJob = jobTitleList.find((job) => job.name === "Default")
     const newRecord = {
       ...record,
-      name: "Default",
-      job_id: '23'
+      name: defaultJob.name,
+      job_id: defaultJob.id
     }
 
     props?.history?.push({
@@ -252,6 +271,7 @@ const Users = props => {
       state: record.name ? record : newRecord,
     });
   };
+
   return (
     <BasicLayout>
       {loading ? (
