@@ -112,7 +112,7 @@ const Users = props => {
           props: {
             style: { color: "#C54B30" },
           },
-          children: <div onClick={() => onRow(record, item)}>{item}</div>,
+          children: <div onClick={() => onRow(record, item)}>{item ? item : "Default"}</div>,
         };
       },
     },
@@ -240,9 +240,16 @@ const Users = props => {
     },
   ]
   const onRow = (record, rowIndex) => {
+
+    const newRecord = {
+      ...record,
+      name: "Default",
+      job_id: '23'
+    }
+
     props?.history?.push({
       pathname: routes.USER_DETAIL,
-      state: record,
+      state: record.name ? record : newRecord,
     });
   };
   return (
