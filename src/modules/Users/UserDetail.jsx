@@ -78,14 +78,18 @@ const Dashboard = props => {
     let speedData = data["speedscore"]?.y || [];
     let riskLabels = data["riskexposures"]?.x || [];
     let riskData = data["riskexposures"]?.y || [];
-    setActiveGraphLabels(activeLabels);
-    setActiveGraphData(activeData);
-    setSafetyGraphLabels(safetyLabels);
-    setSafetyGraphData(safetyData);
-    setSpeedGraphLabels(speedLabels);
-    setSpeedGraphData(speedData);
-    setRiskGraphLabels(riskLabels);
-    setRiskGraphData(riskData);
+    
+    if(userData?.name !== "Default"){
+      setActiveGraphLabels(activeLabels);
+      setActiveGraphData(activeData);
+      setSafetyGraphLabels(safetyLabels);
+      setSafetyGraphData(safetyData);
+      setSpeedGraphLabels(speedLabels);
+      setSpeedGraphData(speedData);
+      setRiskGraphLabels(riskLabels);
+      setRiskGraphData(riskData);
+    }
+
     return response.data;
   };
   useEffect(() => {
@@ -98,9 +102,13 @@ const Dashboard = props => {
     textAlign: "center",
     color: "black",
   }));
+
   const onGridSelection = async value => {
+    if(userData?.name === "Default") return
+
     getActiveScores(value);
   };
+
   const getIcon = icon => {
     switch (icon) {
       case "Active":
@@ -115,6 +123,7 @@ const Dashboard = props => {
         return SettingIcon;
     }
   };
+
   return (
     <BasicLayout pageTitle="User Detail">
       {/* <Space> */}
