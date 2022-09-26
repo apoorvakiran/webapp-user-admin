@@ -79,16 +79,15 @@ const Dashboard = props => {
     let riskLabels = data["riskexposures"]?.x || [];
     let riskData = data["riskexposures"]?.y || [];
     
-    if(userData?.name !== "Default"){
-      setActiveGraphLabels(activeLabels);
-      setActiveGraphData(activeData);
-      setSafetyGraphLabels(safetyLabels);
-      setSafetyGraphData(safetyData);
-      setSpeedGraphLabels(speedLabels);
-      setSpeedGraphData(speedData);
-      setRiskGraphLabels(riskLabels);
-      setRiskGraphData(riskData);
-    }
+    
+    setActiveGraphLabels(activeLabels);
+    setActiveGraphData(activeData);
+    setSafetyGraphLabels(safetyLabels);
+    setSafetyGraphData(safetyData);
+    setSpeedGraphLabels(speedLabels);
+    setSpeedGraphData(speedData);
+    setRiskGraphLabels(riskLabels);
+    setRiskGraphData(riskData);
 
     return response.data;
   };
@@ -104,8 +103,6 @@ const Dashboard = props => {
   }));
 
   const onGridSelection = async value => {
-    if(userData?.name === "Default") return
-
     getActiveScores(value);
   };
 
