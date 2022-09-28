@@ -1,8 +1,8 @@
 import { Grid, Paper, styled, Typography } from "@mui/material";
-import { Card, Skeleton, Space } from "antd";
-import React, { useEffect, useState } from "react";
+import { Card, Skeleton } from "antd";
+import React, { useContext, useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
-import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, getAuthData } from "../../utils/Data/Data";
+import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, getAuthData, getUserEmail } from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
 import axios from "axios";
 import "../../components/Dashboard/dashboard.css";
@@ -13,12 +13,11 @@ import SettingIcon from "../../images/setting.png";
 import PolygonIcon from "../../images/Polygon.svg";
 import StrokeIcon from "../../images/Stroke.png";
 import Vector2Icon from "../../images/Vector2.png";
-import { cardIconStyle } from "./style";
-import LiveSession from "../../components/LiveSession";
+import { UserRoleContext } from "../../features/Routes";
 
 const Dashboard = props => {
   const location = useLocation();
-  const [loading, seLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(0);
   const [scores, setScores] = useState([]);
   const [activeGraphLabels, setActiveGraphLabels] = useState([]);
@@ -29,44 +28,35 @@ const Dashboard = props => {
   const [speedGraphData, setSpeedGraphData] = useState([]);
   const [riskGraphLabels, setRiskGraphLabels] = useState([]);
   const [riskGraphData, setRiskGraphData] = useState([]);
-  const userData = location?.state;
+  // const [email, setEmail] = useState('');
+  const [userData, setUserData] = useState({});
 
-  const getUserScore = async value => {
-    const idToken = await getAuthData();
-    const request = await axios.get(
-      baseUrl + "userdetail", {
-      headers: {
-        "Authorization": `Bearer ${idToken}`
-      },
-      params: {
-        "type": "get-user-score",
-        "userId": userData?.id,
-        "duration_type": value
-      }
-    }
-    );
-    seLoading(false);
-    setScores(request?.data?.data || []);
-    return request?.data;
-  };
-  const getActiveScores = async value => {
+  const userRole = useContext(UserRoleContext);
+
+  const getActiveScores = async (value, userObj) => {
     const current = new Date();
     const date = formatDate(current);
     const idToken = await getAuthData();
+    const userDataUpdated = { ...userObj };
+    let email = '';
+    if (userRole.userRole === '2') {
+      email = await getUserEmail();
+    }
     const response = await axios.get(
-      // "http://localhost:5051/api/user-admin/get-user-detail", {
+      // "http://localhost:3000/userdetail", {
       baseUrl + "userdetail", {
       headers: {
         "Authorization": `Bearer ${idToken}`
       },
       params: {
         "type": "get-user-detail",
-        "userId": userData.id,
+        "userId": (Object.keys(userObj).length === 0) ? null : userDataUpdated[0].id,
         "durationType": value,
-        "startdate": date
+        "startdate": date,
+        "email": (Object.keys(userObj).length !== 0) ? null : email
       }
     });
-    seLoading(false);
+    setLoading(false);
     setScores(response?.data?.card_data || []);
     const data = response?.data?.data;
     let activeLabels = data["activescore"]?.x || [];
@@ -87,8 +77,33 @@ const Dashboard = props => {
     setRiskGraphData(riskData);
     return response.data;
   };
+
+  const getUserDetails = async () => {
+    const idToken = await getAuthData();
+    const email = userRole.userRole === '2' ? await getUserEmail() : location.state.email;
+    const request = await axios.get(
+      // "http://localhost:3000/userdetail", {
+      baseUrl + "userInfo", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
+      params: {
+        "type": "get-user-info",
+        "email": email
+      }
+    }
+    );
+    return request.data;
+  };
+
   useEffect(() => {
-    getActiveScores("Day");
+    (async () => {
+      const userObj = await getUserDetails();
+      setUserData(userObj);
+      if (Object.keys(userObj).length !== 0) {
+        getActiveScores("Day", userObj);
+      }
+    })();
   }, []);
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -98,7 +113,7 @@ const Dashboard = props => {
     color: "black",
   }));
   const onGridSelection = async value => {
-    getActiveScores(value);
+    getActiveScores(value, userData);
   };
   const getIcon = icon => {
     switch (icon) {

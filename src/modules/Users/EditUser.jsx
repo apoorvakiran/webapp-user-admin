@@ -80,7 +80,7 @@ const EditUser = () => {
   const [jobTitleList, setJobTitleList] = useState([]);
   const [initialValues, setInitialValues] = useState([]);
   const [form] = Form.useForm();
-  
+
   const userRole = useContext(UserRoleContext);
 
   useEffect(() => {
@@ -347,12 +347,13 @@ const EditUser = () => {
                       message: "Please select permissions",
                     },
                   ]}
+                  hidden={userRole.userRole === '2'}
                 >
                   <Select
                     placeholder="Select Permissions *"
                     className="formSelectStyle"
                     style={{ height: 50, marginBottom: "20px" }}
-                    disabled={userRole.userRole === '2'}                    
+                    disabled={userRole.userRole === '2'}
                   >
                     <Select.Option value={1}>Admin</Select.Option>
                     <Select.Option value={2}>User</Select.Option>
@@ -381,6 +382,7 @@ const EditUser = () => {
                     placeholder="Select Job Title"
                     className="formSelectStyle"
                     style={{ height: 50, marginBottom: "20px" }}
+                    disabled={userRole.userRole === '2'}
                   >
                     <Select.Option value={0}>None </Select.Option>
                     {jobTitleList.map((row, index) => (
@@ -411,7 +413,7 @@ const EditUser = () => {
               htmlType="submit"
               shape="round"
               style={location.state.banned ? grayUserButton : createUserButton}
-              disabled={location.state.banned || userRole.userRole === '2'}
+              disabled={location.state.banned}
             >
               Save
             </Button>

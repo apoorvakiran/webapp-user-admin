@@ -20,6 +20,14 @@ export const getAuthData = async () => {
     return data;
 };
 
+export const getUserEmail = async () => {
+    const data = await Auth.currentAuthenticatedUser()
+        .then(user => {
+            return Object.values(user.attributes)[8] || null;
+        });
+    return data;
+};
+
 export const getCurrIcon = icon => {
     switch (icon) {
         case "Active Score":

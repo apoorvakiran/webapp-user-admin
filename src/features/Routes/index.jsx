@@ -17,7 +17,7 @@ import AnalyticsSpeedScore from "../../modules/Analytics/SpeedScore";
 import AnalyticsActiveScore from "../../modules/Analytics/ActiveScore/index";
 import AnalyticsSafetyScore from "../../modules/Analytics/SafetyScore/index";
 import Devices from "../../modules/Devices";
-import { Amplify, Auth } from 'aws-amplify';
+import { Amplify, Auth, Hub } from 'aws-amplify';
 import { Authenticator, View, Image, Text, Heading } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import config from '../Configuration/config';
@@ -104,19 +104,10 @@ const formFields = {
   }
 }
 
-function isValidEmail(email) {
-  return /\S+@\S+\.\S+/.test(email);
-}
-
 const services = {
   async handleForgotPassword(formData) {
     console.log("formData", formData);
     let username = formData;
-    // custom username
-    // username = username;
-    console.log("username", username);
-    console.log("first", isValidEmail(username))
-
     if (validator.isEmail(username)) {
       return Auth.forgotPassword(username);
     } else {
@@ -129,20 +120,33 @@ const services = {
 
 
 const Routes = () => {
-  const [userRole, setUserRole] = useState(null)
+  const [userRole, setUserRole] = useState(null);
+
+  Hub.listen("auth", ({ payload: { event, data } }) => {
+    // console.log("event:::::", event, "::::::userRole:::::", Object.values(data.attributes)[7]);
+    if (event === "signIn") {
+      if (Object.values(data.attributes)[7] === '2') {
+        window.location.href = '/user-admin/users/user-detail';
+      } else {
+        window.location.href = '/user-admin/jobs-summary';
+      }
+    } else if (event === "signOut") {
+      setUserRole(null);
+    }
+  });
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       await Auth.currentAuthenticatedUser()
         .then(user => {
           setUserRole(Object.values(user.attributes)[7] || null)
           return
-      }).catch((err) => console.log('Error: ', err));
+        }).catch((err) => console.log('Error: ', err));
     })()
   }, [])
 
   return (
-    <UserRoleContext.Provider value={{userRole: userRole}}>
+    <UserRoleContext.Provider value={{ userRole: userRole }}>
       <Authenticator services={services} hideSignUp={true} formFields={formFields} components={components}>
         <Router history={history}>
           <ErrorBoundary>
@@ -153,39 +157,36 @@ const Routes = () => {
                 component={(props: any) => <ResetPasswordScreen {...props} />}
               /> */}
               <Route exact path="/">
-                <Redirect to="/user-admin/jobs-summary" />
-              </Route>
-              <Route exact path="/user-admin/logout">
-                <Redirect to="/user-admin/jobs-summary" />
+                {userRole !== undefined ? userRole === '1' ? <Redirect to="/user-admin/jobs-summary" /> : <Redirect to="/user-admin/users/user-detail" /> : <Redirect to="/" />}
               </Route>
               <PrivateRouteWithStore
                 exact
                 path={routes.NEW_SUMMARY}
-                userAccess={true}
+                userAccess={userRole === '1'}
                 component={props => <Dashboard />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.SUMMARY}
-                userAccess={true}
+                userAccess={userRole === '1'}
                 component={props => <Summary />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.USERS}
-                userAccess={true}
+                userAccess={userRole === '1'}
                 component={props => <Users {...props} />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.CREATE_USER}
-                userAccess={false}
+                userAccess={userRole === '1'}
                 component={props => <CreateUser {...props} />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.EDIT_USER}
-                userAccess={false}
+                userAccess={true}
                 component={props => <EditUser {...props} />}
               />
               <PrivateRouteWithStore
@@ -196,52 +197,50 @@ const Routes = () => {
               />
               <PrivateRouteWithStore
                 path={routes.ANALYTICS_RISK_SCORE}
-                userAccess={true}
+                userAccess={userRole === '1'}
                 component={props => <AnalyticsRiskScore {...props} />}
               />
               <PrivateRouteWithStore
                 path={routes.ANALYTICS_SPEED_SCORE}
-                userAccess={true}
+                userAccess={userRole === '1'}
                 component={props => <AnalyticsSpeedScore {...props} />}
               />
               <PrivateRouteWithStore
                 path={routes.ANALYTICS_ACTIVE_SCORE}
-                userAccess={true}
+                userAccess={userRole === '1'}
                 component={props => <AnalyticsActiveScore {...props} />}
               />
               <PrivateRouteWithStore
                 path={routes.ANALYTICS_SAFETY_SCORE}
-                userAccess={true}
+                userAccess={userRole === '1'}
                 component={props => <AnalyticsSafetyScore {...props} />}
               />
               <PrivateRouteWithStore
                 path={routes.DEVICES}
-                userAccess={true}
+                userAccess={userRole === '1'}
                 component={props => <Devices {...props} />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.JOBS}
-                userAccess={false}
+                userAccess={userRole === '1'}
                 component={props => <Jobs {...props} />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.CREATE_JOB}
-                userAccess={false}
+                userAccess={userRole === '1'}
                 component={props => <CreateJob {...props} />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.EDIT_JOB}
-                userAccess={false}
+                userAccess={userRole === '1'}
                 component={props => <EditJob {...props} />}
               />
               <PrivateRouteWithStore
                 path="/user-admin/logout"
-                userAccess={true}
-                component={props => <Summary />}
-              />
+                userAccess={true} />
               <PrivateRouteWithStore
                 path="*"
                 userAccess={true}

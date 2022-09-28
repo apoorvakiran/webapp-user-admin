@@ -1,8 +1,8 @@
-import { Col, Divider, Row, Button, Space } from "antd";
-import React, { useState } from "react";
+import { Col, Row, Button, Space } from "antd";
+import React from "react";
 import Profile from "../../images/profile.png";
 import "./user.css";
-import { createUserButton, profileImage, createProfileButton } from "./style";
+import { profileImage, createProfileButton } from "./style";
 import { EditOutlined } from "@ant-design/icons";
 import routes from "../../features/Routes/URLs";
 import { useHistory } from "react-router-dom";
@@ -23,8 +23,8 @@ const UserInfo = props => {
   return (
     <>
       <div className="user-name">
-        {userData?.first_name
-          ? `${userData?.first_name} ${userData?.last_name}`
+        {userData[0].first_name
+          ? `${userData[0].first_name} ${userData[0].last_name}`
           : "NA"}
       </div>
       <div className="user-info">
@@ -49,21 +49,21 @@ const UserInfo = props => {
         >
           <Space>
             <Col style={style} className="gutter-row">
-              <div style={{ fontWeight: "700" }}>{userData.role === 1 ? "Admin" : "User" || ""}</div>
-              <div style={{ color: "#C54B30" }}>{userData?.name || ""}</div>
+              <div style={{ fontWeight: "700" }}>{userData[0].role === 1 ? "Admin" : "User" || ""}</div>
+              <div style={{ color: "#C54B30" }}>{userData[0].name || ""}</div>
             </Col>
             <Col style={style} className="gutter-row">
-              <div style={{ color: "#C54B30" }}>{userData?.email || ""}</div>
+              <div style={{ color: "#C54B30" }}>{userData[0].email || ""}</div>
               <div style={{ color: "#C54B30" }}>
-                Phone: {userData?.phone || ""}
+                Phone: {userData[0].phone || ""}
               </div>
             </Col>
             <Col style={style} className="gutter-row">
-              <div>Watch: {userData?.id_number || ""}</div>
-              <div>Android ID: {userData?.mac || ""}</div>
+              <div>Watch: {userData[0].id_number || ""}</div>
+              <div>Android ID: {userData[0].mac || ""}</div>
             </Col>
             <Col style={style} className="gutter-row">
-              <div>Hand: {userData?.hand || ""}</div>
+              <div>Hand: {userData[0].hand || ""}</div>
             </Col>
             <Col style={style} className="gutter-row">
               <Button
@@ -71,7 +71,7 @@ const UserInfo = props => {
                 htmlType="submit"
                 shape="round"
                 onClick={e => {
-                  editUser(e, userData)
+                  editUser(e, userData[0])
                 }}
                 style={createProfileButton}
                 icon={<EditOutlined />}

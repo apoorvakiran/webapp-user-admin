@@ -116,34 +116,10 @@ export const adminSideBarNavigator = [
 export const userSideBarNavigator = [
   {
     name: "Summary",
-    key: MENU_KEYS.SUMMARY,
-    url: routes.SUMMARY,
-    icon: "CaretRightOutlined",
-  },
-  {
-    name: "Users",
     key: MENU_KEYS.USERS,
-    url: routes.USERS,
+    url: routes.USER_DETAIL,
     icon: "CaretRightOutlined",
   },
-  {
-    name: "Devices",
-    key: MENU_KEYS.DEVICES,
-    url: routes.DEVICES,
-    icon: "CaretRightOutlined",
-  },
-  // {
-  //   name: "Admin Settings",
-  //   key: MENU_KEYS.ADMIN_SETTINGS,
-  //   url: routes.ADMIN_SETTINGS,
-  //   icon: "CaretRightOutlined",
-  // },
-  // {
-  //   name: "My Profile",
-  //   key: MENU_KEYS.MY_PROFILE,
-  //   url: routes.MY_PROFILE,
-  //   icon: "CaretRightOutlined",
-  // },
   {
     name: "Logout",
     key: MENU_KEYS.LOGOUT,
