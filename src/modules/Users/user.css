@@ -216,3 +216,20 @@
   justify-content: center;
   margin-top: 25px !important;
 }
+
+.users-page-header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.create-pdf-buttons{
+  display: flex;
+}
+
+.pdf-button{
+  margin-right: 8px;
+  color: #c54b30 !important;
+  font-weight: 700 !important;
+  border-color: #c54b30 !important;
+  padding: 4px 20px;
+}

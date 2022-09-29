@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button, Card, Radio, Skeleton } from "antd";
 import Table from "../../components/Table/index";
-import { PlusOutlined, EditOutlined } from "@ant-design/icons";
+import { PlusOutlined, EditOutlined, DownloadOutlined } from "@ant-design/icons";
 import { editUserButton, cardStyle } from "./style";
 import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
@@ -10,6 +10,8 @@ import { type } from "@testing-library/user-event/dist/type";
 import { baseUrl, getAuthData } from "../../utils/Data/Data";
 import "./user.css";
 import { openNotificationWithIcon } from "../../utils/helpers";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const Users = props => {
   const [loading, setLoading] = useState(true);
@@ -272,6 +274,21 @@ const Users = props => {
     });
   };
 
+  const PDFComponent = useRef(null)
+
+  const saveAsPdf = () => {
+    const tableCellDark = document.querySelectorAll('.table-row-light .ant-table-cell')
+    html2canvas(PDFComponent.current)
+      .then(canvas => {
+        const imgWidth = 208;
+        const imgHeight = canvas.height * imgWidth/canvas.width;
+        const imgData = canvas.toDataURL('img/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save(`${new Date().toISOString()}.pdf`);
+      })
+  }
+
   return (
     <BasicLayout>
       {loading ? (
@@ -281,17 +298,28 @@ const Users = props => {
           active
         />
       ) : (
-        <Card className="page-content">
-          <div className="page-content-header">
+        <Card className="page-content" ref={PDFComponent}>
+          <div className="page-content-header users-page-header">
             <div className="user-score">Users</div>
-            <Button
-              shape="round"
-              onClick={CreateNewUser}
-              icon={<PlusOutlined />}
-              className="createNewButton"
-            >
-              Create New User
-            </Button>
+            <div className="create-pdf-buttons">
+              <Button
+                shape="round"
+                onClick={() => saveAsPdf()}
+                icon={<DownloadOutlined />}
+                className="pdf-button"
+                data-html2canvas-ignore="true"
+              >
+                Save as PDF
+              </Button>
+              <Button
+                shape="round"
+                onClick={CreateNewUser}
+                icon={<PlusOutlined />}
+                className="createNewButton"
+              >
+                Create New User
+              </Button>
+            </div>
           </div>
           <div className="usersTable">
             <Table

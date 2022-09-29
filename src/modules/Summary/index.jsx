@@ -1,6 +1,7 @@
 import { Grid, Paper, styled, Typography } from "@mui/material";
-import { Card, Select, Skeleton } from "antd";
-import React, { useEffect, useState } from "react";
+import { Card, Select, Skeleton, Button } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
+import React, { useEffect, useState, useRef } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
 import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, ProgressBarChart, ViewBy, getAccessToken, getAccessValueToken, getAuthData } from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
@@ -21,6 +22,8 @@ import { orderBy, round, sortBy } from "lodash";
 import { Auth } from "aws-amplify";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 
 const Summary = (props) => {
@@ -467,6 +470,21 @@ const Summary = (props) => {
         }
     }
 
+    const SummaryComponent = useRef(null)
+
+    const saveAsPdf = () => {
+        const tableCellDark = document.querySelectorAll('.table-row-light .ant-table-cell')
+        html2canvas(SummaryComponent.current)
+        .then(canvas => {
+            const imgWidth = 208;
+            const imgHeight = canvas.height * imgWidth/canvas.width;
+            const imgData = canvas.toDataURL('img/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            pdf.save(`${new Date().toISOString()}.pdf`);
+        })
+    }
+
     return (
         <BasicLayout >
             {loading ? (
@@ -476,16 +494,27 @@ const Summary = (props) => {
                     active
                 />
             ) : (
-                <Card className="summaryWrapper">
-                    <div>
+                <Card className="summaryWrapper" ref={SummaryComponent}>
+                    <div className="summary-page-header">
                         <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
-                        <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px", marginBottom: "20px" }}
-                            onChange={handleChange} >
-                            <Select.Option value={0}> All Jobs </Select.Option>
-                            {jobTitleList.map((row, index) => (
-                                <Select.Option value={row.id}>{row.name} </Select.Option>
-                            ))}
-                        </Select>
+                        <div className="jobs-pdf-buttons">
+                            <Button
+                                shape="round"
+                                onClick={() => saveAsPdf()}
+                                icon={<DownloadOutlined />}
+                                className="pdf-button"
+                                data-html2canvas-ignore="true"
+                            >
+                                Save as PDF
+                            </Button>
+                            <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px" }}
+                                onChange={handleChange} >
+                                <Select.Option value={0}> All Jobs </Select.Option>
+                                {jobTitleList.map((row, index) => (
+                                    <Select.Option value={row.id}>{row.name} </Select.Option>
+                                ))}
+                            </Select>
+                        </div>
                     </div>
                     <div className="dashboard">
                         <Grid container className="timeSelect">
