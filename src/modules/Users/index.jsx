@@ -88,8 +88,14 @@ const Users = props => {
     );
   };
   const onChange = (e, record) => {
+    const defaultJob = jobTitleList.find((job) => job.name === "Default")
+    const newRecord = {
+      ...record,
+      name: defaultJob.name,
+      job_id: defaultJob.id
+    }
     setRadioValue(e?.target?.value);
-    setuserRowData(record);
+    setuserRowData(record.name ? record : newRecord);
   };
   const columns = [
     {
@@ -258,7 +264,7 @@ const Users = props => {
     },
   ]
 
-  const onRow = (record, rowIndex) => {
+  const onRow = (record = {}, rowIndex) => {
     const defaultJob = jobTitleList.find((job) => job.name === "Default")
     const newRecord = {
       ...record,
