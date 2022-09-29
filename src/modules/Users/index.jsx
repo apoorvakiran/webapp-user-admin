@@ -277,7 +277,10 @@ const Users = props => {
   const PDFComponent = useRef(null)
 
   const saveAsPdf = () => {
-    const tableCellDark = document.querySelectorAll('.table-row-light .ant-table-cell')
+  const trElements =  document.getElementsByTagName('tr');
+  for(let i =0; i < trElements.length; i++ ) {
+    trElements[i].classList.remove('table-row-light');
+  }
     html2canvas(PDFComponent.current)
       .then(canvas => {
         const imgWidth = 208;
@@ -286,6 +289,12 @@ const Users = props => {
         const pdf = new jsPDF('p', 'mm', 'a4');
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
         pdf.save(`${new Date().toISOString()}.pdf`);
+        for(let i =0; i < trElements.length; i++ ) {
+          if(i%2 === 0) {
+            trElements[i].classList.add('table-row-light');
+          }
+            
+        }
       })
   }
 
