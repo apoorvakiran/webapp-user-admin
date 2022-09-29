@@ -43,6 +43,9 @@ const Barchart = props => {
           drawBorder: false,
           lineWidth: 12,
         },
+        min: 0,
+        max: 10,
+        stepSize: 1,
       },
       x: {
         grid: {
