@@ -42,26 +42,28 @@ const Users = props => {
   }
 
   useEffect(() => {
-    async function getData() {
-      const idToken = await getAuthData();
-      const response = await axios.get(
-        baseUrl + "user", {
-        // "http://localhost:5051/api/user-admin/user-list"
-        headers: {
-          "Authorization": `Bearer ${idToken}`
-        },
-        params: { type: "user-list" }
-      }
-      );
-      setLoading(false);
-      setDataSource(response.data.data);
-    }
     getData();
     getWindowDimensions();
     getJobTitleList()
     window.addEventListener("resize", getWindowDimensions);
     return () => window.removeEventListener("resize", getWindowDimensions);
   }, []);
+
+  async function getData() {
+    const idToken = await getAuthData();
+    const response = await axios.get(
+      baseUrl + "user", {
+      // "http://localhost:5051/api/user-admin/user-list"
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
+      params: { type: "user-list" }
+    }
+    );
+    setLoading(false);
+    setDataSource(response.data.data);
+  }
+
 
   const CreateNewUser = () => {
     props?.history?.push({
@@ -280,7 +282,41 @@ const Users = props => {
   const trElements =  document.getElementsByTagName('tr');
   for(let i =0; i < trElements.length; i++ ) {
     trElements[i].classList.remove('table-row-light');
+    const nodes = trElements[i].childNodes;
+    for(let j=0; j < nodes.length; j++) {
+      if( j!== 0 && j%8 === 0) {
+        nodes[j].style.display = 'none';
+      }
+      if( nodes[j].nodeName.toLowerCase() === 'th') {
+        if(j === 9 || j === 10) {
+          nodes[j].style.display = 'none';
+        }
+        if(j === 0) {
+          nodes[j].style.width = '92px'
+        }
+        if(j === 1) {
+          nodes[j].style.width = '103px'
+        }
+        if(j === 2) {
+          nodes[j].style.width = '103px'
+        }
+        if(j === 3) {
+          nodes[j].style.width = '222px'
+        }
+        if(j === 4) {
+          nodes[j].style.width = '200px'
+        }
+        if(j === 5) {
+          nodes[j].style.width = '149px'
+        }
+      }
+    }
   }
+  const tableElements =  document.getElementsByTagName('table');
+  for(let i =0; i < tableElements.length; i++ ) {
+    tableElements[i].style.tableLayout = 'initial';
+  }
+ 
     html2canvas(PDFComponent.current)
       .then(canvas => {
         const imgWidth = 208;
@@ -293,7 +329,15 @@ const Users = props => {
           if(i%2 === 0) {
             trElements[i].classList.add('table-row-light');
           }
-            
+          const nodes = trElements[i].childNodes;
+          for(let j=0; j < nodes.length; j++) {
+            nodes[j].style.width = 'auto';
+            nodes[j].style.display = 'table-cell'
+          }
+          const tableElements =  document.getElementsByTagName('table');
+          for(let i =0; i < tableElements.length; i++ ) {
+            tableElements[i].style.tableLayout = 'fixed';
+          } 
         }
       })
   }
