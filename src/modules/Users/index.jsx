@@ -10,6 +10,7 @@ import { type } from "@testing-library/user-event/dist/type";
 import { baseUrl, getAuthData } from "../../utils/Data/Data";
 import "./user.css";
 import { openNotificationWithIcon } from "../../utils/helpers";
+import { usersJobsList } from './../../utils/Data/Data';
 
 const Users = props => {
   const [loading, setLoading] = useState(true);
@@ -25,18 +26,8 @@ const Users = props => {
   };
   
   async function getJobTitleList() {
-    const idToken = await getAuthData();
-    const response = await axios.get(
-      baseUrl + "userdetail", {
-      headers: {
-        "Authorization": `Bearer ${idToken}`
-      },
-      params: {
-        type: "get-jobs-list"
-      }
-    }
-    );
-    setJobTitleList(response.data);
+    const jobList = await usersJobsList()
+    setJobTitleList(jobList.data);
   }
 
   useEffect(() => {

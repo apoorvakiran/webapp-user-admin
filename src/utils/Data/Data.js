@@ -9,6 +9,7 @@ import StrokeIcon from "../../images/Stroke.png";
 import Vector2Icon from "../../images/Vector2.png";
 import { Paper, styled } from "@mui/material";
 import { Auth } from "aws-amplify";
+import axios from "axios";
 
 export const baseUrl = process.env.REACT_APP_API_HOST;
 
@@ -404,3 +405,18 @@ export const data1 = [
         hand: "Left",
     },
 ];
+
+export const usersJobsList = async() => {
+    const idToken = await getAuthData();
+    const response = await axios.get(
+        baseUrl + "userdetail", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
+            params: {
+                type: "get-jobs-list"
+            }
+        }
+    );
+    return response;
+}
