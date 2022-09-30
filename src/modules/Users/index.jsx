@@ -87,8 +87,10 @@ const Users = props => {
       </Button>
     );
   };
+  
+  const defaultJob = jobTitleList?.find((job) => job.name === "Default")
+
   const onChange = (e, record) => {
-    const defaultJob = jobTitleList.find((job) => job.name === "Default")
     const newRecord = {
       ...record,
       name: defaultJob.name,
@@ -265,7 +267,6 @@ const Users = props => {
   ]
 
   const onRow = (record = {}, rowIndex) => {
-    const defaultJob = jobTitleList.find((job) => job.name === "Default")
     const newRecord = {
       ...record,
       name: defaultJob.name,
