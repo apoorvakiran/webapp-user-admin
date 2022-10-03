@@ -23,8 +23,8 @@ const UserInfo = props => {
   return (
     <>
       <div className="user-name">
-        {userData[0].first_name
-          ? `${userData[0].first_name} ${userData[0].last_name}`
+        {userData?.[0]?.first_name
+          ? `${userData?.[0]?.first_name} ${userData?.[0]?.last_name}`
           : "NA"}
       </div>
       <div className="user-info">
@@ -49,21 +49,21 @@ const UserInfo = props => {
         >
           <Space>
             <Col style={style} className="gutter-row">
-              <div style={{ fontWeight: "700" }}>{userData[0].role === 1 ? "Admin" : "User" || ""}</div>
-              <div style={{ color: "#C54B30" }}>{userData[0].name || ""}</div>
+              <div style={{ fontWeight: "700" }}>{userData?.[0]?.role === 1 ? "Admin" : "User" || ""}</div>
+              <div style={{ color: "#C54B30" }}>{userData?.[0]?.name || ""}</div>
             </Col>
             <Col style={style} className="gutter-row">
-              <div style={{ color: "#C54B30" }}>{userData[0].email || ""}</div>
+              <div style={{ color: "#C54B30" }}>{userData?.[0]?.email || ""}</div>
               <div style={{ color: "#C54B30" }}>
-                Phone: {userData[0].phone || ""}
+                Phone: {userData?.[0]?.phone || ""}
               </div>
             </Col>
             <Col style={style} className="gutter-row">
-              <div>Watch: {userData[0].id_number || ""}</div>
-              <div>Android ID: {userData[0].mac || ""}</div>
+              <div>Watch: {userData?.[0]?.id_number || ""}</div>
+              <div>Android ID: {userData?.[0]?.mac || ""}</div>
             </Col>
             <Col style={style} className="gutter-row">
-              <div>Hand: {userData[0].hand || ""}</div>
+              <div>Hand: {userData?.[0]?.hand || ""}</div>
             </Col>
             <Col style={style} className="gutter-row">
               <Button
@@ -71,7 +71,7 @@ const UserInfo = props => {
                 htmlType="submit"
                 shape="round"
                 onClick={e => {
-                  editUser(e, userData[0])
+                  editUser(e, userData?.[0])
                 }}
                 style={createProfileButton}
                 icon={<EditOutlined />}
