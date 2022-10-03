@@ -21,7 +21,7 @@ const Users = props => {
   const [jobTitleList, setJobTitleList] = useState([])
 
   const getWindowDimensions = () => {
-    const { innerWidth: width, innerHeight: height } = window;
+    const { innerWidth: width } = window;
     setWidth(width);
   };
 
