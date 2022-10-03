@@ -86,24 +86,52 @@ const components = {
   }
 }
 
-const formFields = {
-  signIn: {
-    username: {
-      labelHidden: false,
-      label: '',
-      placeholder: 'Email',
+const formFields = () => {
+  return [
+    {
+      type: "email",
+      label: constants.EMAIL_LABEL,
+      placeholder: constants.EMAIL_PLACEHOLDER,
+      value: email.value,
       className: 'email-field',
+      inputProps: {
+        autocomplete: "off",
+        onBlur: (e) => {
+          handleValidation({
+            ev: e,
+            rules: { required: true },
+          });
+        },
+        style:
+          !email.valid && email.focused ? errorStyle : null,
+      },
     },
-  },
-  resetPassword: {
-    username: {
-      labelHidden: false,
-      label: '',
+    {
+      type: "password",
+      label: constants.PASSWORD_LABEL,
+      placeholder: constants.PASSWORD_PLACEHOLDER,
+      value: password.value,
       placeholder: 'Enter E-mail',
-      type: "email"
+      inputProps: {
+        autocomplete: "off",
+        style:
+          !password.valid && password.focused
+            ? errorStyle
+            : null,
+        onblur: (e) =>
+          handleValidation({
+            rules: { required: true },
+            ev: e,
+          }),
+      },
     },
-  }
-}
+  ];
+};
+
+const handleValidation = ({ ev, rules }) => {
+  const { value, type, name } = ev.target;
+  dispatch({ type, name, rules, value });
+};
 
 const services = {
   async handleForgotPassword(formData) {

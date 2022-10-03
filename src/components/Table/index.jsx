@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Table, Radio } from "antd";
 
 const TableComponent = props => {
+
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    setPage(1)
+  }, [props])
+  
   const { columns, data, rowSelection, onRow, showHeader } = props;
   return (
     < Table
@@ -13,6 +20,7 @@ const TableComponent = props => {
       scroll={{ y: 1024, overflow: "auto" }}
       dataSource={data}
       pagination={{
+        current: page,
         pageSize: 10,
         hideOnSinglePage: true,
         showSizeChanger: true,
@@ -20,6 +28,9 @@ const TableComponent = props => {
       rowSelection={rowSelection}
       onRow={onRow}
       showHeader={showHeader}
+      onChange={(page) => {
+        setPage(page.current)
+      }}
     />
   );
 };

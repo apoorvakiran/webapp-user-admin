@@ -20,6 +20,8 @@ import UserProgressScore from "../Analytics/ActiveScore/UserProgressScore";
 import { orderBy, round, sortBy } from "lodash";
 import { Auth } from "aws-amplify";
 import { useAuthenticator } from "@aws-amplify/ui-react";
+import Calendar from "../../components/Calendar/Calendar";
+
 
 const Summary = (props) => {
     const [loading, setLoading] = useState(true);
@@ -40,6 +42,8 @@ const Summary = (props) => {
     const [dataType, setDataType] = useState('Day');
     const [scoreType = "Scores by User", setScoreType] = useState();
     const { route } = useAuthenticator(context => [context.route]);
+    const[calendarDate,setCalendarDate] = useState(formatDate(new Date()))
+    const [selectedOption, setSelectedOption] = useState(0)
 
     async function getActiveScores(value) {
 
@@ -81,17 +85,28 @@ const Summary = (props) => {
     }
 
     useEffect(() => {
+        
+        const current = new Date();
+        const date = formatDate(current);
+
         if (route === 'authenticated') {
             getJobTitleList();
             getUserData();
             // getActiveScores("Day");
-            getUserCardData(null, "Day");
-            getUserSafetyScoreData(null, dataType);
-            getUserRiskScoreData(null, dataType);
-            getUserSpeedScoreData(null, dataType);
-            getUserActiveScoreData(null, dataType);
+            getUserCardData(null, "Day", date);
+            getUserSafetyScoreData(null, dataType, date);
+            getUserRiskScoreData(null, dataType, date);
+            getUserSpeedScoreData(null, dataType, date);
+            getUserActiveScoreData(null, dataType, date);
         }
     }, []);
+
+    useEffect(() => {
+        if(selectedOption === 0) return 
+        handleChange(selectedOption)
+        handleScoreCard(scoreType)
+    }, [calendarDate])
+    
 
     async function getUserData() {
         // const response = await axios.get(
@@ -139,31 +154,39 @@ const Summary = (props) => {
         color: "black",
     }));
 
-    async function onGridSelection(value) {
-        setDataType(value);
-        // getData(value);
-        // console.log("selectedJobTitle::::", selectedJobTitle)
+
+    const getOnSelectionData = (value = dataType, newDate) => {
+        const current = new Date();
+        const date = formatDate(newDate || current);
+        setCalendarDate(date)
+
         if (selectedJobTitle !== "" && selectedJobTitle !== "0") {
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
             // console.log("scoreType:::::", scoreType);
             if (scoreType === "Scores by User") {
-                getUserCardData(jobId, value);
-                getUserSafetyScoreData(jobId, value);
-                getUserRiskScoreData(jobId, value);
-                getUserSpeedScoreData(jobId, value);
-                getUserActiveScoreData(jobId, value);
+                getUserCardData(jobId, value, date);
+                getUserSafetyScoreData(jobId, value, date);
+                getUserRiskScoreData(jobId, value, date);
+                getUserSpeedScoreData(jobId, value, date);
+                getUserActiveScoreData(jobId, value, date);
             } else {
-                getJobWiseSummaryGraph(jobId, value)
+                getJobWiseSummaryGraph(jobId, value, date)
             }
         } else {
-            getUserCardData(null, value);
-            getUserSafetyScoreData(null, value);
-            getUserRiskScoreData(null, value);
-            getUserSpeedScoreData(null, value);
-            getUserActiveScoreData(null, value);
+            getUserCardData(null, value, date);
+            getUserSafetyScoreData(null, value, date);
+            getUserRiskScoreData(null, value, date);
+            getUserSpeedScoreData(null, value, date);
+            getUserActiveScoreData(null, value, date);
             // getActiveScores(value);
         }
-
+    }
+    
+    async function onGridSelection(value) {
+        setDataType(value);
+        // getData(value);
+        // console.log("selectedJobTitle::::", selectedJobTitle)
+        getOnSelectionData(value)
     }
 
     const getIcon = icon => {
@@ -182,6 +205,7 @@ const Summary = (props) => {
     };
 
     const handleChange = (value) => {
+        setSelectedOption(value)
         let val = `${value}`;
         // setDataType("Day");
         // console.log("key", `${jobTitleList.filter(data => data.id === key)[0].name}`);
@@ -189,21 +213,21 @@ const Summary = (props) => {
             setSelectedJobTitle(`${jobTitleList.filter(data => data.id === value)[0].name}`);
             // getJobUserList(`${value}`);
             if (scoreType === "Scores by User") {
-                getUserCardData(`${value}`, dataType);
-                getUserSafetyScoreData(`${value}`, dataType);
-                getUserRiskScoreData(`${value}`, dataType);
-                getUserSpeedScoreData(`${value}`, dataType);
-                getUserActiveScoreData(`${value}`, dataType);
+                getUserCardData(`${value}`, dataType, calendarDate);
+                getUserSafetyScoreData(`${value}`, dataType, calendarDate);
+                getUserRiskScoreData(`${value}`, dataType, calendarDate);
+                getUserSpeedScoreData(`${value}`, dataType, calendarDate);
+                getUserActiveScoreData(`${value}`, dataType, calendarDate);
             } else {
-                getJobWiseSummaryGraph(`${value}`, dataType)
+                getJobWiseSummaryGraph(`${value}`, dataType, calendarDate)
             }
         } else {
             setSelectedJobTitle("");
-            getUserCardData(null, dataType);
-            getUserSafetyScoreData(null, dataType);
-            getUserRiskScoreData(null, dataType);
-            getUserSpeedScoreData(null, dataType);
-            getUserActiveScoreData(null, dataType);
+            getUserCardData(null, dataType, calendarDate);
+            getUserSafetyScoreData(null, dataType, calendarDate);
+            getUserRiskScoreData(null, dataType, calendarDate);
+            getUserSpeedScoreData(null, dataType, calendarDate);
+            getUserActiveScoreData(null, dataType, calendarDate);
             // getActiveScores(dataType);
         }
     };
@@ -222,7 +246,7 @@ const Summary = (props) => {
             params: {
                 type: "get-summary-by-job",
                 durationType: durationType,
-                startdate: date,
+                startdate: calendarDate,
                 jobId: value
             }
         }
@@ -303,26 +327,23 @@ const Summary = (props) => {
     ];
 
     const handleScoreCard = async type => {
-        setScoreType(() => type)
-        // console.log("type", type)
+        setScoreType(type)
         if (type === "Scores by Time") {
             // console.log("scoreType", type)
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
-            getJobWiseSummaryGraph(jobId, dataType)
+            getJobWiseSummaryGraph(jobId, dataType, calendarDate)
         } else {
             // console.log("scoreType", type)
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
-            getUserCardData(jobId, dataType);
-            getUserSafetyScoreData(jobId, dataType);
-            getUserRiskScoreData(jobId, dataType);
-            getUserSpeedScoreData(jobId, dataType);
-            getUserActiveScoreData(jobId, dataType);
+            getUserCardData(jobId, dataType, calendarDate);
+            getUserSafetyScoreData(jobId, dataType, calendarDate);
+            getUserRiskScoreData(jobId, dataType, calendarDate);
+            getUserSpeedScoreData(jobId, dataType, calendarDate);
+            getUserActiveScoreData(jobId, dataType, calendarDate);
         }
     };
 
-    async function getUserCardData(value, durationType) {
-        const current = new Date();
-        const date = formatDate(current);
+    async function getUserCardData(value, durationType, selectedDate) {
         const idToken = await getAuthData();
         const response = await axios.get(
             // "http://localhost:5051/api/user-admin/get-summary-card-detail-by-user", {
@@ -333,7 +354,7 @@ const Summary = (props) => {
             params: {
                 type: "get-summary-card-detail-by-user",
                 durationType: durationType,
-                startdate: date,
+                startdate: selectedDate,
                 jobId: value
             }
         }
@@ -341,9 +362,7 @@ const Summary = (props) => {
         setScores(response.data.card_data);
     }
 
-    async function getUserSafetyScoreData(value, durationType) {
-        const current = new Date();
-        const date = formatDate(current);
+    async function getUserSafetyScoreData(value, durationType, selectedDate) {
         const idToken = await getAuthData();
         const response = await axios.get(
             // value !== null ? "http://localhost:5051/api/user-admin/get-summary-by-user" : "http://localhost:5051/api/user-admin/get-summary-by-all-job", {
@@ -354,7 +373,7 @@ const Summary = (props) => {
             params: {
                 type: value !== null ? "get-summary-by-user" : "get-summary-by-all-job",
                 durationType: durationType,
-                startdate: date,
+                startdate: selectedDate,
                 jobId: value,
                 scoreType: "safetyscore",
                 pageSize: ""
@@ -370,9 +389,7 @@ const Summary = (props) => {
         }
     }
 
-    async function getUserRiskScoreData(value, durationType) {
-        const current = new Date();
-        const date = formatDate(current);
+    async function getUserRiskScoreData(value, durationType, selectedDate) {
         const idToken = await getAuthData();
         const response = await axios.get(
             // value !== null ? "http://localhost:5051/api/user-admin/get-summary-by-user" : "http://localhost:5051/api/user-admin/get-summary-by-all-job", {
@@ -383,7 +400,7 @@ const Summary = (props) => {
             params: {
                 type: value !== null ? "get-summary-by-user" : "get-summary-by-all-job",
                 durationType: durationType,
-                startdate: date,
+                startdate: selectedDate,
                 jobId: value,
                 scoreType: "riskscore",
                 pageSize: ""
@@ -398,9 +415,7 @@ const Summary = (props) => {
         }
     }
 
-    async function getUserSpeedScoreData(value, durationType) {
-        const current = new Date();
-        const date = formatDate(current);
+    async function getUserSpeedScoreData(value, durationType, selectedDate) {
         const idToken = await getAuthData();
         const response = await axios.get(
             // value !== null ? "http://localhost:5051/api/user-admin/get-summary-by-user" : "http://localhost:5051/api/user-admin/get-summary-by-all-job", {
@@ -411,7 +426,7 @@ const Summary = (props) => {
             params: {
                 type: value !== null ? "get-summary-by-user" : "get-summary-by-all-job",
                 durationType: durationType,
-                startdate: date,
+                startdate: selectedDate,
                 jobId: value,
                 scoreType: "speedscore",
                 pageSize: ""
@@ -426,9 +441,7 @@ const Summary = (props) => {
         }
     }
 
-    async function getUserActiveScoreData(value, durationType) {
-        const current = new Date();
-        const date = formatDate(current);
+    async function getUserActiveScoreData(value, durationType, selectedDate) {
         const idToken = await getAuthData();
         const response = await axios.get(
             // value !== null ? "http://localhost:5051/api/user-admin/get-summary-by-user" : "http://localhost:5051/api/user-admin/get-summary-by-all-job", {
@@ -439,7 +452,7 @@ const Summary = (props) => {
             params: {
                 type: value !== null ? "get-summary-by-user" : "get-summary-by-all-job",
                 durationType: durationType,
-                startdate: date,
+                startdate: selectedDate,
                 jobId: value,
                 scoreType: "activescore",
                 pageSize: ""
@@ -501,7 +514,7 @@ const Summary = (props) => {
                                 );
                             })}
                         </Grid>
-
+                        <Calendar  getOnSelectionData={getOnSelectionData} dataType={dataType} />
                         <Card className="scoreBoard childCard">
 
                             <div className="scoreboardTitle">
@@ -629,6 +642,9 @@ const Summary = (props) => {
                                                         labels={safetyGraphLabels}
                                                         Icon={Vector2Icon}
                                                         LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
+                                                        yAxisMax={7}
+                                                        yAxisMin={0}
+                                                        yAxisStep={1}
                                                     />
                                                 </Item>
                                             </Grid>
@@ -653,6 +669,9 @@ const Summary = (props) => {
                                                         labels={speedGraphLabels}
                                                         Icon={StrokeIcon}
                                                         LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
+                                                        yAxisMax={7}
+                                                        yAxisMin={0}
+                                                        yAxisStep={1}
                                                     />
                                                 </Item>
                                             </Grid>
@@ -665,6 +684,9 @@ const Summary = (props) => {
                                                         labels={activeGraphLabels}
                                                         Icon={SettingIcon}
                                                         LinearGradientColor={["#05FF00", "#F3BE00", "#FF0000"]}
+                                                        yAxisMax={100}
+                                                        yAxisMin={0}
+                                                        yAxisStep={10}
                                                     />
                                                 </Item>
                                             </Grid>

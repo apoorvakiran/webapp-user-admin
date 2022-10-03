@@ -14,6 +14,9 @@ import PolygonIcon from "../../images/Polygon.svg";
 import StrokeIcon from "../../images/Stroke.png";
 import Vector2Icon from "../../images/Vector2.png";
 import { UserRoleContext } from "../../features/Routes";
+import { cardIconStyle } from "./style";
+import LiveSession from "../../components/LiveSession";
+import Calendar from "../../components/Calendar/Calendar";
 
 const Dashboard = props => {
   const location = useLocation();
@@ -67,6 +70,8 @@ const Dashboard = props => {
     let speedData = data["speedscore"]?.y || [];
     let riskLabels = data["riskexposures"]?.x || [];
     let riskData = data["riskexposures"]?.y || [];
+    
+    
     setActiveGraphLabels(activeLabels);
     setActiveGraphData(activeData);
     setSafetyGraphLabels(safetyLabels);
@@ -75,6 +80,7 @@ const Dashboard = props => {
     setSpeedGraphData(speedData);
     setRiskGraphLabels(riskLabels);
     setRiskGraphData(riskData);
+
     return response.data;
   };
 
@@ -112,9 +118,11 @@ const Dashboard = props => {
     textAlign: "center",
     color: "black",
   }));
+
   const onGridSelection = async value => {
     getActiveScores(value, userData);
   };
+
   const getIcon = icon => {
     switch (icon) {
       case "Active":
@@ -129,6 +137,7 @@ const Dashboard = props => {
         return SettingIcon;
     }
   };
+
   return (
     <BasicLayout pageTitle="User Detail">
       {/* <Space> */}
@@ -172,6 +181,7 @@ const Dashboard = props => {
                 );
               })}
             </Grid>
+            <Calendar />
             <Card
               className="scoreBoard childCard"
               headStyle={{ fontWeight: "700", padding: "0", marginTop: "-5px" }}
@@ -214,6 +224,9 @@ const Dashboard = props => {
                     labels={safetyGraphLabels}
                     Icon={Vector2Icon}
                     LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
+                    yAxisMax={7}
+                    yAxisMin={0}
+                    yAxisStep={1}
                   />
                 </Item>
               </Grid>
@@ -237,6 +250,9 @@ const Dashboard = props => {
                     labels={speedGraphLabels}
                     Icon={StrokeIcon}
                     LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
+                    yAxisMax={7}
+                    yAxisMin={0}
+                    yAxisStep={1}
                   />
                 </Item>
               </Grid>
@@ -249,6 +265,9 @@ const Dashboard = props => {
                     labels={activeGraphLabels}
                     Icon={SettingIcon}
                     LinearGradientColor={["#05FF00", "#F3BE00", "#FF0000"]}
+                    yAxisMax={100}
+                    yAxisMin={0}
+                    yAxisStep={10}
                   />
                 </Item>
               </Grid>

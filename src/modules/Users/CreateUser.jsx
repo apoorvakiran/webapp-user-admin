@@ -100,7 +100,11 @@ const CreateUser = (props) => {
   };
 
   const handleFinish = values => {
-    signUp(values);
+    const defaultValue = jobTitleList.find((item) => item.name === "Default")
+    const newValues = values.jobTitle === undefined ? {
+      ...values, jobTitle: defaultValue.id
+    } : values
+    signUp(newValues);
   };
 
   async function signUp(values) {
@@ -262,27 +266,27 @@ const CreateUser = (props) => {
                 style={{ justifyContent: "center" }}
                 className="formStyle"
                 name="jobTitle"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please select Job Title",
-                  },
-                  () => ({
-                    validator(_, value) {
-                      if (value === 0) {
-                        return Promise.reject("Job title cannot be None");
-                      }
-                      return Promise.resolve();
-                    },
-                  }),
-                ]}
-                initialValue={0}
+                // rules={[
+                //   {
+                //     required: true,
+                //     // message: "Please select Job Title",
+                //   },
+                  // () => ({
+                  //   validator(_, value) {
+                  //     if (value === 0) {
+                  //       return Promise.reject("Job title cannot be None");
+                  //     }
+                  //     return Promise.resolve();
+                  //   },
+                  // }),
+                // ]}
+                // initialValue={0}
               >
-                <Select placeholder="Select Job Title" defaultValue={0} className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
-                  <Select.Option value={0}>None</Select.Option>
+                <Select placeholder="Select Job Title" 
+                  className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
                   {jobTitleList.map((row, index) => (
-                    <Select.Option value={row.id}>{row.name} </Select.Option>
-                  ))}
+                      <Select.Option value={row.id}>{row.name} </Select.Option>
+                    ))}
                 </Select>
               </Form.Item>
               <Form.Item

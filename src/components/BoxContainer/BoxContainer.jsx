@@ -12,8 +12,8 @@ export default function BoxContainer() {
     return (
         <>
             <CssBaseline />
-            <Container maxWidth="lg" className="boxContainer" style={{marginTop:"5em"}}>
-                    <Tables />
+            <Container data-testid="box-container" maxWidth="lg" className="boxContainer" style={{marginTop:"5em"}}>
+                    <Tables data-testid="tables" />
                 {/* </Box> */}
             </Container>
         </>
