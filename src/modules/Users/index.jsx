@@ -25,7 +25,7 @@ const Users = props => {
     const { innerWidth: width, innerHeight: height } = window;
     setWidth(width);
   };
-  
+
   async function getJobTitleList() {
     const idToken = await getAuthData();
     const response = await axios.get(
@@ -279,65 +279,65 @@ const Users = props => {
   const PDFComponent = useRef(null)
 
   const saveAsPdf = () => {
-  const trElements =  document.getElementsByTagName('tr');
-  for(let i =0; i < trElements.length; i++ ) {
-    trElements[i].classList.remove('table-row-light');
-    const nodes = trElements[i].childNodes;
-    for(let j=0; j < nodes.length; j++) {
-      if( j!== 0 && j%8 === 0) {
-        nodes[j].style.display = 'none';
-      }
-      if( nodes[j].nodeName.toLowerCase() === 'th') {
-        if(j === 9 || j === 10) {
+    const trElements = document.getElementsByTagName('tr');
+    for (let i = 0; i < trElements.length; i++) {
+      trElements[i].classList.remove('table-row-light');
+      const nodes = trElements[i].childNodes;
+      for (let j = 0; j < nodes.length; j++) {
+        if (j !== 0 && j % 8 === 0) {
           nodes[j].style.display = 'none';
         }
-        if(j === 0) {
-          nodes[j].style.width = '92px'
-        }
-        if(j === 1) {
-          nodes[j].style.width = '103px'
-        }
-        if(j === 2) {
-          nodes[j].style.width = '103px'
-        }
-        if(j === 3) {
-          nodes[j].style.width = '222px'
-        }
-        if(j === 4) {
-          nodes[j].style.width = '200px'
-        }
-        if(j === 5) {
-          nodes[j].style.width = '149px'
+        if (nodes[j].nodeName.toLowerCase() === 'th') {
+          if (j === 9 || j === 10) {
+            nodes[j].style.display = 'none';
+          }
+          if (j === 0) {
+            nodes[j].style.width = '92px'
+          }
+          if (j === 1) {
+            nodes[j].style.width = '103px'
+          }
+          if (j === 2) {
+            nodes[j].style.width = '103px'
+          }
+          if (j === 3) {
+            nodes[j].style.width = '222px'
+          }
+          if (j === 4) {
+            nodes[j].style.width = '200px'
+          }
+          if (j === 5) {
+            nodes[j].style.width = '149px'
+          }
         }
       }
     }
-  }
-  const tableElements =  document.getElementsByTagName('table');
-  for(let i =0; i < tableElements.length; i++ ) {
-    tableElements[i].style.tableLayout = 'initial';
-  }
- 
+    const tableElements = document.getElementsByTagName('table');
+    for (let i = 0; i < tableElements.length; i++) {
+      tableElements[i].style.tableLayout = 'initial';
+    }
+
     html2canvas(PDFComponent.current)
       .then(canvas => {
         const imgWidth = 208;
-        const imgHeight = canvas.height * imgWidth/canvas.width;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
         const imgData = canvas.toDataURL('img/png');
         const pdf = new jsPDF('p', 'mm', 'a4');
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
         pdf.save(`${new Date().toISOString()}.pdf`);
-        for(let i =0; i < trElements.length; i++ ) {
-          if(i%2 === 0) {
+        for (let i = 0; i < trElements.length; i++) {
+          if (i % 2 === 0) {
             trElements[i].classList.add('table-row-light');
           }
           const nodes = trElements[i].childNodes;
-          for(let j=0; j < nodes.length; j++) {
+          for (let j = 0; j < nodes.length; j++) {
             nodes[j].style.width = 'auto';
             nodes[j].style.display = 'table-cell'
           }
-          const tableElements =  document.getElementsByTagName('table');
-          for(let i =0; i < tableElements.length; i++ ) {
+          const tableElements = document.getElementsByTagName('table');
+          for (let i = 0; i < tableElements.length; i++) {
             tableElements[i].style.tableLayout = 'fixed';
-          } 
+          }
         }
       })
   }

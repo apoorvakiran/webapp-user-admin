@@ -1,7 +1,7 @@
 import { Grid, Paper, styled, Typography } from "@mui/material";
 import { Card, Select, Skeleton, Button } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
 import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, ProgressBarChart, ViewBy, getAccessToken, getAccessValueToken, getAuthData } from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
@@ -13,13 +13,8 @@ import PolygonIcon from "../../images/Polygon.svg";
 import StrokeIcon from "../../images/Stroke.png";
 import Vector2Icon from "../../images/Vector2.png";
 import UserIcon from "../../images/UserIcon.png";
-import { cardIconStyle } from "../../modules/Users/style";
-import Table from "../../components/Table/index";
-import Meta from "antd/lib/card/Meta";
 import AllJobSummary from "./AllJobSummary";
-import UserProgressScore from "../Analytics/ActiveScore/UserProgressScore";
-import { orderBy, round, sortBy } from "lodash";
-import { Auth } from "aws-amplify";
+import { orderBy, round } from "lodash";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
 import html2canvas from "html2canvas";
@@ -45,7 +40,7 @@ const Summary = (props) => {
     const [dataType, setDataType] = useState('Day');
     const [scoreType = "Scores by User", setScoreType] = useState();
     const { route } = useAuthenticator(context => [context.route]);
-    const[calendarDate,setCalendarDate] = useState(formatDate(new Date()))
+    const [calendarDate, setCalendarDate] = useState(formatDate(new Date()))
     const [selectedOption, setSelectedOption] = useState(0)
 
     async function getActiveScores(value) {
@@ -88,7 +83,7 @@ const Summary = (props) => {
     }
 
     useEffect(() => {
-        
+
         const current = new Date();
         const date = formatDate(current);
 
@@ -105,11 +100,11 @@ const Summary = (props) => {
     }, []);
 
     useEffect(() => {
-        if(selectedOption === 0) return 
+        if (selectedOption === 0) return
         handleChange(selectedOption)
         handleScoreCard(scoreType)
     }, [calendarDate])
-    
+
 
     async function getUserData() {
         // const response = await axios.get(
@@ -184,7 +179,7 @@ const Summary = (props) => {
             // getActiveScores(value);
         }
     }
-    
+
     async function onGridSelection(value) {
         setDataType(value);
         // getData(value);
@@ -470,19 +465,17 @@ const Summary = (props) => {
         }
     }
 
-    const SummaryComponent = useRef(null)
 
     const saveAsPdf = () => {
-        const tableCellDark = document.querySelectorAll('.table-row-light .ant-table-cell')
-        html2canvas(SummaryComponent.current)
-        .then(canvas => {
-            const imgWidth = 208;
-            const imgHeight = canvas.height * imgWidth/canvas.width;
-            const imgData = canvas.toDataURL('img/png');
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-            pdf.save(`${new Date().toISOString()}.pdf`);
-        })
+        html2canvas(document.getElementById('summaryWrapper'))
+            .then(canvas => {
+                const imgWidth = 208;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                const imgData = canvas.toDataURL('img/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                pdf.save(`${new Date().toISOString()}.pdf`);
+            })
     }
 
     return (
@@ -494,7 +487,7 @@ const Summary = (props) => {
                     active
                 />
             ) : (
-                <Card className="summaryWrapper" ref={SummaryComponent}>
+                <Card className="summaryWrapper" id="summaryWrapper">
                     <div className="summary-page-header">
                         <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
                         <div className="jobs-pdf-buttons">
@@ -543,7 +536,7 @@ const Summary = (props) => {
                                 );
                             })}
                         </Grid>
-                        <Calendar  getOnSelectionData={getOnSelectionData} dataType={dataType} />
+                        <Calendar getOnSelectionData={getOnSelectionData} dataType={dataType} />
                         <Card className="scoreBoard childCard">
 
                             <div className="scoreboardTitle">
