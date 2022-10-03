@@ -21,7 +21,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { baseUrl, getAuthData } from "../../utils/Data/Data";
+import { baseUrl, getAuthData, UserRole } from "../../utils/Data/Data";
 import { display } from "@mui/system";
 import { UserRoleContext } from '../../features/Routes'
 
@@ -347,13 +347,13 @@ const EditUser = () => {
                       message: "Please select permissions",
                     },
                   ]}
-                  hidden={userRole.userRole === '2'}
+                  hidden={userRole.userRole === UserRole}
                 >
                   <Select
                     placeholder="Select Permissions *"
                     className="formSelectStyle"
                     style={{ height: 50, marginBottom: "20px" }}
-                    disabled={userRole.userRole === '2'}
+                    disabled={userRole.userRole === UserRole}
                   >
                     <Select.Option value={1}>Admin</Select.Option>
                     <Select.Option value={2}>User</Select.Option>
@@ -382,7 +382,7 @@ const EditUser = () => {
                     placeholder="Select Job Title"
                     className="formSelectStyle"
                     style={{ height: 50, marginBottom: "20px" }}
-                    disabled={userRole.userRole === '2'}
+                    disabled={userRole.userRole === UserRole}
                   >
                     <Select.Option value={0}>None </Select.Option>
                     {jobTitleList.map((row, index) => (
@@ -429,7 +429,7 @@ const EditUser = () => {
                 openModal();
               }}
               icon={<DeleteOutlined />}
-              disabled={userRole.userRole === '2'}
+              disabled={userRole.userRole === UserRole}
             >
               Delete
             </Button>

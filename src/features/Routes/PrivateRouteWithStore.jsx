@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { userSideBarNavigator, adminSideBarNavigator } from "./navigation";
 import { Auth } from "aws-amplify";
 import { UserRoleContext } from './index'
+import { AdminRole } from "../../utils/Data/Data";
 
 export const BASE_ROUTE = "/user-admin/";
 const PrivateRouteWithStore = ({
@@ -19,7 +20,7 @@ const PrivateRouteWithStore = ({
 
   const landingPage = () => {
     try {
-      const route = userRole.userRole === '1' ? adminSideBarNavigator : userSideBarNavigator ;
+      const route = userRole.userRole === AdminRole ? adminSideBarNavigator : userSideBarNavigator;
       return route;
     } catch (error) {
       console.error("error in landingPage", error);
@@ -41,12 +42,12 @@ const PrivateRouteWithStore = ({
       />
     );
   }
-  return <Route {...rest} render={props => 
-    userRole.userRole === '1' ? <Component {...props} />
-    :
-    userAccess ? <Component {...props} />
-    :
-    <Redirect from="/" to={landingPage()?.url} /> } />;
+  return <Route {...rest} render={props =>
+    userRole.userRole === AdminRole ? <Component {...props} />
+      :
+      userAccess ? <Component {...props} />
+        :
+        <Redirect from="/" to={landingPage()?.url} />} />;
 };
 
 export default PrivateRouteWithStore;

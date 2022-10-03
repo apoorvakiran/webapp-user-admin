@@ -9,6 +9,7 @@ import { SideMenuStyle } from "./style";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { LogOut } from "../../modules/Login/Logout";
 import { Auth } from "aws-amplify";
+import { AdminRole } from "../../utils/Data/Data";
 
 const { SubMenu } = Menu;
 
@@ -55,10 +56,10 @@ class SidebarMenuItems extends React.Component {
   };
 
   async componentDidMount() {
-      await Auth.currentAuthenticatedUser()
-        .then(user => {
-          this.setState({userRole: Object.values(user.attributes)[7]} || null)
-          return
+    await Auth.currentAuthenticatedUser()
+      .then(user => {
+        this.setState({ userRole: Object.values(user?.attributes)?.[7] } || null)
+        return
       }).catch((err) => console.log('Error: ', err));
   }
 
@@ -96,9 +97,9 @@ class SidebarMenuItems extends React.Component {
   };
 
   render() {
-    
-    const routesGenerated = this.state.userRole !== null && this.state.userRole === '1' ? adminSideBarNavigator : userSideBarNavigator;
-    
+
+    const routesGenerated = this.state.userRole !== null && this.state.userRole === AdminRole ? adminSideBarNavigator : userSideBarNavigator;
+
     return (
       <Menu
         mode="inline"

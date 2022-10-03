@@ -26,6 +26,7 @@ import CreateJob from "../../modules/Jobs/CreateJob";
 import EditJob from "../../modules/Jobs/EditJob";
 import validator from 'validator';
 import Summary from "../../modules/Summary";
+import { AdminRole, UserRole } from "../../utils/Data/Data";
 
 Amplify.configure(config);
 
@@ -125,7 +126,7 @@ const Routes = () => {
   Hub.listen("auth", ({ payload: { event, data } }) => {
     // console.log("event:::::", event, "::::::userRole:::::", Object.values(data.attributes)[7]);
     if (event === "signIn") {
-      if (Object.values(data.attributes)[7] === '2') {
+      if (Object.values(data?.attributes)?.[7] === UserRole) {
         window.location.href = '/user-admin/users/user-detail';
       } else {
         window.location.href = '/user-admin/jobs-summary';
@@ -139,7 +140,7 @@ const Routes = () => {
     (async () => {
       await Auth.currentAuthenticatedUser()
         .then(user => {
-          setUserRole(Object.values(user.attributes)[7] || null)
+          setUserRole(Object.values(user?.attributes)?.[7] || null)
           return
         }).catch((err) => console.log('Error: ', err));
     })()
@@ -157,30 +158,30 @@ const Routes = () => {
                 component={(props: any) => <ResetPasswordScreen {...props} />}
               /> */}
               <Route exact path="/">
-                {userRole !== undefined ? userRole === '1' ? <Redirect to="/user-admin/jobs-summary" /> : <Redirect to="/user-admin/users/user-detail" /> : <Redirect to="/" />}
+                {userRole !== undefined ? userRole === AdminRole ? <Redirect to="/user-admin/jobs-summary" /> : <Redirect to="/user-admin/users/user-detail" /> : <Redirect to="/" />}
               </Route>
               <PrivateRouteWithStore
                 exact
                 path={routes.NEW_SUMMARY}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <Dashboard />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.SUMMARY}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <Summary />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.USERS}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <Users {...props} />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.CREATE_USER}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <CreateUser {...props} />}
               />
               <PrivateRouteWithStore
@@ -197,45 +198,45 @@ const Routes = () => {
               />
               <PrivateRouteWithStore
                 path={routes.ANALYTICS_RISK_SCORE}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <AnalyticsRiskScore {...props} />}
               />
               <PrivateRouteWithStore
                 path={routes.ANALYTICS_SPEED_SCORE}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <AnalyticsSpeedScore {...props} />}
               />
               <PrivateRouteWithStore
                 path={routes.ANALYTICS_ACTIVE_SCORE}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <AnalyticsActiveScore {...props} />}
               />
               <PrivateRouteWithStore
                 path={routes.ANALYTICS_SAFETY_SCORE}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <AnalyticsSafetyScore {...props} />}
               />
               <PrivateRouteWithStore
                 path={routes.DEVICES}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <Devices {...props} />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.JOBS}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <Jobs {...props} />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.CREATE_JOB}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <CreateJob {...props} />}
               />
               <PrivateRouteWithStore
                 exact
                 path={routes.EDIT_JOB}
-                userAccess={userRole === '1'}
+                userAccess={userRole === AdminRole}
                 component={props => <EditJob {...props} />}
               />
               <PrivateRouteWithStore

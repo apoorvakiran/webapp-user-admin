@@ -2,7 +2,7 @@ import { Grid, Paper, styled, Typography } from "@mui/material";
 import { Card, Skeleton } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
-import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, getAuthData, getUserEmail } from "../../utils/Data/Data";
+import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, getAuthData, getUserEmail, UserRole } from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
 import axios from "axios";
 import "../../components/Dashboard/dashboard.css";
@@ -39,7 +39,7 @@ const Dashboard = props => {
     const idToken = await getAuthData();
     const userDataUpdated = { ...userObj };
     let email = '';
-    if (userRole.userRole === '2') {
+    if (userRole.userRole === UserRole) {
       email = await getUserEmail();
     }
     const response = await axios.get(
@@ -50,7 +50,7 @@ const Dashboard = props => {
       },
       params: {
         "type": "get-user-detail",
-        "userId": (Object.keys(userObj).length === 0) ? null : userDataUpdated[0].id,
+        "userId": (Object.keys(userObj).length === 0) ? null : userDataUpdated?.[0]?.id,
         "durationType": value,
         "startdate": date,
         "email": (Object.keys(userObj).length !== 0) ? null : email
@@ -80,7 +80,7 @@ const Dashboard = props => {
 
   const getUserDetails = async () => {
     const idToken = await getAuthData();
-    const email = userRole.userRole === '2' ? await getUserEmail() : location.state.email;
+    const email = userRole.userRole === UserRole ? await getUserEmail() : location.state.email;
     const request = await axios.get(
       // "http://localhost:3000/userdetail", {
       baseUrl + "userInfo", {
