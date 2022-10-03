@@ -11,6 +11,7 @@ import { baseUrl, getAuthData, UserRole } from "../../utils/Data/Data";
 import "./user.css";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import { UserRoleContext } from '../../features/Routes'
+import { usersJobsList } from './../../utils/Data/Data';
 
 const Users = props => {
   const [loading, setLoading] = useState(true);
@@ -29,18 +30,8 @@ const Users = props => {
   };
   
   async function getJobTitleList() {
-    const idToken = await getAuthData();
-    const response = await axios.get(
-      baseUrl + "userdetail", {
-      headers: {
-        "Authorization": `Bearer ${idToken}`
-      },
-      params: {
-        type: "get-jobs-list"
-      }
-    }
-    );
-    setJobTitleList(response.data);
+    const jobList = await usersJobsList()
+    setJobTitleList(jobList.data);
   }
 
   useEffect(() => {
@@ -92,9 +83,17 @@ const Users = props => {
       </Button>
     );
   };
+  
+  const defaultJob = jobTitleList?.find((job) => job.name === "Default")
+
   const onChange = (e, record) => {
+    const newRecord = {
+      ...record,
+      name: defaultJob.name,
+      job_id: defaultJob.id
+    }
     setRadioValue(e?.target?.value);
-    setuserRowData(record);
+    setuserRowData(record.name ? record : newRecord);
   };
   const columns = [
     {
@@ -264,8 +263,7 @@ const Users = props => {
     },
   ]
 
-  const onRow = (record, rowIndex) => {
-    const defaultJob = jobTitleList.find((job) => job.name === "Default")
+  const onRow = (record = {}, rowIndex) => {
     const newRecord = {
       ...record,
       name: defaultJob.name,
