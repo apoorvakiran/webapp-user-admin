@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Button, Card, Radio, Skeleton } from "antd";
+import { Button, Card, Input, Radio, Skeleton } from "antd";
 import Table from "../../components/Table/index";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
 import { editUserButton, cardStyle } from "./style";
@@ -18,9 +18,9 @@ const Users = props => {
   const [radioValue, setRadioValue] = useState(null);
   const [userRowData, setuserRowData] = useState([]);
   const [dataSource, setDataSource] = useState([]);
-  const [width, setWidth] = useState(0)
-  const [jobTitleList, setJobTitleList] = useState([])
-
+  const [width, setWidth] = useState(0);
+  const [jobTitleList, setJobTitleList] = useState([]);
+  const [searchedText, setSearchedText] = useState("");
 
   const userRole = useContext(UserRoleContext);
 
@@ -28,7 +28,7 @@ const Users = props => {
     const { innerWidth: width, innerHeight: height } = window;
     setWidth(width);
   };
-  
+
   async function getJobTitleList() {
     const jobList = await usersJobsList()
     setJobTitleList(jobList.data);
@@ -83,7 +83,7 @@ const Users = props => {
       </Button>
     );
   };
-  
+
   const defaultJob = jobTitleList?.find((job) => job.name === "Default")
 
   const onChange = (e, record) => {
@@ -103,6 +103,17 @@ const Users = props => {
       sorter: (a, b) => a.first_name.localeCompare(b.first_name),
       fixed: "left",
       width: "10rem",
+      filteredValue: [searchedText],
+      onFilter: (value, record) => {
+        return String(record.first_name).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.role).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.name).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.email).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.phone).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.id_number).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.mac).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.hand).toLowerCase().includes(value.toLowerCase());
+      },
       render(item, record) {
         return {
           props: {
@@ -234,6 +245,10 @@ const Users = props => {
       key: "first_name",
       sorter: true,
       width: "10rem",
+      filteredValue: [searchedText],
+      onFilter: (value, record) => {
+        return String(record.first_name).toLowerCase().includes(value.toLowerCase());
+      },
       render(item, record) {
         return {
           props: {
@@ -299,6 +314,16 @@ const Users = props => {
             </Button>
           </div>
           <div className="usersTable">
+            <Input.Search
+              placeholder="Search here...."
+              style={{ marginBottom: 8 }}
+              onSearch={(value) => {
+                setSearchedText(value);
+              }}
+              onChange={(e) => {
+                setSearchedText(e.target.value);
+              }}
+            />
             <Table
               data={dataSource}
               columns={parseInt(width) > 480 ? columns : mobileColumns}
