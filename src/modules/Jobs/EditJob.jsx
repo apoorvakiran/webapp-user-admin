@@ -48,7 +48,12 @@ const EditJob = props => {
   const location = useLocation();
   const [userList, setUserList] = useState([]);
   const [mappedUserList, setMappedUserList] = useState([]);
-  const [jobTitleList, setJobTitleList] = useState([])
+  const [defaultJob, setDefaultJob] = useState({})
+
+  const jobCases = {
+    createJob: "createJob",
+    deleteJob: "deleteJob"
+  }
 
   useEffect(() => {
     getUserData();
@@ -97,7 +102,7 @@ const EditJob = props => {
 
   async function getJobTitleList() {
     const jobList = await usersJobsList()
-    setJobTitleList(jobList.data);
+    setDefaultJob(jobList);
   }
 
   const columns = [
@@ -157,8 +162,6 @@ const EditJob = props => {
     props?.history?.goBack();
   }
 
-  const defaultJob = jobTitleList?.find((job) => job.name === "Default")
-
   const onClick = async (event, value) => {
     const data = {
       job_id: defaultJob.id,
@@ -167,7 +170,7 @@ const EditJob = props => {
       location_id: 4,
       users: deleteMappedUserList(value),
     };
-    saveEditJob(data, "deleteJob", value)
+    saveEditJob(data, jobCases.deleteJob, value)
     
     // const data = {
     //   job_id: location.state.id,
@@ -216,7 +219,7 @@ const EditJob = props => {
       location_id: 4,
       users: getIdforMappedUsers(),
     };
-    saveEditJob(data, "createJob")
+    saveEditJob(data, jobCases.createJob)
   }
 
   async function saveEditJob(data, callingFrom, deleteUser = null) {
@@ -254,9 +257,9 @@ const EditJob = props => {
             "Success",
             `Job updated successfully`,
           );
-          if(callingFrom === "createJob"){
+          if(callingFrom === jobCases.createJob){
             props?.history?.goBack();
-          }else if(callingFrom === "deleteJob"){
+          }else if(callingFrom === jobCases.deleteJob){
             setMappedUserList(prevState =>
               prevState.filter(prevItem => prevItem !== deleteUser),
             );
