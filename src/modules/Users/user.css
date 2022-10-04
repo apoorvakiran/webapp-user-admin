@@ -190,15 +190,15 @@
     margin-bottom: 20px !important;
   }
 
-  .page-content-header{
+  .page-content-header {
     padding-bottom: 60px;
   }
 
-  .page-content-header .createNewButton{
+  .page-content-header .createNewButton {
     margin-top: 5px;
   }
 
-  .page-content-header .createNewButton .anticon{
+  .page-content-header .createNewButton .anticon {
     font-size: 14px;
   }
 }
@@ -215,4 +215,10 @@
 .user-list {
   justify-content: center;
   margin-top: 25px !important;
+}
+
+.ant-input-group {
+  width: auto !important;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
 }
