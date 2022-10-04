@@ -70,8 +70,8 @@ const Dashboard = props => {
     let speedData = data["speedscore"]?.y || [];
     let riskLabels = data["riskexposures"]?.x || [];
     let riskData = data["riskexposures"]?.y || [];
-    
-    
+
+
     setActiveGraphLabels(activeLabels);
     setActiveGraphData(activeData);
     setSafetyGraphLabels(safetyLabels);
@@ -89,7 +89,7 @@ const Dashboard = props => {
     const email = userRole.userRole === UserRole ? await getUserEmail() : location.state.email;
     const request = await axios.get(
       // "http://localhost:3000/userdetail", {
-      baseUrl + "userInfo", {
+      baseUrl + "userdetail", {
       headers: {
         "Authorization": `Bearer ${idToken}`
       },
