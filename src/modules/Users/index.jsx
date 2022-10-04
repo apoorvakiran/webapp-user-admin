@@ -31,24 +31,24 @@ const Users = props => {
 
   async function getJobTitleList() {
     const jobList = await usersJobsList()
-    setJobTitleList(jobList.data);
+    setDefaultJob(jobList);
   }
 
   useEffect(() => {
-    async function getData() {
-      const idToken = await getAuthData();
-      const response = await axios.get(
-        baseUrl + "user", {
-        // "http://localhost:5051/api/user-admin/user-list"
-        headers: {
-          "Authorization": `Bearer ${idToken}`
-        },
-        params: { type: "user-list" }
-      }
-      );
-      setLoading(false);
-      setDataSource(response.data.data);
+  async function getData() {
+    const idToken = await getAuthData();
+    const response = await axios.get(
+      baseUrl + "user", {
+      // "http://localhost:5051/api/user-admin/user-list"
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
+      params: { type: "user-list" }
     }
+    );
+    setLoading(false);
+    setDataSource(response.data.data);
+  }
     getData();
     getWindowDimensions();
     getJobTitleList()
@@ -83,7 +83,6 @@ const Users = props => {
       </Button>
     );
   };
-
   const defaultJob = jobTitleList?.find((job) => job.name === "Default")
 
   const onChange = (e, record) => {
