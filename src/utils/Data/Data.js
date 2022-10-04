@@ -10,6 +10,7 @@ import Vector2Icon from "../../images/Vector2.png";
 import { Paper, styled } from "@mui/material";
 import { Auth } from "aws-amplify";
 import axios from "axios";
+import get from "lodash/get";
 
 export const baseUrl = process.env.REACT_APP_API_HOST;
 
@@ -428,5 +429,6 @@ export const usersJobsList = async() => {
             }
         }
     );
-    return response;
+    const defaultJob = get(response, "data", []).find((job) => job.name === "Default")
+    return defaultJob;
 }
