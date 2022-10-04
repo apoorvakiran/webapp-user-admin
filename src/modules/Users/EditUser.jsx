@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Form,
   Input,
@@ -21,8 +21,10 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { baseUrl, getAuthData } from "../../utils/Data/Data";
+import { baseUrl, getAuthData, UserRole } from "../../utils/Data/Data";
 import { display } from "@mui/system";
+import { UserRoleContext } from '../../features/Routes'
+
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 axios.defaults.headers.post["Access-Control-Allow-Methods"] = "*";
@@ -78,6 +80,8 @@ const EditUser = () => {
   const [jobTitleList, setJobTitleList] = useState([]);
   const [initialValues, setInitialValues] = useState([]);
   const [form] = Form.useForm();
+
+  const userRole = useContext(UserRoleContext);
 
   useEffect(() => {
     setInitialValues(location.state);
@@ -343,11 +347,13 @@ const EditUser = () => {
                       message: "Please select permissions",
                     },
                   ]}
+                  hidden={userRole.userRole === UserRole}
                 >
                   <Select
                     placeholder="Select Permissions *"
                     className="formSelectStyle"
                     style={{ height: 50, marginBottom: "20px" }}
+                    disabled={userRole.userRole === UserRole}
                   >
                     <Select.Option value={1}>Admin</Select.Option>
                     <Select.Option value={2}>User</Select.Option>
@@ -376,6 +382,7 @@ const EditUser = () => {
                     placeholder="Select Job Title"
                     className="formSelectStyle"
                     style={{ height: 50, marginBottom: "20px" }}
+                    disabled={userRole.userRole === UserRole}
                   >
                     <Select.Option value={0}>None </Select.Option>
                     {jobTitleList.map((row, index) => (
@@ -422,6 +429,7 @@ const EditUser = () => {
                 openModal();
               }}
               icon={<DeleteOutlined />}
+              disabled={userRole.userRole === UserRole}
             >
               Delete
             </Button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Button, Card, Radio, Skeleton } from "antd";
 import Table from "../../components/Table/index";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
@@ -7,9 +7,10 @@ import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
 import axios from "axios";
 import { type } from "@testing-library/user-event/dist/type";
-import { baseUrl, getAuthData } from "../../utils/Data/Data";
+import { baseUrl, getAuthData, UserRole } from "../../utils/Data/Data";
 import "./user.css";
 import { openNotificationWithIcon } from "../../utils/helpers";
+import { UserRoleContext } from '../../features/Routes'
 import { usersJobsList } from './../../utils/Data/Data';
 
 const Users = props => {
@@ -19,6 +20,9 @@ const Users = props => {
   const [dataSource, setDataSource] = useState([]);
   const [width, setWidth] = useState(0)
   const [jobTitleList, setJobTitleList] = useState([])
+
+
+  const userRole = useContext(UserRoleContext);
 
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
@@ -74,6 +78,7 @@ const Users = props => {
         style={editUserButton}
         onClick={EditUser}
         icon={<EditOutlined />}
+        disabled={userRole.userRole === UserRole} //Admin: 1
       >
       </Button>
     );
@@ -213,6 +218,7 @@ const Users = props => {
                 onChange(e, record);
               }}
               value={radioValue}
+              disabled={userRole.userRole === UserRole} //Admin: 1
             >
               <Radio value={record?.id} />
             </Radio.Group>
@@ -287,6 +293,7 @@ const Users = props => {
               onClick={CreateNewUser}
               icon={<PlusOutlined />}
               className="createNewButton"
+              disabled={userRole.userRole === UserRole} //Admin: 1
             >
               Create New User
             </Button>

@@ -2,11 +2,14 @@ import React from "react";
 import { Menu } from "antd";
 import {
   MENU_KEYS,
-  sideBarNavigator,
+  adminSideBarNavigator,
+  userSideBarNavigator
 } from "../../features/Routes/navigation";
 import { SideMenuStyle } from "./style";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { LogOut } from "../../modules/Login/Logout";
+import { Auth } from "aws-amplify";
+import { AdminRole } from "../../utils/Data/Data";
 
 const { SubMenu } = Menu;
 
@@ -15,13 +18,13 @@ const Icon = ({ type, ...rest }) => {
   const Component = icons[type];
   return <Component {...rest} />;
 };
-
 class SidebarMenuItems extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       openKeys: [this.firstPath],
       selectedKey: this.path,
+      userRole: null
     };
   }
   rootSubmenuKeys = Object.values(MENU_KEYS);
@@ -54,8 +57,16 @@ class SidebarMenuItems extends React.Component {
          LogOut()
       }
     }
-
   };
+
+  async componentDidMount() {
+    await Auth.currentAuthenticatedUser()
+      .then(user => {
+        this.setState({ userRole: Object.values(user?.attributes)?.[7] } || null)
+        return
+      }).catch((err) => console.log('Error: ', err));
+  }
+
   renderSideMenu = routeMap => {
     return routeMap?.map((menu, i) => {
       return (
@@ -90,7 +101,9 @@ class SidebarMenuItems extends React.Component {
   };
 
   render() {
-    const routesGenerated = sideBarNavigator;
+
+    const routesGenerated = this.state.userRole !== null && this.state.userRole === AdminRole ? adminSideBarNavigator : userSideBarNavigator;
+
     return (
       <Menu
         mode="inline"
