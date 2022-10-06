@@ -168,7 +168,9 @@ const Routes = () => {
     (async () => {
       await Auth.currentAuthenticatedUser()
         .then(user => {
-          setUserRole(Object.values(user?.attributes)?.[7] || null)
+          // console.log("user attributes::::", user?.attributes['custom:role']);
+          // console.log("eight::::", Object.values(user?.attributes['custom:role'])?.[0]);
+          setUserRole(Object.values(user?.attributes['custom:role'])?.[0] || null)
           return
         }).catch((err) => console.log('Error: ', err));
     })()
