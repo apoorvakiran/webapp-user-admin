@@ -19,6 +19,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { consts } from "../../utils/consts";
 
 
 const Summary = (props) => {
@@ -472,7 +473,7 @@ const Summary = (props) => {
                 const imgWidth = 208;
                 const imgHeight = canvas.height * imgWidth / canvas.width;
                 const imgData = canvas.toDataURL('img/png');
-                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdf = new jsPDF(consts.orientation, consts.unit, consts.format);
                 pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
                 pdf.save(`${new Date().toISOString()}.pdf`);
             })
@@ -510,36 +511,69 @@ const Summary = (props) => {
                         </div>
                     </div>
                     <div className="dashboard">
-                        <Grid container className="timeSelect">
-                            {DashboardData.map((data, index) => {
-                                return (
-                                    <Grid
-                                        key={index}
-                                        item
-                                        xs={3}
-                                        onClick={() => {
-                                            setSelected(index);
-                                        }}
-                                    >
-                                        <Item
-                                            className={
-                                                selected === index ? "gridData activeGrid" : "gridData"
-                                            }
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                onGridSelection(data);
+                        <Grid container>
+                            <Grid item xs={6} md={3}> 
+                                <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px", padding: "3px 0px" }}
+                                    onChange={handleChange} >
+                                    <Select.Option value={0}> All Jobs </Select.Option>
+                                    {jobTitleList.map((row, index) => (
+                                        <Select.Option value={row.id}>{row.name} </Select.Option>
+                                    ))}
+                                </Select>
+                            </Grid>
+                            <Grid item xs={6} md={9}>
+                                <Grid container className="timeSelect">
+                                {DashboardData.map((data, index) => {
+                                    return (
+                                        <Grid
+                                            key={index}
+                                            item
+                                            xs={2.5}
+                                            onClick={() => {
+                                                setSelected(index);
                                             }}
                                         >
-                                            {data}
+                                            <Item
+                                                className={
+                                                    selected === index ? "gridData activeGrid" : "gridData"
+                                                }
+                                                onClick={e => {
+                                                    e.preventDefault();
+                                                    onGridSelection(data);
+                                                }}
+                                            >
+                                                {data}
+                                            </Item>
+                                        </Grid>
+                                    );
+                                })}
+                                        <Grid
+                                            // key={index}
+                                            item
+                                            xs={2}
+                                            onClick={() => {
+                                                // setSelected(index);
+                                            }}
+                                        >
+                                        <Item
+                                            // className={
+                                            //     selected === index ? "gridData activeGrid" : "gridData"
+                                            // }
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                // onGridSelection();
+                                            }}
+                                        >
+                                            Icon
                                         </Item>
-                                    </Grid>
-                                );
-                            })}
+                                        </Grid>
+                                </Grid>
+                            </Grid>
                         </Grid>
                         <Calendar getOnSelectionData={getOnSelectionData} dataType={dataType} />
                         <Card className="scoreBoard childCard">
 
-                            <div className="scoreboardTitle">
+                            {/* <div className="scoreboardTitle">
                                 {
                                     selectedJobTitle !== "" & selectedJobTitle !== "0" ?
                                         <span>
@@ -548,7 +582,10 @@ const Summary = (props) => {
                                 }
 
                                 <span>Scoreboard</span>
-                            </div>
+                            </div> */}
+                            {/* <div className="calendarWrapper">
+                                <Calendar  getOnSelectionData={getOnSelectionData} dataType={dataType} />
+                            </div> */}
 
                             {scores.map((row, index) => (
                                 <Card.Grid hoverable={false} className="gridStyle">
