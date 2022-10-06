@@ -25,7 +25,8 @@ export const getAuthData = async () => {
 export const getUserEmail = async () => {
     const data = await Auth.currentAuthenticatedUser()
         .then(user => {
-            return Object.values(user?.attributes)?.[8] || null;
+            // console.log("::::checkmail:::::", user?.attributes['email']);
+            return user?.attributes['email'];
         });
     return data;
 };
@@ -417,17 +418,17 @@ export const data1 = [
     },
 ];
 
-export const usersJobsList = async() => {
+export const usersJobsList = async () => {
     const idToken = await getAuthData();
     const response = await axios.get(
         baseUrl + "userdetail", {
-            headers: {
-                "Authorization": `Bearer ${idToken}`
-            },
-            params: {
-                type: "get-jobs-list"
-            }
+        headers: {
+            "Authorization": `Bearer ${idToken}`
+        },
+        params: {
+            type: "get-jobs-list"
         }
+    }
     );
     const defaultJob = get(response, "data", []).find((job) => job.name === "Default")
     return defaultJob;
