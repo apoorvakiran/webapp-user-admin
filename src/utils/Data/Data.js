@@ -103,7 +103,7 @@ export const ScoresTabData = ['Injury Risk Score', 'Risk Frequency', 'Speed Scor
 export const ViewBy = ['Scores by User', 'Scores by Time']
 
 export const AdminRole = '1';
-export const UserRole = '2'
+export const UserRole = '2';
 
 export const ActiveScoreDesc = "A metric of productivity measured by the ratio measured in percentage of intense active motion vs mild active motion. Value ranges from 0% to 100%. It is an indicator of individual productivity and engagement.";
 export const SafetyScoreDesc = "Measures the risk of injury due to poor ergonomic motion. Value ranges from 0 to 7. The higher the number, the higher the risk of injury. The dominant motion (pitch, yaw, roll) used in this index is speed of pitch. It is a measure of force on the hand and wrist.";

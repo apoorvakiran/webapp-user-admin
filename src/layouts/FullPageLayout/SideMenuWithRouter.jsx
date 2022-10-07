@@ -52,9 +52,9 @@ class SidebarMenuItems extends React.Component {
       } else {
         this.props?.history?.push(`${selectedMenu.key}`);
       }
-    }else{
+    } else {
       if (selectedMenu.key === "/user-admin/logout") {
-         LogOut()
+        LogOut()
       }
     }
   };
@@ -62,7 +62,8 @@ class SidebarMenuItems extends React.Component {
   async componentDidMount() {
     await Auth.currentAuthenticatedUser()
       .then(user => {
-        this.setState({ userRole: Object.values(user?.attributes)?.[7] } || null)
+        const role = Object.values(user.attributes['custom:role'])?.[0];
+        this.setState({ userRole: role } || null)
         return
       }).catch((err) => console.log('Error: ', err));
   }
