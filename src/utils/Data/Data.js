@@ -11,6 +11,10 @@ import { Paper, styled } from "@mui/material";
 import { Auth } from "aws-amplify";
 import axios from "axios";
 import get from "lodash/get";
+import { jsPDF } from "jspdf"
+import html2canvas from "html2canvas";
+import { consts } from "../../utils/consts";
+
 
 export const baseUrl = process.env.REACT_APP_API_HOST;
 
@@ -432,4 +436,17 @@ export const usersJobsList = async () => {
     );
     const defaultJob = get(response, "data", []).find((job) => job.name === "Default")
     return defaultJob;
+}
+
+
+export const generatePdf = (id) => {
+    html2canvas(document.getElementById(id))
+        .then(canvas => {
+            const imgWidth = 208;
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            const imgData = canvas.toDataURL('img/png');
+            const pdf = new jsPDF(consts.orientation, consts.unit, consts.format);
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            pdf.save(`${new Date().toISOString()}.pdf`);
+        })
 }

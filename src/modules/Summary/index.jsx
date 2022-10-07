@@ -3,7 +3,8 @@ import { Card, Select, Skeleton, Button } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
-import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, ProgressBarChart, ViewBy, getAccessToken, getAccessValueToken, getAuthData } from "../../utils/Data/Data";
+import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, 
+        formatDate, getColor, ViewBy, getAuthData, generatePdf } from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
 import axios from "axios";
 import "./dashboard.css";
@@ -17,9 +18,6 @@ import AllJobSummary from "./AllJobSummary";
 import { orderBy, round } from "lodash";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf"
-import { consts } from "../../utils/consts";
 
 
 const Summary = (props) => {
@@ -468,15 +466,8 @@ const Summary = (props) => {
 
 
     const saveAsPdf = () => {
-        html2canvas(document.getElementById('summaryWrapper'))
-            .then(canvas => {
-                const imgWidth = 208;
-                const imgHeight = canvas.height * imgWidth / canvas.width;
-                const imgData = canvas.toDataURL('img/png');
-                const pdf = new jsPDF(consts.orientation, consts.unit, consts.format);
-                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-                pdf.save(`${new Date().toISOString()}.pdf`);
-            })
+        generatePdf('summaryWrapper');
+        
     }
 
     return (
