@@ -155,10 +155,12 @@ const Routes = () => {
     // console.log(data.attributes)
     // console.log("event:::::", event, "::::::userRole:::::", Object.values(data.attributes['custom:role'])?.[0]);
     if (event === "signIn") {
-      if (Object.values(data.attributes['custom:role'])?.[0] === UserRole) {
-        window.location.href = '/user-admin/users/user-detail';
+      const role = Object.values(data.attributes['custom:role'])?.[0];
+      setUserRole(role);
+      if (role === UserRole) {
+        history.push("/user-admin/users/user-detail");
       } else {
-        window.location.href = '/user-admin/jobs-summary';
+        history.push("/user-admin/jobs-summary");
       }
     }
   });
@@ -186,9 +188,9 @@ const Routes = () => {
                 path={getRoute("reset-password/:userid")}
                 component={(props: any) => <ResetPasswordScreen {...props} />}
               /> */}
-              <Route exact path="/">
+              {/* <Route exact path="/">
                 {userRole !== undefined ? userRole === AdminRole ? <Redirect to="/user-admin/jobs-summary" /> : <Redirect to="/user-admin/users/user-detail" /> : <Redirect to="/" />}
-              </Route>
+              </Route> */}
               <PrivateRouteWithStore
                 exact
                 path={routes.NEW_SUMMARY}

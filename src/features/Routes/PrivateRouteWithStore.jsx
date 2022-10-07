@@ -27,7 +27,7 @@ const PrivateRouteWithStore = ({
       return false;
     }
   };
-  if (rest?.path === routes.LOGIN || rest?.path === BASE_ROUTE) {
+  if (rest?.path === "/" || rest?.path === BASE_ROUTE) {
     const landingPageRoute = landingPage(); // always 1st child of 1st menu url
     return (
       <Route
@@ -36,7 +36,7 @@ const PrivateRouteWithStore = ({
           loggedIn ? (
             <Component {...props} />
           ) : (
-            <Redirect from="/" to={landingPageRoute?.url} />
+            <Redirect from="/" to={landingPageRoute?.[0].url} />
           )
         }
       />
