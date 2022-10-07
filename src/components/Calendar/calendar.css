@@ -2,6 +2,7 @@
 .datePickerRow{
     display: flex;
     justify-content: space-between;
+    padding: 0px 10px;
 }
 .previousDatePicker, .nextDatePicker{
     display: flex;
@@ -10,14 +11,20 @@
     padding: 0 8px;
     width: 33.3%;
 }
-.previousDatePicker .arrowLeft{
+.previousDatePicker,  .arrowLeft{
+    display: flex;
+    align-items: center;
     color: #C54B30;
     cursor: pointer;
-    margin-top: 4px;
+    font-weight: 600;
 }
-.datePicker{
-    width: 150px;
-    margin: 0 !important;
+
+.nextDatePicker, .arrowRight{
+    display: flex;
+    align-items: center;
+    color: #C54B30;
+    cursor: pointer;
+    font-weight: 600;
 }
 
 .datePicker .MuiInputBase-root{
@@ -25,7 +32,9 @@
     color: #c54b30;
     font-weight: 600;
 }
-
+.displyhorizontal{
+    display: flex;
+}
 .datePicker .MuiInputBase-root:hover{
     background: none !important;
 }
@@ -46,17 +55,80 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    width: 33.3%;
-    height: 40px;
+    height: 34px;
+    border: 2px solid #c54b30;
+    width: 18%;
+    border-radius: 20px;
 }
 
 .datePickerLive .liveWord{
     font-weight: 700;
     margin-left: 5px;
     color:#000;
-    font-size: 18px;
+    font-size: 14px;
+}
+
+.datePickerLive .liveTime{
+    color: #C54B30;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 4px;
 }
 
 .datePickerLive .calendarIcon{
     color: #C54B30;
+    font-size: 18px;
+}
+
+.weekPicker .MuiInputBase-root {
+    margin-left: 70px;
+    font-size: 12px;
+    color: #535353;
+    background: none;
+}
+
+.weekPicker {
+    border: 2px solid #C54B30 !important;
+    border-radius: 20px;
+    width: 20%;
+}
+
+.weekPicker .weekLabel{
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    color: #535353;
+}
+
+.weekPicker .weekLabel .calendarIcon{
+    color: #C54B30;
+    margin-right: 6px;
+}
+
+.monthPicker, .yearPicker {
+    display: flex;
+    align-items: center;
+    border: 2px solid #C54B30;
+    background-color: none;
+    border-radius: 20px;
+    padding: 0px 10px;
+}
+
+.monthPicker .calendarIcon, .yearPicker .calendarIcon{
+    color: #C54B30;
+}
+
+.monthPicker_yearSelect{
+    border-left: 2px solid #C54B30;
+}
+
+.monthPicker_monthSelect{
+    width: 140px;
+}
+
+.monthPicker_yearSelect .ant-select-selector,
+.monthPicker_monthSelect .ant-select-selector,
+.yearPicker_yearSelect .ant-select-selector{
+    box-shadow: none !important;
 }
