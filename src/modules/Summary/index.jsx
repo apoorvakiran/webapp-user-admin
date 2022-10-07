@@ -18,7 +18,7 @@ import { orderBy, round } from "lodash";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
 import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import { jsPDF } from "jspdf"
 import { consts } from "../../utils/consts";
 
 
@@ -512,16 +512,7 @@ const Summary = (props) => {
                     </div>
                     <div className="dashboard">
                         <Grid container>
-                            <Grid item xs={6} md={3}> 
-                                <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px", padding: "3px 0px" }}
-                                    onChange={handleChange} >
-                                    <Select.Option value={0}> All Jobs </Select.Option>
-                                    {jobTitleList.map((row, index) => (
-                                        <Select.Option value={row.id}>{row.name} </Select.Option>
-                                    ))}
-                                </Select>
-                            </Grid>
-                            <Grid item xs={6} md={9}>
+                            <Grid item xs={6} md={12}>
                                 <Grid container className="timeSelect">
                                 {DashboardData.map((data, index) => {
                                     return (

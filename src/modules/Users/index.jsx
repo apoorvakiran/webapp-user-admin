@@ -9,8 +9,8 @@ import axios from "axios";
 import { baseUrl, getAuthData } from "../../utils/Data/Data";
 import "./user.css";
 import { openNotificationWithIcon } from "../../utils/helpers";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import * as html2canvas from "html2canvas";
+import { jsPDF } from "jspdf"
 import { usersJobsList } from './../../utils/Data/Data';
 
 const Users = props => {
