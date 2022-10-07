@@ -11,6 +11,7 @@ import Table from "../../components/Table/index";
 import { useLocation } from "react-router-dom";
 import { DeleteOutlined } from "@ant-design/icons";
 import { baseUrl, getAuthData } from "../../utils/Data/Data";
+import { usersJobsList } from './../../utils/Data/Data';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -47,10 +48,18 @@ const EditJob = props => {
   const location = useLocation();
   const [userList, setUserList] = useState([]);
   const [mappedUserList, setMappedUserList] = useState([]);
+  const [defaultJob, setDefaultJob] = useState({})
+
+  const jobCases = {
+    createJob: "createJob",
+    deleteJob: "deleteJob"
+  }
 
   useEffect(() => {
     getUserData();
     getJobUserList(location.state.id);
+    // console.log(props, 'props')
+    getJobTitleList()
   }, []);
 
   async function getJobUserList(jobId) {
@@ -91,44 +100,10 @@ const EditJob = props => {
     return userArray;
   }
 
-  const onClick = async (event, value) => {
-    // console.log(value);
-    const data = {
-      job_id: location.state.id,
-      users: deleteMappedUserList(value),
-    };
-    const idToken = await getAuthData();
-    const config = {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${idToken}`
-      },
-      // mode: 'no-cors',
-      body: JSON.stringify(data),
-    };
-    const url = baseUrl + "userdetail?type=delete-job";
-    // const url = 'http://localhost:5051/api/user-admin/delete-job';
-    fetch(url, config)
-      .then(response => response.json())
-      .then(data => {
-        if (data.data.code === 201) {
-          openNotificationWithIcon(
-            "success",
-            "Success",
-            `User unassigned successfully`,
-          );
-          // props?.history?.goBack();
-          setMappedUserList(prevState =>
-            prevState.filter(prevItem => prevItem !== value),
-          );
-        }
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-  };
+  async function getJobTitleList() {
+    const jobList = await usersJobsList()
+    setDefaultJob(jobList);
+  }
 
   const columns = [
     {
@@ -187,7 +162,56 @@ const EditJob = props => {
     props?.history?.goBack();
   }
 
-  async function saveEditJob(values) {
+  const onClick = async (event, value) => {
+    const data = {
+      job_id: defaultJob.id,
+      job_name: defaultJob.name.trim(),
+      description: defaultJob.name.trim(),
+      location_id: 4,
+      users: deleteMappedUserList(value),
+    };
+    saveEditJob(data, jobCases.deleteJob, value)
+    
+    // const data = {
+    //   job_id: location.state.id,
+    //   users: deleteMappedUserList(value),
+    // };
+    // return
+    // const idToken = await getAuthData();
+    // const config = {
+    //   method: "POST",
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'Authorization': `Bearer ${idToken}`
+    //   },
+    //   // mode: 'no-cors',
+    //   body: JSON.stringify(data),
+    // };
+    // const url = baseUrl + "userdetail?type=delete-job";
+    // // const url = 'http://localhost:5051/api/user-admin/delete-job';
+    // fetch(url, config)
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     if (data.data.code === 201) {
+    //       openNotificationWithIcon(
+    //         "success",
+    //         "Success",
+    //         `User unassigned successfully`,
+    //       );
+    //       // props?.history?.goBack();
+    //       setMappedUserList(prevState =>
+    //         prevState.filter(prevItem => prevItem !== value),
+    //       );
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.error("Error:", error);
+    //   });
+
+  };
+
+  const onSaveJob = (values) => {
     const data = {
       job_id: values.id,
       job_name: values.name.trim(),
@@ -195,6 +219,19 @@ const EditJob = props => {
       location_id: 4,
       users: getIdforMappedUsers(),
     };
+    saveEditJob(data, jobCases.createJob)
+  }
+
+  async function saveEditJob(data, callingFrom, deleteUser = null) {
+    // const data = {
+    //   job_id: values.id,
+    //   job_name: values.name.trim(),
+    //   description: values.name.trim(),
+    //   location_id: 4,
+    //   users: getIdforMappedUsers(),
+    // };
+    // console.info(data, 'save')
+    // return
     const idToken = await getAuthData();
     const config = {
       method: "POST",
@@ -220,7 +257,13 @@ const EditJob = props => {
             "Success",
             `Job updated successfully`,
           );
-          props?.history?.goBack();
+          if(callingFrom === jobCases.createJob){
+            props?.history?.goBack();
+          }else if(callingFrom === jobCases.deleteJob){
+            setMappedUserList(prevState =>
+              prevState.filter(prevItem => prevItem !== deleteUser),
+            );
+          }
         }
         if (responseCode === 409) {
           openNotificationWithIcon("error", "Error", data.data.message);
@@ -252,7 +295,7 @@ const EditJob = props => {
         {...formItemLayout}
         form={form}
         name="edit-job"
-        onFinish={saveEditJob}
+        onFinish={onSaveJob}
         initialValues={location?.state}
         style={{ margin: "60px 30px" }}
       >

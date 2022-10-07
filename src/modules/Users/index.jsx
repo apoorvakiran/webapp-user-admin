@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from "react";
 import { Button, Card, Radio, Skeleton } from "antd";
 import Table from "../../components/Table/index";
@@ -12,14 +13,16 @@ import { openNotificationWithIcon } from "../../utils/helpers";
 import * as html2canvas from "html2canvas";
 import { jsPDF } from "jspdf"
 import { usersJobsList } from './../../utils/Data/Data';
-
 const Users = props => {
   const [loading, setLoading] = useState(true);
   const [radioValue, setRadioValue] = useState(null);
   const [userRowData, setuserRowData] = useState([]);
   const [dataSource, setDataSource] = useState([]);
   const [width, setWidth] = useState(0)
-  const [jobTitleList, setJobTitleList] = useState([])
+  const [defaultJob, setDefaultJob] = useState({})
+
+
+  const userRole = useContext(UserRoleContext);
 
   const getWindowDimensions = () => {
     const { innerWidth: width } = window;
@@ -28,7 +31,7 @@ const Users = props => {
 
   async function getJobTitleList() {
     const jobList = await usersJobsList()
-    setJobTitleList(jobList.data);
+    setDefaultJob(jobList);
   }
 
   useEffect(() => {
@@ -77,13 +80,12 @@ const Users = props => {
         style={editUserButton}
         onClick={EditUser}
         icon={<EditOutlined />}
+        disabled={userRole.userRole === UserRole} //Admin: 1
       >
       </Button>
     );
   };
   
-  const defaultJob = jobTitleList?.find((job) => job.name === "Default")
-
   const onChange = (e, record) => {
     const newRecord = {
       ...record,
@@ -216,6 +218,7 @@ const Users = props => {
                 onChange(e, record);
               }}
               value={radioValue}
+              disabled={userRole.userRole === UserRole} //Admin: 1
             >
               <Radio value={record?.id} />
             </Radio.Group>
@@ -351,6 +354,7 @@ const Users = props => {
         <Card className="page-content" ref={PDFComponent}>
           <div className="page-content-header users-page-header">
             <div className="user-score">Users</div>
+
             <div className="create-pdf-buttons">
               <Button
                 shape="round"
@@ -370,6 +374,7 @@ const Users = props => {
                 Create New User
               </Button>
             </div>
+
           </div>
           <div className="usersTable">
             <Table

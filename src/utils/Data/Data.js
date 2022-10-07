@@ -10,6 +10,7 @@ import Vector2Icon from "../../images/Vector2.png";
 import { Paper, styled } from "@mui/material";
 import { Auth } from "aws-amplify";
 import axios from "axios";
+import get from "lodash/get";
 
 export const baseUrl = process.env.REACT_APP_API_HOST;
 
@@ -17,6 +18,15 @@ export const getAuthData = async () => {
     const data = await Auth.currentAuthenticatedUser()
         .then(user => {
             return user.signInUserSession.idToken.jwtToken;
+        });
+    return data;
+};
+
+export const getUserEmail = async () => {
+    const data = await Auth.currentAuthenticatedUser()
+        .then(user => {
+            // console.log("::::checkmail:::::", user?.attributes['email']);
+            return user?.attributes['email'];
         });
     return data;
 };
@@ -92,6 +102,8 @@ export const DashboardData = ['Day', 'Week', 'Month', 'Year']
 export const ScoresTabData = ['Injury Risk Score', 'Risk Frequency', 'Speed Score', 'Active Score']
 export const ViewBy = ['Scores by User', 'Scores by Time']
 
+export const AdminRole = '1';
+export const UserRole = '2'
 
 export const ActiveScoreDesc = "A metric of productivity measured by the ratio measured in percentage of intense active motion vs mild active motion. Value ranges from 0% to 100%. It is an indicator of individual productivity and engagement.";
 export const SafetyScoreDesc = "Measures the risk of injury due to poor ergonomic motion. Value ranges from 0 to 7. The higher the number, the higher the risk of injury. The dominant motion (pitch, yaw, roll) used in this index is speed of pitch. It is a measure of force on the hand and wrist.";
@@ -406,17 +418,18 @@ export const data1 = [
     },
 ];
 
-export const usersJobsList = async() => {
+export const usersJobsList = async () => {
     const idToken = await getAuthData();
     const response = await axios.get(
         baseUrl + "userdetail", {
-            headers: {
-                "Authorization": `Bearer ${idToken}`
-            },
-            params: {
-                type: "get-jobs-list"
-            }
+        headers: {
+            "Authorization": `Bearer ${idToken}`
+        },
+        params: {
+            type: "get-jobs-list"
         }
+    }
     );
-    return response;
+    const defaultJob = get(response, "data", []).find((job) => job.name === "Default")
+    return defaultJob;
 }
