@@ -436,7 +436,7 @@ const EditUser = () => {
           </Form.Item>
 
           <Form.Item className="edit-job-save-item" {...canTailFormItemLayout} style={{ fontSize: 14, justifyContent: "center", marginTop: "20px" }}>
-            <Link className="cancel-edit" to="/user-admin/users/">
+            <Link className="cancel-edit" to={userRole.userRole === UserRole ? "/user-admin/users/user-detail" : "/user-admin/users/"}>
               Cancel
             </Link>
           </Form.Item>
