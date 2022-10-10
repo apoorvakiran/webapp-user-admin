@@ -135,7 +135,7 @@ const handleValidation = ({ ev, rules }) => {
 
 const services = {
   async handleForgotPassword(formData) {
-    console.log("formData", formData);
+    // console.log("formData", formData);
     let username = formData;
     if (validator.isEmail(username)) {
       return Auth.forgotPassword(username);
@@ -153,9 +153,9 @@ const Routes = () => {
 
   Hub.listen("auth", ({ payload: { event, data } }) => {
     if (event === "signIn") {
-      console.log(data)
+      // console.log(data)
       // console.log(Object.values(data.challengeParam.userAttributes['custom:role'])?.[0])
-      console.log("event:::::", event, "::::::userRole:::::", data?.attributes !== undefined ? Object.values(data?.attributes['custom:role'])?.[0] : Object.values(data?.challengeParam?.userAttributes['custom:role'])?.[0]);
+      // console.log("event:::::", event, "::::::userRole:::::", data?.attributes !== undefined ? Object.values(data?.attributes['custom:role'])?.[0] : Object.values(data?.challengeParam?.userAttributes['custom:role'])?.[0]);
       const role = data?.attributes !== undefined ? Object.values(data?.attributes['custom:role'])?.[0] : Object.values(data?.challengeParam?.userAttributes['custom:role'])?.[0];
       setUserRole(role);
       if (role === UserRole) {
@@ -172,8 +172,8 @@ const Routes = () => {
     (async () => {
       await Auth.currentAuthenticatedUser()
         .then(user => {
-          console.log("user attributes::::", user?.attributes['custom:role']);
-          console.log("eight::::", Object.values(user?.attributes['custom:role'])?.[0]);
+          // console.log("user attributes::::", user?.attributes['custom:role']);
+          // console.log("eight::::", Object.values(user?.attributes['custom:role'])?.[0]);
           setUserRole(Object.values(user?.attributes['custom:role'])?.[0] || null)
           return
         }).catch((err) => console.log('Error: ', err));
