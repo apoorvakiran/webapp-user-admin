@@ -166,6 +166,16 @@
     margin-top: 10px;
     width: 100% !important;
   }
+
+  .searchBoxStyle {
+    margin: 20px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .searchBoxStyle {
+    margin: 20px !important;
+  }
 }
 
 @media (max-width: 425px) {
@@ -204,6 +214,14 @@
 
   .create-pdf-buttons .pdf-button {
     height: 35px;
+  }
+
+  .searchBoxStyle {
+    margin: 10px !important;
+  }
+
+  .ant-input-group-addon {
+    background-color: #ffffff !important;
   }
 }
 
@@ -253,4 +271,13 @@
   .create-pdf-buttons .pdf-button {
     height: 42px;
   }
+}
+
+.ant-input-group-wrapper {
+  width: auto !important;
+}
+
+.ant-input-group-addon,
+.ant-input-group-wrap {
+  vertical-align: top !important;
 }

@@ -35,6 +35,14 @@ export const getUserEmail = async () => {
     return data;
 };
 
+export const compareString = (str1, str2) => {
+    return (String(str1).toLowerCase().includes(String(str2).toLowerCase()))
+}
+
+export const sortTableColumns = (str1, str2) => {
+    return (String(str1).localeCompare(String(str2)))
+}
+
 export const getCurrIcon = icon => {
     switch (icon) {
         case "Active Score":

@@ -7,13 +7,14 @@ import { editUserButton } from "./style";
 import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
 import axios from "axios";
-import { baseUrl, getAuthData, UserRole } from "../../utils/Data/Data";
+import { baseUrl, compareString, getAuthData, sortTableColumns, UserRole } from "../../utils/Data/Data";
 import { UserRoleContext } from '../../features/Routes';
 import "./user.css";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import * as html2canvas from "html2canvas";
 import { jsPDF } from "jspdf"
 import { usersJobsList } from './../../utils/Data/Data';
+import SearchBox from "../../utils/SearchBox";
 const Users = props => {
   const [loading, setLoading] = useState(true);
   const [radioValue, setRadioValue] = useState(null);
@@ -96,24 +97,30 @@ const Users = props => {
     setRadioValue(e?.target?.value);
     setuserRowData(record.name ? record : newRecord);
   };
+
+  const pull_data = (searchedText) => {
+    setSearchedText(searchedText);
+    return searchedText;
+  }
+
   const columns = [
     {
       title: "Name",
       dataIndex: "first_name",
       key: "first_name",
-      sorter: (a, b) => a.first_name.localeCompare(b.first_name),
+      sorter: (a, b) => sortTableColumns(a.first_name, b.first_name),
       fixed: "left",
       width: "10rem",
       filteredValue: [searchedText],
       onFilter: (value, record) => {
-        return String(record.first_name).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.role).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.name).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.email).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.phone).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.id_number).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.mac).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.hand).toLowerCase().includes(value.toLowerCase());
+        return compareString(record.first_name, value) ||
+          compareString(record.role, value) ||
+          compareString(record.name, value) ||
+          compareString(record.email, value) ||
+          compareString(record.phone, value) ||
+          compareString(record.id_number, value) ||
+          compareString(record.mac, value) ||
+          compareString(record.hand, value)
       },
       render(item, record) {
         return {
@@ -128,6 +135,7 @@ const Users = props => {
       title: "Role",
       dataIndex: "role",
       width: "10rem",
+      sorter: (a, b) => sortTableColumns(a.role, b.role),
       render(item, record) {
         return {
           props: {
@@ -141,6 +149,7 @@ const Users = props => {
       title: "Job Title",
       dataIndex: "name",
       width: "10rem",
+      sorter: (a, b) => sortTableColumns(a.name, b.name),
       render(item, record) {
         return {
           props: {
@@ -155,7 +164,7 @@ const Users = props => {
       dataIndex: "email",
       key: "email",
       width: "20rem",
-      sorter: (a, b) => a.email.localeCompare(b.email),
+      sorter: (a, b) => sortTableColumns(a.email, b.email),
       render(item, record) {
         return {
           props: {
@@ -169,6 +178,7 @@ const Users = props => {
       title: "Phone",
       dataIndex: "phone",
       width: "15rem",
+      sorter: (a, b) => sortTableColumns(a.phone, b.phone),
       render(item, record) {
         return {
           props: {
@@ -182,6 +192,7 @@ const Users = props => {
       title: "Device",
       dataIndex: "id_number",
       width: "15rem",
+      sorter: (a, b) => sortTableColumns(a.id_number, b.id_number),
       render(item, record) {
         return {
           props: {
@@ -195,6 +206,7 @@ const Users = props => {
       title: "Android ID",
       dataIndex: "mac",
       width: "15rem",
+      sorter: (a, b) => sortTableColumns(a.mac, b.mac),
       render(item, record) {
         return {
           props: {
@@ -208,6 +220,7 @@ const Users = props => {
       title: "Hand",
       dataIndex: "hand",
       width: "10rem",
+      sorter: (a, b) => sortTableColumns(a.hand, b.hand),
       render(item, record) {
         return {
           props: {
@@ -244,11 +257,11 @@ const Users = props => {
       title: "Name",
       dataIndex: "first_name",
       key: "first_name",
-      sorter: true,
       width: "10rem",
+      sorter: (a, b) => sortTableColumns(a.first_name, b.first_name),
       filteredValue: [searchedText],
       onFilter: (value, record) => {
-        return String(record.first_name).toLowerCase().includes(value.toLowerCase());
+        return compareString(record.first_name, value);
       },
       render(item, record) {
         return {
@@ -393,16 +406,7 @@ const Users = props => {
 
           </div>
           <div className="usersTable">
-            <Input.Search
-              placeholder="Search here...."
-              style={{ marginBottom: 8 }}
-              onSearch={(value) => {
-                setSearchedText(value);
-              }}
-              onChange={(e) => {
-                setSearchedText(e.target.value);
-              }}
-            />
+            <SearchBox func={pull_data} />
             <Table
               data={dataSource}
               columns={parseInt(width) > 480 ? columns : mobileColumns}
