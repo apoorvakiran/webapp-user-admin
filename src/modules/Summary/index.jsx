@@ -503,14 +503,14 @@ const Summary = (props) => {
                     </div>
                     <div className="dashboard">
                         <Grid container>
-                            <Grid item xs={6} md={12}>
+                            <Grid item xs={12} md={12}>
                                 <Grid container className="timeSelect">
                                 {DashboardData.map((data, index) => {
                                     return (
                                         <Grid
                                             key={index}
                                             item
-                                            xs={2.5}
+                                            xs={3}
                                             onClick={() => {
                                                 setSelected(index);
                                             }}
@@ -529,26 +529,6 @@ const Summary = (props) => {
                                         </Grid>
                                     );
                                 })}
-                                        <Grid
-                                            // key={index}
-                                            item
-                                            xs={2}
-                                            onClick={() => {
-                                                // setSelected(index);
-                                            }}
-                                        >
-                                        <Item
-                                            // className={
-                                            //     selected === index ? "gridData activeGrid" : "gridData"
-                                            // }
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                // onGridSelection();
-                                            }}
-                                        >
-                                            Icon
-                                        </Item>
-                                        </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
