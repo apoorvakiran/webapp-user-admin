@@ -7,6 +7,9 @@ import TextField from '@mui/material/TextField';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Select } from 'antd';
+import { DatePicker } from 'antd';
+import moment from 'moment'
+
 
 const { Option } = Select;
 
@@ -72,7 +75,7 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
     const [calendarDate, setCalendarDate] = useState(new Date())
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [selectedMonth, setSelectedMonth] = useState({month: new Date().getMonth(), year: new Date().getFullYear()})
-
+    const [selectedweek, setSelectedweek] = useState(moment())
     const handleChangeDate = (newDate) => {
         setCalendarDate(newDate['$d'])
     }
@@ -128,33 +131,17 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
             case "Week":
                 return (
                     <>
-                        <div className="arrowLeft">
+                        <div className="arrowLeft"  onClick={() => {
+                            setSelectedweek(moment(selectedweek).subtract(1, 'week'))
+                        }}>
                             <ArrowBackIos  /> Previous Week
                         </div>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <MobileDatePicker
-                                label={<span className="weekLabel"><CalendarMonthIcon className="calendarIcon" /><span className='weekLabelText'> Week of</span></span>}
-                                inputFormat="DD/MM/YYYY"
-                                value={calendarDate}
-                                onChange={handleChangeDate}
-                                onAccept={() => getOnSelectionData(null, calendarDate)}
-                                className="datePicker weekPicker"
-                                InputProps={{
-                                    disableUnderline: true,
-                                }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        {...params}
-                                        inputProps={{
-                                            ...params.inputProps,
-                                        }}
-                                        variant="filled"
-                                    />
-                                }
-                                disableFuture={true}
-                            />
-                        </LocalizationProvider>
-                        <div  className="arrowLeft" >
+                        <DatePicker format='yyyy/MM/DD'  value={selectedweek} onChange={(date, ds) => {
+                           setSelectedweek(date)
+                        }} picker="week" />
+                        <div  className="arrowLeft" onClick={() => {
+                            setSelectedweek(moment(selectedweek).add(1, 'week'))
+                        }}>
                             Next Week  <ArrowForwardIos />
                         </div>
                     </>
