@@ -401,3 +401,28 @@ input[type="search"] {
        color: rgb(197, 75, 48);
 
 } */
+
+.summary-page-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 425px) {
+    .summary-page-header{
+        display: flex;
+        flex-direction: column;
+    }
+}
+  
+.jobs-pdf-buttons{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.pdf-button{
+    margin-right: 8px;
+    color: #c54b30 !important;
+    font-weight: 700 !important;
+    border-color: #c54b30 !important;
+    padding: 4px 20px;
+}

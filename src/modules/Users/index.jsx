@@ -1,18 +1,19 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Button, Card, Input, Radio, Skeleton } from "antd";
+
+import React, { useEffect, useState, useRef, useContext } from "react";
+import { Button, Card, Radio, Skeleton } from "antd";
 import Table from "../../components/Table/index";
-import { PlusOutlined, EditOutlined } from "@ant-design/icons";
-import { editUserButton, cardStyle } from "./style";
+import { PlusOutlined, EditOutlined, DownloadOutlined } from "@ant-design/icons";
+import { editUserButton } from "./style";
 import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
 import axios from "axios";
-import { type } from "@testing-library/user-event/dist/type";
 import { baseUrl, getAuthData, UserRole } from "../../utils/Data/Data";
+import { UserRoleContext } from '../../features/Routes';
 import "./user.css";
 import { openNotificationWithIcon } from "../../utils/helpers";
-import { UserRoleContext } from '../../features/Routes'
+import * as html2canvas from "html2canvas";
+import { jsPDF } from "jspdf"
 import { usersJobsList } from './../../utils/Data/Data';
-
 const Users = props => {
   const [loading, setLoading] = useState(true);
   const [radioValue, setRadioValue] = useState(null);
@@ -25,7 +26,7 @@ const Users = props => {
   const userRole = useContext(UserRoleContext);
 
   const getWindowDimensions = () => {
-    const { innerWidth: width, innerHeight: height } = window;
+    const { innerWidth: width } = window;
     setWidth(width);
   };
 
@@ -35,26 +36,28 @@ const Users = props => {
   }
 
   useEffect(() => {
-    async function getData() {
-      const idToken = await getAuthData();
-      const response = await axios.get(
-        baseUrl + "user", {
-        // "http://localhost:5051/api/user-admin/user-list"
-        headers: {
-          "Authorization": `Bearer ${idToken}`
-        },
-        params: { type: "user-list" }
-      }
-      );
-      setLoading(false);
-      setDataSource(response.data.data);
-    }
     getData();
     getWindowDimensions();
     getJobTitleList()
     window.addEventListener("resize", getWindowDimensions);
     return () => window.removeEventListener("resize", getWindowDimensions);
   }, []);
+
+  async function getData() {
+    const idToken = await getAuthData();
+    const response = await axios.get(
+      baseUrl + "user", {
+      // "http://localhost:5051/api/user-admin/user-list"
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
+      params: { type: "user-list" }
+    }
+    );
+    setLoading(false);
+    setDataSource(response.data.data);
+  }
+
 
   const CreateNewUser = () => {
     props?.history?.push({
@@ -289,6 +292,72 @@ const Users = props => {
     });
   };
 
+  const PDFComponent = useRef(null)
+
+  const saveAsPdf = () => {
+    const trElements = document.getElementsByTagName('tr');
+    for (let i = 0; i < trElements.length; i++) {
+      trElements[i].classList.remove('table-row-light');
+      const nodes = trElements[i].childNodes;
+      for (let j = 0; j < nodes.length; j++) {
+        if (j !== 0 && j % 8 === 0) {
+          nodes[j].style.display = 'none';
+        }
+        if (nodes[j].nodeName.toLowerCase() === 'th') {
+          if (j === 9 || j === 10) {
+            nodes[j].style.display = 'none';
+          }
+          if (j === 0) {
+            nodes[j].style.width = '92px'
+          }
+          if (j === 1) {
+            nodes[j].style.width = '103px'
+          }
+          if (j === 2) {
+            nodes[j].style.width = '103px'
+          }
+          if (j === 3) {
+            nodes[j].style.width = '222px'
+          }
+          if (j === 4) {
+            nodes[j].style.width = '200px'
+          }
+          if (j === 5) {
+            nodes[j].style.width = '149px'
+          }
+        }
+      }
+    }
+    const tableElements = document.getElementsByTagName('table');
+    for (let i = 0; i < tableElements.length; i++) {
+      tableElements[i].style.tableLayout = 'initial';
+    }
+
+    html2canvas(PDFComponent.current)
+      .then(canvas => {
+        const imgWidth = 208;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        const imgData = canvas.toDataURL('img/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save(`${new Date().toISOString()}.pdf`);
+        for (let i = 0; i < trElements.length; i++) {
+          if (i % 2 === 0) {
+            trElements[i].classList.add('table-row-light');
+          }
+          const nodes = trElements[i].childNodes;
+          for (let j = 0; j < nodes.length; j++) {
+            nodes[j].style.width = 'auto';
+            nodes[j].style.display = 'table-cell'
+          }
+          const tableElements = document.getElementsByTagName('table');
+          for (let i = 0; i < tableElements.length; i++) {
+            tableElements[i].style.tableLayout = 'fixed';
+          }
+        }
+      })
+  }
+
   return (
     <BasicLayout>
       {loading ? (
@@ -298,18 +367,30 @@ const Users = props => {
           active
         />
       ) : (
-        <Card className="page-content">
-          <div className="page-content-header">
+        <Card className="page-content" ref={PDFComponent}>
+          <div className="page-content-header users-page-header">
             <div className="user-score">Users</div>
-            <Button
-              shape="round"
-              onClick={CreateNewUser}
-              icon={<PlusOutlined />}
-              className="createNewButton"
-              disabled={userRole.userRole === UserRole} //Admin: 1
-            >
-              Create New User
-            </Button>
+
+            <div className="create-pdf-buttons">
+              <Button
+                shape="round"
+                onClick={() => saveAsPdf()}
+                icon={<DownloadOutlined />}
+                className="pdf-button"
+                data-html2canvas-ignore="true"
+              >
+                Save as PDF
+              </Button>
+              <Button
+                shape="round"
+                onClick={CreateNewUser}
+                icon={<PlusOutlined />}
+                className="createNewButton"
+              >
+                Create New User
+              </Button>
+            </div>
+
           </div>
           <div className="usersTable">
             <Input.Search

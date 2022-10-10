@@ -152,15 +152,16 @@ const Routes = () => {
   const [userRole, setUserRole] = useState(null);
 
   Hub.listen("auth", ({ payload: { event, data } }) => {
-    // console.log("event:::::", event, "::::::userRole:::::", Object.values(data.attributes)[7]);
+    // console.log(data.attributes)
+    // console.log("event:::::", event, "::::::userRole:::::", Object.values(data.attributes['custom:role'])?.[0]);
     if (event === "signIn") {
-      if (Object.values(data?.attributes)?.[7] === UserRole) {
-        window.location.href = '/user-admin/users/user-detail';
+      const role = Object.values(data.attributes['custom:role'])?.[0];
+      setUserRole(role);
+      if (role === UserRole) {
+        history.push("/user-admin/users/user-detail");
       } else {
-        window.location.href = '/user-admin/jobs-summary';
+        history.push("/user-admin/jobs-summary");
       }
-    } else if (event === "signOut") {
-      setUserRole(null);
     }
   });
 
@@ -168,7 +169,9 @@ const Routes = () => {
     (async () => {
       await Auth.currentAuthenticatedUser()
         .then(user => {
-          setUserRole(Object.values(user?.attributes)?.[7] || null)
+          // console.log("user attributes::::", user?.attributes['custom:role']);
+          // console.log("eight::::", Object.values(user?.attributes['custom:role'])?.[0]);
+          setUserRole(Object.values(user?.attributes['custom:role'])?.[0] || null)
           return
         }).catch((err) => console.log('Error: ', err));
     })()
@@ -185,9 +188,9 @@ const Routes = () => {
                 path={getRoute("reset-password/:userid")}
                 component={(props: any) => <ResetPasswordScreen {...props} />}
               /> */}
-              <Route exact path="/">
+              {/* <Route exact path="/">
                 {userRole !== undefined ? userRole === AdminRole ? <Redirect to="/user-admin/jobs-summary" /> : <Redirect to="/user-admin/users/user-detail" /> : <Redirect to="/" />}
-              </Route>
+              </Route> */}
               <PrivateRouteWithStore
                 exact
                 path={routes.NEW_SUMMARY}
