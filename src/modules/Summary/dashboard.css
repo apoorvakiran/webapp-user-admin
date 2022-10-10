@@ -406,6 +406,13 @@ input[type="search"] {
     display: flex;
     justify-content: space-between;
 }
+
+@media (max-width: 425px) {
+    .summary-page-header{
+        display: flex;
+        flex-direction: column;
+    }
+}
   
 .jobs-pdf-buttons{
     display: flex;

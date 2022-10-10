@@ -195,11 +195,15 @@
   }
 
   .page-content-header .createNewButton{
-    margin-top: 5px;
+    margin-top: 0px;
   }
 
   .page-content-header .createNewButton .anticon{
     font-size: 14px;
+  }
+
+  .create-pdf-buttons .pdf-button {
+    height: 35px;
   }
 }
 
@@ -222,6 +226,13 @@
   justify-content: space-between;
 }
 
+@media (max-width: 425px) {
+  .users-page-header{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .create-pdf-buttons{
   display: flex;
 }
@@ -232,4 +243,13 @@
   font-weight: 700 !important;
   border-color: #c54b30 !important;
   padding: 4px 20px;
+}
+
+@media (min-width: 426px) {
+  .page-content-header .createNewButton{
+    margin-top: 0px;
+  }
+  .create-pdf-buttons .pdf-button {
+    height: 42px;
+  }
 }
