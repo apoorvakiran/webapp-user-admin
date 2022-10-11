@@ -135,7 +135,7 @@ const handleValidation = ({ ev, rules }) => {
 
 const services = {
   async handleForgotPassword(formData) {
-    console.log("formData", formData);
+    // console.log("formData", formData);
     let username = formData;
     if (validator.isEmail(username)) {
       return Auth.forgotPassword(username);
@@ -152,16 +152,19 @@ const Routes = () => {
   const [userRole, setUserRole] = useState(null);
 
   Hub.listen("auth", ({ payload: { event, data } }) => {
-    // console.log(data.attributes)
-    // console.log("event:::::", event, "::::::userRole:::::", Object.values(data.attributes['custom:role'])?.[0]);
     if (event === "signIn") {
-      const role = Object.values(data.attributes['custom:role'])?.[0];
+      // console.log(data)
+      // console.log(Object.values(data.challengeParam.userAttributes['custom:role'])?.[0])
+      // console.log("event:::::", event, "::::::userRole:::::", data?.attributes !== undefined ? Object.values(data?.attributes['custom:role'])?.[0] : Object.values(data?.challengeParam?.userAttributes['custom:role'])?.[0]);
+      const role = data?.attributes !== undefined ? Object.values(data?.attributes['custom:role'])?.[0] : Object.values(data?.challengeParam?.userAttributes['custom:role'])?.[0];
       setUserRole(role);
       if (role === UserRole) {
         history.push("/user-admin/users/user-detail");
       } else {
         history.push("/user-admin/jobs-summary");
       }
+    } else if (event === "signOut") {
+      history.push("/");
     }
   });
 
@@ -188,9 +191,9 @@ const Routes = () => {
                 path={getRoute("reset-password/:userid")}
                 component={(props: any) => <ResetPasswordScreen {...props} />}
               /> */}
-              {/* <Route exact path="/">
+              <Route exact path="/">
                 {userRole !== undefined ? userRole === AdminRole ? <Redirect to="/user-admin/jobs-summary" /> : <Redirect to="/user-admin/users/user-detail" /> : <Redirect to="/" />}
-              </Route> */}
+              </Route>
               <PrivateRouteWithStore
                 exact
                 path={routes.NEW_SUMMARY}
@@ -272,7 +275,9 @@ const Routes = () => {
               />
               <PrivateRouteWithStore
                 path="/user-admin/logout"
-                userAccess={true} />
+                userAccess={true}
+              // component={props => <Summary />} 
+              />
               <PrivateRouteWithStore
                 path="*"
                 userAccess={true}

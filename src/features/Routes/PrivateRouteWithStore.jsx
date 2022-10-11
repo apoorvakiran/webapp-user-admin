@@ -45,7 +45,7 @@ const PrivateRouteWithStore = ({
   return <Route {...rest} render={props =>
     userRole.userRole === AdminRole ? <Component {...props} />
       :
-      userAccess ? <Component {...props} />
+      (userAccess !== undefined && userAccess) ? <Component {...props} />
         :
         <Redirect from="/" to={landingPage()?.url} />} />;
 };
