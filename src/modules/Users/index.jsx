@@ -345,7 +345,8 @@ const Users = props => {
     for (let i = 0; i < tableElements.length; i++) {
       tableElements[i].style.tableLayout = 'initial';
     }
-
+    const viewportMeta = document.getElementById("viewportMeta").getAttribute("content");
+    document.getElementById("viewportMeta").setAttribute("content", "width=1200");
     html2canvas(PDFComponent.current)
       .then(canvas => {
         const imgWidth = 208;
@@ -354,6 +355,7 @@ const Users = props => {
         const pdf = new jsPDF('p', 'mm', 'a4');
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
         pdf.save(`${new Date().toISOString()}.pdf`);
+        document.getElementById("viewportMeta").setAttribute("content", viewportMeta);
         for (let i = 0; i < trElements.length; i++) {
           if (i % 2 === 0) {
             trElements[i].classList.add('table-row-light');
