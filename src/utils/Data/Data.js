@@ -440,6 +440,8 @@ export const usersJobsList = async () => {
 
 
 export const generatePdf = (id) => {
+    const viewportMeta = document.getElementById("viewportMeta").getAttribute("content");
+    document.getElementById("viewportMeta").setAttribute("content", "width=1200");
     html2canvas(document.getElementById(id))
         .then(canvas => {
             const imgWidth = 208;
@@ -448,5 +450,6 @@ export const generatePdf = (id) => {
             const pdf = new jsPDF(consts.orientation, consts.unit, consts.format);
             pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
             pdf.save(`${new Date().toISOString()}.pdf`);
+            document.getElementById("viewportMeta").setAttribute("content", viewportMeta);
         })
 }
