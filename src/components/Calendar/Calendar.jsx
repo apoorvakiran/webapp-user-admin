@@ -10,13 +10,21 @@ import { Select } from 'antd';
 import { DatePicker } from 'antd';
 import moment from 'moment'
 
+import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
+import dayjs from 'dayjs';
+import isBetweenPlugin from 'dayjs/plugin/isBetween';
+import { styled } from '@mui/material/styles';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { formatDate } from '../../utils/Data/Data';
+
 
 const { Option } = Select;
 
 const years = Array(100).fill('').reduce((a,b, i) => {
     a.push(2000 + i );
     return a;
-},[]);
+}, []);
 
 const months = [
     {
@@ -71,7 +79,6 @@ const months = [
 
 const Calendar = ({ getOnSelectionData, dataType }) => {
 
-    console.log(years)
     const [calendarDate, setCalendarDate] = useState(new Date())
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [selectedMonth, setSelectedMonth] = useState({month: new Date().getMonth(), year: new Date().getFullYear()})
@@ -79,6 +86,15 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
     const handleChangeDate = (newDate) => {
         setCalendarDate(newDate['$d'])
     }
+
+    const [value, setValue] = useState(dayjs(new Date()));
+    const [weekCalendarVisibility, setWeekCalendarVisibility] = useState(false);
+
+    useEffect(() => {
+        getOnSelectionData(null, `${selectedMonth.month + 1}-${selectedMonth.year}`)
+        console.log(`${selectedMonth.month + 1}-${selectedMonth.year}`)
+    }, [selectedMonth])
+    
 
     useEffect(() => {
         setCalendarDate(new Date())
@@ -89,6 +105,53 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
     useEffect(() => {
         setInterval(() => setClock(new Date().toLocaleTimeString()), 1000);
     }, []);
+
+    dayjs.extend(isBetweenPlugin);
+
+    const CustomPickersDay = styled(PickersDay, {
+        shouldForwardProp: (prop) =>
+            prop !== 'dayIsBetween' && prop !== 'isFirstDay' && prop !== 'isLastDay',
+        })(({ theme, dayIsBetween, isFirstDay, isLastDay }) => ({
+        ...(dayIsBetween && {
+            borderRadius: 0,
+            backgroundColor:  "#C54B30",
+            color: theme.palette.common.white,
+            '&:hover, &:focus': {
+                backgroundColor: "#C54B30",
+            },
+        }),
+        ...(isFirstDay && {
+            borderTopLeftRadius: '50%',
+            borderBottomLeftRadius: '50%',
+        }),
+        ...(isLastDay && {
+            borderTopRightRadius: '50%',
+            borderBottomRightRadius: '50%',
+        }),
+    }));
+
+    const renderWeekPickerDay = (date, selectedDates, pickersDayProps) => {
+        if (!value) {
+          return <PickersDay {...pickersDayProps} />;
+        }
+    
+        const start = value.startOf('week');
+        const end = value.endOf('week');
+    
+        const dayIsBetween = date.isBetween(start, end, null, '[]');
+        const isFirstDay = date.isSame(start, 'day');
+        const isLastDay = date.isSame(end, 'day');
+    
+        return (
+          <CustomPickersDay
+            {...pickersDayProps}
+            disableMargin
+            dayIsBetween={dayIsBetween}
+            isFirstDay={isFirstDay}
+            isLastDay={isLastDay}
+          />
+        );
+      };
     
     const getCalendar = () => {
         switch(dataType){
@@ -102,7 +165,7 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                     inputFormat="DD/MM/YYYY"
                                     value={calendarDate}
                                     onChange={handleChangeDate}
-                                    onAccept={() => getOnSelectionData(null, calendarDate)}
+                                    onAccept={() => getOnSelectionData(null, formatDate(calendarDate))}
                                     className="datePicker"
                                     InputProps={{
                                         disableUnderline: true,
@@ -116,6 +179,7 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                             variant="filled"
                                         />
                                     }
+                                    maxDate={new Date()}
                                     disableFuture={true}
                                 />
                             </LocalizationProvider>
@@ -132,15 +196,40 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                 return (
                     <>
                         <div className="arrowLeft"  onClick={() => {
-                            setSelectedweek(moment(selectedweek).subtract(1, 'week'))
+                            const now = new Date(dayjs(new Date(value)).startOf("week"))
+                            setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)))
                         }}>
                             <ArrowBackIos  /> Previous Week
                         </div>
-                        <DatePicker format='yyyy/MM/DD'  value={selectedweek} onChange={(date, ds) => {
+                        {/* <DatePicker className='weekPickerAntD' format='yyyy/MM/DD'  value={selectedweek} onChange={(date, ds) => {
                            setSelectedweek(date)
-                        }} picker="week" />
+                           console.log(date, 'week')
+                        }} picker="week" /> */}
+                        <div className='weekPickerWrapper'>
+                            <div className='weekPickerHandler' onClick={() => setWeekCalendarVisibility(prevState => !prevState)}><CalendarMonthIcon className='weekPickerIcon' /><span className='weekPickerText'> Week of {`${value["$D"]}/${value["$M"] + 1}/${value["$y"]}`}</span> <KeyboardArrowDownIcon className='weekPickerIcon' /></div>
+                            { weekCalendarVisibility && 
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <StaticDatePicker
+                                        displayStaticWrapperAs="desktop"
+                                        label="Week picker"
+                                        value={value}
+                                        onChange={(newValue) => {
+                                            const now = new Date(dayjs(new Date(newValue)).startOf("week"))
+                                            setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())));
+                                            setWeekCalendarVisibility(false)
+                                        }}
+                                        maxDate={new Date()}
+                                        renderDay={renderWeekPickerDay}
+                                        renderInput={(params) => <TextField {...params} />}
+                                        inputFormat="'Week of' MMM d"
+                                        className='weekPicker'
+                                    />
+                                </LocalizationProvider>
+                            }                        
+                        </div>
                         <div  className="arrowLeft" onClick={() => {
-                            setSelectedweek(moment(selectedweek).add(1, 'week'))
+                            const now = new Date(dayjs(new Date(value)).startOf("week"))
+                            setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)))
                         }}>
                             Next Week  <ArrowForwardIos />
                         </div>

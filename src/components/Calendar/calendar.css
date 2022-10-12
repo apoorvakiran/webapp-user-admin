@@ -47,7 +47,6 @@
 
 .MuiPickersDay-root.Mui-selected{
     background-color: #c54b30 !important;
-    border-radius: 0% !important;
 }
 
 .datePickerLive{
@@ -87,10 +86,43 @@
     background: none;
 }
 
+.weekPickerWrapper {
+    position: relative;
+}
+
 .weekPicker {
-    border: 2px solid #C54B30 !important;
+    position: absolute;
+    z-index: 100;
+    transform: translateX(-14%) translateY(6px);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 20px;
-    width: 20%;
+}
+
+.weekPicker .MuiPickerStaticWrapper-content {
+    border-radius: 20px;
+}
+
+.weekPickerHandler {
+    border: 2px solid #C54B30;
+    border-radius: 20px;
+    padding: 4px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.weekPickerText {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0px 8px;
+}
+
+.MuiDayPicker-weekContainer .Mui-Selected{
+    background-color: blue !important;
+}
+
+.weekPickerIcon {
+    color: #C54B30;
 }
 
 .weekPicker .weekLabel{
@@ -123,6 +155,11 @@
     border-left: 2px solid #C54B30;
 }
 
+.monthPicker_yearSelect .ant-select-selection-item {
+    text-align: center;
+    font-weight: 700;
+}
+
 .monthPicker_monthSelect{
     width: 140px;
 }
@@ -131,6 +168,16 @@
 .monthPicker_monthSelect .ant-select-selector,
 .yearPicker_yearSelect .ant-select-selector{
     box-shadow: none !important;
+}
+
+.monthPicker_monthSelect .ant-select-selection-item {
+    text-align: center;
+    font-weight: 700;
+}
+
+.yearPicker_yearSelect .ant-select-selection-item {
+    text-align: center;
+    font-weight: 700;
 }
 
 .ant-picker, .ant-picker-focused {
