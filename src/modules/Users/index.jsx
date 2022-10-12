@@ -113,7 +113,7 @@ const Users = props => {
       width: "10rem",
       filteredValue: [searchedText],
       onFilter: (value, record) => {
-        return compareString(record.first_name, value) ||
+        return compareString(record.first_name + " " + record?.last_name, value) ||
           compareString(record.role, value) ||
           compareString(record.name, value) ||
           compareString(record.email, value) ||
