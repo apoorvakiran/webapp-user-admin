@@ -26,7 +26,7 @@ import CreateJob from "../../modules/Jobs/CreateJob";
 import EditJob from "../../modules/Jobs/EditJob";
 import validator from 'validator';
 import Summary from "../../modules/Summary";
-import { AdminRole, UserRole } from "../../utils/Data/Data";
+import { AdminRole, getUserRole, UserRole } from "../../utils/Data/Data";
 
 Amplify.configure(config);
 
@@ -151,20 +151,30 @@ const services = {
 const Routes = () => {
   const [userRole, setUserRole] = useState(null);
 
-  Hub.listen("auth", ({ payload: { event, data } }) => {
-    if (event === "signIn") {
-      // console.log(data)
-      // console.log(Object.values(data.challengeParam.userAttributes['custom:role'])?.[0])
-      // console.log("event:::::", event, "::::::userRole:::::", data?.attributes !== undefined ? Object.values(data?.attributes['custom:role'])?.[0] : Object.values(data?.challengeParam?.userAttributes['custom:role'])?.[0]);
-      const role = data?.attributes !== undefined ? Object.values(data?.attributes['custom:role'])?.[0] : Object.values(data?.challengeParam?.userAttributes['custom:role'])?.[0];
-      setUserRole(role);
-      if (role === UserRole) {
-        history.push("/user-admin/users/user-detail");
-      } else {
-        history.push("/user-admin/jobs-summary");
-      }
-    } else if (event === "signOut") {
-      history.push("/");
+  Hub.listen("auth", async ({ payload: { event, data } }) => {
+
+    switch (event) {
+      case 'signIn':
+        const role = data?.attributes !== undefined ? Object.values(data?.attributes['custom:role'])?.[0] : Object.values(data?.challengeParam?.userAttributes['custom:role'])?.[0];
+        setUserRole(role);
+        if (role === UserRole) {
+          history.push("/user-admin/users/user-detail");
+        } else {
+          history.push("/user-admin/jobs-summary");
+        }
+        break;
+      case 'signOut':
+        history.push("/");
+        break;
+      case 'tokenRefresh':
+        const newRole = await getUserRole();
+        setUserRole(newRole);
+        if (newRole === UserRole) {
+          history.push("/user-admin/users/user-detail");
+        } else {
+          history.push("/user-admin/jobs-summary");
+        }
+        break;
     }
   });
 
@@ -192,7 +202,7 @@ const Routes = () => {
                 component={(props: any) => <ResetPasswordScreen {...props} />}
               /> */}
               <Route exact path="/">
-                {userRole !== undefined ? userRole === AdminRole ? <Redirect to="/user-admin/jobs-summary" /> : <Redirect to="/user-admin/users/user-detail" /> : <Redirect to="/" />}
+                {(userRole !== undefined || userRole !== null) ? (userRole === AdminRole) ? <Redirect to="/user-admin/jobs-summary" /> : <Redirect to="/user-admin/users/user-detail" /> : <Redirect to="/" />}
               </Route>
               <PrivateRouteWithStore
                 exact
