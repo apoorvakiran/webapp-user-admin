@@ -449,15 +449,20 @@ export const usersJobsList = async () => {
 
 export const generatePdf = (id) => {
     const viewportMeta = document.getElementById("viewportMeta").getAttribute("content");
-    document.getElementById("viewportMeta").setAttribute("content", "width=1200");
-    html2canvas(document.getElementById(id))
+    document.getElementById("viewportMeta").setAttribute("content", "width=1280");
+    const currentPosition = document.getElementById(id).scrollTop;
+    const offsetWidth = document.getElementById(id).offsetWidth;
+    const offsetHeight = document.getElementById(id).offsetHeight;
+   document.getElementById(id).style.height="auto";
+    html2canvas(document.getElementById(id), {dpi: 300, scale: 3})
         .then(canvas => {
             const imgWidth = 208;
             const imgHeight = canvas.height * imgWidth / canvas.width;
             const imgData = canvas.toDataURL('img/png');
-            const pdf = new jsPDF(consts.orientation, consts.unit, consts.format);
-            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            const pdf = new jsPDF(consts.orientation, consts.unit, [offsetWidth,offsetHeight]);
+            pdf.addImage(imgData, 'JPEG', 0, 0, offsetWidth, offsetHeight);
             pdf.save(`${new Date().toISOString()}.pdf`);
+           document.getElementById(id).scrollTop=currentPosition;
             document.getElementById("viewportMeta").setAttribute("content", viewportMeta);
         })
 }
