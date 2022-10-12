@@ -31,7 +31,7 @@ const Devices = props => {
             filteredValue: [searchedText],
             onFilter: (value, record) => {
                 return compareString(record?.id_number, value) ||
-                    compareString(record?.first_name, value) ||
+                    compareString(record?.first_name + " " + record?.last_name, value) ||
                     compareString(record?.mac, value)
             },
             render(item, record) {
