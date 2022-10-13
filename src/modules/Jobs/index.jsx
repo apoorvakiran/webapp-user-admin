@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Radio, Skeleton } from "antd";
+import { Button, Card, Input, Radio, Skeleton } from "antd";
 import BasicLayout from "../../layouts/BasicLayout";
 import Table from "../../components/Table";
 import axios from "axios";
@@ -7,7 +7,8 @@ import { createUserButton, newCreateUserButton } from "./../Users/style";
 import './jobs.css';
 import routes from "../../features/Routes/URLs";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
-import { baseUrl, getAuthData } from "../../utils/Data/Data";
+import { baseUrl, compareString, getAuthData } from "../../utils/Data/Data";
+import SearchBox from "../../utils/SearchBox";
 
 const editUserButton = {
     color: "#C54B30",
@@ -23,12 +24,17 @@ const Jobs = props => {
     const { history } = props;
     const [loading, setLoading] = useState(true);
     const [jobsList, setJobsList] = useState([]);
-    const [radioValue, setRadioValue] = useState(null);
+    const [searchedText, setSearchedText] = useState("");
     const [jobRowData, setJobRowData] = useState([]);
 
     useEffect(() => {
         getJobsList();
     }, []);
+
+    const pull_data = (searchedText) => {
+        setSearchedText(searchedText);
+        return searchedText;
+    }
 
     async function getJobsList() {
         const idToken = await getAuthData();
@@ -85,6 +91,10 @@ const Jobs = props => {
             dataIndex: "name",
             key: "name",
             sorter: true,
+            filteredValue: [searchedText],
+            onFilter: (value, record) => {
+                return compareString(record?.name, value)
+            },
             render(item, record) {
                 return {
                     props: {
@@ -148,6 +158,7 @@ const Jobs = props => {
                             Create New Job
                         </Button>
                     </div>
+                    <SearchBox func={pull_data} />
                     <Table data={jobsList} columns={columns} showHeader={false} />
                 </Card>
             )}

@@ -468,6 +468,12 @@ const Summary = (props) => {
         }
     }
 
+
+    const saveAsPdf = () => {
+        generatePdf('summaryWrapper');
+        
+    }
+
     return (
         <BasicLayout >
             {loading ? (
