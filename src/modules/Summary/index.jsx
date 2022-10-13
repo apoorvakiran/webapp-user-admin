@@ -467,13 +467,7 @@ const Summary = (props) => {
             setActiveGraphData(orderBy(response.data.data.jobscore, ['job_score'], ['desc']));
         }
     }
-
-
-    const saveAsPdf = () => {
-        generatePdf('summaryWrapper');
-        
-    }
-
+    
     return (
         <BasicLayout >
             {loading ? (
