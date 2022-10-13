@@ -86,7 +86,7 @@ const Dashboard = props => {
 
   const getUserDetails = async () => {
     const idToken = await getAuthData();
-    const email = userRole.userRole === UserRole ? await getUserEmail() : location.state.email;
+    const email = userRole.userRole === UserRole ? await getUserEmail() : location?.state?.email;
     const request = await axios.get(
       // "http://localhost:3000/userdetail", {
       baseUrl + "userdetail", {

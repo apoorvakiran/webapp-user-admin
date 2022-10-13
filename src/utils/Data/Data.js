@@ -26,6 +26,14 @@ export const getAuthData = async () => {
     return data;
 };
 
+export const getUserRole = async () => {
+    const data = await Auth.currentAuthenticatedUser()
+        .then(user => {
+            return Object.values(user?.attributes['custom:role'])?.[0] || null;
+        });
+    return data;
+};
+
 export const getUserEmail = async () => {
     const data = await Auth.currentAuthenticatedUser()
         .then(user => {
