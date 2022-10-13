@@ -17,6 +17,7 @@ import isBetweenPlugin from 'dayjs/plugin/isBetween';
 import { styled } from '@mui/material/styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { formatDate } from '../../utils/Data/Data';
+import { Grid } from '@mui/material';
 
 
 const { Option } = Select;
@@ -158,7 +159,7 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
             case "Day":
                 return (
                     <>
-                        <div className="previousDatePicker">
+                        <Grid item xs={3} className="previousDatePicker">
                             <LocalizationProvider dateAdapter={AdapterDayjs} className="datePickerProvider">
                                 <MobileDatePicker
                                     label={<ArrowBackIos className="arrowLeft" />}
@@ -183,31 +184,31 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                     disableFuture={true}
                                 />
                             </LocalizationProvider>
-                        </div>
-                        <div className="datePickerLive">
+                        </Grid>
+                        <Grid item xs={6} md={2} className="datePickerLive">
                             <CalendarMonthIcon className="calendarIcon" />
                             <span className="liveWord">LIVE</span>
                             <span className="liveTime">{clock}</span>
-                        </div>
-                        <div className="nextDatePicker"></div>
+                        </Grid>
+                        <Grid item xs={3} className="nextDatePicker"></Grid>
                     </>
                 )
             case "Week":
                 return (
                     <>
-                        <div className="arrowLeft"  onClick={() => {
+                        <Grid item xs={3} className="arrowLeft" onClick={() => {
                             const now = new Date(dayjs(new Date(value)).startOf("week"))
                             setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)))
                             getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)).toDate().toISOString() )
                         }}>
                             <ArrowBackIos  /> Previous Week
-                        </div>
+                        </Grid>
                         {/* <DatePicker className='weekPickerAntD' format='yyyy/MM/DD'  value={selectedweek} onChange={(date, ds) => {
                            setSelectedweek(date)
                            console.log(date, 'week')
                         }} picker="week" /> */}
-                        <div className='weekPickerWrapper'>
-                            <div className='weekPickerHandler' onClick={() => setWeekCalendarVisibility(prevState => !prevState)}><CalendarMonthIcon className='weekPickerIcon' /><span className='weekPickerText'> Week of {`${value["$D"]}/${value["$M"] + 1}/${value["$y"]}`}</span> <KeyboardArrowDownIcon className='weekPickerIcon' /></div>
+                        <Grid item xs={6} md={3.5} className='weekPickerWrapper'>
+                            <div className='weekPickerHandler' onClick={() => setWeekCalendarVisibility(prevState => !prevState)}><CalendarMonthIcon className='calendarIcon' /><span className='weekPickerText'> Week of {`${value["$D"]}/${value["$M"] + 1}/${value["$y"]}`}</span> <KeyboardArrowDownIcon className='weekPickerDropdownIcon' /></div>
                             { weekCalendarVisibility && 
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <StaticDatePicker
@@ -227,20 +228,20 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                     />
                                 </LocalizationProvider>
                             }                        
-                        </div>
-                        <div  className="arrowRight" onClick={() => {
+                        </Grid>
+                        <Grid item xs={3} className="arrowRight" onClick={() => {
                             const now = new Date(dayjs(new Date(value)).startOf("week"))
                             setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)))
                             getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)).toDate().toISOString() )
                         }}>
                             Next Week  <ArrowForwardIos />
-                        </div>
+                        </Grid>
                     </>
                 )
             case "Month":
                 return (
                     <>
-                        <div  className="arrowLeft" onClick={() => {
+                        <Grid item xs={3} className="arrowLeft" onClick={() => {
                                if(selectedMonth?.month === 0) {
                                 setSelectedMonth({year: selectedMonth?.year - 1, month: 11});
                                 getOnSelectionData(dataType, `${selectedMonth?.year - 1}-12-${moment().format('DD')}` );
@@ -251,8 +252,8 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                             }
                         }} >
                              <ArrowBackIos  />  {months[(((months.findIndex(q => q?.value === selectedMonth?.month) || 12) - 1) % months.length + months.length) % months.length ]?.label} 
-                        </div>
-                        <div className='monthPicker'>
+                        </Grid>
+                        <Grid item xs={6} md={4} className='monthPicker'>
                             <CalendarMonthIcon className="calendarIcon" />
                             <Select value={selectedMonth?.month} onChange={(val) => {
                                 setSelectedMonth({ ...selectedMonth, month: val});
@@ -275,8 +276,8 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                     ))
                                 }
                             </Select>
-                        </div>
-                        <div  className="arrowRight"  onClick={() => {
+                        </Grid>
+                        <Grid item xs={3} className="arrowRight"  onClick={() => {
                             if(selectedMonth?.month === 11) {
                                 setSelectedMonth({year: selectedMonth?.year + 1, month: 0});
                                 getOnSelectionData(dataType, `${selectedMonth?.year + 1}-01-${moment().format('DD')}` );
@@ -287,21 +288,21 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                             }
                         }}>
                         {months[(((months.findIndex(q => q?.value === selectedMonth?.month)) + 1) % months.length + months.length) % months.length ]?.label}   <ArrowForwardIos />
-                        </div>
+                        </Grid>
                     </>
                 )
             case "Year":
                 return (
                     <>
-                        <div  className="arrowLeft" onClick={() => {
+                        <Grid item xs={3} className="arrowLeft" onClick={() => {
                             if(years.indexOf(selectedYear - 1) >= 0) {
                                 setSelectedYear(selectedYear - 1);
                                 getOnSelectionData(dataType, `${selectedYear - 1}-${moment().format('MM-DD')}` );
                             }
                         }} >
                              <ArrowBackIos  />  {years.indexOf(selectedYear - 1) >= 0 ? selectedYear - 1 : selectedYear } 
-                        </div>
-                        <div className="yearPicker">
+                        </Grid>
+                        <Grid item xs={6} md={2} className="yearPicker">
                             <CalendarMonthIcon className="calendarIcon" />
                             <Select id='yearSelector' value={selectedYear} onChange={(val) => {
                                 setSelectedYear(val);
@@ -313,15 +314,15 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                     ))
                                 }
                             </Select>
-                        </div>
-                        <div  className="arrowRight"  onClick={() => {
+                        </Grid>
+                        <Grid item xs={3} className="arrowRight"  onClick={() => {
                             if(years.indexOf(selectedYear + 1) < years.length) {
                                 setSelectedYear(selectedYear + 1);
                                 getOnSelectionData(dataType, `${selectedYear + 1}-${moment().format('MM-DD')}` );
                             }
                         }} >
                             {years.indexOf(selectedYear - 1) < years.length ? selectedYear + 1 : selectedYear }  <ArrowForwardIos />
-                        </div>
+                        </Grid>
                     </>
                 )
             default:
@@ -330,9 +331,9 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
     }
 
     return (
-        <div className="datePickerRow">
+        <Grid container className="datePickerRow">
             {getCalendar()}
-        </div>
+        </Grid>
     )
 }
 

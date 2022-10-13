@@ -483,7 +483,7 @@ const Summary = (props) => {
                     </div>
                     <div className="dashboard">
                         <Grid container>
-                            <Grid item xs={3}>
+                            <Grid item xs={12} md={3}>
                                 <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px", marginBottom: "20px" }}
                                     onChange={handleChange} >
                                     <Select.Option value={0}> All Jobs </Select.Option>
@@ -492,7 +492,7 @@ const Summary = (props) => {
                                     ))}
                                 </Select>
                             </Grid>
-                            <Grid item xs={9} className="dateSelectTabsWrapper">
+                            <Grid item xs={12} md={9} className="dateSelectTabsWrapper">
                                 <Grid container className="timeSelect">
                                     {DashboardData.map((data, index) => {
                                         return (

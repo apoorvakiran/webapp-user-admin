@@ -242,7 +242,6 @@
 
 .selectJob {
     display: inline-block;
-    padding: 3px !important;
     border-color: #C54B30;
 }
 
@@ -412,6 +411,19 @@ input[type="search"] {
     font-weight: bold;
 }
 
-.arrowIconWrapper {
-    height: 38px;
+
+@media (min-width: 900px) {
+    .selectJob {
+        padding: 3px !important;
+    }
+
+    .arrowIconWrapper {
+        height: 38px;
+    }
+}
+
+@media (max-width: 899px) {
+    .arrowIconWrapper {
+        height: 10px;
+    }
 }

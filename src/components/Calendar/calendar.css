@@ -10,6 +10,7 @@
     align-items: center;
     padding: 0 8px;
     width: 33.3%;
+    height: 36px;
 }
 .previousDatePicker,  .arrowLeft, .arrowRight{
     display: flex;
@@ -107,7 +108,7 @@
 .weekPicker {
     position: absolute;
     z-index: 100;
-    transform: translateX(-14%) translateY(6px);
+    transform: translateX(-6%) translateY(6px);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 20px;
 }
@@ -135,8 +136,8 @@
     background-color: blue !important;
 }
 
-.weekPickerIcon {
-    color: #C54B30;
+.calendarIcon, .weekPickerDropdownIcon, .ant-select-arrow {
+    color: #C54B30 !important;
 }
 
 .weekPicker .weekLabel{
@@ -167,6 +168,11 @@
 
 .monthPicker_yearSelect{
     border-left: 2px solid #C54B30;
+    width: 100%;
+}
+
+.monthPicker_monthSelect{
+    width: 100%;
 }
 
 .monthPicker_yearSelect .ant-select-selection-item {
@@ -174,9 +180,6 @@
     font-weight: 700;
 }
 
-.monthPicker_monthSelect{
-    width: 140px;
-}
 
 .monthPicker_yearSelect .ant-select-selector,
 .monthPicker_monthSelect .ant-select-selector,
@@ -209,4 +212,52 @@
 }
 .ant-picker-input > input {
     font-weight: 700 !important;
+}
+
+.yearPicker_yearSelect {
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .datePicker .MuiInputBase-root input {
+        font-size: 10px;
+        margin-left: 6px;
+    }
+
+    .datePicker .MuiFormLabel-root {
+        transform-origin: top;
+        margin-left: -20px;
+    }
+
+    .previousDatePicker .arrowLeft {
+        font-size: 14px;
+    }
+
+    .arrowLeft, .arrowRight {
+        font-size: 8px;
+    }
+
+    .arrowLeft svg,
+    .arrowRight svg {
+        font-size: 10px;
+    }
+
+    .weekPickerText,
+    .monthPicker_monthSelect .ant-select-selection-item,
+    .monthPicker_yearSelect .ant-select-selection-item,
+    .yearPicker_yearSelect .ant-select-selection-item {
+        font-size: 8px !important;
+    }
+
+    .weekPickerHandler {
+        padding: 8px 10px;
+    }
+    
+    .weekPickerDropdownIcon {
+        font-size: 14px !important;
+    }
+
+    .calendarIcon {
+        font-size: 14px !important;
+    }
 }
