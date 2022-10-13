@@ -11,12 +11,22 @@
     padding: 0 8px;
     width: 33.3%;
 }
-.previousDatePicker,  .arrowLeft{
+.previousDatePicker,  .arrowLeft, .arrowRight{
     display: flex;
     align-items: center;
     color: #C54B30;
     cursor: pointer;
     font-weight: 600;
+}
+
+.arrowLeft {
+    width: 15%;
+    justify-content: flex-start;
+}
+
+.arrowRight {
+    width: 15%;
+    justify-content: flex-end;
 }
 
 .nextDatePicker, .arrowRight{
@@ -43,6 +53,10 @@
     padding: 8px 0px;
     cursor: pointer;
     margin-left: 30px;
+}
+
+.datePicker .MuiFormLabel-root {
+    transform-origin: unset;
 }
 
 .MuiPickersDay-root.Mui-selected{

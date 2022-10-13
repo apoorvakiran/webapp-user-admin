@@ -90,10 +90,10 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
     const [value, setValue] = useState(dayjs(new Date()));
     const [weekCalendarVisibility, setWeekCalendarVisibility] = useState(false);
 
-    useEffect(() => {
-        getOnSelectionData(null, `${selectedMonth.month + 1}-${selectedMonth.year}`)
-        console.log(`${selectedMonth.month + 1}-${selectedMonth.year}`)
-    }, [selectedMonth])
+    // useEffect(() => {
+    //     getOnSelectionData(null, `${selectedMonth.month + 1}-${selectedMonth.year}`)
+    //     console.log(`${selectedMonth.month + 1}-${selectedMonth.year}`)
+    // }, [selectedMonth])
     
 
     useEffect(() => {
@@ -198,6 +198,7 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                         <div className="arrowLeft"  onClick={() => {
                             const now = new Date(dayjs(new Date(value)).startOf("week"))
                             setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)))
+                            getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)).toDate().toISOString() )
                         }}>
                             <ArrowBackIos  /> Previous Week
                         </div>
@@ -227,9 +228,10 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                 </LocalizationProvider>
                             }                        
                         </div>
-                        <div  className="arrowLeft" onClick={() => {
+                        <div  className="arrowRight" onClick={() => {
                             const now = new Date(dayjs(new Date(value)).startOf("week"))
                             setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)))
+                            getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)).toDate().toISOString() )
                         }}>
                             Next Week  <ArrowForwardIos />
                         </div>
@@ -239,25 +241,34 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                 return (
                     <>
                         <div  className="arrowLeft" onClick={() => {
-                            if(selectedMonth === 0) {
-                                setSelectedMonth({year: selectedYear - 1, month: months[(((months.findIndex(q => q?.value === selectedMonth?.month) || 12) - 1) % months.length + months.length) % months.length ]?.value})
+                               if(selectedMonth?.month === 0) {
+                                setSelectedMonth({year: selectedMonth?.year - 1, month: 11});
+                                getOnSelectionData(dataType, `${selectedMonth?.year - 1}-12-${moment().format('DD')}` );
                             }else {
-                                setSelectedMonth({...selectedMonth, month: months[(((months.findIndex(q => q?.value === selectedMonth?.month) || 12) - 1) % months.length + months.length) % months.length ]?.value})
-
+                                setSelectedMonth({...selectedMonth, month: months[(((months.findIndex(q => q?.value === selectedMonth?.month)) - 1) % months.length + months.length) % months.length ]?.value})
+                                const sMonth =  months[(((months.findIndex(q => q?.value === selectedMonth?.month)) - 1) % months.length + months.length) % months.length ]?.value;
+                                getOnSelectionData(dataType, `${selectedMonth?.year}-${String(sMonth + 1).length === 1 ? `0${sMonth + 1}` : `${sMonth + 1}`}-${moment().format('DD')}` );
                             }
                         }} >
                              <ArrowBackIos  />  {months[(((months.findIndex(q => q?.value === selectedMonth?.month) || 12) - 1) % months.length + months.length) % months.length ]?.label} 
                         </div>
                         <div className='monthPicker'>
                             <CalendarMonthIcon className="calendarIcon" />
-                            <Select value={selectedMonth?.month} onChange={(val) => setSelectedMonth({ ...selectedMonth, month: val})} className="monthPicker_monthSelect">
+                            <Select value={selectedMonth?.month} onChange={(val) => {
+                                setSelectedMonth({ ...selectedMonth, month: val});
+                                getOnSelectionData(dataType, `${selectedYear}-${String(val + 1).length === 1 ? `0${val+1}` : `${val}`}-${moment().format('DD')}` );
+                            }} className="monthPicker_monthSelect">
                                 {
                                     months.map((month) => (
                                         <Option key={month.value}  value={month.value}>{month.label}</Option>
                                     ))
                                 }
                             </Select>
-                            <Select value={selectedMonth?.year} onChange={(val) => setSelectedMonth({ ...selectedMonth, year: val})}  className="monthPicker_yearSelect">
+                            <Select value={selectedMonth?.year} onChange={(val) => {
+                                setSelectedMonth({ ...selectedMonth, year: val})
+                                getOnSelectionData(dataType, `${val}-${String(selectedMonth?.month + 1).length === 1 ? `0${selectedMonth?.month + 1}` : `${selectedMonth?.month}`}-${moment().format('DD')}` );
+                            }
+                                }  className="monthPicker_yearSelect">
                                 {
                                     years.map((item) => (
                                         <Option key={item} value={item}>{item}</Option>
@@ -265,12 +276,14 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                 }
                             </Select>
                         </div>
-                        <div  className="arrowLeft"  onClick={() => {
-                            if(selectedMonth === 0) {
-                                setSelectedMonth({year: selectedYear + 1, month: months[(((months.findIndex(q => q?.value === selectedMonth?.month)) + 1) % months.length + months.length) % months.length ]?.value})
+                        <div  className="arrowRight"  onClick={() => {
+                            if(selectedMonth?.month === 11) {
+                                setSelectedMonth({year: selectedMonth?.year + 1, month: 0});
+                                getOnSelectionData(dataType, `${selectedMonth?.year + 1}-01-${moment().format('DD')}` );
                             }else {
                                 setSelectedMonth({...selectedMonth, month: months[(((months.findIndex(q => q?.value === selectedMonth?.month)) + 1) % months.length + months.length) % months.length ]?.value})
-
+                                const sMonth =  months[(((months.findIndex(q => q?.value === selectedMonth?.month)) + 1) % months.length + months.length) % months.length ]?.value;
+                                getOnSelectionData(dataType, `${selectedMonth?.year}-${String(sMonth + 1).length === 1 ? `0${sMonth + 1}` : `${sMonth + 1}`}-${moment().format('DD')}` );
                             }
                         }}>
                         {months[(((months.findIndex(q => q?.value === selectedMonth?.month)) + 1) % months.length + months.length) % months.length ]?.label}   <ArrowForwardIos />
@@ -283,13 +296,17 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                         <div  className="arrowLeft" onClick={() => {
                             if(years.indexOf(selectedYear - 1) >= 0) {
                                 setSelectedYear(selectedYear - 1);
+                                getOnSelectionData(dataType, `${selectedYear - 1}-${moment().format('MM-DD')}` );
                             }
                         }} >
                              <ArrowBackIos  />  {years.indexOf(selectedYear - 1) >= 0 ? selectedYear - 1 : selectedYear } 
                         </div>
                         <div className="yearPicker">
                             <CalendarMonthIcon className="calendarIcon" />
-                            <Select id='yearSelector' value={selectedYear} onChange={(val) => setSelectedYear(val)} className="yearPicker_yearSelect">
+                            <Select id='yearSelector' value={selectedYear} onChange={(val) => {
+                                setSelectedYear(val);
+                                getOnSelectionData(dataType, `${val}-${moment().format('MM-DD')}` );
+                                }} className="yearPicker_yearSelect">
                                 {
                                     years.map((year) => (
                                         <Option key={year}  value={year}>{year}</Option>
@@ -297,9 +314,10 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                 }
                             </Select>
                         </div>
-                        <div  className="arrowLeft"  onClick={() => {
+                        <div  className="arrowRight"  onClick={() => {
                             if(years.indexOf(selectedYear + 1) < years.length) {
                                 setSelectedYear(selectedYear + 1);
+                                getOnSelectionData(dataType, `${selectedYear + 1}-${moment().format('MM-DD')}` );
                             }
                         }} >
                             {years.indexOf(selectedYear - 1) < years.length ? selectedYear + 1 : selectedYear }  <ArrowForwardIos />
@@ -311,121 +329,6 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
         }
     }
 
-
-    // return (
-    //     <div className="datePickerRow">
-    //         <div className="previousDatePicker">
-    //             {
-    //                 dataType === "Day" &&
-    //                 <LocalizationProvider dateAdapter={AdapterDayjs} className="datePickerProvider">
-    //                     <MobileDatePicker
-    //                         label={<ArrowBackIos className="arrowLeft" />}
-    //                         inputFormat="DD/MM/YYYY"
-    //                         value={calendarDate}
-    //                         onChange={handleChangeDate}
-    //                         onAccept={() => getOnSelectionData(null, calendarDate)}
-    //                         className="datePicker"
-    //                         InputProps={{
-    //                             disableUnderline: true,
-    //                         }}
-    //                         renderInput={(params) =>
-    //                             <TextField
-    //                                 {...params}
-    //                                 inputProps={{
-    //                                     ...params.inputProps,
-    //                                 }}
-    //                                 variant="filled"
-    //                             />
-    //                         }
-    //                         disableFuture={true}
-    //                     />
-    //                 </LocalizationProvider>
-    //             }
-    //             {
-    //                ( dataType === 'Week' && (
-    //                     <div className="arrowLeft">
-    //                         <ArrowBackIos  /> Previous Week
-    //                     </div>
-    //                 ))
-    //                 ||( dataType === 'Month' && (
-
-    //                     <div  className="arrowLeft" >
-    //                          <ArrowBackIos  />  Previous Month 
-    //                     </div>
-    //                 ))||( dataType === 'Year' && (
-    //                     <div  className="arrowLeft" >
-    //                          <ArrowBackIos  />  Previous Year 
-    //                     </div>
-    //                 ))
-    //             }
-    //         </div>
-
-    //         <div className="datePickerLive">
-    //             {
-    //                 dataType === "Day" ?
-    //                     <>
-    //                         {
-    //                             (formatDate(new Date())) === (formatDate(calendarDate)) &&
-    //                             <>
-    //                                 <CalendarMonthIcon className="calendarIcon" />
-    //                                 <span className="liveWord">LIVE</span>
-    //                                 <span className="liveTime">1:36:41</span>
-    //                             </>
-    //                         }
-    //                     </>
-    //                     :
-    //                     <>
-    //                         <CalendarMonthIcon className="calendarIcon" />
-    //                         <span className="liveWord">LIVE</span>
-    //                     </>
-    //             }
-    //         </div>
-
-    //         <div className='nextDatePicker'>
-    //             {
-    //                 false &&
-    //                 <LocalizationProvider dateAdapter={AdapterDayjs} className="datePickerProvider">
-    //                     <ArrowBackIos className="arrowLeft" />
-    //                     <MobileDatePicker
-    //                         inputFormat="DD/MM/YYYY"
-    //                         value={calendarDate}
-    //                         onChange={handleChangeDate}
-    //                         onAccept={() => getOnSelectionData(null, calendarDate)}
-    //                         className="datePicker"
-    //                         InputProps={{
-    //                             disableUnderline: true,
-    //                         }}
-    //                         renderInput={(params) =>
-    //                             <TextField
-    //                                 {...params}
-    //                                 inputProps={{
-    //                                     ...params.inputProps,
-    //                                 }}
-    //                                 variant="filled"
-    //                             />
-    //                         }
-    //                         disableFuture={true}
-    //                     />
-    //                 </LocalizationProvider>
-    //             }
-    //             {
-    //                ( dataType === 'Week' && (
-    //                     <div  className="arrowLeft" >
-    //                         Next Week  <ArrowForwardIos />
-    //                     </div>
-    //                 )) ||( dataType === 'Month' && (
-    //                     <div  className="arrowLeft" >
-    //                         Next Month  <ArrowForwardIos />
-    //                     </div>
-    //                 )) ||( dataType === 'Year' && (
-    //                     <div  className="arrowLeft" >
-    //                         Next Year  <ArrowForwardIos />
-    //                     </div>
-    //                 ))
-    //             }
-    //         </div>
-    //     </div>
-    // )
     return (
         <div className="datePickerRow">
             {getCalendar()}
