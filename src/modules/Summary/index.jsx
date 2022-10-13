@@ -1,8 +1,10 @@
 import { Grid, Paper, styled, Typography } from "@mui/material";
-import { Card, Select, Skeleton } from "antd";
+import { Card, Select, Skeleton, Button } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
-import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, ProgressBarChart, ViewBy, getAccessToken, getAccessValueToken, getAuthData } from "../../utils/Data/Data";
+import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, 
+        formatDate, getColor, ViewBy, getAuthData, generatePdf } from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
 import axios from "axios";
 import "./dashboard.css";
@@ -12,13 +14,8 @@ import PolygonIcon from "../../images/Polygon.svg";
 import StrokeIcon from "../../images/Stroke.png";
 import Vector2Icon from "../../images/Vector2.png";
 import UserIcon from "../../images/UserIcon.png";
-import { cardIconStyle } from "../../modules/Users/style";
-import Table from "../../components/Table/index";
-import Meta from "antd/lib/card/Meta";
 import AllJobSummary from "./AllJobSummary";
-import UserProgressScore from "../Analytics/ActiveScore/UserProgressScore";
-import { orderBy, round, sortBy } from "lodash";
-import { Auth } from "aws-amplify";
+import { orderBy, round } from "lodash";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
 import { KeyboardArrowDownSharp } from "@mui/icons-material";
@@ -43,7 +40,7 @@ const Summary = (props) => {
     const [dataType, setDataType] = useState('Day');
     const [scoreType = "Scores by User", setScoreType] = useState();
     const { route } = useAuthenticator(context => [context.route]);
-    const[calendarDate,setCalendarDate] = useState(formatDate(new Date()))
+    const [calendarDate, setCalendarDate] = useState(formatDate(new Date()))
     const [selectedOption, setSelectedOption] = useState(0)
 
     async function getActiveScores(value) {
@@ -86,7 +83,7 @@ const Summary = (props) => {
     }
 
     useEffect(() => {
-        
+
         const current = new Date();
         const date = formatDate(current);
 
@@ -103,11 +100,11 @@ const Summary = (props) => {
     }, []);
 
     useEffect(() => {
-        if(selectedOption === 0) return 
+        if (selectedOption === 0) return
         handleChange(selectedOption)
         handleScoreCard(scoreType)
     }, [calendarDate])
-    
+
 
     async function getUserData() {
         // const response = await axios.get(
@@ -185,7 +182,7 @@ const Summary = (props) => {
             // getActiveScores(value);
         }
     }
-    
+
     async function onGridSelection(value) {
         setDataType(value);
         // getData(value);
@@ -471,6 +468,12 @@ const Summary = (props) => {
         }
     }
 
+
+    const saveAsPdf = () => {
+        generatePdf('summaryWrapper');
+        
+    }
+
     return (
         <BasicLayout >
             {loading ? (
@@ -480,8 +483,8 @@ const Summary = (props) => {
                     active
                 />
             ) : (
-                <Card className="summaryWrapper">
-                    <div>
+                <Card className="summaryWrapper" id="summaryWrapper">
+                    <div className="summary-page-header">
                         <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
                     </div>
                     <div className="dashboard">
@@ -537,14 +540,14 @@ const Summary = (props) => {
                                         >
                                             <KeyboardArrowDownSharp className="arrowDownIcon" />
                                         </Item>
-                                    </Grid>
+                                    </Grid>                        
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Calendar  getOnSelectionData={getOnSelectionData} dataType={dataType} />
+                        <Calendar getOnSelectionData={getOnSelectionData} dataType={dataType} />
                         <Card className="scoreBoard childCard">
 
-                            <div className="scoreboardTitle">
+                            {/* <div className="scoreboardTitle">
                                 {
                                     selectedJobTitle !== "" & selectedJobTitle !== "0" ?
                                         <span>
@@ -553,7 +556,10 @@ const Summary = (props) => {
                                 }
 
                                 <span>Scoreboard</span>
-                            </div>
+                            </div> */}
+                            {/* <div className="calendarWrapper">
+                                <Calendar  getOnSelectionData={getOnSelectionData} dataType={dataType} />
+                            </div> */}
 
                             {scores.map((row, index) => (
                                 <Card.Grid hoverable={false} className="gridStyle">

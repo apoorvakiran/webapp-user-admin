@@ -166,6 +166,16 @@
     margin-top: 10px;
     width: 100% !important;
   }
+
+  .searchBoxStyle {
+    margin: 20px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .searchBoxStyle {
+    margin: 20px !important;
+  }
 }
 
 @media (max-width: 425px) {
@@ -190,16 +200,28 @@
     margin-bottom: 20px !important;
   }
 
-  .page-content-header{
+  .page-content-header {
     padding-bottom: 60px;
   }
 
-  .page-content-header .createNewButton{
-    margin-top: 5px;
+  .page-content-header .createNewButton {
+    margin-top: 0px;
   }
 
-  .page-content-header .createNewButton .anticon{
+  .page-content-header .createNewButton .anticon {
     font-size: 14px;
+  }
+
+  .create-pdf-buttons .pdf-button {
+    height: 35px;
+  }
+
+  .searchBoxStyle {
+    margin: 10px !important;
+  }
+
+  .ant-input-group-addon {
+    background-color: #ffffff !important;
   }
 }
 
@@ -215,4 +237,47 @@
 .user-list {
   justify-content: center;
   margin-top: 25px !important;
+}
+
+.users-page-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 425px) {
+  .users-page-header {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.create-pdf-buttons {
+  display: flex;
+}
+
+.pdf-button {
+  margin-right: 8px;
+  color: #c54b30 !important;
+  font-weight: 700 !important;
+  border-color: #c54b30 !important;
+  padding: 4px 20px;
+}
+
+@media (min-width: 426px) {
+  .page-content-header .createNewButton {
+    margin-top: 0px;
+  }
+
+  .create-pdf-buttons .pdf-button {
+    height: 42px;
+  }
+}
+
+.ant-input-group-wrapper {
+  width: auto !important;
+}
+
+.ant-input-group-addon,
+.ant-input-group-wrap {
+  vertical-align: top !important;
 }
