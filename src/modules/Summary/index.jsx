@@ -21,6 +21,7 @@ import { orderBy, round, sortBy } from "lodash";
 import { Auth } from "aws-amplify";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
+import { KeyboardArrowDownSharp } from "@mui/icons-material";
 
 
 const Summary = (props) => {
@@ -482,40 +483,63 @@ const Summary = (props) => {
                 <Card className="summaryWrapper">
                     <div>
                         <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
-                        <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px", marginBottom: "20px" }}
-                            onChange={handleChange} >
-                            <Select.Option value={0}> All Jobs </Select.Option>
-                            {jobTitleList.map((row, index) => (
-                                <Select.Option value={row.id}>{row.name} </Select.Option>
-                            ))}
-                        </Select>
                     </div>
                     <div className="dashboard">
-                        <Grid container className="timeSelect">
-                            {DashboardData.map((data, index) => {
-                                return (
+                        <Grid container>
+                            <Grid item xs={3}>
+                                <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px", marginBottom: "20px" }}
+                                    onChange={handleChange} >
+                                    <Select.Option value={0}> All Jobs </Select.Option>
+                                    {jobTitleList.map((row, index) => (
+                                        <Select.Option value={row.id}>{row.name} </Select.Option>
+                                    ))}
+                                </Select>
+                            </Grid>
+                            <Grid item xs={9} className="dateSelectTabsWrapper">
+                                <Grid container className="timeSelect">
+                                    {DashboardData.map((data, index) => {
+                                        return (
+                                            <Grid
+                                                key={index}
+                                                item
+                                                xs={2.5}
+                                                onClick={() => {
+                                                    setSelected(index);
+                                                }}
+                                            >
+                                                <Item
+                                                    className={
+                                                        selected === index ? "gridData activeGrid" : "gridData"
+                                                    }
+                                                    onClick={e => {
+                                                        e.preventDefault();
+                                                        onGridSelection(data);
+                                                    }}
+                                                >
+                                                    {data}
+                                                </Item>
+                                            </Grid>
+                                        );
+                                    })}
                                     <Grid
-                                        key={index}
                                         item
-                                        xs={3}
-                                        onClick={() => {
-                                            setSelected(index);
-                                        }}
+                                        xs={2}
+                                        // onClick={() => {
+                                        //     setSelected(index);
+                                        // }}
                                     >
                                         <Item
-                                            className={
-                                                selected === index ? "gridData activeGrid" : "gridData"
-                                            }
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                onGridSelection(data);
-                                            }}
+                                            className="gridData arrowIconWrapper"
+                                            // onClick={e => {
+                                            //     e.preventDefault();
+                                            //     onGridSelection(data);
+                                            // }}
                                         >
-                                            {data}
+                                            <KeyboardArrowDownSharp className="arrowDownIcon" />
                                         </Item>
                                     </Grid>
-                                );
-                            })}
+                                </Grid>
+                            </Grid>
                         </Grid>
                         <Calendar  getOnSelectionData={getOnSelectionData} dataType={dataType} />
                         <Card className="scoreBoard childCard">
