@@ -18,7 +18,8 @@ import { ACTIVE, ACTIVE_SCORE, INJURY_RISK_SCORE, RISK_FREQUENCY, SPEED_SCORE } 
 // import { convertLegacyProps } from "antd/lib/button/button";
 
 
-export const baseUrl = process.env.REACT_APP_API_HOST;
+export const baseUrl = process.env.REACT_APP_API_HOST; //Change for localhost
+
 export const getAuthData = async () => {
     const data = await Auth.currentAuthenticatedUser()
         .then(user => {
