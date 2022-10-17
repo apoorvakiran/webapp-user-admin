@@ -467,11 +467,8 @@ const Summary = (props) => {
 
 
     const saveAsPdf = () => {
-        generatePdf('summaryWrapper',setLoader);
-      // download(setLoader)
-        
+        generatePdf('summaryWrapper', setLoader);
     }
-
     return (
         <BasicLayout >
             {loading ? (
