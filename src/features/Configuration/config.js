@@ -1,3 +1,4 @@
+//Change for localhost
 const config = {
     Auth: {
         'userPoolId': process.env.REACT_APP_USER_POOL, //REQUIRED
