@@ -155,11 +155,9 @@ const Summary = (props) => {
 
     const getOnSelectionData = (value = dataType, newDate) => {
         const current = formatDate(new Date());
-        console.log(value, newDate, 'be')
-        // const date = formatDate(newDate || current);
+
         const date = newDate || current
         setCalendarDate(date)
-        console.log(value, date, 'af')
 
         if (selectedJobTitle !== "" && selectedJobTitle !== "0") {
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
