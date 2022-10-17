@@ -7,9 +7,7 @@ import TextField from '@mui/material/TextField';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Select } from 'antd';
-import { DatePicker } from 'antd';
 import moment from 'moment'
-
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
 import dayjs from 'dayjs';
@@ -20,72 +18,24 @@ import { formatDate } from '../../utils/Data/Data';
 import { Grid } from '@mui/material';
 import { customPicker } from '../../features/Routes/style';
 import { get } from 'lodash'
+import { months } from '../../utils/consts';
 
 
 const { Option } = Select;
 
-const years = Array(100).fill('').reduce((a,b, i) => {
-    a.push(2000 + i );
-    return a;
-}, []);
+const year = new Date().getFullYear()
 
-const months = [
-    {
-        label: "January",
-        value: 0
-    },
-    {
-        label: "February",
-        value: 1
-    },
-    {
-        label: "March",
-        value: 2
-    },
-    {
-        label: "April",
-        value: 3
-    },
-    {
-        label: "May",
-        value: 4
-    },
-    {
-        label: "June",
-        value: 5
-    },
-    {
-        label: "July",
-        value: 6
-    },
-    {
-        label: "August",
-        value: 7
-    },
-    {
-        label: "September",
-        value: 8
-    },
-    {
-        label: "October",
-        value: 9
-    },
-    {
-        label: "November",
-        value: 10
-    },
-    {
-        label: "December",
-        value: 11
-    }
-]
+const years = Array(25).fill('').reduce((previousValue, currentValue, currentIndex) => {
+    previousValue.push(year - currentIndex);
+    return previousValue;
+}, []);
 
 const Calendar = ({ getOnSelectionData, dataType }) => {
 
     const [calendarDate, setCalendarDate] = useState(new Date())
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [selectedMonth, setSelectedMonth] = useState({month: new Date().getMonth(), year: new Date().getFullYear()})
-    const [selectedweek, setSelectedweek] = useState(moment())
+    // const [selectedweek, setSelectedweek] = useState(moment())
     const handleChangeDate = (newDate) => {
         setCalendarDate(newDate['$d'])
     }
