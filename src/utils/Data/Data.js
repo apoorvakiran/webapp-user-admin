@@ -453,10 +453,11 @@ export const generatePdf = (id) => {
             var pageHeight = 295;  
             var imgHeight = canvas.height * imgWidth / canvas.width;
             var heightLeft = imgHeight;
-            var doc = new jsPDF('p', 'mm');
+            var doc = new jsPDF('p', 'mm','a4',true);
+            
             var position = 15; // give some top padding to first page
             
-            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight,undefined,'FAST');
             heightLeft -= pageHeight;
             
             while (heightLeft >= 0) {
