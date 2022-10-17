@@ -14,10 +14,11 @@ import get from "lodash/get";
 import { jsPDF } from "jspdf"
 import html2canvas from "html2canvas";
 import { consts } from "../../utils/consts";
+import JsPDF from 'jspdf';
+import { convertLegacyProps } from "antd/lib/button/button";
 
 
 export const baseUrl = process.env.REACT_APP_API_HOST;
-
 export const getAuthData = async () => {
     const data = await Auth.currentAuthenticatedUser()
         .then(user => {
@@ -443,17 +444,27 @@ export const generatePdf = (id) => {
     const viewportMeta = document.getElementById("viewportMeta").getAttribute("content");
     document.getElementById("viewportMeta").setAttribute("content", "width=1280");
     const currentPosition = document.getElementById(id).scrollTop;
-    const offsetWidth = document.getElementById(id).offsetWidth;
-    const offsetHeight = document.getElementById(id).offsetHeight;
    document.getElementById(id).style.height="auto";
     html2canvas(document.getElementById(id), {dpi: 300, scale: 3})
         .then(canvas => {
-            const imgWidth = 208;
-            const imgHeight = canvas.height * imgWidth / canvas.width;
-            const imgData = canvas.toDataURL('img/png');
-            const pdf = new jsPDF(consts.orientation, consts.unit, [offsetWidth,offsetHeight]);
-            pdf.addImage(imgData, 'JPEG', 0, 0, offsetWidth, offsetHeight);
-            pdf.save(`${new Date().toISOString()}.pdf`);
+            var imgData = canvas.toDataURL('image/png');
+            var imgWidth = 210; 
+            var pageHeight = 295;  
+            var imgHeight = canvas.height * imgWidth / canvas.width;
+            var heightLeft = imgHeight;
+            var doc = new jsPDF('p', 'mm');
+            var position = 15; // give some top padding to first page
+            
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+            
+            while (heightLeft >= 0) {
+              position += heightLeft - imgHeight; // top padding for other pages
+              doc.addPage();
+              doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+              heightLeft -= pageHeight;
+            }
+            doc.save(`${new Date().toISOString()}.pdf`);
            document.getElementById(id).scrollTop=currentPosition;
             document.getElementById("viewportMeta").setAttribute("content", viewportMeta);
         })
