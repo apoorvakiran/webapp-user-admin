@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,6 +16,7 @@ import { FormButton } from "../formComponents/FormButton";
 import "./chart.css";
 import { Typography } from "antd";
 import SettingIcon from "../../images/setting.png";
+import { colorizePercentageChart } from "../../utils/helpers";
 
 ChartJS.register(
   CategoryScale,
@@ -69,21 +70,17 @@ const Barchart = props => {
     "July",
   ];
 
+  useEffect(() => {
+    colorizePercentageChart(data);
+  })
+
   const data = {
     labels: props.labels,
     datasets: [
       {
         label: "",
         data: props.data,
-        backgroundColor: [
-          "#DFD600",
-          "#F3BE00",
-          "#FF6E1C",
-          "#E65300",
-          "#D10000",
-          "#DFD600",
-          "#F3BE00",
-        ],
+        backgroundColor: [],
       },
     ],
   };
