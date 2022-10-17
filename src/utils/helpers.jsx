@@ -34,22 +34,23 @@ export const getSpeedScoreColor = (value) => {
 
 export const colorizePercentageChart = (myObjBar) => {
 
-  let bars = myObjBar.datasets[0].data;
+  let bars = myObjBar?.datasets?.[0]?.data;
 
-  for (let i = 0; i < bars.length; i++) {
+  for (let i = 0; i < bars?.length; i++) {
 
     let color = "#45CF03";
 
-    if (parseFloat(bars[i]) > 95) {
+    if (parseFloat(bars?.[i]) > 95) {
       color = "#D10000";
     }
-    if (parseFloat(bars[i]) > 20 && parseFloat(bars[i]) < 95) {
+    if (parseFloat(bars?.[i]) > 20 && parseFloat(bars?.[i]) < 95) {
       color = "#DFD600";
     }
-    if (parseFloat(bars[i]) < 20) {
+    if (parseFloat(bars?.[i]) < 20) {
       color = "#45CF03";
     }
 
+    // no optinal chaining because it is an assignment 
     myObjBar.datasets[0].backgroundColor[i] = color;
 
   }

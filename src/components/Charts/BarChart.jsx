@@ -44,9 +44,9 @@ const Barchart = props => {
           drawBorder: false,
           lineWidth: 12,
         },
-        min: 0,
-        max: 10,
-        stepSize: 1,
+        // min: 0,
+        // max: 10,
+        // stepSize: 1,
       },
       x: {
         grid: {
@@ -70,10 +70,6 @@ const Barchart = props => {
     "July",
   ];
 
-  useEffect(() => {
-    colorizePercentageChart(data);
-  })
-
   const data = {
     labels: props.labels,
     datasets: [
@@ -84,6 +80,8 @@ const Barchart = props => {
       },
     ],
   };
+
+  const finalData = colorizePercentageChart(data);
 
   return (
     <div className="Chart">
@@ -108,7 +106,7 @@ const Barchart = props => {
           height={200}
           width={600}
           id="canvas"
-          data={data}
+          data={finalData}
           options={options}
         />
       </article>
