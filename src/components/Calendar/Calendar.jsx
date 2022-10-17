@@ -18,6 +18,8 @@ import { styled } from '@mui/material/styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { formatDate } from '../../utils/Data/Data';
 import { Grid } from '@mui/material';
+import { customPicker } from '../../features/Routes/style';
+import { get } from 'lodash'
 
 
 const { Option } = Select;
@@ -113,22 +115,9 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
         shouldForwardProp: (prop) =>
             prop !== 'dayIsBetween' && prop !== 'isFirstDay' && prop !== 'isLastDay',
         })(({ theme, dayIsBetween, isFirstDay, isLastDay }) => ({
-        ...(dayIsBetween && {
-            borderRadius: 0,
-            backgroundColor:  "#C54B30",
-            color: theme.palette.common.white,
-            '&:hover, &:focus': {
-                backgroundColor: "#C54B30",
-            },
-        }),
-        ...(isFirstDay && {
-            borderTopLeftRadius: '50%',
-            borderBottomLeftRadius: '50%',
-        }),
-        ...(isLastDay && {
-            borderTopRightRadius: '50%',
-            borderBottomRightRadius: '50%',
-        }),
+        ...(dayIsBetween && get(customPicker, 'dayBetween')),
+        ...(isFirstDay && get(customPicker, 'firstDay')),
+        ...(isLastDay && get(customPicker, 'lastDay')),
     }));
 
     const renderWeekPickerDay = (date, selectedDates, pickersDayProps) => {
