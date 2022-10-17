@@ -441,6 +441,7 @@ export const usersJobsList = async () => {
 
 
 export const generatePdf = (id) => {
+    console.debug = () => {};
     const viewportMeta = document.getElementById("viewportMeta").getAttribute("content");
     document.getElementById("viewportMeta").setAttribute("content", "width=1280");
     const currentPosition = document.getElementById(id).scrollTop;
