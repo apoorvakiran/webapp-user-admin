@@ -16,7 +16,7 @@ import axios from "axios";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
-import { baseUrl, getAuthData } from "../../utils/Data/Data";
+import { baseUrl, defaultJobName, getAuthData } from "../../utils/Data/Data";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -100,7 +100,7 @@ const CreateUser = (props) => {
   };
 
   const handleFinish = values => {
-    const defaultValue = jobTitleList.find((item) => item.name === "Default")
+    const defaultValue = jobTitleList.find((item) => item.name === defaultJobName)
     const newValues = values.jobTitle === undefined ? {
       ...values, jobTitle: defaultValue.id
     } : values
@@ -266,27 +266,27 @@ const CreateUser = (props) => {
                 style={{ justifyContent: "center" }}
                 className="formStyle"
                 name="jobTitle"
-                // rules={[
-                //   {
-                //     required: true,
-                //     // message: "Please select Job Title",
-                //   },
-                  // () => ({
-                  //   validator(_, value) {
-                  //     if (value === 0) {
-                  //       return Promise.reject("Job title cannot be None");
-                  //     }
-                  //     return Promise.resolve();
-                  //   },
-                  // }),
-                // ]}
-                // initialValue={0}
+              // rules={[
+              //   {
+              //     required: true,
+              //     // message: "Please select Job Title",
+              //   },
+              // () => ({
+              //   validator(_, value) {
+              //     if (value === 0) {
+              //       return Promise.reject("Job title cannot be None");
+              //     }
+              //     return Promise.resolve();
+              //   },
+              // }),
+              // ]}
+              // initialValue={0}
               >
-                <Select placeholder="Select Job Title" 
+                <Select placeholder="Select Job Title"
                   className="formSelectStyle" style={{ height: 50, marginBottom: "20px" }}>
                   {jobTitleList.map((row, index) => (
-                      <Select.Option value={row.id}>{row.name} </Select.Option>
-                    ))}
+                    <Select.Option value={row.id}>{row.name} </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
               <Form.Item

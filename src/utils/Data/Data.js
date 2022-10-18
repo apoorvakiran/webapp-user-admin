@@ -438,6 +438,8 @@ export const data1 = [
     },
 ];
 
+export const defaultJobName = "Unassigned";
+
 export const usersJobsList = async () => {
     const idToken = await getAuthData();
     const response = await axios.get(
@@ -450,7 +452,7 @@ export const usersJobsList = async () => {
         }
     }
     );
-    const defaultJob = get(response, "data", []).find((job) => job.name === "Unassigned")
+    const defaultJob = get(response, "data", []).find((job) => job.name === defaultJobName)
     return defaultJob;
 }
 

@@ -7,7 +7,7 @@ import { editUserButton } from "./style";
 import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
 import axios from "axios";
-import { baseUrl, compareString, getAuthData, sortTableColumns, UserRole } from "../../utils/Data/Data";
+import { baseUrl, compareString, defaultJobName, getAuthData, sortTableColumns, UserRole } from "../../utils/Data/Data";
 import { UserRoleContext } from '../../features/Routes';
 import "./user.css";
 import { openNotificationWithIcon } from "../../utils/helpers";
@@ -155,7 +155,7 @@ const Users = props => {
           props: {
             style: { color: "#C54B30" },
           },
-          children: <div onClick={() => onRow(record, item)}>{item ? item : "Default"}</div>,
+          children: <div onClick={() => onRow(record, item)}>{item ? item : defaultJobName}</div>,
         };
       },
     },
