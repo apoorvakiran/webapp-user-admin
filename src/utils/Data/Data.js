@@ -450,7 +450,7 @@ export const usersJobsList = async () => {
         }
     }
     );
-    const defaultJob = get(response, "data", []).find((job) => job.name === "Default")
+    const defaultJob = get(response, "data", []).find((job) => job.name === "Unassigned")
     return defaultJob;
 }
 
@@ -460,28 +460,28 @@ export const generatePdf = (id) => {
     const viewportMeta = document.getElementById("viewportMeta").getAttribute("content");
     document.getElementById("viewportMeta").setAttribute("content", "width=1280");
     const currentPosition = document.getElementById(id).scrollTop;
-   document.getElementById(id).style.height="auto";
-    html2canvas(document.getElementById(id), {dpi: 300, scale: 3})
+    document.getElementById(id).style.height = "auto";
+    html2canvas(document.getElementById(id), { dpi: 300, scale: 3 })
         .then(canvas => {
             const imgData = canvas.toDataURL('image/png');
-            const imgWidth = 210; 
-            const pageHeight = 295;  
+            const imgWidth = 210;
+            const pageHeight = 295;
             const imgHeight = canvas.height * imgWidth / canvas.width;
             let heightLeft = imgHeight;
             const doc = new jsPDF('p', 'mm', 'a4', true);
             let position = 15; // give some top padding to first page
-            
+
             doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
             heightLeft -= pageHeight;
-            
+
             while (heightLeft >= 0) {
-              position += heightLeft - imgHeight; // top padding for other pages
-              doc.addPage();
-              doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-              heightLeft -= pageHeight;
+                position += heightLeft - imgHeight; // top padding for other pages
+                doc.addPage();
+                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
             }
             doc.save(`${new Date().toISOString()}.pdf`);
-           document.getElementById(id).scrollTop=currentPosition;
+            document.getElementById(id).scrollTop = currentPosition;
             document.getElementById("viewportMeta").setAttribute("content", viewportMeta);
         })
 }
