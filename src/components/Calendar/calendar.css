@@ -2,7 +2,6 @@
 .datePickerRow{
     display: flex;
     justify-content: space-between;
-    padding: 0px 10px;
 }
 .previousDatePicker, .nextDatePicker{
     display: flex;
@@ -10,32 +9,15 @@
     align-items: center;
     padding: 0 8px;
     width: 33.3%;
-    height: 36px;
 }
-.previousDatePicker,  .arrowLeft, .arrowRight{
-    display: flex;
-    align-items: center;
+.previousDatePicker .arrowLeft{
     color: #C54B30;
     cursor: pointer;
-    font-weight: 600;
+    margin-top: 4px;
 }
-
-.arrowLeft {
-    width: 15%;
-    justify-content: flex-start;
-}
-
-.arrowRight {
-    width: 15%;
-    justify-content: flex-end;
-}
-
-.nextDatePicker, .arrowRight{
-    display: flex;
-    align-items: center;
-    color: #C54B30;
-    cursor: pointer;
-    font-weight: 600;
+.datePicker{
+    width: 150px;
+    margin: 0 !important;
 }
 
 .datePicker .MuiInputBase-root{
@@ -43,9 +25,7 @@
     color: #c54b30;
     font-weight: 600;
 }
-.displyhorizontal{
-    display: flex;
-}
+
 .datePicker .MuiInputBase-root:hover{
     background: none !important;
 }
@@ -56,12 +36,9 @@
     margin-left: 30px;
 }
 
-.datePicker .MuiFormLabel-root {
-    transform-origin: unset;
-}
-
 .MuiPickersDay-root.Mui-selected{
     background-color: #c54b30 !important;
+    border-radius: 0% !important;
 }
 
 .datePickerLive{
@@ -69,195 +46,17 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    height: 34px;
-    border: 2px solid #c54b30;
-    width: 18%;
-    border-radius: 20px;
+    width: 33.3%;
+    height: 40px;
 }
 
 .datePickerLive .liveWord{
     font-weight: 700;
     margin-left: 5px;
     color:#000;
-    font-size: 14px;
-}
-
-.datePickerLive .liveTime{
-    color: #C54B30;
-    font-size: 14px;
-    font-weight: 500;
-    margin-left: 4px;
+    font-size: 18px;
 }
 
 .datePickerLive .calendarIcon{
     color: #C54B30;
-    font-size: 18px;
-}
-
-.weekPicker .MuiInputBase-root {
-    margin-left: 70px;
-    font-size: 12px;
-    color: #535353;
-    background: none;
-}
-
-.weekPickerWrapper {
-    position: relative;
-}
-
-.weekPicker {
-    position: absolute;
-    z-index: 100;
-    transform: translateX(-6%) translateY(6px);
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius: 20px;
-}
-
-.weekPicker .MuiPickerStaticWrapper-content {
-    border-radius: 20px;
-}
-
-.weekPickerHandler {
-    border: 2px solid #C54B30;
-    border-radius: 20px;
-    padding: 4px 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.weekPickerText {
-    font-size: 14px;
-    font-weight: 700;
-    padding: 0px 8px;
-}
-
-.MuiDayPicker-weekContainer .Mui-Selected{
-    background-color: blue !important;
-}
-
-.calendarIcon, .weekPickerDropdownIcon, .ant-select-arrow {
-    color: #C54B30 !important;
-}
-
-.weekPicker .weekLabel{
-    font-size: 18px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    color: #535353;
-}
-
-.weekPicker .weekLabel .calendarIcon{
-    color: #C54B30;
-    margin-right: 6px;
-}
-
-.monthPicker, .yearPicker {
-    display: flex;
-    align-items: center;
-    border: 2px solid #C54B30;
-    background-color: none;
-    border-radius: 20px;
-    padding: 0px 10px;
-}
-
-.monthPicker .calendarIcon, .yearPicker .calendarIcon{
-    color: #C54B30;
-}
-
-.monthPicker_yearSelect{
-    border-left: 2px solid #C54B30;
-    width: 100%;
-}
-
-.monthPicker_monthSelect{
-    width: 100%;
-}
-
-.monthPicker_yearSelect .ant-select-selection-item {
-    text-align: center;
-    font-weight: 700;
-}
-
-
-.monthPicker_yearSelect .ant-select-selector,
-.monthPicker_monthSelect .ant-select-selector,
-.yearPicker_yearSelect .ant-select-selector{
-    box-shadow: none !important;
-}
-
-.monthPicker_monthSelect .ant-select-selection-item {
-    text-align: center;
-    font-weight: 700;
-}
-
-.yearPicker_yearSelect .ant-select-selection-item {
-    text-align: center;
-    font-weight: 700;
-}
-
-.ant-picker, .ant-picker-focused {
-    border: 2px solid #C54B30 !important;
-    background-color: none !important;
-    border-radius: 20px !important;
-    padding: 5px 16px 5px 40px !important;
-    display: flex;
-    align-items: center;
-}
-.ant-picker-suffix {
-    position: absolute;
-    left: -24px !important;
-    color: #C54B30 !important;
-}
-.ant-picker-input > input {
-    font-weight: 700 !important;
-}
-
-.yearPicker_yearSelect {
-    width: 100%;
-}
-
-@media (max-width: 480px) {
-    .datePicker .MuiInputBase-root input {
-        font-size: 10px;
-        margin-left: 6px;
-    }
-
-    .datePicker .MuiFormLabel-root {
-        transform-origin: top;
-        margin-left: -20px;
-    }
-
-    .previousDatePicker .arrowLeft {
-        font-size: 14px;
-    }
-
-    .arrowLeft, .arrowRight {
-        font-size: 8px;
-    }
-
-    .arrowLeft svg,
-    .arrowRight svg {
-        font-size: 10px;
-    }
-
-    .weekPickerText,
-    .monthPicker_monthSelect .ant-select-selection-item,
-    .monthPicker_yearSelect .ant-select-selection-item,
-    .yearPicker_yearSelect .ant-select-selection-item {
-        font-size: 8px !important;
-    }
-
-    .weekPickerHandler {
-        padding: 8px 10px;
-    }
-    
-    .weekPickerDropdownIcon {
-        font-size: 14px !important;
-    }
-
-    .calendarIcon {
-        font-size: 14px !important;
-    }
 }
