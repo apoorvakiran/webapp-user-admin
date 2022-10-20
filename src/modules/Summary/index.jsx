@@ -20,6 +20,7 @@ import AllJobSummary from "./AllJobSummary";
 import { orderBy, round } from "lodash";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
+import { KeyboardArrowDownSharp } from "@mui/icons-material";
 
 
 const Summary = (props) => {
@@ -155,8 +156,9 @@ const Summary = (props) => {
 
 
     const getOnSelectionData = (value = dataType, newDate) => {
-        const current = new Date();
-        const date = formatDate(newDate || current);
+        const current = formatDate(new Date());
+
+        const date = newDate || current
         setCalendarDate(date)
 
         if (selectedJobTitle !== "" && selectedJobTitle !== "0") {
@@ -465,12 +467,7 @@ const Summary = (props) => {
             setActiveGraphData(orderBy(response.data.data.jobscore, ['job_score'], ['desc']));
         }
     }
-    const [showLoader, setLoader] = useState(false);
-
-
-    const saveAsPdf = () => {
-        generatePdf('summaryWrapper', setLoader);
-    }
+    
     return (
         <BasicLayout >
             {loading ? (
@@ -483,35 +480,26 @@ const Summary = (props) => {
                 <Card className="summaryWrapper" id="summaryWrapper">
                     <div className="summary-page-header">
                         <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
-                        <div className="jobs-pdf-buttons">
-                            <Button
-                                shape="round"
-                                onClick={() => saveAsPdf()}
-                                icon={<DownloadOutlined />}
-                                className="pdf-button"
-                                data-html2canvas-ignore="true"
-                            >
-                                Save as PDF
-                            </Button>
-                            <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px" }}
-                                onChange={handleChange} >
-                                <Select.Option value={0}> All Jobs </Select.Option>
-                                {jobTitleList.map((row, index) => (
-                                    <Select.Option value={row.id}>{row.name} </Select.Option>
-                                ))}
-                            </Select>
-                        </div>
                     </div>
                     <div className="dashboard">
                         <Grid container>
-                            <Grid item xs={12} md={12}>
+                            <Grid item xs={12} md={3}>
+                                <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px", marginBottom: "20px" }}
+                                    onChange={handleChange} >
+                                    <Select.Option value={0}> All Jobs </Select.Option>
+                                    {jobTitleList.map((row, index) => (
+                                        <Select.Option value={row.id}>{row.name} </Select.Option>
+                                    ))}
+                                </Select>
+                            </Grid>
+                            <Grid item xs={12} md={9} className="dateSelectTabsWrapper">
                                 <Grid container className="timeSelect">
                                     {DashboardData.map((data, index) => {
                                         return (
                                             <Grid
                                                 key={index}
                                                 item
-                                                xs={3}
+                                                xs={2.5}
                                                 onClick={() => {
                                                     setSelected(index);
                                                 }}
@@ -530,6 +518,23 @@ const Summary = (props) => {
                                             </Grid>
                                         );
                                     })}
+                                    <Grid
+                                        item
+                                        xs={2}
+                                        // onClick={() => {
+                                        //     setSelected(index);
+                                        // }}
+                                    >
+                                        <Item
+                                            className="gridData arrowIconWrapper"
+                                            // onClick={e => {
+                                            //     e.preventDefault();
+                                            //     onGridSelection(data);
+                                            // }}
+                                        >
+                                            <KeyboardArrowDownSharp className="arrowDownIcon" />
+                                        </Item>
+                                    </Grid>                        
                                 </Grid>
                             </Grid>
                         </Grid>
