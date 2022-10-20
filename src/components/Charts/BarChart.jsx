@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,6 +16,7 @@ import { FormButton } from "../formComponents/FormButton";
 import "./chart.css";
 import { Typography } from "antd";
 import SettingIcon from "../../images/setting.png";
+import { colorizePercentageChart } from "../../utils/helpers";
 
 ChartJS.register(
   CategoryScale,
@@ -43,9 +44,9 @@ const Barchart = props => {
           drawBorder: false,
           lineWidth: 12,
         },
-        min: 0,
-        max: 10,
-        stepSize: 1,
+        // min: 0,
+        // max: 10,
+        // stepSize: 1,
       },
       x: {
         grid: {
@@ -75,18 +76,12 @@ const Barchart = props => {
       {
         label: "",
         data: props.data,
-        backgroundColor: [
-          "#DFD600",
-          "#F3BE00",
-          "#FF6E1C",
-          "#E65300",
-          "#D10000",
-          "#DFD600",
-          "#F3BE00",
-        ],
+        backgroundColor: [],
       },
     ],
   };
+
+  const finalData = colorizePercentageChart(data);
 
   return (
     <div className="Chart">
@@ -111,7 +106,7 @@ const Barchart = props => {
           height={200}
           width={600}
           id="canvas"
-          data={data}
+          data={finalData}
           options={options}
         />
       </article>
