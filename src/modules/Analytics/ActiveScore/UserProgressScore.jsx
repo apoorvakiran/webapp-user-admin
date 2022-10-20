@@ -33,7 +33,7 @@ const UserProgressScore = props => {
   const renderSafetySpeed = {
     display:
       props.scoreName === "Injury Risk Score" ||
-      props.scoreName === "Speed Score"
+        props.scoreName === "Speed Score"
         ? "block"
         : "none",
   };
@@ -83,16 +83,16 @@ const UserProgressScore = props => {
         parseFloat(a.user_score) > parseFloat(b.user_score)
           ? 1
           : parseFloat(b.user_score) > parseFloat(a.user_score)
-          ? -1
-          : 0,
+            ? -1
+            : 0,
       );
     } else {
       filterSpeedScoreData.sort((a, b) =>
         parseFloat(a.user_score) < parseFloat(b.user_score)
           ? 1
           : parseFloat(b.user_score) < parseFloat(a.user_score)
-          ? -1
-          : 0,
+            ? -1
+            : 0,
       );
     }
     setScores([...filterSpeedScoreData]);
@@ -106,58 +106,58 @@ const UserProgressScore = props => {
         minValue={props.minValue}
         handleChange={handleFilterChange}
       />
-      <div style={averageLine} class="avgLine"></div>
+      {props.scoreName === "Risk Frequency Score" ? <></> : <div style={averageLine} class="avgLine"></div>}
       <Row style={{ marginTop: "20px" }}>
         {scores?.map((row, index) => (
-              <>
-                <Col className="userProgress" xs={8} xl={8}>
-                  <p className="userNameText">
-                    {row?.first_name + " " + row?.last_name}
-                  </p>
-                </Col>
-                <Col
-                  className="userProgress"
-                  xs={16}
-                  xl={16}
-                  style={renderSafetySpeed}
-                >
-                  <Progress
-                    format={percent => `${row.user_score}`}
-                    showInfo={true}
-                    strokeWidth={30}
-                    percent={round(100 - (row.user_score / 7) * 100)}
-                  />
-                </Col>
-                <Col
-                  className="userProgress"
-                  xs={16}
-                  xl={16}
-                  style={renderRisk}
-                >
-                  <Progress
-                    format={percent => `${row.user_score}`}
-                    showInfo={true}
-                    strokeWidth={30}
-                    percent={round(100 - (row.user_score / 10) * 100)}
-                  />
-                </Col>
-                <Col
-                  className="userProgress"
-                  xs={16}
-                  xl={16}
-                  style={renderActive}
-                >
-                  <Progress
-                    format={percent =>
-                      `${round((row.user_score * 100) / 1)}` + "%"
-                    }
-                    showInfo={true}
-                    strokeWidth={30}
-                    percent={round(100 - (row.user_score / 1) * 100)}
-                  />
-                </Col>
-              </>
-            ))}
+          <>
+            <Col className="userProgress" xs={8} xl={8}>
+              <p className="userNameText">
+                {row?.first_name + " " + row?.last_name}
+              </p>
+            </Col>
+            <Col
+              className="userProgress"
+              xs={16}
+              xl={16}
+              style={renderSafetySpeed}
+            >
+              <Progress
+                format={percent => `${row.user_score}`}
+                showInfo={true}
+                strokeWidth={30}
+                percent={round(100 - (row.user_score / 7) * 100)}
+              />
+            </Col>
+            <Col
+              className="userProgress"
+              xs={16}
+              xl={16}
+              style={renderRisk}
+            >
+              <Progress
+                format={percent => `${row.user_score}`}
+                showInfo={true}
+                strokeWidth={30}
+                percent={round(100 - (row.user_score / 10) * 100)}
+              />
+            </Col>
+            <Col
+              className="userProgress"
+              xs={16}
+              xl={16}
+              style={renderActive}
+            >
+              <Progress
+                format={percent =>
+                  `${round((row.user_score * 100) / 1)}` + "%"
+                }
+                showInfo={true}
+                strokeWidth={30}
+                percent={round(100 - (row.user_score / 1) * 100)}
+              />
+            </Col>
+          </>
+        ))}
       </Row>
     </div>
   );
