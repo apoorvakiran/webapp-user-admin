@@ -18,8 +18,8 @@ const AllJobSummary = props => {
       setMaxValue(7);
       setMinValue(0);
     } else if (props.title === "Risk Frequency Score") {
-      setMaxValue(10);
-      setMinValue(0);
+      // setMaxValue(10);
+      // setMinValue(0);
     } else if (props.title === "Active Score") {
       // console.log("Active")
       setMaxValue("100%");
@@ -28,7 +28,7 @@ const AllJobSummary = props => {
     }
   });
 
-  
+
   return (
     <div className="Chart">
       <h3 className="SettingTitle">
