@@ -1,5 +1,5 @@
 import { Grid, Paper, styled, Typography } from "@mui/material";
-import { Card, Skeleton } from "antd";
+import { Card, Select, Skeleton } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
 import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, formatDate, getColor, getAuthData, getUserEmail, UserRole } from "../../utils/Data/Data";
@@ -31,12 +31,13 @@ const Dashboard = props => {
   const [speedGraphData, setSpeedGraphData] = useState([]);
   const [riskGraphLabels, setRiskGraphLabels] = useState([]);
   const [riskGraphData, setRiskGraphData] = useState([]);
-  // const [email, setEmail] = useState('');
+  const [durationType, setDurationType] = useState('Day');
   const [userData, setUserData] = useState({});
-
+  const [jobTitleList, setJobTitleList] = useState([]);
+  const [currentJobAssigned, setCurrentJobAssigned] = useState([]);
   const userRole = useContext(UserRoleContext);
 
-  const getActiveScores = async (value, userObj) => {
+  const getActiveScores = async (value, userObj, jobId) => {
     const current = new Date();
     const date = formatDate(current);
     const idToken = await getAuthData();
@@ -56,7 +57,8 @@ const Dashboard = props => {
         "userId": (Object.keys(userObj).length === 0) ? null : userDataUpdated?.[0]?.id,
         "durationType": value,
         "startdate": date,
-        "email": (Object.keys(userObj).length !== 0) ? null : email
+        "email": (Object.keys(userObj).length !== 0) ? null : email,
+        "jobId": jobId != null ? jobId : (Object.keys(userObj).length === 0) ? null : userDataUpdated?.[0]?.job_id,
       }
     });
     setLoading(false);
@@ -102,11 +104,37 @@ const Dashboard = props => {
     return request.data;
   };
 
+  async function getJobsByUser(userObj) {
+    const idToken = await getAuthData();
+    const userDataUpdated = { ...userObj };
+    setCurrentJobAssigned((Object.keys(userObj).length === 0) ? null : userDataUpdated?.[0]?.job_id);
+    const response = await axios.get(
+      // "http://localhost:3000/" + "userdetail", {
+      baseUrl + "userdetail", {
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
+      params: {
+        type: "get-jobs-by-user",
+        "userId": (Object.keys(userObj).length === 0) ? null : userDataUpdated?.[0]?.id,
+      }
+    }
+    );
+    setLoading(false);
+    setJobTitleList(response.data);
+  }
+
+  const handleChange = (value) => {
+    setCurrentJobAssigned(value);
+    getActiveScores(durationType, userData, value);
+  };
+
   useEffect(() => {
     (async () => {
       const userObj = await getUserDetails();
       setUserData(userObj);
       if (Object.keys(userObj).length !== 0) {
+        getJobsByUser(userObj);
         getActiveScores("Day", userObj);
       }
     })();
@@ -120,7 +148,8 @@ const Dashboard = props => {
   }));
 
   const onGridSelection = async value => {
-    getActiveScores(value, userData);
+    setDurationType(value);
+    getActiveScores(value, userData, currentJobAssigned);
   };
 
   const getIcon = icon => {
@@ -153,33 +182,45 @@ const Dashboard = props => {
             <div className="user-info-container">
               <UserInfo userData={userData} />
             </div>
-            <Grid container spacing={0} className="timeSelect">
-              {DashboardData?.map((data, index) => {
-                return (
-                  <Grid
-                    key={index}
-                    item
-                    xs={3}
-                    onClick={() => {
-                      setSelected(index);
-                    }}
-                  >
-                    <Item
-                      className={
-                        selected === index
-                          ? "gridData activeGrid"
-                          : "gridData"
-                      }
-                      onClick={e => {
-                        e.preventDefault();
-                        onGridSelection(data);
-                      }}
-                    >
-                      {data}
-                    </Item>
-                  </Grid>
-                );
-              })}
+            <Grid container>
+              <Grid item xs={12} md={3}>
+                <Select defaultValue={currentJobAssigned} className="selectStyle selectJob" style={{ width: "200px", marginBottom: "20px" }}
+                  onChange={handleChange} >
+                  {jobTitleList.map((row, index) => (
+                    <Select.Option value={row.id}>{row.name} </Select.Option>
+                  ))}
+                </Select>
+              </Grid>
+              <Grid item xs={12} md={9} className="dateSelectTabsWrapper">
+                <Grid container spacing={0} className="timeSelect">
+                  {DashboardData?.map((data, index) => {
+                    return (
+                      <Grid
+                        key={index}
+                        item
+                        xs={3}
+                        onClick={() => {
+                          setSelected(index);
+                        }}
+                      >
+                        <Item
+                          className={
+                            selected === index
+                              ? "gridData activeGrid"
+                              : "gridData"
+                          }
+                          onClick={e => {
+                            e.preventDefault();
+                            onGridSelection(data);
+                          }}
+                        >
+                          {data}
+                        </Item>
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+              </Grid>
             </Grid>
             <Calendar />
             <Card
