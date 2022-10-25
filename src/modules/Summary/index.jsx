@@ -3,8 +3,10 @@ import { Card, Select, Skeleton, Button } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
-import { DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl, 
-        formatDate, getColor, ViewBy, getAuthData, generatePdf, download } from "../../utils/Data/Data";
+import {
+    DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl,
+    formatDate, getColor, ViewBy, getAuthData, generatePdf, download
+} from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
 import axios from "axios";
 import "./dashboard.css";
@@ -566,7 +568,7 @@ const Summary = (props) => {
 
                                     <Typography className="innerCardValue">{row.type !== "Active" ? row.value : row.value + "%"}</Typography>
                                     <Typography className={"innerCardTitle" + index} style={{ color: getColor(row) }}>
-                                        {row.color}
+                                        {row.type !== "Risk" ? row.color : ""}
                                     </Typography>
                                 </Card.Grid>
                             ))}

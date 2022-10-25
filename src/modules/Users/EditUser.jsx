@@ -110,9 +110,10 @@ const EditUser = () => {
         first_name: values.first_name,
         last_name: values.last_name,
         phone: values.phone,
-        role: values.role,
+        role: String(values.role),
         job_id: values.job_id,
         hand: values.hand,
+        email: values.email
       };
       const idToken = await getAuthData();
       const config = {
@@ -125,7 +126,7 @@ const EditUser = () => {
         // mode: 'no-cors',
         body: JSON.stringify(userdata),
       };
-      const url = baseUrl + "user?type=user-edit";
+      const url = baseUrl + "admin?type=edit-user";
       // const url = 'http://localhost:5051/api/user-admin/user-edit';
       await fetch(url, config)
         .then(response => response.json())
@@ -152,7 +153,7 @@ const EditUser = () => {
     const idToken = await getAuthData();
     const response = await axios.post(
       // "http://localhost:5051/api/user-admin/user-edit",
-      baseUrl + "user",
+      baseUrl + "admin",
       {
         "user_id": location.state.id,
         "first_name": values.first_name,
@@ -161,12 +162,13 @@ const EditUser = () => {
         "role": values.role,
         "job_id": values.job_id,
         "hand": values.hand,
+        "email": values.email
       }, {
       headers: {
         "Authorization": `Bearer ${idToken}`
       },
       params: {
-        type: "user-edit"
+        type: "edit-user"
       }
     }
     );
