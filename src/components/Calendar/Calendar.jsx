@@ -142,10 +142,6 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                         }}>
                             <ArrowBackIos  /> Previous Week
                         </Grid>
-                        {/* <DatePicker className='weekPickerAntD' format='yyyy/MM/DD'  value={selectedweek} onChange={(date, ds) => {
-                           setSelectedweek(date)
-                           console.log(date, 'week')
-                        }} picker="week" /> */}
                         <Grid item xs={6} md={3.5} className='weekPickerWrapper'>
                             <div className='weekPickerHandler' onClick={() => setWeekCalendarVisibility(prevState => !prevState)}><CalendarMonthIcon className='calendarIcon' /><span className='weekPickerText'> Week of {`${value["$D"]}/${value["$M"] + 1}/${value["$y"]}`}</span> <KeyboardArrowDownIcon className='weekPickerDropdownIcon' /></div>
                             { weekCalendarVisibility && 
