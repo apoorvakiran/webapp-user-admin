@@ -158,6 +158,8 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                             const now = new Date(dayjs(new Date(newValue)).startOf("week"))
                                             setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())));
                                             setWeekCalendarVisibility(false)
+                                            getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)).toDate().toISOString() )
+                  
                                         }}
                                         maxDate={new Date()}
                                         renderDay={renderWeekPickerDay}
@@ -254,7 +256,7 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
                                 }
                             </Select>
                         </Grid>
-                        <Grid item xs={3} className="arrowRight"  onClick={() => {
+                        <Grid item xs={3} className="arrowRight" style={{visibility:((year <= selectedYear ))?'hidden':'visible'}}  onClick={() => {
                             if(years.indexOf(selectedYear + 1) < years.length) {
                                 setSelectedYear(selectedYear + 1);
                                 getOnSelectionData(dataType, `${selectedYear + 1}-${moment().format('MM-DD')}` );
