@@ -240,8 +240,21 @@
 }
 
 .selectJob {
-    float: right;
-    display: inline-block;
+    padding: 3px !important;
+    border-color: #C54B30;
+}
+
+.selectJob .ant-select-arrow {
+    color: #C54B30;
+    left: 10px;
+}
+
+.selectJob .ant-select-selector .ant-select-selection-item {
+    left: 20px;
+}
+
+.selectJob.ant-select-open .ant-select-selector {
+    box-shadow: none;
 }
 
 input[type="search"] {
@@ -413,11 +426,22 @@ input[type="search"] {
         flex-direction: column;
     }
 }
+
+@media (max-width: 780px) {
+    .jobs-pdf-buttons, .selectJob {
+        margin-bottom: 10px !important;
+    }
+}
+
+@media (min-width: 425px) {
+    .summary-page-header {
+        margin-bottom: 10px;
+    }
+}
   
 .jobs-pdf-buttons{
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
 }
 .pdf-button{
     margin-right: 8px;
@@ -425,4 +449,8 @@ input[type="search"] {
     font-weight: 700 !important;
     border-color: #c54b30 !important;
     padding: 4px 20px;
+}
+
+.lastItem {
+    height: 38px;
 }
