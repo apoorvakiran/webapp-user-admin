@@ -3,7 +3,7 @@ export const consts = {
     unit: 'pt',
     format: 'a4'
 }
-
+export const totalPreviousYears = 25;
 export const months = [
     {
         label: "January",
