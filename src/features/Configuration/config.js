@@ -1,3 +1,4 @@
+//Change for localhost
 const config = {
     Auth: {
         'userPoolId': process.env.REACT_APP_USER_POOL, //REQUIRED
@@ -7,8 +8,8 @@ const config = {
     },
     Storage: {
         AWSS3: {
-            'bucket': process.env.REACT_APP_LOGO_BUCKET, //REQUIRED -  Amazon S3 bucket name
-            'region': process.env.REACT_APP_REGION, //OPTIONAL -  Amazon service region
+            'bucket': process.env.REACT_APP_LOGO_BUCKET,
+            'region': process.env.REACT_APP_REGION,
         }
     }
 }
