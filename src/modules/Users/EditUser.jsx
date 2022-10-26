@@ -105,11 +105,12 @@ const EditUser = () => {
 
   async function saveEditUser(values) {
     try {
+      const phone = (values.phone !== undefined) ? values.phone.includes("+1") ? values.phone : "+1" + values.phone : null
       const userdata = {
         user_id: location.state.id,
         first_name: values.first_name,
         last_name: values.last_name,
-        phone: values.phone,
+        phone: phone,
         role: String(values.role),
         job_id: values.job_id,
         hand: values.hand,
