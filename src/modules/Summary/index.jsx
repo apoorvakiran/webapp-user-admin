@@ -20,6 +20,7 @@ import AllJobSummary from "./AllJobSummary";
 import { orderBy, round } from "lodash";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 
 const Summary = (props) => {
@@ -493,25 +494,27 @@ const Summary = (props) => {
                             >
                                 Save as PDF
                             </Button>
-                            <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px" }}
-                                onChange={handleChange} >
-                                <Select.Option value={0}> All Jobs </Select.Option>
-                                {jobTitleList.map((row, index) => (
-                                    <Select.Option value={row.id}>{row.name} </Select.Option>
-                                ))}
-                            </Select>
                         </div>
                     </div>
                     <div className="dashboard">
                         <Grid container>
-                            <Grid item xs={12} md={12}>
+                            <Grid item xs={12} md={3}>
+                                <Select defaultValue="All Jobs" className="selectStyle selectJob" style={{ width: "200px" }}
+                                    onChange={handleChange} >
+                                    <Select.Option value={0}> All Jobs </Select.Option>
+                                    {jobTitleList.map((row, index) => (
+                                        <Select.Option value={row.id}>{row.name} </Select.Option>
+                                    ))}
+                                </Select>
+                            </Grid>
+                            <Grid item xs={12} md={9} className="dateSelectTabsWrapper">
                                 <Grid container className="timeSelect">
                                     {DashboardData.map((data, index) => {
                                         return (
                                             <Grid
                                                 key={index}
                                                 item
-                                                xs={3}
+                                                xs={2.5}
                                                 onClick={() => {
                                                     setSelected(index);
                                                 }}
@@ -530,6 +533,11 @@ const Summary = (props) => {
                                             </Grid>
                                         );
                                     })}
+                                    <Grid item xs={2} className="gridData lastItem">
+                                        <Item>
+                                            <KeyboardArrowDownIcon />
+                                        </Item>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>

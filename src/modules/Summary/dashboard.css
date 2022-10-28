@@ -104,7 +104,7 @@
 }
 
 .ant-progress-text {
-    width: 40px !important;
+    width:  40px !important;
 }
 
 
@@ -239,21 +239,8 @@
     width: 200px;
 }
 
-@media (min-width: 900px) {
-
-    .selectJob {
-        padding: 3px !important;
-    }
-
-
-    .arrowIconWrapper {
-        height: 38px;
-    }
-
-}
-
 .selectJob {
-    display: inline-block;
+    padding: 3px !important;
     border-color: #C54B30;
 }
 
@@ -266,8 +253,8 @@
     left: 20px;
 }
 
-.selectJob.ant-select-focused .ant-select-selector {
-    box-shadow: none !important;
+.selectJob.ant-select-open .ant-select-selector {
+    box-shadow: none;
 }
 
 input[type="search"] {
@@ -294,13 +281,11 @@ input[type="search"] {
     /* height: 50px !important; */
     border-radius: 50px !important;
 }
-
 @media (max-width: 1199px) {
     .chart {
         margin-bottom: 25px !important;
     }
 }
-
 @media (max-width: 768px) {
     .userCard {
         display: none;
@@ -337,7 +322,6 @@ input[type="search"] {
         cursor: pointer;
         transition: opacity 0.25s ease-out;
     }
-
     .summaryWrapper {
         border: none !important;
         border-radius: 0px;
@@ -431,28 +415,42 @@ input[type="search"] {
 
 } */
 
-.summary-page-header {
+.summary-page-header{
     display: flex;
     justify-content: space-between;
 }
 
 @media (max-width: 425px) {
-    .summary-page-header {
+    .summary-page-header{
         display: flex;
         flex-direction: column;
     }
 }
 
-.jobs-pdf-buttons {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+@media (max-width: 780px) {
+    .jobs-pdf-buttons, .selectJob {
+        margin-bottom: 10px !important;
+    }
 }
 
-.pdf-button {
+@media (min-width: 425px) {
+    .summary-page-header {
+        margin-bottom: 10px;
+    }
+}
+  
+.jobs-pdf-buttons{
+    display: flex;
+    align-items: center;
+}
+.pdf-button{
     margin-right: 8px;
     color: #c54b30 !important;
     font-weight: 700 !important;
     border-color: #c54b30 !important;
     padding: 4px 20px;
+}
+
+.lastItem {
+    height: 38px;
 }
