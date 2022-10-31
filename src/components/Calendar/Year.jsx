@@ -4,7 +4,7 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Select } from 'antd';
 import moment from 'moment'
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { totalPreviousYears } from '../../utils/consts';
 
 export const Year = (props) => {
@@ -41,13 +41,15 @@ export const Year = (props) => {
                     }
                 </Select>
             </Grid>
-            <Grid item xs={3} className="arrowRight" style={{ visibility: ((year <= selectedYear)) ? 'hidden' : 'visible' }} onClick={() => {
-                if (years.indexOf(selectedYear + 1) < years.length) {
-                    setSelectedYear(selectedYear + 1);
-                    getOnSelectionData(dataType, `${selectedYear + 1}-${moment().format('MM-DD')}`);
-                }
-            }} >
-                {years.indexOf(selectedYear - 1) < years.length ? selectedYear + 1 : selectedYear}  <ArrowForwardIos />
+            <Grid item xs={3} className="arrowRightWrapper">
+                <Box className="arrowRight" style={{ visibility: ((year <= selectedYear)) ? 'hidden' : 'visible' }} onClick={() => {
+                    if (years.indexOf(selectedYear + 1) < years.length) {
+                        setSelectedYear(selectedYear + 1);
+                        getOnSelectionData(dataType, `${selectedYear + 1}-${moment().format('MM-DD')}`);
+                    }
+                }} >
+                    {years.indexOf(selectedYear - 1) < years.length ? selectedYear + 1 : selectedYear}  <ArrowForwardIos />
+                </Box>
             </Grid>
         </>
     )

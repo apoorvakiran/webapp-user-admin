@@ -1,23 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './calendar.css';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Select } from 'antd';
 import moment from 'moment'
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { months } from '../../utils/consts';
 import { totalPreviousYears } from '../../utils/consts';
+import get from "lodash/get";
 
 export const Month = (props) => {
     const { dataType, getOnSelectionData } = props
     const [selectedMonth, setSelectedMonth] = useState({ month: new Date().getMonth(), year: new Date().getFullYear() })
-    const selectedYear = new Date().getFullYear();
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
     const { Option } = Select;
-    const year = new Date().getFullYear()
+    const currentYear = new Date().getFullYear()
+    const currentMonth = new Date().getMonth();
     const years = Array(totalPreviousYears).fill('').reduce((previousValue, currentValue, currentIndex) => {
-        previousValue.push(year - currentIndex);
+        previousValue.push(currentYear - currentIndex);
         return previousValue;
     }, []);
+
+    useEffect(() => {
+        if (selectedYear === currentYear && get(selectedMonth, 'month') > currentMonth) {
+            setSelectedMonth({ month: currentMonth, year: currentYear })
+        }
+    }, [selectedYear])
+
 
     return (
 
@@ -42,12 +51,13 @@ export const Month = (props) => {
                 }} className="monthPicker_monthSelect">
                     {
                         months.map((month) => (
-                            <Option key={month.value} value={month.value}>{month.label}</Option>
+                            <Option key={month.value} value={month.value} {...((get(selectedMonth, 'year') === currentYear && month.value > currentMonth) && { disabled: true })}>{month.label}</Option>
                         ))
                     }
                 </Select>
                 <Select value={selectedMonth?.year} onChange={(val) => {
                     setSelectedMonth({ ...selectedMonth, year: val })
+                    setSelectedYear(val)
                     getOnSelectionData(dataType, `${val}-${String(selectedMonth?.month + 1).length === 1 ? `0${selectedMonth?.month + 1}` : `${selectedMonth?.month}`}-${moment().format('DD')}`);
                 }
                 } className="monthPicker_yearSelect">
@@ -58,17 +68,19 @@ export const Month = (props) => {
                     }
                 </Select>
             </Grid>
-            <Grid item xs={3} className="arrowRight" onClick={() => {
-                if (selectedMonth?.month === 11) {
-                    setSelectedMonth({ year: selectedMonth?.year + 1, month: 0 });
-                    getOnSelectionData(dataType, `${selectedMonth?.year + 1}-01-${moment().format('DD')}`);
-                } else {
-                    setSelectedMonth({ ...selectedMonth, month: months[(((months.findIndex(q => q?.value === selectedMonth?.month)) + 1) % months.length + months.length) % months.length]?.value })
-                    const sMonth = months[(((months.findIndex(q => q?.value === selectedMonth?.month)) + 1) % months.length + months.length) % months.length]?.value;
-                    getOnSelectionData(dataType, `${selectedMonth?.year}-${String(sMonth + 1).length === 1 ? `0${sMonth + 1}` : `${sMonth + 1}`}-${moment().format('DD')}`);
-                }
-            }}>
-                {months[(((months.findIndex(q => q?.value === selectedMonth?.month)) + 1) % months.length + months.length) % months.length]?.label}   <ArrowForwardIos />
+            <Grid item xs={3} className="arrowRightWrapper">
+                <Box className="arrowRight" onClick={() => {
+                    if (selectedMonth?.month === 11) {
+                        setSelectedMonth({ year: selectedMonth?.year + 1, month: 0 });
+                        getOnSelectionData(dataType, `${selectedMonth?.year + 1}-01-${moment().format('DD')}`);
+                    } else {
+                        setSelectedMonth({ ...selectedMonth, month: months[(((months.findIndex(q => q?.value === selectedMonth?.month)) + 1) % months.length + months.length) % months.length]?.value })
+                        const sMonth = months[(((months.findIndex(q => q?.value === selectedMonth?.month)) + 1) % months.length + months.length) % months.length]?.value;
+                        getOnSelectionData(dataType, `${selectedMonth?.year}-${String(sMonth + 1).length === 1 ? `0${sMonth + 1}` : `${sMonth + 1}`}-${moment().format('DD')}`);
+                    }
+                }}>
+                    {(get(selectedMonth, 'month') === currentMonth && get(selectedMonth, 'year') === currentYear) ? <></> : <>{months[(((months.findIndex(q => q?.value === selectedMonth?.month)) + 1) % months.length + months.length) % months.length]?.label} <ArrowForwardIos /></>}
+                </Box>
             </Grid>
         </>
     )

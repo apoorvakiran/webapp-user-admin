@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './calendar.css';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -13,12 +13,18 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid } from '@mui/material';
 import { customPicker } from '../../features/Routes/style';
 import { get } from 'lodash';
+import { Box } from '@mui/system';
 
 
 export const Week = (props) => {
     const { dataType, getOnSelectionData } = props
     const [value, setValue] = useState(dayjs(new Date()));
     const [weekCalendarVisibility, setWeekCalendarVisibility] = useState(false);
+    const [isNextWeekVisible, setIsNextWeekVisible] = useState(true)
+    const today = new Date().getDate();
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+
     const CustomPickersDay = styled(PickersDay, {
         shouldForwardProp: (prop) =>
             prop !== 'dayIsBetween' && prop !== 'isFirstDay' && prop !== 'isLastDay',
@@ -50,6 +56,17 @@ export const Week = (props) => {
         );
     };
 
+    useEffect(() => {
+        const now = new Date(dayjs(new Date(value)).startOf("week"))
+        const endOfWeek = now.getDate() + 6
+        if ((now.getFullYear() === currentYear && now.getMonth() === currentMonth && today >= now.getDate() && today <= endOfWeek)) {
+            setIsNextWeekVisible(true)
+        } else {
+            setIsNextWeekVisible(false)
+        }
+    }, [value])
+
+
     return (
         <>
             <Grid item xs={3} className="arrowLeft" onClick={() => {
@@ -71,8 +88,8 @@ export const Week = (props) => {
                                 const now = new Date(dayjs(new Date(newValue)).startOf("week"))
                                 setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())));
                                 setWeekCalendarVisibility(false)
-                                getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)).toDate().toISOString())
-
+                                console.log(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())), 'this week')
+                                getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())).toDate().toISOString())
                             }}
                             maxDate={new Date()}
                             renderDay={renderWeekPickerDay}
@@ -83,12 +100,18 @@ export const Week = (props) => {
                     </LocalizationProvider>
                 }
             </Grid>
-            <Grid item xs={3} className="arrowRight" onClick={() => {
-                const now = new Date(dayjs(new Date(value)).startOf("week"))
-                setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)))
-                getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)).toDate().toISOString())
-            }}>
-                Next Week  <ArrowForwardIos />
+            <Grid item xs={3} className="arrowRightWrapper">
+                {
+                    !isNextWeekVisible && (
+                        <Box className="arrowRight" onClick={() => {
+                            const now = new Date(dayjs(new Date(value)).startOf("week"))
+                            setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)))
+                            getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)).toDate().toISOString())
+                        }}>
+                            Next Week  <ArrowForwardIos />
+                        </Box>
+                    )
+                }
             </Grid>
         </>
     )
