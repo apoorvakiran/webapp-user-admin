@@ -64,7 +64,7 @@ export const Week = (props) => {
         } else {
             setIsNextWeekVisible(false)
         }
-    }, [value])
+    }, [value, currentMonth, currentYear, today]);
 
 
     return (
@@ -88,7 +88,6 @@ export const Week = (props) => {
                                 const now = new Date(dayjs(new Date(newValue)).startOf("week"))
                                 setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())));
                                 setWeekCalendarVisibility(false)
-                                console.log(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())), 'this week')
                                 getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())).toDate().toISOString())
                             }}
                             maxDate={new Date()}
