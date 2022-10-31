@@ -12,7 +12,7 @@
     width: 33.3%;
     height: 36px;
 }
-.previousDatePicker,  .arrowLeft, .arrowRight{
+.previousDatePicker,  .arrowLeft{
     display: flex;
     align-items: center;
     color: #C54B30;
@@ -20,14 +20,16 @@
     font-weight: 600;
 }
 
+.arrowRightWrapper {
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 .arrowLeft {
     width: 15%;
     justify-content: flex-start;
-}
-
-.arrowRight {
-    width: 15%;
-    justify-content: flex-end;
 }
 
 .nextDatePicker, .arrowRight{
