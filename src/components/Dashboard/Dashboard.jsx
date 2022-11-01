@@ -130,7 +130,7 @@ const Dashboard = (props) => {
     // getData(value);
     if (selectedJobTitle !== "") {
       const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
-      getJobWiseSummaryGraph(jobId, value)
+      getJobWiseSummaryGraph(jobId, value);
     } else {
       getActiveScores(value);
     }
@@ -177,7 +177,7 @@ const Dashboard = (props) => {
     if (val !== "0") {
       setSelectedJobTitle(`${jobTitleList.filter(data => data.id === value)[0].name}`);
       getJobUserList(`${value}`);
-      getJobWiseSummaryGraph(`${value}`, dataType)
+      getJobWiseSummaryGraph(`${value}`, dataType);
     } else {
       setSelectedJobTitle("");
       getActiveScores(dataType);
@@ -307,7 +307,7 @@ const Dashboard = (props) => {
                 <Card.Grid hoverable={false} className="gridStyle">
                   <Typography className={"innerCardUpperTitle" + index}>
                     <span>
-                      <img src={getIcon(row?.type)} className="cardIcon" style={cardIconStyle} />
+                      <img src={getIcon(row?.type)} className="cardIcon" style={cardIconStyle} alt="" />
                     </span>
                     {row.type}
                   </Typography>
@@ -321,7 +321,7 @@ const Dashboard = (props) => {
               <Card.Grid hoverable={false} className="gridStyle userCard">
                 <Typography className="innerCardTitle">
                   <span>
-                    <img src={UserIcon} />
+                    <img src={UserIcon} alt="" />
                   </span>
                   &nbsp; USERS
                 </Typography>
@@ -417,7 +417,7 @@ const Dashboard = (props) => {
             {
               selectedJobTitle !== "" & selectedJobTitle !== "0" ?
                 <>
-                  <Typography className="jobTitleTeam"><img style={{ marginRight: "10px" }} src={UserIcon} />{selectedJobTitle} Team</Typography>
+                  <Typography className="jobTitleTeam"><img style={{ marginRight: "10px" }} src={UserIcon} alt="" />{selectedJobTitle} Team</Typography>
                   <div className="chart">
                     <Table data={jobTeamList} columns={columns} showHeader={false} />
                   </div>

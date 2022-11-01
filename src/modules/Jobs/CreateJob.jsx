@@ -5,7 +5,7 @@ import { createUserButton } from "./../Users/style";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { Autocomplete, CircularProgress, TextField } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { Box } from "@mui/system";
 import Table from "../../components/Table/index";
@@ -51,8 +51,8 @@ const CreateJob = props => {
         "Authorization": `Bearer ${idToken}`
       },
       params: { type: "user-list" }
-    })
-    setUserList(response.data.data)
+    });
+    setUserList(response.data.data);
   }
 
   const onClick = (event, item) => {
@@ -99,24 +99,24 @@ const CreateJob = props => {
 
   const [form] = Form.useForm();
 
-  async function handleFinish(values) {
-    const response = await axios.post(
-      "http://localhost:5051/api/user-admin/create-new-job",
-      {
-        job_id: null,
-        job_name: values.jobTitle.trim(),
-        description: values.jobTitle.trim(),
-        location_id: 4,
-        users: getIdforMappedUsers(),
-      },
-    );
-    openNotificationWithIcon(
-      "success",
-      "Success",
-      `New Job ${values.jobTitle} successfully created`,
-    );
-    props?.history?.goBack();
-  }
+  // async function handleFinish(values) {
+  //   const response = await axios.post(
+  //     "http://localhost:5051/api/user-admin/create-new-job",
+  //     {
+  //       job_id: null,
+  //       job_name: values.jobTitle.trim(),
+  //       description: values.jobTitle.trim(),
+  //       location_id: 4,
+  //       users: getIdforMappedUsers(),
+  //     },
+  //   );
+  //   openNotificationWithIcon(
+  //     "success",
+  //     "Success",
+  //     `New Job ${values.jobTitle} successfully created`,
+  //   );
+  //   props?.history?.goBack();
+  // }
 
   function getIdforMappedUsers() {
     let userArray = [];

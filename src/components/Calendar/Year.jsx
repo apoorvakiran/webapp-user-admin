@@ -3,14 +3,14 @@ import './calendar.css';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Select } from 'antd';
-import moment from 'moment'
+import moment from 'moment';
 import { Box, Grid } from '@mui/material';
 import { totalPreviousYears } from '../../utils/consts';
 
 export const Year = (props) => {
-    const { dataType, getOnSelectionData } = props
+    const { dataType, getOnSelectionData } = props;
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-    const year = new Date().getFullYear()
+    const year = new Date().getFullYear();
     const years = Array(totalPreviousYears).fill('').reduce((previousValue, currentValue, currentIndex) => {
         previousValue.push(year - currentIndex);
         return previousValue;
@@ -52,5 +52,5 @@ export const Year = (props) => {
                 </Box>
             </Grid>
         </>
-    )
-}
+    );
+};

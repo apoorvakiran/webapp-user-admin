@@ -11,8 +11,6 @@ import {
   LineElement,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { FormButton } from "../formComponents/FormButton";
 import "./chart.css";
 import { Typography } from "antd";
 import SettingIcon from "../../images/setting.png";
@@ -29,7 +27,7 @@ ChartJS.register(
 );
 
 const Chart = props => {
-  const { Icon, LinearGradientColor, labels } = props;
+  const { Icon, LinearGradientColor } = props;
   const data = () => {
     return {
       labels: props?.labels,
@@ -38,7 +36,7 @@ const Chart = props => {
           label: "",
           data: props?.data,
           fill: false,
-          borderColor: (context: ScriptableContext<"Line">) => {
+          borderColor: (context) => {
             const ctx = context.chart.ctx;
             const gradient = ctx.createLinearGradient(0, 0, 0, 400);
             gradient.addColorStop(0, LinearGradientColor[0] ? LinearGradientColor[0] : "#8ECF03");
@@ -95,7 +93,7 @@ const Chart = props => {
   return (
     <div className="Chart">
       <h3 className="SettingTitle">
-        <img className="icon-css" src={Icon ? Icon : SettingIcon} />
+        <img className="icon-css" src={Icon ? Icon : SettingIcon} alt="" />
         {props.title}
       </h3>
       <div className="description">

@@ -1,21 +1,17 @@
-import { Grid, Paper, styled, Typography } from "@mui/material";
-import { Card, Skeleton, Space, Radio, Row, Col, Progress } from "antd";
+import { Grid, Typography } from "@mui/material";
+import { Card, Skeleton, Row, Col, Progress } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../../layouts/BasicLayout";
 import axios from "axios";
 import "../../../components/Dashboard/dashboard.css";
 import "../analytics.css";
-import { useLocation } from "react-router-dom";
 import PolygonIcon from "../../../images/Polygon.svg";
 import StrokeIcon from "../../../images/Stroke.png";
 import Vector2Icon from "../../../images/Vector2.png";
 import SettingIcon from "../../../images/setting.png";
-import { cardIconStyle, RiskcardIconStyle } from "../../Users/style";
-import ProgressBar from "./ProgressBar";
-import ScoreFilter from "./ScoreFilter";
-import { getSpeedScoreColor } from "../../../utils/helpers";
+import { cardIconStyle } from "../../Users/style";
 import routes from "../../../features/Routes/URLs";
-import { baseUrl, DashboardData, formatDate, getAuthData, getCurrIcon, Item, ScoresTabData } from "../../../utils/Data/Data";
+import { baseUrl, DashboardData, formatDate, getAuthData, Item } from "../../../utils/Data/Data";
 import CurrActiveIcon from "../../../images/activity-score-icon-white.png";
 import CurrSafetyIcon from "../../../images/safety-score-icon-white.png";
 import CurrSpeedIcon from "../../../images/speed-icon-white.png";
@@ -25,16 +21,15 @@ import { round, sumBy } from "lodash";
 import HeaderCard from "../ActiveScore/HeaderCard";
 
 const RiskScore = props => {
-  const location = useLocation();
   const [loading, seLoading] = useState(true);
   const [scoreType, setScoreType] = useState("Speed Score");
   const [selected, setSelected] = useState(0);
   const [speedScoreData, setSpeedScoreData] = useState([]);
   const [speedScoreCount, setSpeedScoreCount] = useState(0);
-  const [bins, setBins] = useState("");
-  const [tabChanged, setTabChanged] = useState(false);
-  const [activeTab, setActiveTab] = useState("Speed Score");
-  const [aggScore, setAggScore] = useState();
+  // const [bins, setBins] = useState("");
+  // const [tabChanged, setTabChanged] = useState(false);
+  // const [activeTab, setActiveTab] = useState("Speed Score");
+  // const [aggScore, setAggScore] = useState();
 
   const getSpeedScore = async value => {
     const current = new Date();
@@ -55,7 +50,7 @@ const RiskScore = props => {
     );
     setSpeedScoreData(request?.data?.data || []);
     setSpeedScoreCount(request?.data?.speedScore || 0);
-    setBins(request?.data?.bins);
+    // setBins(request?.data?.bins);
     seLoading(false);
     return request?.data;
   };
@@ -64,8 +59,8 @@ const RiskScore = props => {
   }, []);
 
   const onGridSelection = value => {
-    setTabChanged(true);
-    setActiveTab(value);
+    // setTabChanged(true);
+    // setActiveTab(value);
     getSpeedScore(value);
   };
   const getIcon = icon => {
@@ -128,20 +123,20 @@ const RiskScore = props => {
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
     }
   };
-  const getBinsColor = bins => {
-    if (bins === "LOW") {
-      return "#8ECF03";
-    } else if (bins === "MEDIUM") {
-      return "#FFA700";
-    } else {
-      return "#C54B30";
-    }
-  };
+  // const getBinsColor = bins => {
+  //   if (bins === "LOW") {
+  //     return "#8ECF03";
+  //   } else if (bins === "MEDIUM") {
+  //     return "#FFA700";
+  //   } else {
+  //     return "#C54B30";
+  //   }
+  // };
 
-  const strokeColor = {
-    '0%': '#FFD705',
-    '100%': '#45CF03',
-  }
+  // const strokeColor = {
+  //   '0%': '#FFD705',
+  //   '100%': '#45CF03',
+  // };
 
   function calcAverage() {
     // console.log("props.scoreName", avgActiveScore);
@@ -161,7 +156,7 @@ const RiskScore = props => {
     "z-index": "99",
     "top": "16px",
     "bottom": "0px",
-  }
+  };
 
   const handleFilterChange = value => {
     const filterSpeedScoreData = speedScoreData;
@@ -208,7 +203,7 @@ const RiskScore = props => {
               >
                 <Typography className="innerCardTitle">
                   <span>
-                    <img src={getIcon(row?.type)} style={cardIconStyle} />
+                    <img src={getIcon(row?.type)} style={cardIconStyle} alt="" />
                   </span>
                 </Typography>
                 <Typography>{row.type}</Typography>

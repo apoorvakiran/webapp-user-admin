@@ -1,6 +1,6 @@
 import React from "react";
-import { Progress, Select, Typography } from "antd";
-import "../analytics.css"
+import {  Select, Typography } from "antd";
+import "../analytics.css";
 const { Option } = Select;
 
 const ScoreFilter = props => {

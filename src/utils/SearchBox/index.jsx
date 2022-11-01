@@ -6,7 +6,8 @@ const SearchBox = props => {
 
     useEffect(() => {
         props.func(searchedText);
-    }, [searchedText])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchedText]);
 
     return (
 
@@ -21,6 +22,6 @@ const SearchBox = props => {
             }}
         />
     );
-}
+};
 
 export default SearchBox;

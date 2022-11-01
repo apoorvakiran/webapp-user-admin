@@ -11,6 +11,6 @@ const config = {
             'region': process.env.REACT_APP_REGION, //OPTIONAL -  Amazon service region
         }
     }
-}
+};
 
 export default config;

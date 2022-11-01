@@ -12,16 +12,16 @@ import { Grid } from '@mui/material';
 
 export const Day = (props) => {
     const { dataType, getOnSelectionData } = props;
-    const [calendarDate, setCalendarDate] = useState(new Date())
-    const [clock, setClock] = useState(new Date().toLocaleTimeString())
+    const [calendarDate, setCalendarDate] = useState(new Date());
+    const [clock, setClock] = useState(new Date().toLocaleTimeString());
 
     const handleChangeDate = (newDate) => {
-        setCalendarDate(newDate['$d'])
-    }
+        setCalendarDate(newDate['$d']);
+    };
 
     useEffect(() => {
-        setCalendarDate(new Date())
-    }, [dataType])
+        setCalendarDate(new Date());
+    }, [dataType]);
 
     useEffect(() => {
         setInterval(() => setClock(new Date().toLocaleTimeString()), 1000);
@@ -62,5 +62,5 @@ export const Day = (props) => {
             </Grid>
             <Grid item xs={3} className="nextDatePicker"></Grid>
         </>
-    )
-}
+    );
+};

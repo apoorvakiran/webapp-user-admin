@@ -30,7 +30,7 @@ const UserInfo = props => {
       <div className="user-info">
         <Row>
           <Col className="gutter-row">
-            <img src={Profile} style={profileImage} />
+            <img src={Profile} style={profileImage} alt="" />
           </Col>
         </Row>
         <Row
@@ -71,7 +71,7 @@ const UserInfo = props => {
                 htmlType="submit"
                 shape="round"
                 onClick={e => {
-                  editUser(e, userData?.[0])
+                  editUser(e, userData?.[0]);
                 }}
                 style={createProfileButton}
                 icon={<EditOutlined />}

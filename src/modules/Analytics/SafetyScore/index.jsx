@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, Skeleton } from "antd";
 import BasicLayout from "../../../layouts/BasicLayout";
 import { ScoresTab } from "./../ActiveScore/ScoresTab";
@@ -6,7 +6,7 @@ import "./../ActiveScore/analytics.css";
 
 const UserAnalytics = props => {
   const { history } = props;
-  const [loading, setLoading] = useState(false);
+  const loading =  false;
 
   return (
     <BasicLayout>

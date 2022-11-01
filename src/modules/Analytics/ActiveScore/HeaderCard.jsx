@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { Progress, Select, Typography } from "antd";
-import "./analytics.css"
+import React from "react";
+import { Select, Typography } from "antd";
+import "./analytics.css";
 const { Option } = Select;
 
 const HeaderCard = props => {

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 const Card = (props) => {
 
+    // eslint-disable-next-line no-unused-vars
     const [expanded, setExpanded] = useState(false);
 
     return (
@@ -19,8 +20,8 @@ const Card = (props) => {
             </div>
         </>
 
-    )
-}
+    );
+};
 
 // compact Card
 function CompactCard({ param }) {
@@ -36,7 +37,7 @@ function CompactCard({ param }) {
                 <span>Last 24 hours</span>
             </div>
         </div>
-    )
+    );
 }
 
-export default Card
+export default Card;

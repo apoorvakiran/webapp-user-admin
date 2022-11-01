@@ -17,10 +17,10 @@ import { Box } from '@mui/system';
 
 
 export const Week = (props) => {
-    const { dataType, getOnSelectionData } = props
+    const { dataType, getOnSelectionData } = props;
     const [value, setValue] = useState(dayjs(new Date()));
     const [weekCalendarVisibility, setWeekCalendarVisibility] = useState(false);
-    const [isNextWeekVisible, setIsNextWeekVisible] = useState(true)
+    const [isNextWeekVisible, setIsNextWeekVisible] = useState(true);
     const today = new Date().getDate();
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
@@ -57,12 +57,12 @@ export const Week = (props) => {
     };
 
     useEffect(() => {
-        const now = new Date(dayjs(new Date(value)).startOf("week"))
-        const endOfWeek = now.getDate() + 6
+        const now = new Date(dayjs(new Date(value)).startOf("week"));
+        const endOfWeek = now.getDate() + 6;
         if ((now.getFullYear() === currentYear && now.getMonth() === currentMonth && today >= now.getDate() && today <= endOfWeek)) {
-            setIsNextWeekVisible(true)
+            setIsNextWeekVisible(true);
         } else {
-            setIsNextWeekVisible(false)
+            setIsNextWeekVisible(false);
         }
     }, [value, currentMonth, currentYear, today]);
 
@@ -70,9 +70,9 @@ export const Week = (props) => {
     return (
         <>
             <Grid item xs={3} className="arrowLeft" onClick={() => {
-                const now = new Date(dayjs(new Date(value)).startOf("week"))
-                setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)))
-                getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)).toDate().toISOString())
+                const now = new Date(dayjs(new Date(value)).startOf("week"));
+                setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)));
+                getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)).toDate().toISOString());
             }}>
                 <ArrowBackIos /> Previous Week
             </Grid>
@@ -85,10 +85,10 @@ export const Week = (props) => {
                             label="Week picker"
                             value={value}
                             onChange={(newValue) => {
-                                const now = new Date(dayjs(new Date(newValue)).startOf("week"))
+                                const now = new Date(dayjs(new Date(newValue)).startOf("week"));
                                 setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())));
-                                setWeekCalendarVisibility(false)
-                                getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())).toDate().toISOString())
+                                setWeekCalendarVisibility(false);
+                                getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())).toDate().toISOString());
                             }}
                             maxDate={new Date()}
                             renderDay={renderWeekPickerDay}
@@ -103,9 +103,9 @@ export const Week = (props) => {
                 {
                     !isNextWeekVisible && (
                         <Box className="arrowRight" onClick={() => {
-                            const now = new Date(dayjs(new Date(value)).startOf("week"))
-                            setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)))
-                            getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)).toDate().toISOString())
+                            const now = new Date(dayjs(new Date(value)).startOf("week"));
+                            setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)));
+                            getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)).toDate().toISOString());
                         }}>
                             Next Week  <ArrowForwardIos />
                         </Box>
@@ -113,5 +113,5 @@ export const Week = (props) => {
                 }
             </Grid>
         </>
-    )
-}
+    );
+};

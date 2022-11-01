@@ -18,33 +18,33 @@ const Calendar = ({ getOnSelectionData, dataType }) => {
             case "Day":
                 return (
                     <Day dataType={dataType} getOnSelectionData={getOnSelectionData} />
-                )
+                );
 
             case "Week":
                 return (
                     <Week dataType={dataType} getOnSelectionData={getOnSelectionData} />
-                )
+                );
 
             case "Month":
                 return (
                     <Month dataType={dataType} getOnSelectionData={getOnSelectionData} />
-                )
+                );
 
             case "Year":
                 return (
                     <Year dataType={dataType} getOnSelectionData={getOnSelectionData} />
 
-                )
+                );
             default:
                 return;
         }
-    }
+    };
 
     return (
         <Grid container className="datePickerRow">
             {getCalendar()}
         </Grid>
-    )
-}
+    );
+};
 
-export default Calendar
+export default Calendar;

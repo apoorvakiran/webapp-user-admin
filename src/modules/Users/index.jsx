@@ -12,7 +12,7 @@ import { UserRoleContext } from '../../features/Routes';
 import "./user.css";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import * as html2canvas from "html2canvas";
-import { jsPDF } from "jspdf"
+import { jsPDF } from "jspdf";
 import { usersJobsList } from './../../utils/Data/Data';
 import SearchBox from "../../utils/SearchBox";
 const Users = props => {
@@ -20,8 +20,8 @@ const Users = props => {
   const [radioValue, setRadioValue] = useState(null);
   const [userRowData, setuserRowData] = useState([]);
   const [dataSource, setDataSource] = useState([]);
-  const [width, setWidth] = useState(0)
-  const [defaultJob, setDefaultJob] = useState({})
+  const [width, setWidth] = useState(0);
+  const [defaultJob, setDefaultJob] = useState({});
   const [searchedText, setSearchedText] = useState("");
 
   const userRole = useContext(UserRoleContext);
@@ -32,14 +32,14 @@ const Users = props => {
   };
 
   async function getJobTitleList() {
-    const jobList = await usersJobsList()
+    const jobList = await usersJobsList();
     setDefaultJob(jobList);
   }
 
   useEffect(() => {
     getData();
     getWindowDimensions();
-    getJobTitleList()
+    getJobTitleList();
     window.addEventListener("resize", getWindowDimensions);
     return () => window.removeEventListener("resize", getWindowDimensions);
   }, []);
@@ -93,7 +93,7 @@ const Users = props => {
       ...record,
       name: defaultJob.name,
       job_id: defaultJob.id
-    }
+    };
     setRadioValue(e?.target?.value);
     setuserRowData(record.name ? record : newRecord);
   };
@@ -101,7 +101,7 @@ const Users = props => {
   const pull_data = (searchedText) => {
     setSearchedText(searchedText);
     return searchedText;
-  }
+  };
 
   const columns = [
     {
@@ -120,7 +120,7 @@ const Users = props => {
           compareString(record.phone, value) ||
           compareString(record.id_number, value) ||
           compareString(record.mac, value) ||
-          compareString(record.hand, value)
+          compareString(record.hand, value);
       },
       render(item, record) {
         return {
@@ -290,14 +290,14 @@ const Users = props => {
         );
       },
     },
-  ]
+  ];
 
   const onRow = (record = {}, rowIndex) => {
     const newRecord = {
       ...record,
       name: defaultJob.name,
       job_id: defaultJob.id
-    }
+    };
 
     props?.history?.push({
       pathname: routes.USER_DETAIL,
@@ -305,7 +305,7 @@ const Users = props => {
     });
   };
 
-  const PDFComponent = useRef(null)
+  const PDFComponent = useRef(null);
 
   const saveAsPdf = () => {
     const trElements = document.getElementsByTagName('tr');
@@ -321,22 +321,22 @@ const Users = props => {
             nodes[j].style.display = 'none';
           }
           if (j === 0) {
-            nodes[j].style.width = '92px'
+            nodes[j].style.width = '92px';
           }
           if (j === 1) {
-            nodes[j].style.width = '103px'
+            nodes[j].style.width = '103px';
           }
           if (j === 2) {
-            nodes[j].style.width = '103px'
+            nodes[j].style.width = '103px';
           }
           if (j === 3) {
-            nodes[j].style.width = '222px'
+            nodes[j].style.width = '222px';
           }
           if (j === 4) {
-            nodes[j].style.width = '200px'
+            nodes[j].style.width = '200px';
           }
           if (j === 5) {
-            nodes[j].style.width = '149px'
+            nodes[j].style.width = '149px';
           }
         }
       }
@@ -363,15 +363,15 @@ const Users = props => {
           const nodes = trElements[i].childNodes;
           for (let j = 0; j < nodes.length; j++) {
             nodes[j].style.width = 'auto';
-            nodes[j].style.display = 'table-cell'
+            nodes[j].style.display = 'table-cell';
           }
           const tableElements = document.getElementsByTagName('table');
           for (let i = 0; i < tableElements.length; i++) {
             tableElements[i].style.tableLayout = 'fixed';
           }
         }
-      })
-  }
+      });
+  };
 
   return (
     <BasicLayout>

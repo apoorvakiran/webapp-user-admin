@@ -11,9 +11,8 @@ import CurrSpeedIcon from "../../../images/speed-icon-white.png";
 import CurrRiskIcon from "../../../images/risk-icon-white.png";
 import { cardIconStyle } from "../../../modules/Users/style";
 import ScoreDetails from "./ScoreDetails";
-import { Card, Col, Row, Select, Skeleton } from "antd";
+import { Card, Skeleton } from "antd";
 import UserProgressScore from "./UserProgressScore";
-import { Option } from "antd/lib/mentions";
 import axios from "axios";
 import routes from "../../../features/Routes/URLs";
 import { sumBy } from "lodash";
@@ -21,12 +20,10 @@ import { sumBy } from "lodash";
 
 export const ScoresTab = props => {
   const { history } = props;
-  const [tabChanged, setTabChanged] = useState(false);
-  const [activeTab, setActiveTab] = useState("Injury Risk Score");
   const [scoreType, setScoreType] = useState();
   const [aggScore, setAggScore] = useState();
   const [rating, setRating] = useState();
-  const [showDate, setShowDate] = useState();
+  // const [showDate, setShowDate] = useState();
   const [userScoreData, setUserScoreData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(0);
@@ -36,16 +33,17 @@ export const ScoresTab = props => {
 
   useEffect(() => {
     if (history.location.pathname === "/user-admin/analytics/active-score") {
-      setScoreType('Active Score')
+      setScoreType('Active Score');
       setMaxValue("100%");
       setMinValue("0%");
     } else if (history.location.pathname === "/user-admin/analytics/safety-score") {
-      setScoreType('Injury Risk Score')
+      setScoreType('Injury Risk Score');
       setMaxValue(7);
       setMinValue(0);
     }
     setFilterBy("Day");
     getScoresData(scoreType, filterBy);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scoreType, history]);
 
   async function getScoresData(type, filterBy) {
@@ -87,7 +85,7 @@ export const ScoresTab = props => {
     setLoading(false);
     setAggScore(response?.data?.agg_score || '');
     setRating(response?.data?.rating || '');
-    setShowDate(response?.data?.start_date || '');
+    // setShowDate(response?.data?.start_date || '');
     setUserScoreData(response?.data?.users || []);
   }
 
@@ -124,7 +122,7 @@ export const ScoresTab = props => {
   };
 
   const handleScoreCard = async type => {
-    setScoreType(() => type)
+    setScoreType(() => type);
     switch (type) {
       case "Injury Risk Score":
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
@@ -177,7 +175,7 @@ export const ScoresTab = props => {
                 >
                   <Typography className="innerCardTitle">
                     <span>
-                      <img src={getIcon(row)} style={cardIconStyle} />
+                      <img src={getIcon(row)} style={cardIconStyle} alt="" />
                     </span>
                   </Typography>
                   <Typography>{row}</Typography>

@@ -14,8 +14,6 @@ import PolygonIcon from "../../images/Polygon.svg";
 import StrokeIcon from "../../images/Stroke.png";
 import Vector2Icon from "../../images/Vector2.png";
 import { UserRoleContext } from "../../features/Routes";
-import { cardIconStyle } from "./style";
-import LiveSession from "../../components/LiveSession";
 import Calendar from "../../components/Calendar/Calendar";
 
 const Dashboard = props => {
@@ -138,6 +136,7 @@ const Dashboard = props => {
         getActiveScores("Day", userObj);
       }
     })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -242,7 +241,7 @@ const Dashboard = props => {
                 >
                   <Typography className={"innerCardUpperTitle" + index}>
                     <span>
-                      <img src={getIcon(row.type)} className="cardIcon" />
+                      <img src={getIcon(row.type)} className="cardIcon" alt="" />
                     </span>
                     {row.type !== "Risk" ? row.type : "Risk Frequency"}
                   </Typography>

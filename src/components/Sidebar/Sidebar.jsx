@@ -19,7 +19,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Dashboard from '../Dashboard/Dashboard';
 import './Sidebar.css';
-import BoxContainer from '../BoxContainer/BoxContainer';
 
 const drawerWidth = 240;
 

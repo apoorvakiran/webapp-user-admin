@@ -13,7 +13,7 @@ const UpdatePassword = () => {
             <FormInput id="confirmPassword" description="Confirm Password" placeholder="Password confirmation" type="password" />
             <FormButton id="buttonLogin" title="Save" changeStyleClass="" />
         </div >
-    )
-}
+    );
+};
 
-export default UpdatePassword
+export default UpdatePassword;

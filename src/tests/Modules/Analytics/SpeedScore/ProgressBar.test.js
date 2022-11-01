@@ -1,5 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 import ProgressBar from "../../../../modules/Analytics/SpeedScore/ProgressBar";
 
 
@@ -17,4 +16,4 @@ describe('ProgressBar Component', () => {
         expect(screen.getByTestId('progress')).toBeDefined();
     });
 
-})
+});

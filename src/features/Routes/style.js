@@ -21,4 +21,4 @@ export const customPicker = {
         borderTopRightRadius: '50%',
         borderBottomRightRadius: '50%',
     }
-}
+};

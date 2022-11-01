@@ -14,7 +14,6 @@ import BasicLayout from "../../layouts/BasicLayout";
 import {
   createUserButton,
   grayUserButton,
-  hideBtn,
   invertCreateUserButton,
 } from "./style";
 import { Link, useHistory, useLocation } from "react-router-dom";
@@ -22,14 +21,12 @@ import { openNotificationWithIcon } from "../../utils/helpers";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { baseUrl, getAuthData, UserRole } from "../../utils/Data/Data";
-import { display } from "@mui/system";
-import { UserRoleContext } from '../../features/Routes'
+import { UserRoleContext } from './../../features/Routes';
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 axios.defaults.headers.post["Access-Control-Allow-Methods"] = "*";
 
-const { Option } = Select;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -67,10 +64,6 @@ const canTailFormItemLayout = {
   },
 };
 
-const formItemStyle = {
-  marginBottom: "0px !important",
-};
-
 const { confirm } = Modal;
 
 const EditUser = () => {
@@ -86,6 +79,7 @@ const EditUser = () => {
   useEffect(() => {
     setInitialValues(location.state);
     getJobTitleList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function getJobTitleList() {
@@ -105,7 +99,7 @@ const EditUser = () => {
 
   async function saveEditUser(values) {
     try {
-      const phone = (values.phone !== undefined) ? values.phone.includes("+1") ? values.phone : "+1" + values.phone : null
+      const phone = (values.phone !== undefined) ? values.phone.includes("+1") ? values.phone : "+1" + values.phone : null;
       const userdata = {
         user_id: location.state.id,
         first_name: values.first_name,
@@ -150,56 +144,56 @@ const EditUser = () => {
     }
   }
 
-  async function saveEditUser2(values) {
-    const idToken = await getAuthData();
-    const response = await axios.post(
-      // "http://localhost:5051/api/user-admin/user-edit",
-      baseUrl + "admin",
-      {
-        "user_id": location.state.id,
-        "first_name": values.first_name,
-        "last_name": values.last_name,
-        "phone": values.phone,
-        "role": values.role,
-        "job_id": values.job_id,
-        "hand": values.hand,
-        "email": values.email
-      }, {
-      headers: {
-        "Authorization": `Bearer ${idToken}`
-      },
-      params: {
-        type: "edit-user"
-      }
-    }
-    );
-    if (response.rowcount === 1) {
-      openNotificationWithIcon(
-        "success",
-        "Success",
-        `User ${values?.first_name} updated successfully`,
-      );
-    }
-  }
+  // async function saveEditUser2(values) {
+  //   const idToken = await getAuthData();
+  //   const response = await axios.post(
+  //     // "http://localhost:5051/api/user-admin/user-edit",
+  //     baseUrl + "admin",
+  //     {
+  //       "user_id": location.state.id,
+  //       "first_name": values.first_name,
+  //       "last_name": values.last_name,
+  //       "phone": values.phone,
+  //       "role": values.role,
+  //       "job_id": values.job_id,
+  //       "hand": values.hand,
+  //       "email": values.email
+  //     }, {
+  //     headers: {
+  //       "Authorization": `Bearer ${idToken}`
+  //     },
+  //     params: {
+  //       type: "edit-user"
+  //     }
+  //   }
+  //   );
+  //   if (response.rowcount === 1) {
+  //     openNotificationWithIcon(
+  //       "success",
+  //       "Success",
+  //       `User ${values?.first_name} updated successfully`,
+  //     );
+  //   }
+  // }
 
-  async function deleteUser1() {
-    const idToken = await getAuthData();
-    const response = await axios.post(
-      // "http://localhost:5051/api/user-admin/banned-user",
-      baseUrl + "user",
-      {
-        "user_id": location.state.id,
-      }, {
-      headers: {
-        "Authorization": `Bearer ${idToken}`
-      },
-      params: {
-        type: "user-deactivate"
-      }
-    }
-    );
-    // openNotificationWithIcon("success", "Success", `User deleted/disabled successfully`);
-  }
+  // async function deleteUser1() {
+  //   const idToken = await getAuthData();
+  //   const response = await axios.post(
+  //     // "http://localhost:5051/api/user-admin/banned-user",
+  //     baseUrl + "user",
+  //     {
+  //       "user_id": location.state.id,
+  //     }, {
+  //     headers: {
+  //       "Authorization": `Bearer ${idToken}`
+  //     },
+  //     params: {
+  //       type: "user-deactivate"
+  //     }
+  //   }
+  //   );
+  //   // openNotificationWithIcon("success", "Success", `User deleted/disabled successfully`);
+  // }
 
   const openModal = () => {
     confirm({
@@ -253,18 +247,18 @@ const EditUser = () => {
     saveEditUser(values);
   };
 
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="+1">+1</Option>
-        <Option value="+91">+91</Option>
-      </Select>
-    </Form.Item>
-  );
+  // const prefixSelector = (
+  //   <Form.Item name="prefix" noStyle>
+  //     <Select
+  //       style={{
+  //         width: 70,
+  //       }}
+  //     >
+  //       <Option value="+1">+1</Option>
+  //       <Option value="+91">+91</Option>
+  //     </Select>
+  //   </Form.Item>
+  // );
 
   return (
     <BasicLayout>

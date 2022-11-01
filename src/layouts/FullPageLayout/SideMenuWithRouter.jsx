@@ -6,12 +6,10 @@ import {
   userSideBarNavigator
 } from "../../features/Routes/navigation";
 import { SideMenuStyle } from "./style";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { LogOut } from "../../modules/Login/Logout";
 import { Auth } from "aws-amplify";
 import { AdminRole } from "../../utils/Data/Data";
-
-const { SubMenu } = Menu;
 
 const Icon = ({ type, ...rest }) => {
   const icons = require(`@ant-design/icons`);
@@ -54,7 +52,7 @@ class SidebarMenuItems extends React.Component {
       }
     } else {
       if (selectedMenu.key === "/user-admin/logout") {
-        LogOut()
+        LogOut();
       }
     }
   };
@@ -63,8 +61,8 @@ class SidebarMenuItems extends React.Component {
     await Auth.currentAuthenticatedUser()
       .then(user => {
         const role = Object.values(user.attributes['custom:role'])?.[0];
-        this.setState({ userRole: role } || null)
-        return
+        this.setState({ userRole: role } || null);
+        return;
       }).catch((err) => console.log('Error: ', err));
   }
 
