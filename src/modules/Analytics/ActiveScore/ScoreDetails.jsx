@@ -1,29 +1,27 @@
 import React from "react";
-import { cardIconStyle, RiskcardIconStyle } from "../../../modules/Users/style";
-import DownArrowIcon from "../../../images/downArrow.png";
-import { Divider, Row } from "antd";
-import SettingIcon from "../../../images/setting.png";
-import PolygonIcon from "../../../images/risk-icon.svg";
-import StrokeIcon from "../../../images/Stroke.png";
-import Vector2Icon from "../../../images/Vector2.png";
+import { RiskcardIconStyle } from "../../../modules/Users/style";
+// import SettingIcon from "../../../images/setting.png";
+// import PolygonIcon from "../../../images/risk-icon.svg";
+// import StrokeIcon from "../../../images/Stroke.png";
+// import Vector2Icon from "../../../images/Vector2.png";
 import { getCurrIcon, getDescription } from "../../../utils/Data/Data";
 
 const ScoreDetails = props => {
 
-  const getIcon = icon => {
-    switch (icon) {
-      case "Active Score":
-        return SettingIcon;
-      case "Injury Risk Score":
-        return Vector2Icon;
-      case "Risk Frequency":
-        return PolygonIcon;
-      case "Speed Score":
-        return StrokeIcon;
-      default:
-        return SettingIcon;
-    }
-  };
+  // const getIcon = icon => {
+  //   switch (icon) {
+  //     case "Active Score":
+  //       return SettingIcon;
+  //     case "Injury Risk Score":
+  //       return Vector2Icon;
+  //     case "Risk Frequency":
+  //       return PolygonIcon;
+  //     case "Speed Score":
+  //       return StrokeIcon;
+  //     default:
+  //       return SettingIcon;
+  //   }
+  // };
 
   return (
     <div className="textContent">

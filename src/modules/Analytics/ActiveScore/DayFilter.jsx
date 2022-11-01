@@ -5,10 +5,6 @@ import { DashboardData } from "../../../utils/Data/Data";
 export const DayFilter = (props) => {
     const [selected, setSelected] = useState(0);
 
-    function onTabChange() {
-        setSelected(0);
-    }
-
     const Item = styled(Paper)(({ theme }) => ({
         // backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : 'gray',
         borderColor: "black",
@@ -50,5 +46,5 @@ export const DayFilter = (props) => {
                 })}
             </Grid>
         </div >
-    )
-}
+    );
+};

@@ -187,8 +187,6 @@
     align-items: left;
 }
 
-.chartContainer {}
-
 .chart .MuiPaper-root {
     padding: 25px;
     width: 100%;
@@ -252,7 +250,6 @@ input[type="search"] {
 .selectStyle>.ant-select-selector {
     height: 32px !important;
 }
-
 
 .selectStyle>.ant-select-selection-item,
 .ant-select-arrow,

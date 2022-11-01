@@ -1,8 +1,5 @@
 import React from 'react';
 import './loginForm.css';
-import { FormHeader } from '../formComponents/FormHeader';
-import { FormInput } from '../formComponents/FormInput';
-import { FormButton } from '../formComponents/FormButton';
 
 const LoginForm = () => {
     return (
@@ -15,7 +12,7 @@ const LoginForm = () => {
                 <label className="ForgotPassword">Forget Password</label>
             </div> */}
         </div>
-    )
-}
+    );
+};
 
-export default LoginForm
+export default LoginForm;

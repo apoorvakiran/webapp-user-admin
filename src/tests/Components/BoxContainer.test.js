@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react";
 import BoxContainer from "../../components/BoxContainer/BoxContainer";
 
 
@@ -13,7 +13,7 @@ describe('BoxContainer Component', () => {
         const { container } = render(<BoxContainer />);
         expect(container).toBeDefined();
         expect(screen.getByTestId('box-container')).toBeInTheDocument();
-        expect(screen.getByTestId('tables')).toBeInTheDocument()
+        expect(screen.getByTestId('tables')).toBeInTheDocument();
     });
 
-})
+});

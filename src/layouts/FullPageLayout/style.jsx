@@ -4,15 +4,15 @@ export const SideMenuStyle = {
   marginTop: "20px",
   fontFamily: 'Montserrat',
   color: "#C54B30",
-}
+};
 
 export const SideMenuItemStyle = {
   fontSize: "14px"
-}
+};
 
 export const AvatarIconStyle = { backgroundColor: "#fcfcfc" };
 
-export const LogoComponentStyle = { margin: "2em 0 0 2.75em" }
+export const LogoComponentStyle = { margin: "2em 0 0 2.75em" };
 export const logoStyle = {};
 const LayoutComponentStyles = {
   fixedSider: {

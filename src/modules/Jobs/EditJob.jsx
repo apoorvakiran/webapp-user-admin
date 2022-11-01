@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Form, Input, Row, Select, Col, Button, Card } from "antd";
+import { Form, Input, Row, Col, Button, Card } from "antd";
 import BasicLayout from "../../layouts/BasicLayout";
 import { createUserButton } from "./../Users/style";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import axios from "axios";
-import { Autocomplete, CircularProgress, TextField } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { Box } from "@mui/system";
 import Table from "../../components/Table/index";
@@ -13,7 +13,6 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { baseUrl, getAuthData } from "../../utils/Data/Data";
 import { usersJobsList } from './../../utils/Data/Data';
 
-const { Option } = Select;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -38,28 +37,29 @@ const tailFormItemLayout = {
   },
 };
 
-function sleep(delay = 0) {
-  return new Promise(resolve => {
-    setTimeout(resolve, delay);
-  });
-}
+// function sleep(delay = 0) {
+//   return new Promise(resolve => {
+//     setTimeout(resolve, delay);
+//   });
+// }
 
 const EditJob = props => {
   const location = useLocation();
   const [userList, setUserList] = useState([]);
   const [mappedUserList, setMappedUserList] = useState([]);
-  const [defaultJob, setDefaultJob] = useState({})
+  const [defaultJob, setDefaultJob] = useState({});
 
   const jobCases = {
     createJob: "createJob",
     deleteJob: "deleteJob"
-  }
+  };
 
   useEffect(() => {
     getUserData();
     getJobUserList(location.state.id);
-    // console.log(props, 'props')
-    getJobTitleList()
+    getJobTitleList();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function getJobUserList(jobId) {
@@ -87,8 +87,8 @@ const EditJob = props => {
         "Authorization": `Bearer ${idToken}`
       },
       params: { type: "user-list" }
-    })
-    setUserList(response.data.data)
+    });
+    setUserList(response.data.data);
   }
 
   function deleteMappedUserList(value) {
@@ -101,7 +101,7 @@ const EditJob = props => {
   }
 
   async function getJobTitleList() {
-    const jobList = await usersJobsList()
+    const jobList = await usersJobsList();
     setDefaultJob(jobList);
   }
 
@@ -143,24 +143,24 @@ const EditJob = props => {
 
   const [form] = Form.useForm();
 
-  async function handleFinish(values) {
-    const response = await axios.post(
-      "http://localhost:5051/api/user-admin/create-new-job",
-      {
-        job_id: values.id,
-        job_name: values.name.trim(),
-        description: values.name.trim(),
-        location_id: 4,
-        users: getIdforMappedUsers(),
-      },
-    );
-    openNotificationWithIcon(
-      "success",
-      "Success",
-      `Job ${values.name} updated successfully`,
-    );
-    props?.history?.goBack();
-  }
+  // async function handleFinish(values) {
+  //   const response = await axios.post(
+  //     "http://localhost:5051/api/user-admin/create-new-job",
+  //     {
+  //       job_id: values.id,
+  //       job_name: values.name.trim(),
+  //       description: values.name.trim(),
+  //       location_id: 4,
+  //       users: getIdforMappedUsers(),
+  //     },
+  //   );
+  //   openNotificationWithIcon(
+  //     "success",
+  //     "Success",
+  //     `Job ${values.name} updated successfully`,
+  //   );
+  //   props?.history?.goBack();
+  // }
 
   const onClick = async (event, value) => {
     const data = {
@@ -170,7 +170,7 @@ const EditJob = props => {
       location_id: 4,
       users: deleteMappedUserList(value),
     };
-    saveEditJob(data, jobCases.deleteJob, value)
+    saveEditJob(data, jobCases.deleteJob, value);
     
     // const data = {
     //   job_id: location.state.id,
@@ -219,8 +219,8 @@ const EditJob = props => {
       location_id: 4,
       users: getIdforMappedUsers(),
     };
-    saveEditJob(data, jobCases.createJob)
-  }
+    saveEditJob(data, jobCases.createJob);
+  };
 
   async function saveEditJob(data, callingFrom, deleteUser = null) {
     // const data = {

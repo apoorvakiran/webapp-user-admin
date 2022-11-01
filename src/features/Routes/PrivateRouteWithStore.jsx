@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
-import routes, { getRoute } from "./URLs";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { userSideBarNavigator, adminSideBarNavigator } from "./navigation";
-import { Auth } from "aws-amplify";
-import { UserRoleContext } from './index'
+import { UserRoleContext } from './index';
 import { AdminRole } from "../../utils/Data/Data";
 
 export const BASE_ROUTE = "/user-admin/";

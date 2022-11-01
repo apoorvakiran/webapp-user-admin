@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Layout, Space, Menu, PageHeader, Spin } from "antd";
 import {
   SettingOutlined,
@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import routes from "../../features/Routes/URLs";
 import { SidebarMenuItemsWithRouter } from "./SideMenuWithRouter";
 import NoData from "./NoData/index";
-import styled from "styled-components";
 import LayoutComponentStyles, { LogoComponentStyle } from "./style";
 import "./styles.css";
 import Logo from "../../images/mlogo.svg";
@@ -19,15 +18,15 @@ import { LogoComponent } from "./Logo";
 
 const { Content, Sider } = Layout;
 
-const TitleMenu = styled(PageHeader)`
-  .ant-page-header-heading-title {
-    color: #535353;
-    font-family: "Montserrat";
-    font-size: 12px;
-    text-transform: capitalize;
-    fontweight: bold;
-  }
-`;
+// const TitleMenu = styled(PageHeader)`
+//   .ant-page-header-heading-title {
+//     color: #535353;
+//     font-family: "Montserrat";
+//     font-size: 12px;
+//     text-transform: capitalize;
+//     fontweight: bold;
+//   }
+// `;
 class LayoutComponent extends React.Component {
   state = {
     collapsed: false,
@@ -87,7 +86,7 @@ class LayoutComponent extends React.Component {
     return <Space style={LayoutComponentStyles.actionButtons}></Space>;
   };
   renderSider = () => {
-    const { width, height } = this.state;
+    const { width } = this.state;
     let style =
       parseInt(width) > 480
         ? "block"
@@ -128,7 +127,7 @@ class LayoutComponent extends React.Component {
                 className="header-icon"
                 onClick={this.handleSideMenu}
               />
-              <img className="header-img" src={Logo} />
+              <img className="header-img" src={Logo} alt="" />
             </div>
           }
         ></PageHeader>

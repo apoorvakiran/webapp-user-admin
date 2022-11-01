@@ -8,7 +8,6 @@ import { baseUrl, compareString, getAuthData, sortTableColumns } from "../../uti
 import SearchBox from "../../utils/SearchBox";
 
 const Devices = props => {
-    const { history } = props;
     const [loading, setLoading] = useState(true);
     const [devicesList, setDevicesList] = useState([]);
     const [searchedText, setSearchedText] = useState("");
@@ -20,7 +19,7 @@ const Devices = props => {
     const pull_data = (searchedText) => {
         setSearchedText(searchedText);
         return searchedText;
-    }
+    };
 
     const columns = [
         {
@@ -32,7 +31,7 @@ const Devices = props => {
             onFilter: (value, record) => {
                 return compareString(record?.id_number, value) ||
                     compareString(record?.first_name + " " + record?.last_name, value) ||
-                    compareString(record?.mac, value)
+                    compareString(record?.mac, value);
             },
             render(item, record) {
                 return {

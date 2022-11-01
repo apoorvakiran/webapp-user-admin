@@ -11,7 +11,7 @@ const ForgotPassword = () => {
             <FormInput id="email" description="Email" placeholder="Enter E-mail" type="text" />
             <FormButton id="buttonLogin" title="Send Password Update Link" changeStyleClass="" />
         </div>
-    )
-}
+    );
+};
 
-export default ForgotPassword
+export default ForgotPassword;

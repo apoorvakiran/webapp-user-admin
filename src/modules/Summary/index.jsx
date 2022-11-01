@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
 import {
     DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl,
-    formatDate, getColor, ViewBy, getAuthData, generatePdf, download
+    formatDate, getColor, ViewBy, getAuthData, generatePdf
 } from "../../utils/Data/Data";
 import Chart from "../../components/Charts/Chart";
 import axios from "axios";
@@ -37,52 +37,51 @@ const Summary = (props) => {
     const [riskGraphData, setRiskGraphData] = useState([]);
     const [userCount, setUserCount] = useState([]);
     const [jobTitleList, setJobTitleList] = useState([]);
-    const [jobTeamList, setJobTeamList] = useState([]);
     const [selectedJobTitle, setSelectedJobTitle] = useState('0');
     const [dataType, setDataType] = useState('Day');
     const [scoreType = "Scores by User", setScoreType] = useState();
     const { route } = useAuthenticator(context => [context.route]);
-    const [calendarDate, setCalendarDate] = useState(formatDate(new Date()))
-    const [selectedOption, setSelectedOption] = useState(0)
+    const [calendarDate, setCalendarDate] = useState(formatDate(new Date()));
+    const [selectedOption, setSelectedOption] = useState(0);
 
-    async function getActiveScores(value) {
+    // async function getActiveScores(value) {
 
-        const current = new Date();
-        const date = formatDate(current);
-        const idToken = await getAuthData();
-        const response = await axios.get(
-            // "http://localhost:5051/api/user-admin/summary-graph-data", {
-            baseUrl + "summary", {
-            headers: {
-                "Authorization": `Bearer ${idToken}`
-            },
-            params: {
-                type: "summary-graph-data",
-                durationType: value,
-                startdate: date
-            }
-        }
-        );
-        const data = response.data.data;
-        setScores(response.data.card_data);
-        let activeLabels = data["activescore"]?.x || [];
-        let activeData = data["activescore"]?.y || [];
-        let safetyLabels = data["safetyscore"]?.x || [];
-        let safetyData = data["safetyscore"]?.y || [];
-        let speedLabels = data["speedscore"]?.x || [];
-        let speedData = data["speedscore"]?.y || [];
-        let riskLabels = data["riskexposures"]?.x || [];
-        let riskData = data["riskexposures"]?.y || [];
-        setActiveGraphLabels(activeLabels);
-        setActiveGraphData(activeData);
-        setSafetyGraphLabels(safetyLabels);
-        setSafetyGraphData(safetyData);
-        setSpeedGraphLabels(speedLabels);
-        setSpeedGraphData(speedData);
-        setRiskGraphLabels(riskLabels);
-        setRiskGraphData(riskData);
-        return response.data;
-    }
+    //     const current = new Date();
+    //     const date = formatDate(current);
+    //     const idToken = await getAuthData();
+    //     const response = await axios.get(
+    //         // "http://localhost:5051/api/user-admin/summary-graph-data", {
+    //         baseUrl + "summary", {
+    //         headers: {
+    //             "Authorization": `Bearer ${idToken}`
+    //         },
+    //         params: {
+    //             type: "summary-graph-data",
+    //             durationType: value,
+    //             startdate: date
+    //         }
+    //     }
+    //     );
+    //     const data = response.data.data;
+    //     setScores(response.data.card_data);
+    //     let activeLabels = data["activescore"]?.x || [];
+    //     let activeData = data["activescore"]?.y || [];
+    //     let safetyLabels = data["safetyscore"]?.x || [];
+    //     let safetyData = data["safetyscore"]?.y || [];
+    //     let speedLabels = data["speedscore"]?.x || [];
+    //     let speedData = data["speedscore"]?.y || [];
+    //     let riskLabels = data["riskexposures"]?.x || [];
+    //     let riskData = data["riskexposures"]?.y || [];
+    //     setActiveGraphLabels(activeLabels);
+    //     setActiveGraphData(activeData);
+    //     setSafetyGraphLabels(safetyLabels);
+    //     setSafetyGraphData(safetyData);
+    //     setSpeedGraphLabels(speedLabels);
+    //     setSpeedGraphData(speedData);
+    //     setRiskGraphLabels(riskLabels);
+    //     setRiskGraphData(riskData);
+    //     return response.data;
+    // }
 
     useEffect(() => {
 
@@ -99,13 +98,15 @@ const Summary = (props) => {
             getUserSpeedScoreData(null, dataType, date);
             getUserActiveScoreData(null, dataType, date);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        if (selectedOption === 0) return
-        handleChange(selectedOption)
-        handleScoreCard(scoreType)
-    }, [calendarDate])
+        if (selectedOption === 0) return;
+        handleChange(selectedOption);
+        handleScoreCard(scoreType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [calendarDate]);
 
 
     async function getUserData() {
@@ -158,7 +159,7 @@ const Summary = (props) => {
     const getOnSelectionData = (value = dataType, newDate) => {
         const current = new Date();
         const date = formatDate(newDate || current);
-        setCalendarDate(date)
+        setCalendarDate(date);
 
         if (selectedJobTitle !== "" && selectedJobTitle !== "0") {
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
@@ -170,7 +171,7 @@ const Summary = (props) => {
                 getUserSpeedScoreData(jobId, value, date);
                 getUserActiveScoreData(jobId, value, date);
             } else {
-                getJobWiseSummaryGraph(jobId, value, date)
+                getJobWiseSummaryGraph(jobId, value, date);
             }
         } else {
             getUserCardData(null, value, date);
@@ -180,13 +181,13 @@ const Summary = (props) => {
             getUserActiveScoreData(null, value, date);
             // getActiveScores(value);
         }
-    }
+    };
 
     async function onGridSelection(value) {
         setDataType(value);
         // getData(value);
         // console.log("selectedJobTitle::::", selectedJobTitle)
-        getOnSelectionData(value)
+        getOnSelectionData(value);
     }
 
     const getIcon = icon => {
@@ -205,7 +206,7 @@ const Summary = (props) => {
     };
 
     const handleChange = (value) => {
-        setSelectedOption(value)
+        setSelectedOption(value);
         let val = `${value}`;
         // setDataType("Day");
         // console.log("key", `${jobTitleList.filter(data => data.id === key)[0].name}`);
@@ -219,7 +220,7 @@ const Summary = (props) => {
                 getUserSpeedScoreData(`${value}`, dataType, calendarDate);
                 getUserActiveScoreData(`${value}`, dataType, calendarDate);
             } else {
-                getJobWiseSummaryGraph(`${value}`, dataType, calendarDate)
+                getJobWiseSummaryGraph(`${value}`, dataType, calendarDate);
             }
         } else {
             setSelectedJobTitle("");
@@ -234,8 +235,6 @@ const Summary = (props) => {
 
     async function getJobWiseSummaryGraph(value, durationType) {
 
-        const current = new Date();
-        const date = formatDate(current);
         const idToken = await getAuthData();
         const response = await axios.get(
             // "http://localhost:5051/api/user-admin/get-summary-by-job", {
@@ -272,29 +271,28 @@ const Summary = (props) => {
         return response.data;
     }
 
-    async function getJobUserList(userId) {
-        // const response = await axios.get(
-        //   "http://localhost:5051/api/user-admin/get-user-jobs-list", {
-        //   params: {
-        //     id: userId
-        //   }
-        // }
-        // );
-        const idToken = await getAuthData();
-        const response = await axios.get(
-            baseUrl + "userdetail", {
-            headers: {
-                "Authorization": `Bearer ${idToken}`
-            },
-            params: {
-                id: userId,
-                type: "get-user-jobs-list"
-            }
-        }
-        );
-        setLoading(false);
-        setJobTeamList(response.data);
-    }
+    // async function getJobUserList(userId) {
+    //     // const response = await axios.get(
+    //     //   "http://localhost:5051/api/user-admin/get-user-jobs-list", {
+    //     //   params: {
+    //     //     id: userId
+    //     //   }
+    //     // }
+    //     // );
+    //     const idToken = await getAuthData();
+    //     const response = await axios.get(
+    //         baseUrl + "userdetail", {
+    //         headers: {
+    //             "Authorization": `Bearer ${idToken}`
+    //         },
+    //         params: {
+    //             id: userId,
+    //             type: "get-user-jobs-list"
+    //         }
+    //     }
+    //     );
+    //     setLoading(false);
+    // }
 
     const columns = type => [
         {
@@ -327,11 +325,11 @@ const Summary = (props) => {
     ];
 
     const handleScoreCard = async type => {
-        setScoreType(type)
+        setScoreType(type);
         if (type === "Scores by Time") {
             // console.log("scoreType", type)
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
-            getJobWiseSummaryGraph(jobId, dataType, calendarDate)
+            getJobWiseSummaryGraph(jobId, dataType, calendarDate);
         } else {
             // console.log("scoreType", type)
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
@@ -466,12 +464,13 @@ const Summary = (props) => {
             setActiveGraphData(orderBy(response.data.data.jobscore, ['job_score'], ['desc']));
         }
     }
+    // eslint-disable-next-line no-unused-vars
     const [showLoader, setLoader] = useState(false);
 
 
     const saveAsPdf = () => {
         generatePdf('summaryWrapper', setLoader);
-    }
+    };
     return (
         <BasicLayout >
             {loading ? (
@@ -563,7 +562,7 @@ const Summary = (props) => {
                                     <Typography className={"innerCardUpperTitle" + index}>
 
                                         <span className="imgSpan">
-                                            <img src={getIcon(row?.type)} className="cardIcon" />
+                                            <img src={getIcon(row?.type)} className="cardIcon" alt="" />
                                         </span>
                                         {row.type !== "Risk" ? row.type : "Risk Frequency"}
 
@@ -578,7 +577,7 @@ const Summary = (props) => {
                             <Card.Grid hoverable={false} className="gridStyle userCard">
                                 <Typography className="innerCardTitle">
                                     <span>
-                                        <img src={UserIcon} className="cardIcon" />
+                                        <img src={UserIcon} className="cardIcon" alt="" />
                                     </span>
                                     <span>USERS</span>
                                 </Typography>

@@ -11,7 +11,7 @@ import { Paper, styled } from "@mui/material";
 import { Auth } from "aws-amplify";
 import axios from "axios";
 import get from "lodash/get";
-import { jsPDF } from "jspdf"
+import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 // import { consts } from "../../utils/consts";
 // import { convertLegacyProps } from "antd/lib/button/button";
@@ -44,12 +44,12 @@ export const getUserEmail = async () => {
 };
 
 export const compareString = (str1, str2) => {
-    return (String(str1).toLowerCase().includes(String(str2).toLowerCase()))
-}
+    return (String(str1).toLowerCase().includes(String(str2).toLowerCase()));
+};
 
 export const sortTableColumns = (str1, str2) => {
-    return (String(str1).localeCompare(String(str2)))
-}
+    return (String(str1).localeCompare(String(str2)));
+};
 
 export const getCurrIcon = icon => {
     switch (icon) {
@@ -85,7 +85,7 @@ export const formatDate = (date) => {
         day = '0' + day;
     }
     return [year, month, day].join('-');
-}
+};
 
 export const getColor = icon => {
     let type = icon.type;
@@ -116,11 +116,11 @@ export const getColor = icon => {
 
 };
 
-export const DashboardData = ['Day', 'Week', 'Month', 'Year']
+export const DashboardData = ['Day', 'Week', 'Month', 'Year'];
 
 
-export const ScoresTabData = ['Injury Risk Score', 'Risk Frequency', 'Speed Score', 'Active Score']
-export const ViewBy = ['Scores by User', 'Scores by Time']
+export const ScoresTabData = ['Injury Risk Score', 'Risk Frequency', 'Speed Score', 'Active Score'];
+export const ViewBy = ['Scores by User', 'Scores by Time'];
 
 export const AdminRole = '1';
 export const UserRole = '2';
@@ -187,7 +187,7 @@ export const ProgressBarChart = [
         name: "Nathalia James",
         value: 74.0
     }
-]
+];
 
 export const LineChartData = {
     labels: [
@@ -260,7 +260,7 @@ export const SidebarData = [
         parent: 'Menu',
         heading: 'Settings'
     },
-]
+];
 
 export const cardsData = [
     {
@@ -311,7 +311,7 @@ export const cardsData = [
             }
         ]
     },
-]
+];
 
 export const data1 = [
     {
@@ -452,9 +452,9 @@ export const usersJobsList = async () => {
         }
     }
     );
-    const defaultJob = get(response, "data", []).find((job) => job.name === defaultJobName)
+    const defaultJob = get(response, "data", []).find((job) => job.name === defaultJobName);
     return defaultJob;
-}
+};
 
 
 export const generatePdf = (id) => {
@@ -485,5 +485,5 @@ export const generatePdf = (id) => {
             doc.save(`${new Date().toISOString()}.pdf`);
             document.getElementById(id).scrollTop = currentPosition;
             document.getElementById("viewportMeta").setAttribute("content", viewportMeta);
-        })
-}
+        });
+};

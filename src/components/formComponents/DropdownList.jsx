@@ -1,23 +1,21 @@
 
-import { DownOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Menu, Select, Space } from 'antd';
-import { Option } from 'antd/lib/mentions';
+import { Select } from 'antd';
 import '../Login/loginForm.css';
 
-const menu = (
-    <Menu
-        items={[
-            {
-                label: "All Jobs",
-                key: '0',
-            },
-            {
-                label: "Meat grinder",
-                key: '1',
-            }
-        ]}
-    />
-);
+// const menu = (
+//     <Menu
+//         items={[
+//             {
+//                 label: "All Jobs",
+//                 key: '0',
+//             },
+//             {
+//                 label: "Meat grinder",
+//                 key: '1',
+//             }
+//         ]}
+//     />
+// );
 
 const handleChange = (value) => {
     console.log(`selected ${value}`);

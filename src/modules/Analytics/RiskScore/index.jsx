@@ -1,20 +1,18 @@
 import { Grid, Typography } from "@mui/material";
-import { Card, Skeleton, Space, Radio } from "antd";
+import { Card, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import BasicLayout from "../../../layouts/BasicLayout";
-import { baseUrl, DashboardData, formatDate, getAuthData, getCurrIcon, Item } from "../../../utils/Data/Data";
+import { baseUrl, DashboardData, formatDate, getAuthData, Item } from "../../../utils/Data/Data";
 import axios from "axios";
 import "../../../components/Dashboard/dashboard.css";
 import "../analytics.css";
-import { useLocation } from "react-router-dom";
 import PolygonIcon from "../../../images/Polygon.svg";
 import StrokeIcon from "../../../images/Stroke.png";
 import Vector2Icon from "../../../images/Vector2.png";
 import SettingIcon from "../../../images/setting.png";
-import { cardIconStyle, RiskcardIconStyle } from "../../Users/style";
+import { cardIconStyle } from "../../Users/style";
 import Table from "../../../components/Table/index";
 import routes from "../../../features/Routes/URLs";
-import { ScoresTabData } from "../../../utils/Data/Data";
 import CurrActiveIcon from "../../../images/activity-score-icon-white.png";
 import CurrSafetyIcon from "../../../images/safety-score-icon-white.png";
 import CurrSpeedIcon from "../../../images/speed-icon-white.png";
@@ -22,17 +20,12 @@ import CurrRiskIcon from "../../../images/risk-icon-white.png";
 import ScoreDetails from "../ActiveScore/ScoreDetails";
 
 const RiskScore = props => {
-  const location = useLocation();
   const [loading, seLoading] = useState(true);
   const [scoreType, setScoreType] = useState("Risk Frequency");
   const [selected, setSelected] = useState(0);
   const [speedScoreData, setSpeedScoreData] = useState([]);
   const [riskScoreCount, setRiskScoreCount] = useState(0);
-  const [tabChanged, setTabChanged] = useState(false);
-  const [activeTab, setActiveTab] = useState("Risk Frequency");
-  const [aggScore, setAggScore] = useState();
 
-  const userData = location?.state;
   const getSpeedScore = async value => {
     const current = new Date();
     const date = formatDate(current);
@@ -60,8 +53,6 @@ const RiskScore = props => {
   }, []);
 
   const onGridSelection = value => {
-    setTabChanged(true);
-    setActiveTab(value);
     getSpeedScore(value);
   };
 
@@ -178,7 +169,7 @@ const RiskScore = props => {
               >
                 <Typography className="innerCardTitle">
                   <span>
-                    <img src={getIcon(row?.type)} style={cardIconStyle} />
+                    <img src={getIcon(row?.type)} style={cardIconStyle} alt="" />
                   </span>
                 </Typography>
                 <Typography>{row.type}</Typography>

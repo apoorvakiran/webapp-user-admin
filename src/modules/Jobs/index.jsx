@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Input, Radio, Skeleton } from "antd";
+import { Button, Card, Skeleton } from "antd";
 import BasicLayout from "../../layouts/BasicLayout";
 import Table from "../../components/Table";
 import axios from "axios";
-import { createUserButton, newCreateUserButton } from "./../Users/style";
 import './jobs.css';
 import routes from "../../features/Routes/URLs";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
@@ -21,11 +20,10 @@ const editUserButton = {
 };
 
 const Jobs = props => {
-    const { history } = props;
     const [loading, setLoading] = useState(true);
     const [jobsList, setJobsList] = useState([]);
     const [searchedText, setSearchedText] = useState("");
-    const [jobRowData, setJobRowData] = useState([]);
+    // const [jobRowData, setJobRowData] = useState([]);
 
     useEffect(() => {
         getJobsList();
@@ -34,7 +32,7 @@ const Jobs = props => {
     const pull_data = (searchedText) => {
         setSearchedText(searchedText);
         return searchedText;
-    }
+    };
 
     async function getJobsList() {
         const idToken = await getAuthData();
@@ -73,10 +71,10 @@ const Jobs = props => {
 
     const editRecord = (e, record) => {
         // setRadioValue(e?.target?.value);
-        setJobRowData((jobRowData) => [
-            ...jobRowData,
-            record,
-        ]);
+        // setJobRowData((jobRowData) => [
+        //     ...jobRowData,
+        //     record,
+        // ]);
 
         props?.history?.push({
             pathname: routes.EDIT_JOB,
@@ -93,7 +91,7 @@ const Jobs = props => {
             sorter: true,
             filteredValue: [searchedText],
             onFilter: (value, record) => {
-                return compareString(record?.name, value)
+                return compareString(record?.name, value);
             },
             render(item, record) {
                 return {

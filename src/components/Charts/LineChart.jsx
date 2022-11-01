@@ -10,11 +10,9 @@ import {
   Tooltip,
   Legend,
   Filler,
-  ScriptableContext,
 } from "chart.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import SettingIcon from "../../images/setting.png";
 
 ChartJS.register(
   CategoryScale,
@@ -28,6 +26,7 @@ ChartJS.register(
 );
 
 export function LineChart() {
+  // eslint-disable-next-line no-unused-vars
   const [chartData, setChartData] = useState([]);
   const [graphLabel, setGraphLabel] = useState([]);
   const [graphData, setGraphData] = useState([]);
@@ -73,7 +72,7 @@ export function LineChart() {
           label: "First dataset",
           data: graphData,
           fill: false,
-          borderColor: (context: ScriptableContext<"Line">) => {
+          borderColor: (context) => {
             const ctx = context.chart.ctx;
             const gradient = ctx.createLinearGradient(0, 0, 0, 400);
             gradient.addColorStop(0, "#8ECF03");

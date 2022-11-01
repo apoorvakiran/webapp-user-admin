@@ -1,8 +1,7 @@
 import { Col, Progress, Row } from "antd";
-import { countBy, round, toLower } from "lodash";
+import { round } from "lodash";
 import React, { useEffect, useState } from "react";
 import HeaderCard from "./HeaderCard";
-import { sumBy } from "lodash";
 
 const UserProgressScore = props => {
   const [scores, setScores] = useState([]);
@@ -149,7 +148,7 @@ const UserProgressScore = props => {
             >
               <Progress
                 format={percent =>
-                  `${round((row.user_score * 100) / 1)}` + "%"
+                  `${round((row.user_score * 100) / 1)}%`
                 }
                 showInfo={true}
                 strokeWidth={30}

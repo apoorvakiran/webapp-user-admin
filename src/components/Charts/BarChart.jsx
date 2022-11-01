@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,8 +11,6 @@ import {
   LineElement,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { FormButton } from "../formComponents/FormButton";
 import "./chart.css";
 import { Typography } from "antd";
 import SettingIcon from "../../images/setting.png";
@@ -60,16 +58,6 @@ const Barchart = props => {
     },
   };
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
-
   const data = {
     labels: props.labels,
     datasets: [
@@ -86,7 +74,7 @@ const Barchart = props => {
   return (
     <div className="Chart">
       <h3 className="SettingTitle">
-        <img className="icon-css" src={Icon ? Icon : SettingIcon} />
+        <img className="icon-css" src={Icon ? Icon : SettingIcon} alt="" />
         {props.title}
       </h3>
       <div className="description">

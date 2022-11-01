@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../components/Table/index";
-import { FormButton } from "../../components/formComponents/FormButton";
 import "./chart.css";
 import { Typography } from "antd";
 import SettingIcon from "../../images/setting.png";
@@ -12,6 +11,7 @@ const AllJobSummary = props => {
   const [maxValue, setMaxValue] = useState();
   const [minValue, setMinValue] = useState();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // console.log("title:::", props.title);
     if (props.title === "Injury Risk Score" || props.title === "Speed Score") {
@@ -24,7 +24,6 @@ const AllJobSummary = props => {
       // console.log("Active")
       setMaxValue("100%");
       setMinValue("0%");
-
     }
   });
 
@@ -32,7 +31,7 @@ const AllJobSummary = props => {
   return (
     <div className="Chart">
       <h3 className="SettingTitle">
-        <img className="icon-css" src={Icon ? Icon : SettingIcon} />
+        <img className="icon-css" src={Icon ? Icon : SettingIcon} alt="" />
         {props.title}
       </h3>
       <div className="description">

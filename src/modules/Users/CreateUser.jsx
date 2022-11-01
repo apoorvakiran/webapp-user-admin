@@ -7,18 +7,14 @@ import {
   Col,
   Button,
   Card,
-  Upload,
 } from "antd";
 import BasicLayout from "../../layouts/BasicLayout";
-import { createUserButton, cardStyle, padding50 } from "./style";
+import { createUserButton } from "./style";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import axios from "axios";
-import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
-import { UploadOutlined } from "@ant-design/icons";
 import { baseUrl, defaultJobName, getAuthData } from "../../utils/Data/Data";
 
-const { Option } = Select;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -45,7 +41,7 @@ const canTailFormItemLayout = {
       offset: 10,
     },
   },
-}
+};
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
@@ -70,6 +66,7 @@ const tailFormItemLayout = {
 const CreateUser = (props) => {
   const [form] = Form.useForm();
   const [jobTitleList, setJobTitleList] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [password, setPassword] = useState('');
 
   useEffect(() => {
@@ -100,17 +97,17 @@ const CreateUser = (props) => {
   }
 
   const handleFinish = values => {
-    const defaultValue = jobTitleList.find((item) => item.name === defaultJobName)
+    const defaultValue = jobTitleList.find((item) => item.name === defaultJobName);
     const newValues = values.jobTitle === undefined ? {
       ...values, jobTitle: defaultValue.id
-    } : values
+    } : values;
     signUp(newValues);
   };
 
   async function signUp(values) {
     try {
+      // eslint-disable-next-line no-unused-vars
       const pwd = generatePassword();
-      // console.log(pwd);
       const attributeVal = {
         email: values.email,
         phone: (values.phone !== undefined) ? "+1" + values.phone : null,   // optional - E.164 number convention
@@ -119,7 +116,7 @@ const CreateUser = (props) => {
         role: values.role,
         job_id: values.jobTitle,
         hand: values.hand
-      }
+      };
       // const { user } = await Auth.signUp({
       //   username: values.email,
       //   password: pwd,
@@ -135,14 +132,14 @@ const CreateUser = (props) => {
         },
         // mode: 'no-cors',
         body: JSON.stringify(attributeVal),
-      }
+      };
 
       let responseCode = null;
-      const url = baseUrl + "admin?type=create-user"
-      await fetch(url, config).
-        then(response => {
+      const url = baseUrl + "admin?type=create-user";
+      await fetch(url, config)
+        .then(response => {
           responseCode = response.status;
-          return response.json()
+          return response.json();
         })
         .then(data => {
           if (responseCode === 200) {
@@ -165,18 +162,18 @@ const CreateUser = (props) => {
     }
   }
 
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="86">+1</Option>
-        <Option value="87">+91</Option>
-      </Select>
-    </Form.Item>
-  );
+  // const prefixSelector = (
+  //   <Form.Item name="prefix" noStyle>
+  //     <Select
+  //       style={{
+  //         width: 70,
+  //       }}
+  //     >
+  //       <Option value="86">+1</Option>
+  //       <Option value="87">+91</Option>
+  //     </Select>
+  //   </Form.Item>
+  // );
 
   return (
     <BasicLayout>

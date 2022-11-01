@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Progress, Select, Typography, Card } from "antd";
+import { Typography, Card } from "antd";
 import "./analytics.css";
 import PolygonIcon from "../../images/Polygon.svg";
 import StrokeIcon from "../../images/Stroke.png";
 import Vector2Icon from "../../images/Vector2.png";
 import SettingIcon from "../../images/setting.png";
-import { cardIconStyle, RiskcardIconStyle } from "../Users/style";
+import { cardIconStyle } from "../Users/style";
 import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
 
