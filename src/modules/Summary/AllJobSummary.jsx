@@ -49,6 +49,7 @@ const AllJobSummary = props => {
 
       </div>
       {/* <article className="canvas-container"> */}
+      {/* eslint-disable-next-line no-prototype-builtins*/}
       {props?.data?.length && props.data[0].hasOwnProperty('name') ?
         <Table data={props.data} columns={props.columns} showHeader={props.showHeader} /> :
         <UserProgressScore scoreName={props.title} minValue={minValue} maxValue={maxValue} userScore={props.data} totalAvgScore={sumBy(props.data, 'user_score') / props.data.length} />

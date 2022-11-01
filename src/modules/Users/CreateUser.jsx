@@ -97,7 +97,7 @@ const CreateUser = (props) => {
 
     setPassword(randomPassword);
     return randomPassword;
-  };
+  }
 
   const handleFinish = values => {
     const defaultValue = jobTitleList.find((item) => item.name === defaultJobName)
