@@ -99,7 +99,7 @@ const EditUser = () => {
 
   async function saveEditUser(values) {
     try {
-      const phone = (values.phone !== undefined) ? values.phone.includes("+1") ? values.phone : "+1" + values.phone : null;
+      const phone = (values.phone !== undefined && values.phone !== "") ? values.phone.includes("+1") ? values.phone : "+1" + values.phone : "";
       const userdata = {
         user_id: location.state.id,
         first_name: values.first_name,
