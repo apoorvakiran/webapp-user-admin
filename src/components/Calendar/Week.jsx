@@ -10,7 +10,7 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import dayjs from 'dayjs';
 import { styled } from '@mui/material/styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Grid } from '@mui/material';
+import { ClickAwayListener, Grid } from '@mui/material';
 import { customPicker } from '../../features/Routes/style';
 import { get } from 'lodash';
 import { Box } from '@mui/system';
@@ -58,14 +58,14 @@ export const Week = (props) => {
 
     useEffect(() => {
         const now = new Date(dayjs(new Date(value)).startOf("week"));
-        const endOfWeek = now.getDate() + 6;
-        if ((now.getFullYear() === currentYear && now.getMonth() === currentMonth && today >= now.getDate() && today <= endOfWeek)) {
+        const end = new Date(dayjs(new Date(value)).endOf("week"));
+        if ((now.getFullYear() === currentYear && (now.getMonth() === currentMonth || end.getMonth() >= currentMonth) &&  today <= end.getDate() )) {
             setIsNextWeekVisible(true);
         } else {
             setIsNextWeekVisible(false);
         }
-    }, [value, currentMonth, currentYear, today]);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value]);
 
     return (
         <>
@@ -79,24 +79,34 @@ export const Week = (props) => {
             <Grid item xs={6} md={3.5} className='weekPickerWrapper'>
                 <div className='weekPickerHandler' onClick={() => setWeekCalendarVisibility(prevState => !prevState)}><CalendarMonthIcon className='calendarIcon' /><span className='weekPickerText'> Week of {`${value["$D"]}/${value["$M"] + 1}/${value["$y"]}`}</span> <KeyboardArrowDownIcon className='weekPickerDropdownIcon' /></div>
                 {weekCalendarVisibility &&
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <StaticDatePicker
-                            displayStaticWrapperAs="desktop"
-                            label="Week picker"
-                            value={value}
-                            onChange={(newValue) => {
-                                const now = new Date(dayjs(new Date(newValue)).startOf("week"));
-                                setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())));
-                                setWeekCalendarVisibility(false);
-                                getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())).toDate().toISOString());
-                            }}
-                            maxDate={new Date()}
-                            renderDay={renderWeekPickerDay}
-                            renderInput={(params) => <TextField {...params} />}
-                            inputFormat="'Week of' MMM d"
-                            className='weekPicker'
-                        />
-                    </LocalizationProvider>
+                    <ClickAwayListener onClickAway={(e) => {
+                        if (weekCalendarVisibility) {
+                            setWeekCalendarVisibility(false);
+                        }
+                    }}
+                    >
+                        <div>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <StaticDatePicker
+                                    displayStaticWrapperAs="desktop"
+                                    label="Week picker"
+                                    showToolbar={false}
+                                    value={value}
+                                    onChange={(newValue) => {
+                                        const now = new Date(dayjs(new Date(newValue)).startOf("week"));
+                                        setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())));
+                                        setWeekCalendarVisibility(false);
+                                        getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())).toDate().toISOString());
+                                    }}
+                                    maxDate={new Date()}
+                                    renderDay={renderWeekPickerDay}
+                                    renderInput={(params) => <TextField {...params} />}
+                                    inputFormat="'Week of' MMM d"
+                                    className='weekPicker'
+                                />
+                            </LocalizationProvider>
+                        </div>
+                    </ClickAwayListener>
                 }
             </Grid>
             <Grid item xs={3} className="arrowRightWrapper">
