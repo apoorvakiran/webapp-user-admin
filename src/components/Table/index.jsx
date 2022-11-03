@@ -17,7 +17,7 @@ const TableComponent = props => {
       }
       key={data.id}
       columns={columns}
-      scroll={{ y: 1024, overflow: "auto" }}
+      // scroll={{ y: 1024, overflow: "auto" }}
       dataSource={data}
       pagination={{
         current: page,
