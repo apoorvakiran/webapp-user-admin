@@ -67,16 +67,23 @@
   .user-info {
     justify-content: space-between;
     flex-direction: row-reverse;
+    margin: 5px;
   }
 
   .user-info-container {
     padding-bottom: 0em;
+    margin: 5px;
   }
 
   .ant-space-align-center {
     align-items: start !important;
     padding-left: 0em;
   }
+
+  .ant-row {
+    min-width: 20% !important;
+  }
+
 }
 
 .formStyle {
@@ -280,4 +287,11 @@
 .ant-input-group-addon,
 .ant-input-group-wrap {
   vertical-align: top !important;
+}
+
+@media (max-width: 320px) {
+  .create-pdf-buttons {
+    display: grid;
+    gap: 10px;
+  }
 }
