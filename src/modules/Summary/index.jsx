@@ -98,14 +98,14 @@ const Summary = (props) => {
             getUserSpeedScoreData(null, dataType, date);
             getUserActiveScoreData(null, dataType, date);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         if (selectedOption === 0) return;
         handleChange(selectedOption);
         handleScoreCard(scoreType);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [calendarDate]);
 
 

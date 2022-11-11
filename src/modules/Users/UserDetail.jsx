@@ -136,7 +136,7 @@ const Dashboard = props => {
         getActiveScores("Day", userObj);
       }
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -240,7 +240,7 @@ const Dashboard = props => {
                   className="gridUserStyle gridStyle"
                 >
                   <Typography className={"innerCardUpperTitle" + index}>
-                    <span>
+                    <span className="imgSpan">
                       <img src={getIcon(row.type)} className="cardIcon" alt="" />
                     </span>
                     {row.type !== "Risk" ? row.type : "Risk Frequency"}
