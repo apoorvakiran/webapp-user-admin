@@ -344,8 +344,8 @@ const Summary = (props) => {
     async function getUserCardData(value, durationType, selectedDate) {
         const idToken = await getAuthData();
         const response = await axios.get(
-            "http://localhost:3000/summary", {
-            // baseUrl + "summary", {
+            // "http://localhost:3000/summary", {
+            baseUrl + "summary", {
             headers: {
                 "Authorization": `Bearer ${idToken}`
             },
