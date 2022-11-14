@@ -224,7 +224,7 @@ const EditUser = () => {
       // mode: 'no-cors',
       body: JSON.stringify(data),
     };
-    const url = baseUrl + "admin?type=disable-user";
+    const url = baseUrl + "admin?type=delete-user";
     fetch(url, config)
       .then(response => {
         console.log("response", response.status);
