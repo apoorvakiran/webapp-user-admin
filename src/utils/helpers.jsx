@@ -39,13 +39,13 @@ export const colorizePercentageChart = (myObjBar) => {
 
     let color = "#45CF03";
 
-    if (parseFloat(bars?.[i]) > 95) {
+    if (parseFloat(bars?.[i]) > 99) {
       color = "#D10000";
     }
-    if (parseFloat(bars?.[i]) > 20 && parseFloat(bars?.[i]) < 95) {
-      color = "#DFD600";
+    if (parseFloat(bars?.[i]) > 10 && parseFloat(bars?.[i]) <= 99) {
+      color = "#DF9800";
     }
-    if (parseFloat(bars?.[i]) < 20) {
+    if (parseFloat(bars?.[i]) <= 10) {
       color = "#45CF03";
     }
 

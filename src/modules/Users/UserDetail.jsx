@@ -249,7 +249,7 @@ const Dashboard = props => {
                     {row.type !== "Active" ? row.value : row.value + "%"}
                   </Typography>
                   <Typography className={"innerCardTitle" + index} style={{ color: getColor(row) }}>
-                    {row.type !== "Risk" ? row.color : ""}
+                    {row.color}
                   </Typography>
                 </Card.Grid>
               ))}

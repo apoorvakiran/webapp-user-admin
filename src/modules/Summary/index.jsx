@@ -344,7 +344,7 @@ const Summary = (props) => {
     async function getUserCardData(value, durationType, selectedDate) {
         const idToken = await getAuthData();
         const response = await axios.get(
-            // "http://localhost:5051/api/user-admin/get-summary-card-detail-by-user", {
+            // "http://localhost:3000/summary", {
             baseUrl + "summary", {
             headers: {
                 "Authorization": `Bearer ${idToken}`
@@ -570,7 +570,7 @@ const Summary = (props) => {
 
                                     <Typography className="innerCardValue">{row.type !== "Active" ? row.value : row.value + "%"}</Typography>
                                     <Typography className={"innerCardTitle" + index} style={{ color: getColor(row) }}>
-                                        {row.type !== "Risk" ? row.color : ""}
+                                        {row.color}
                                     </Typography>
                                 </Card.Grid>
                             ))}
