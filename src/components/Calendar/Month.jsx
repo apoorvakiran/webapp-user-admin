@@ -25,7 +25,7 @@ export const Month = (props) => {
         if (selectedYear === currentYear && get(selectedMonth, 'month') > currentMonth) {
             setSelectedMonth({ month: currentMonth, year: currentYear });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedYear]);
 
 
@@ -47,8 +47,9 @@ export const Month = (props) => {
             <Grid item xs={6} md={4} className='monthPicker'>
                 <CalendarMonthIcon className="calendarIcon" />
                 <Select value={selectedMonth?.month} onChange={(val) => {
+                    console.log("selectedMonth::::::::::", selectedMonth);
                     setSelectedMonth({ ...selectedMonth, month: val });
-                    getOnSelectionData(dataType, `${selectedYear}-${String(val + 1).length === 1 ? `0${val + 1}` : `${val}`}-${moment().format('DD')}`);
+                    getOnSelectionData(dataType, `${selectedYear}-${String(val + 1).length === 1 ? `0${val + 1}` : `${val + 1}`}-${moment().format('DD')}`);
                 }} className="monthPicker_monthSelect">
                     {
                         months.map((month) => (
