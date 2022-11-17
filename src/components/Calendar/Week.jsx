@@ -38,13 +38,11 @@ export const Week = (props) => {
         if (!value) {
             return <PickersDay {...pickersDayProps} />;
         }
-
-        const start = value.startOf('week');
-        const end = value.endOf('week');
+        const start = value.startOf('day').subtract(6, 'day');
+        const end = value;
         const dayIsBetween = date.isBetween(start, end, null, '[]');
         const isFirstDay = date.isSame(start, 'day');
         const isLastDay = date.isSame(end, 'day');
-
         return (
             <CustomPickersDay
                 {...pickersDayProps}
@@ -57,25 +55,32 @@ export const Week = (props) => {
     };
 
     useEffect(() => {
-        const now = new Date(dayjs(new Date(value)).startOf("week"));
-        const end = new Date(dayjs(new Date(value)).endOf("week"));
-        if ((now.getFullYear() === currentYear && (now.getMonth() === currentMonth || end.getMonth() >= currentMonth) &&  today <= end.getDate() )) {
+        // const now = new Date(dayjs(new Date(value)).startOf("week"));
+        // const end = new Date(dayjs(new Date(value)).endOf("week"));
+        const now = new Date(dayjs(new Date(value)).startOf('day').subtract(6, 'day'));
+        const end = new Date(dayjs(new Date(value)));
+        if ((now.getFullYear() === currentYear && (now.getMonth() === currentMonth || end.getMonth() >= currentMonth) && today <= end.getDate())) {
             setIsNextWeekVisible(true);
         } else {
             setIsNextWeekVisible(false);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     return (
         <>
-            <Grid item xs={3} className="arrowLeft" onClick={() => {
-                const now = new Date(dayjs(new Date(value)).startOf("week"));
+            <Grid item xs={3}>
+
+            </Grid>
+
+            {/* <Grid item xs={3} className="arrowLeft" onClick={() => {
+                console.log("prev week:::", value);
+                const now = new Date(dayjs(new Date(value)));
                 setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)));
                 getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)).toDate().toISOString());
             }}>
                 <ArrowBackIos /> Previous Week
-            </Grid>
+            </Grid> */}
             <Grid item xs={6} md={3.5} className='weekPickerWrapper'>
                 <div className='weekPickerHandler' onClick={() => setWeekCalendarVisibility(prevState => !prevState)}><CalendarMonthIcon className='calendarIcon' /><span className='weekPickerText'> Week of {`${value["$D"]}/${value["$M"] + 1}/${value["$y"]}`}</span> <KeyboardArrowDownIcon className='weekPickerDropdownIcon' /></div>
                 {weekCalendarVisibility &&
@@ -93,7 +98,7 @@ export const Week = (props) => {
                                     showToolbar={false}
                                     value={value}
                                     onChange={(newValue) => {
-                                        const now = new Date(dayjs(new Date(newValue)).startOf("week"));
+                                        const now = new Date(dayjs(new Date(newValue)));
                                         setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())));
                                         setWeekCalendarVisibility(false);
                                         getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())).toDate().toISOString());
@@ -110,17 +115,21 @@ export const Week = (props) => {
                 }
             </Grid>
             <Grid item xs={3} className="arrowRightWrapper">
-                {
+                {/* {
                     !isNextWeekVisible && (
                         <Box className="arrowRight" onClick={() => {
-                            const now = new Date(dayjs(new Date(value)).startOf("week"));
-                            setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)));
-                            getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)).toDate().toISOString());
+                            console.log("value:::::::::::::::::::::", value);
+                            const now = new Date(dayjs(new Date(value)));
+                            const newValue = dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7));
+                            setValue(newValue);
+                            console.log("new value::::::::", dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)));
+                            getOnSelectionData(dataType, newValue.toDate().toISOString());
+
                         }}>
                             Next Week  <ArrowForwardIos />
                         </Box>
                     )
-                }
+                } */}
             </Grid>
         </>
     );
