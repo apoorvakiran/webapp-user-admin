@@ -1,6 +1,6 @@
 const config = {
     Auth: {
-        'userPoolId': process.env.REACT_APP_USER_POOL, //Triggering build again
+        'userPoolId': process.env.REACT_APP_USER_POOL, //forced build
         'userPoolWebClientId': process.env.REACT_APP_WEB_CLIENT,
         'identityPoolId': process.env.REACT_APP_IDENTITY_POOL,
         'region': process.env.REACT_APP_REGION,
