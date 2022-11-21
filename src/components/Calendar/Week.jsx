@@ -69,18 +69,13 @@ export const Week = (props) => {
 
     return (
         <>
-            <Grid item xs={3}>
-
-            </Grid>
-
-            {/* <Grid item xs={3} className="arrowLeft" onClick={() => {
-                console.log("prev week:::", value);
+            <Grid item xs={3} className="arrowLeft" onClick={() => {
                 const now = new Date(dayjs(new Date(value)));
                 setValue(dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)));
                 getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)).toDate().toISOString());
             }}>
                 <ArrowBackIos /> Previous Week
-            </Grid> */}
+            </Grid>
             <Grid item xs={6} md={3.5} className='weekPickerWrapper'>
                 <div className='weekPickerHandler' onClick={() => setWeekCalendarVisibility(prevState => !prevState)}><CalendarMonthIcon className='calendarIcon' /><span className='weekPickerText'> Week of {`${value["$D"]}/${value["$M"] + 1}/${value["$y"]}`}</span> <KeyboardArrowDownIcon className='weekPickerDropdownIcon' /></div>
                 {weekCalendarVisibility &&
@@ -93,6 +88,7 @@ export const Week = (props) => {
                         <div>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <StaticDatePicker
+
                                     displayStaticWrapperAs="desktop"
                                     label="Week picker"
                                     showToolbar={false}
@@ -103,33 +99,33 @@ export const Week = (props) => {
                                         setWeekCalendarVisibility(false);
                                         getOnSelectionData(dataType, dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate())).toDate().toISOString());
                                     }}
-                                    maxDate={new Date()}
+                                    disableFuture={true}
                                     renderDay={renderWeekPickerDay}
                                     renderInput={(params) => <TextField {...params} />}
                                     inputFormat="'Week of' MMM d"
                                     className='weekPicker'
                                 />
+
                             </LocalizationProvider>
                         </div>
                     </ClickAwayListener>
                 }
             </Grid>
             <Grid item xs={3} className="arrowRightWrapper">
-                {/* {
+                {
                     !isNextWeekVisible && (
                         <Box className="arrowRight" onClick={() => {
-                            console.log("value:::::::::::::::::::::", value);
                             const now = new Date(dayjs(new Date(value)));
                             const newValue = dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7));
-                            setValue(newValue);
-                            console.log("new value::::::::", dayjs(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7)));
+                            const currDate = dayjs(new Date());
+                            setValue(newValue > currDate ? currDate : newValue);
                             getOnSelectionData(dataType, newValue.toDate().toISOString());
 
                         }}>
                             Next Week  <ArrowForwardIos />
                         </Box>
                     )
-                } */}
+                }
             </Grid>
         </>
     );
