@@ -47,7 +47,6 @@ export const Month = (props) => {
             <Grid item xs={6} md={4} className='monthPicker'>
                 <CalendarMonthIcon className="calendarIcon" />
                 <Select value={selectedMonth?.month} onChange={(val) => {
-                    console.log("selectedMonth::::::::::", selectedMonth);
                     setSelectedMonth({ ...selectedMonth, month: val });
                     getOnSelectionData(dataType, `${selectedYear}-${String(val + 1).length === 1 ? `0${val + 1}` : `${val + 1}`}-${moment().format('DD')}`);
                 }} className="monthPicker_monthSelect">
