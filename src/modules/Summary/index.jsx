@@ -23,6 +23,7 @@ import Calendar from "../../components/Calendar/Calendar";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import * as XLSX from 'xlsx';
 import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
+import { openNotificationWithIcon } from "../../utils/helpers";
 
 const Summary = (props) => {
     const [loading, setLoading] = useState(true);
@@ -446,7 +447,16 @@ const Summary = (props) => {
             category: dataType,
             data: response.data.data
         }]
-        setExcelData(data);
+        if (response?.data?.data?.length > 0) {
+            setExcelData(data);
+        } else {
+            openNotificationWithIcon(
+                "error",
+                "Error",
+                `No data found or Error while fetching records`,
+            );
+        }
+
     };
 
     // eslint-disable-next-line no-unused-vars
@@ -571,12 +581,9 @@ const Summary = (props) => {
     };
 
     useEffect(() => {
-
-        if (excelData.length > 0) {
+        if (excelData.length > 0 && Object.keys(excelData?.[0]?.data)?.length > 0) {
             createDownLoadData();
         }
-
-
     }, [excelData]);
 
     const saveAsPdf = () => {
