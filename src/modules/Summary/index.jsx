@@ -21,7 +21,8 @@ import { orderBy, round } from "lodash";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-
+import * as XLSX from 'xlsx';
+import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 
 const Summary = (props) => {
     const [loading, setLoading] = useState(true);
@@ -43,45 +44,8 @@ const Summary = (props) => {
     const { route } = useAuthenticator(context => [context.route]);
     const [calendarDate, setCalendarDate] = useState(formatDate(new Date()));
     const [selectedOption, setSelectedOption] = useState(0);
+    const [excelData, setExcelData] = useState([]);
 
-    // async function getActiveScores(value) {
-
-    //     const current = new Date();
-    //     const date = formatDate(current);
-    //     const idToken = await getAuthData();
-    //     const response = await axios.get(
-    //         // "http://localhost:5051/api/user-admin/summary-graph-data", {
-    //         baseUrl + "summary", {
-    //         headers: {
-    //             "Authorization": `Bearer ${idToken}`
-    //         },
-    //         params: {
-    //             type: "summary-graph-data",
-    //             durationType: value,
-    //             startdate: date
-    //         }
-    //     }
-    //     );
-    //     const data = response.data.data;
-    //     setScores(response.data.card_data);
-    //     let activeLabels = data["activescore"]?.x || [];
-    //     let activeData = data["activescore"]?.y || [];
-    //     let safetyLabels = data["safetyscore"]?.x || [];
-    //     let safetyData = data["safetyscore"]?.y || [];
-    //     let speedLabels = data["speedscore"]?.x || [];
-    //     let speedData = data["speedscore"]?.y || [];
-    //     let riskLabels = data["riskexposures"]?.x || [];
-    //     let riskData = data["riskexposures"]?.y || [];
-    //     setActiveGraphLabels(activeLabels);
-    //     setActiveGraphData(activeData);
-    //     setSafetyGraphLabels(safetyLabels);
-    //     setSafetyGraphData(safetyData);
-    //     setSpeedGraphLabels(speedLabels);
-    //     setSpeedGraphData(speedData);
-    //     setRiskGraphLabels(riskLabels);
-    //     setRiskGraphData(riskData);
-    //     return response.data;
-    // }
 
     useEffect(() => {
 
@@ -163,7 +127,6 @@ const Summary = (props) => {
 
         if (selectedJobTitle !== "" && selectedJobTitle !== "0") {
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
-            // console.log("scoreType:::::", scoreType);
             if (scoreType === "Scores by User") {
                 getUserCardData(jobId, value, date);
                 getUserSafetyScoreData(jobId, value, date);
@@ -186,7 +149,6 @@ const Summary = (props) => {
     async function onGridSelection(value) {
         setDataType(value);
         // getData(value);
-        // console.log("selectedJobTitle::::", selectedJobTitle)
         getOnSelectionData(value);
     }
 
@@ -464,9 +426,158 @@ const Summary = (props) => {
             setActiveGraphData(orderBy(response.data.data.jobscore, ['job_score'], ['desc']));
         }
     }
+
+    const getDataForExcel = async (durationType, selectedDate) => {
+        const idToken = await getAuthData();
+        const response = await axios.get(
+            // "http://localhost:3000/summary", {
+            baseUrl + "summary", {
+            headers: {
+                "Authorization": `Bearer ${idToken}`
+            },
+            params: {
+                type: "get-data-for-excel",
+                durationType: durationType,
+                startdate: selectedDate
+            }
+        }
+        );
+        const data = [{
+            category: dataType,
+            data: response.data.data
+        }]
+        setExcelData(data);
+    };
+
     // eslint-disable-next-line no-unused-vars
     const [showLoader, setLoader] = useState(false);
 
+    const createDownLoadData = () => {
+        handleExport().then((url) => {
+            const downloadAnchorNode = document.createElement("a");
+            downloadAnchorNode.setAttribute("href", url);
+            downloadAnchorNode.setAttribute("download", "Score-Details.xlsx");
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        });
+    };
+
+    const handleExport = () => {
+        const obj = {
+            Sheets: {},
+            SheetNames: []
+        };
+        const wb = XLSX.utils.book_new();
+        excelData.map((item, index) => {
+            item[`json`] = XLSX.utils.json_to_sheet(item.data);
+            obj.Sheets[item.category] = item.json;
+            obj.SheetNames.push(item.category);
+            // console.log("sheet:::::::", obj.Sheets[item.category], ":::::::sheetName::::::", obj.SheetNames[0]);
+            //create a new workbook
+            XLSX.utils.book_append_sheet(wb, obj.Sheets[item.category], obj.SheetNames[0]);
+        });
+
+        // binary large object
+        // Since blobs can store binary data, they can be used to store images or other multimedia files.
+
+        const workbookBlob = workbook2blob(wb);
+
+        var headerIndexes = [];
+        excelData.forEach((data, index) => {
+            return data["User ID"] === "User ID" ? headerIndexes.push(index) : null;
+        });
+        const dataInfo = {
+            titleCell: "A1",
+            titleRange: "A1:G1",
+            tbodyRange: `A2:H${Object.keys(excelData[0].data).length + 1}`,
+        };
+
+        return addStyle(workbookBlob, dataInfo);
+    };
+
+    const addStyle = (workbookBlob, dataInfo) => {
+        return XlsxPopulate.fromDataAsync(workbookBlob).then((workbook) => {
+            workbook.sheets().forEach((sheet) => {
+                sheet.usedRange().style({
+                    fontFamily: "Arial",
+                    verticalAlignment: "center",
+                });
+
+                sheet.column("A").width(30);
+                sheet.column("B").width(15);
+                sheet.column("C").width(20);
+                sheet.column("D").width(25);
+                sheet.column("E").width(15);
+                sheet.column("F").width(15);
+                sheet.column("G").width(30);
+
+                sheet.range(dataInfo.titleRange).style({
+                    bold: true,
+                    fill: "FFFD04",
+                    horizontalAlignment: "center",
+                    verticalAlignment: "center",
+                });
+
+                if (dataInfo.tbodyRange) {
+                    sheet.range(dataInfo.tbodyRange).style({
+                        horizontalAlignment: "center",
+                        verticalAlignment: "center",
+                    });
+                }
+            });
+
+            return workbook
+                .outputAsync()
+                .then((workbookBlob) => URL.createObjectURL(workbookBlob));
+        });
+    };
+
+    const workbook2blob = (workbook) => {
+        const wopts = {
+            bookType: "xlsx",
+            bookSST: false,
+            type: "binary",
+        };
+
+        const wbout = XLSX.write(workbook, wopts);
+
+        // The application/octet-stream MIME type is used for unknown binary files.
+        // It preserves the file contents, but requires the receiver to determine file type,
+        // for example, from the filename extension.
+        const blob = new Blob([s2ab(wbout)], {
+            type: "application/octet-stream",
+        });
+
+        return blob;
+    };
+
+    const s2ab = (s) => {
+        // The ArrayBuffer() constructor is used to create ArrayBuffer objects.
+        // create an ArrayBuffer with a size in bytes
+        const buf = new ArrayBuffer(s.length);
+
+        // console.log(buf);
+
+        //create a 8 bit integer array
+        const view = new Uint8Array(buf);
+
+        // console.log(view);
+        //charCodeAt The charCodeAt() method returns an integer between 0 and 65535 representing the UTF-16 code
+        for (let i = 0; i !== s.length; ++i) {
+            // console.log(s.charCodeAt(i));
+            view[i] = s.charCodeAt(i);
+        }
+        return buf;
+    };
+
+    useEffect(() => {
+
+        if (excelData.length > 0) {
+            createDownLoadData();
+        }
+
+
+    }, [excelData]);
 
     const saveAsPdf = () => {
         generatePdf('summaryWrapper', setLoader);
@@ -484,6 +595,15 @@ const Summary = (props) => {
                     <div className="summary-page-header">
                         <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
                         <div className="jobs-pdf-buttons">
+                            <Button
+                                shape="round"
+                                onClick={() => getDataForExcel(dataType, calendarDate)}
+                                icon={<DownloadOutlined />}
+                                className="pdf-button"
+                                data-html2canvas-ignore="true"
+                            >
+                                Save as Excel
+                            </Button>
                             <Button
                                 shape="round"
                                 onClick={() => saveAsPdf()}
