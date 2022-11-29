@@ -18,8 +18,8 @@ const AllJobSummary = props => {
       setMaxValue(7);
       setMinValue(0);
     } else if (props.title === "Risk Frequency Score") {
-      // setMaxValue(10);
-      // setMinValue(0);
+      setMaxValue(props?.data?.[0]?.user_score);
+      setMinValue(0);
     } else if (props.title === "Active Score") {
       // console.log("Active")
       setMaxValue("100%");
