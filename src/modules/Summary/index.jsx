@@ -135,6 +135,7 @@ const Summary = (props) => {
                 getUserSpeedScoreData(jobId, value, date);
                 getUserActiveScoreData(jobId, value, date);
             } else {
+                getUserCardData(jobId, value, date);
                 getJobWiseSummaryGraph(jobId, value, date);
             }
         } else {
@@ -183,6 +184,7 @@ const Summary = (props) => {
                 getUserSpeedScoreData(`${value}`, dataType, calendarDate);
                 getUserActiveScoreData(`${value}`, dataType, calendarDate);
             } else {
+                getUserCardData(`${value}`, dataType, calendarDate);
                 getJobWiseSummaryGraph(`${value}`, dataType, calendarDate);
             }
         } else {
@@ -214,7 +216,7 @@ const Summary = (props) => {
         }
         );
         const data = response.data.data;
-        setScores(response.data.card_data);
+        // setScores(response.data.card_data);
         let activeLabels = data["activescore"]?.x || [];
         let activeData = data["activescore"]?.y || [];
         let safetyLabels = data["safetyscore"]?.x || [];
@@ -293,6 +295,7 @@ const Summary = (props) => {
             // console.log("scoreType", type)
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
             getJobWiseSummaryGraph(jobId, dataType, calendarDate);
+            getUserCardData(jobId, dataType, calendarDate);
         } else {
             // console.log("scoreType", type)
             const jobId = `${jobTitleList.filter(data => data.name === selectedJobTitle)[0].id}`;
