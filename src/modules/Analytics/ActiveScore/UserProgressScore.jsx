@@ -137,7 +137,7 @@ const UserProgressScore = props => {
                 format={percent => `${row.user_score}`}
                 showInfo={true}
                 strokeWidth={30}
-                percent={round(100 - (row.user_score / 10) * 100)}
+                percent={round(100 - (row.user_score / props.maxValue) * 100)}
               />
             </Col>
             <Col
