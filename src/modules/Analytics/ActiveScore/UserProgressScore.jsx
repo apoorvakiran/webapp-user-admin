@@ -58,7 +58,7 @@ const UserProgressScore = props => {
     } else if (props.scoreName === "Speed Score") {
       return 33 + (67 * avgSpeedScore) / 7 + "%";
     } else if (props.scoreName === "Risk Frequency Score") {
-      return 33 + (67 * avgRiskScore) / 10 + "%";
+      return 33 + (67 * avgRiskScore) / props.maxValue + "%";
     } else if (props.scoreName === "Active Score") {
       return 33 + (67 * avgActiveScore) / 1 + "%";
     }
@@ -105,7 +105,7 @@ const UserProgressScore = props => {
         minValue={props.minValue}
         handleChange={handleFilterChange}
       />
-      {props.scoreName === "Risk Frequency Score" ? <></> : <div style={averageLine} class="avgLine"></div>}
+      <div style={averageLine} class="avgLine"></div>
       <Row style={{ marginTop: "20px" }}>
         {scores?.map((row, index) => (
           <>

@@ -640,7 +640,7 @@ const Summary = (props) => {
                                             <Grid
                                                 key={index}
                                                 item
-                                                xs={2.5}
+                                                xs={3}
                                                 onClick={() => {
                                                     setSelected(index);
                                                 }}
@@ -659,11 +659,6 @@ const Summary = (props) => {
                                             </Grid>
                                         );
                                     })}
-                                    <Grid item xs={2} className="gridData lastItem">
-                                        <Item>
-                                            <KeyboardArrowDownIcon />
-                                        </Item>
-                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
