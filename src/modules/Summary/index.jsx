@@ -606,6 +606,7 @@ const Summary = (props) => {
                         <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
                         <div className="jobs-pdf-buttons">
                             <Button
+                                style={dataType === "Year" ? { display: "none" } : { display: "block" }}
                                 shape="round"
                                 onClick={() => getDataForExcel(dataType, calendarDate)}
                                 icon={<DownloadOutlined />}
