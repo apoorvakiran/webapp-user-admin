@@ -1,7 +1,7 @@
 import { Grid, Paper, styled, Typography } from "@mui/material";
-import { Card, Select, Skeleton, Button } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
+import { Card, Select, Skeleton, Button, Spin } from "antd";
+import { DownloadOutlined, LoadingOutlined } from "@ant-design/icons";
+import React, { useEffect, useRef, useState } from "react";
 import BasicLayout from "../../layouts/BasicLayout";
 import {
     DashboardData, ActiveScoreDesc, SafetyScoreDesc, SpeedScoreDesc, RiskScoreDesc, baseUrl,
@@ -20,10 +20,8 @@ import AllJobSummary from "./AllJobSummary";
 import { orderBy, round } from "lodash";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import * as XLSX from 'xlsx';
-import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 import { openNotificationWithIcon } from "../../utils/helpers";
+import { CSVLink } from "react-csv";
 
 const Summary = (props) => {
     const [loading, setLoading] = useState(true);
@@ -46,7 +44,8 @@ const Summary = (props) => {
     const [calendarDate, setCalendarDate] = useState(formatDate(new Date()));
     const [selectedOption, setSelectedOption] = useState(0);
     const [excelData, setExcelData] = useState([]);
-
+    const [showLoadingIcon, setShowLoadingIcon] = useState(false);
+    const csvDownloadRef = useRef(null);
 
     useEffect(() => {
 
@@ -202,7 +201,7 @@ const Summary = (props) => {
 
         const idToken = await getAuthData();
         const response = await axios.get(
-            // "http://localhost:5051/api/user-admin/get-summary-by-job", {
+            // "http://localhost:3000/summary", {
             baseUrl + "summary", {
             headers: {
                 "Authorization": `Bearer ${idToken}`
@@ -451,13 +450,16 @@ const Summary = (props) => {
             data: response.data.data
         }]
         if (response?.data?.data?.length > 0) {
-            setExcelData(data);
+            setShowLoadingIcon(false);
+            setExcelData(response.data.data);
+            csvDownloadRef.current.link.click();
         } else {
             openNotificationWithIcon(
                 "error",
                 "Error",
                 `No data found or Error while fetching records`,
             );
+            setShowLoadingIcon(false);
         }
 
     };
@@ -465,129 +467,15 @@ const Summary = (props) => {
     // eslint-disable-next-line no-unused-vars
     const [showLoader, setLoader] = useState(false);
 
-    const createDownLoadData = () => {
-        handleExport().then((url) => {
-            const downloadAnchorNode = document.createElement("a");
-            downloadAnchorNode.setAttribute("href", url);
-            downloadAnchorNode.setAttribute("download", "Score-Details.xlsx");
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
-        });
-    };
-
-    const handleExport = () => {
-        const obj = {
-            Sheets: {},
-            SheetNames: []
-        };
-        const wb = XLSX.utils.book_new();
-        excelData.map((item, index) => {
-            item[`json`] = XLSX.utils.json_to_sheet(item.data);
-            obj.Sheets[item.category] = item.json;
-            obj.SheetNames.push(item.category);
-            // console.log("sheet:::::::", obj.Sheets[item.category], ":::::::sheetName::::::", obj.SheetNames[0]);
-            //create a new workbook
-            XLSX.utils.book_append_sheet(wb, obj.Sheets[item.category], obj.SheetNames[0]);
-        });
-
-        // binary large object
-        // Since blobs can store binary data, they can be used to store images or other multimedia files.
-
-        const workbookBlob = workbook2blob(wb);
-
-        var headerIndexes = [];
-        excelData.forEach((data, index) => {
-            return data["User ID"] === "User ID" ? headerIndexes.push(index) : null;
-        });
-        const dataInfo = {
-            titleCell: "A1",
-            titleRange: "A1:G1",
-            tbodyRange: `A2:H${Object.keys(excelData[0].data).length + 1}`,
-        };
-
-        return addStyle(workbookBlob, dataInfo);
-    };
-
-    const addStyle = (workbookBlob, dataInfo) => {
-        return XlsxPopulate.fromDataAsync(workbookBlob).then((workbook) => {
-            workbook.sheets().forEach((sheet) => {
-                sheet.usedRange().style({
-                    fontFamily: "Arial",
-                    verticalAlignment: "center",
-                });
-
-                sheet.column("A").width(30);
-                sheet.column("B").width(15);
-                sheet.column("C").width(20);
-                sheet.column("D").width(25);
-                sheet.column("E").width(15);
-                sheet.column("F").width(15);
-                sheet.column("G").width(30);
-
-                sheet.range(dataInfo.titleRange).style({
-                    bold: true,
-                    fill: "FFFD04",
-                    horizontalAlignment: "center",
-                    verticalAlignment: "center",
-                });
-
-                if (dataInfo.tbodyRange) {
-                    sheet.range(dataInfo.tbodyRange).style({
-                        horizontalAlignment: "center",
-                        verticalAlignment: "center",
-                    });
-                }
-            });
-
-            return workbook
-                .outputAsync()
-                .then((workbookBlob) => URL.createObjectURL(workbookBlob));
-        });
-    };
-
-    const workbook2blob = (workbook) => {
-        const wopts = {
-            bookType: "xlsx",
-            bookSST: false,
-            type: "binary",
-        };
-
-        const wbout = XLSX.write(workbook, wopts);
-
-        // The application/octet-stream MIME type is used for unknown binary files.
-        // It preserves the file contents, but requires the receiver to determine file type,
-        // for example, from the filename extension.
-        const blob = new Blob([s2ab(wbout)], {
-            type: "application/octet-stream",
-        });
-
-        return blob;
-    };
-
-    const s2ab = (s) => {
-        // The ArrayBuffer() constructor is used to create ArrayBuffer objects.
-        // create an ArrayBuffer with a size in bytes
-        const buf = new ArrayBuffer(s.length);
-
-        // console.log(buf);
-
-        //create a 8 bit integer array
-        const view = new Uint8Array(buf);
-
-        // console.log(view);
-        //charCodeAt The charCodeAt() method returns an integer between 0 and 65535 representing the UTF-16 code
-        for (let i = 0; i !== s.length; ++i) {
-            // console.log(s.charCodeAt(i));
-            view[i] = s.charCodeAt(i);
-        }
-        return buf;
-    };
-
-    useEffect(() => {
-        if (excelData.length > 0 && Object.keys(excelData?.[0]?.data)?.length > 0) {
-            createDownLoadData();
-        }
-    }, [excelData]);
+    const antIcon = (
+        <LoadingOutlined
+            style={{
+                color: "#C54B30",
+                marginRight: "10px",
+            }}
+            spin
+        />
+    );
 
     const saveAsPdf = () => {
         generatePdf('summaryWrapper', setLoader);
@@ -608,13 +496,19 @@ const Summary = (props) => {
                             <Button
                                 style={dataType === "Year" ? { display: "none" } : { display: "block" }}
                                 shape="round"
-                                onClick={() => getDataForExcel(dataType, calendarDate)}
-                                icon={<DownloadOutlined />}
+                                onClick={() => { setShowLoadingIcon(true); getDataForExcel(dataType, calendarDate); }}
+                                icon={showLoadingIcon ? <Spin size="small" indicator={antIcon} /> : <DownloadOutlined />}
                                 className="pdf-button"
                                 data-html2canvas-ignore="true"
                             >
-                                Save as Excel
+                                CSV Download
                             </Button>
+                            <CSVLink
+                                filename="Score-Details.csv"
+                                data={excelData}
+                                target="_blank"
+                                ref={csvDownloadRef}
+                            />
                             <Button
                                 shape="round"
                                 onClick={() => saveAsPdf()}
