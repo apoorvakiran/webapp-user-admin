@@ -501,7 +501,7 @@ const Summary = (props) => {
                                 className="pdf-button"
                                 data-html2canvas-ignore="true"
                             >
-                                CSV Download
+                                Download CSV
                             </Button>
                             <CSVLink
                                 filename="Score-Details.csv"
