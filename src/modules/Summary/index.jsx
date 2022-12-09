@@ -494,7 +494,7 @@ const Summary = (props) => {
                         <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
                         <div className="jobs-pdf-buttons">
                             <Button
-                                style={dataType === "Year" ? { display: "none" } : { display: "block" }}
+                                style={dataType === "Year" || dataType === "Month" || dataType === "Week"? { display: "none" } : { display: "block" }}
                                 shape="round"
                                 onClick={() => { setShowLoadingIcon(true); getDataForExcel(dataType, calendarDate); }}
                                 icon={showLoadingIcon ? <Spin size="small" indicator={antIcon} /> : <DownloadOutlined />}
