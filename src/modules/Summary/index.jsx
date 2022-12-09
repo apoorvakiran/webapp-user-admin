@@ -430,7 +430,7 @@ const Summary = (props) => {
         }
     }
 
-    const getDataForExcel = async (durationType, selectedDate) => {
+    const getDataForExcel = async (durationType, selectedDate, jobId) => {
         const idToken = await getAuthData();
         const response = await axios.get(
             // "http://localhost:3000/summary", {
@@ -441,6 +441,7 @@ const Summary = (props) => {
             params: {
                 type: "get-data-for-excel",
                 durationType: durationType,
+                jobId: jobId,
                 startdate: selectedDate
             }
         }
@@ -496,7 +497,7 @@ const Summary = (props) => {
                             <Button
                                 style={dataType === "Year" ? { display: "none" } : { display: "block" }}
                                 shape="round"
-                                onClick={() => { setShowLoadingIcon(true); getDataForExcel(dataType, calendarDate); }}
+                                onClick={() => { setShowLoadingIcon(true); getDataForExcel(dataType, calendarDate, selectedOption); }}
                                 icon={showLoadingIcon ? <Spin size="small" indicator={antIcon} /> : <DownloadOutlined />}
                                 className="pdf-button"
                                 data-html2canvas-ignore="true"
