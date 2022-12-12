@@ -17,7 +17,7 @@ import html2canvas from "html2canvas";
 // import { convertLegacyProps } from "antd/lib/button/button";
 
 
-export const baseUrl = process.env.REACT_APP_API_HOST;
+export const baseUrl = "http://localhost:3000/";
 export const getAuthData = async () => {
     const data = await Auth.currentAuthenticatedUser()
         .then(user => {
