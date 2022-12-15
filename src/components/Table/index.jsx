@@ -7,8 +7,8 @@ const TableComponent = props => {
 
   useEffect(() => {
     setPage(1);
-  }, [props]);
-  
+  }, []);
+
   const { columns, data, rowSelection, onRow, showHeader } = props;
   return (
     < Table
