@@ -6,6 +6,10 @@ const { Option } = Select;
 const HeaderCard = props => {
     const { handleChange } = props;
 
+    const renderMaxScore = {
+        display: props.inheritedFrom === "Summary" ? (props.scoreName !== "Risk Frequency Score" ? "block" : "none") : "none",
+    };
+
     return (
         <div className="speed-score-container">
             <div className="dropdownWidth">
@@ -18,7 +22,9 @@ const HeaderCard = props => {
                     <Option value="low" data-testid="low">Sort: Low</Option>
                 </Select>
             </div>
-            <div className="spaceDiv"></div>
+            <div className="spaceDiv">
+                <Typography className="maxScoreLabel" style={renderMaxScore}>Peak</Typography>
+            </div>
             <div className="speed-score-average">
                 <Typography className="rangeLabelStart" data-testid="minValue">{props.minValue}</Typography>
                 {/*<Typography style={{ width: "34%", textAlign: "center", color: "#F3AF00", fontWeight: "700" }}>{"Average"}</Typography>*/}

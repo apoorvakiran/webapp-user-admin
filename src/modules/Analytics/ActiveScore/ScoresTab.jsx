@@ -43,7 +43,7 @@ export const ScoresTab = props => {
     }
     setFilterBy("Day");
     getScoresData(scoreType, filterBy);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scoreType, history]);
 
   async function getScoresData(type, filterBy) {
@@ -238,7 +238,7 @@ export const ScoresTab = props => {
             </Row> 
             <UserProgressScore scoreName={props.title} minValue={minValue} maxValue={maxValue} userScore={props.data} />
             */}
-            <UserProgressScore scoreName={scoreType} minValue={minValue} maxValue={maxValue} userScore={userScoreData} totalAvgScore={sumBy(userScoreData, data => Number(data.user_score)) / userScoreData.length} />
+            <UserProgressScore inheritedFrom={"Analytics"} scoreName={scoreType} minValue={minValue} maxValue={maxValue} userScore={userScoreData} totalAvgScore={sumBy(userScoreData, data => Number(data.user_score)) / userScoreData.length} />
           </>
         )}
     </div>

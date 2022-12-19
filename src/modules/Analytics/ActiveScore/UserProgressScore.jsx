@@ -45,6 +45,10 @@ const UserProgressScore = props => {
     display: props.scoreName === "Active Score" ? "block" : "none",
   };
 
+  const renderMaxScore = {
+    display: props.scoreName !== "Risk Frequency Score" ? "block" : "none",
+  };
+
   // const strokeColor = {
   //     '0%': '#45CF03',
   //     '50%': '#FFD705',
@@ -103,15 +107,24 @@ const UserProgressScore = props => {
       <HeaderCard
         maxValue={props.maxValue}
         minValue={props.minValue}
+        scoreName={props.scoreName}
+        inheritedFrom={props.inheritedFrom}
         handleChange={handleFilterChange}
       />
       <div style={averageLine} class="avgLine"></div>
       <Row style={{ marginTop: "20px" }}>
         {scores?.map((row, index) => (
           <>
-            <Col className="userProgress" xs={8} xl={8}>
+            <Col className="userProgress"
+              xs={5} xl={5}
+            >
               <p className="userNameText">
                 {row?.first_name + " " + row?.last_name}
+              </p>
+            </Col>
+            <Col xs={3} xl={3}>
+              <p className="maxScoreText" style={renderMaxScore}>
+                {props.scoreName !== "Active Score" ? row?.max_score : ((row?.max_score / 1) * 100) + "%"}
               </p>
             </Col>
             <Col
@@ -158,7 +171,7 @@ const UserProgressScore = props => {
           </>
         ))}
       </Row>
-    </div>
+    </div >
   );
 };
 
