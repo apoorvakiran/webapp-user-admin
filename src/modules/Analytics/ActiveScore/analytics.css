@@ -49,7 +49,7 @@
 .timeSelect {
     border-radius: 100px;
     overflow: hidden;
-    margin-bottom:  10px;
+    margin-bottom: 10px;
 }
 
 .timeSelect .gridData {
@@ -215,13 +215,13 @@
 
 .ant-progress-inner {
     border-radius: 0px !important;
-    background: rgb(69,207,3);
-    background: linear-gradient(90deg, rgba(69,207,3,1) 0%, rgba(255,215,5,1) 50%, rgba(209,0,0,1) 100%);
+    background: rgb(69, 207, 3);
+    background: linear-gradient(90deg, rgba(69, 207, 3, 1) 0%, rgba(255, 215, 5, 1) 50%, rgba(209, 0, 0, 1) 100%);
 }
 
 .ant-progress-bg {
     border-radius: 0px !important;
-    background-color: #E7E7E7 !important; 
+    background-color: #E7E7E7 !important;
     float: right;
 }
 
@@ -422,4 +422,12 @@
     .innerCardValue {
         font-size: 25px !important;
     }
+}
+
+.maxScoreText {
+    margin-top: 21px;
+}
+
+.maxScoreLabel {
+    margin-top: 4px;
 }

@@ -3,6 +3,19 @@ export const consts = {
     unit: 'pt',
     format: 'a4'
 };
+export const SUMMARY = "Summary";
+export const ANALYTICS = "Analytics";
+export const INJURY_RISK_SCORE = "Injury Risk Score";
+export const SPEED_SCORE = "Speed Score";
+export const ACTIVE_SCORE = "Active Score";
+export const RISK_FREQUENCY_SCORE = "Risk Frequency Score";
+export const RISK_FREQUENCY = "Risk Frequency";
+export const SAFETY_SCORE = "Safety Score";
+export const RISK = "Risk";
+export const ACTIVE = "Active";
+export const SAFETY = "Safety";
+export const INJURY = "Injury";
+export const SPEED = "Speed";
 export const totalPreviousYears = 25;
 export const months = [
     {

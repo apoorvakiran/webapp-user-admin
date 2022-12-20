@@ -13,6 +13,7 @@ import axios from "axios";
 import get from "lodash/get";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import { ACTIVE, ACTIVE_SCORE, INJURY_RISK_SCORE, RISK_FREQUENCY, SPEED_SCORE } from "../consts";
 // import { consts } from "../../utils/consts";
 // import { convertLegacyProps } from "antd/lib/button/button";
 
@@ -53,13 +54,13 @@ export const sortTableColumns = (str1, str2) => {
 
 export const getCurrIcon = icon => {
     switch (icon) {
-        case "Active Score":
+        case ACTIVE_SCORE:
             return SettingIcon;
-        case "Injury Risk Score":
+        case INJURY_RISK_SCORE:
             return Vector2Icon;
-        case "Risk Frequency":
+        case RISK_FREQUENCY:
             return PolygonIcon;
-        case "Speed Score":
+        case SPEED_SCORE:
             return StrokeIcon;
         default:
             return SettingIcon;
@@ -90,7 +91,7 @@ export const formatDate = (date) => {
 export const getColor = icon => {
     let type = icon.type;
     let value = icon.color;
-    if (type !== "Active") {
+    if (type !== ACTIVE) {
         switch (value) {
             case "LOW":
                 return "#8ECF03";
@@ -132,13 +133,13 @@ export const RiskScoreDesc = "A count of the number of times the Injury Risk Sco
 
 export const getDescription = activeTab => {
     switch (activeTab) {
-        case "Active Score":
+        case ACTIVE_SCORE:
             return ActiveScoreDesc;
-        case "Injury Risk Score":
+        case INJURY_RISK_SCORE:
             return SafetyScoreDesc;
-        case "Risk Frequency":
+        case RISK_FREQUENCY:
             return RiskScoreDesc;
-        case "Speed Score":
+        case SPEED_SCORE:
             return SpeedScoreDesc;
         default:
             return "";

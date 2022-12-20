@@ -22,6 +22,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import Calendar from "../../components/Calendar/Calendar";
 import { openNotificationWithIcon } from "../../utils/helpers";
 import { CSVLink } from "react-csv";
+import { ACTIVE, ACTIVE_SCORE, INJURY, INJURY_RISK_SCORE, RISK, RISK_FREQUENCY, RISK_FREQUENCY_SCORE, SPEED, SPEED_SCORE } from "../../utils/consts";
 
 const Summary = (props) => {
     const [loading, setLoading] = useState(true);
@@ -155,13 +156,13 @@ const Summary = (props) => {
 
     const getIcon = icon => {
         switch (icon) {
-            case "Active":
+            case ACTIVE:
                 return SettingIcon;
-            case "Injury":
+            case INJURY:
                 return Vector2Icon;
-            case "Speed":
+            case SPEED:
                 return StrokeIcon;
-            case "Risk":
+            case RISK:
                 return PolygonIcon;
             default:
                 return SettingIcon;
@@ -282,7 +283,7 @@ const Summary = (props) => {
                     props: {
                         style: { color: "#C54B30", fontWeight: 700, textAlign: "right" },
                     },
-                    children: <div>{type !== "Active Score" ? record.job_score : round((record.job_score * 100) / 1.0) + "%"}</div>,
+                    children: <div>{type !== ACTIVE_SCORE ? record.job_score : round((record.job_score * 100) / 1.0) + "%"}</div>,
                 };
             },
         },
@@ -452,7 +453,7 @@ const Summary = (props) => {
             category: dataType,
             data: response.data.data
         }];
-        
+
         if (response?.data?.data?.length > 0) {
             setShowLoadingIcon(false);
             setExcelData(response.data.data);
@@ -498,7 +499,7 @@ const Summary = (props) => {
                         <div className="user-score" style={{ marginBottom: 20 }}>Score Summary</div>
                         <div className="jobs-pdf-buttons">
                             <Button
-                                style={dataType === "Year" || dataType === "Month" || dataType === "Week"? { display: "none" } : { display: "block" }}
+                                style={dataType === "Year" || dataType === "Month" || dataType === "Week" ? { display: "none" } : { display: "block" }}
                                 shape="round"
                                 onClick={() => { setShowLoadingIcon(true); getDataForExcel(dataType, calendarDate, selectedOption); }}
                                 icon={showLoadingIcon ? <Spin size="small" indicator={antIcon} /> : <DownloadOutlined />}
@@ -588,11 +589,11 @@ const Summary = (props) => {
                                         <span className="imgSpan">
                                             <img src={getIcon(row?.type)} className="cardIcon" alt="" />
                                         </span>
-                                        {row.type !== "Risk" ? row.type : "Risk Frequency"}
+                                        {row.type !== RISK ? row.type : RISK_FREQUENCY}
 
                                     </Typography>
 
-                                    <Typography className="innerCardValue">{row.type !== "Active" ? row.value : row.value + "%"}</Typography>
+                                    <Typography className="innerCardValue">{row.type !== ACTIVE ? row.value : row.value + "%"}</Typography>
                                     <Typography className={"innerCardTitle" + index} style={{ color: getColor(row) }}>
                                         {row.color}
                                     </Typography>
@@ -622,44 +623,44 @@ const Summary = (props) => {
                                     <Grid item s={12} lg={6} className="chart">
                                         <Item>
                                             <AllJobSummary
-                                                title="Injury Risk Score"
+                                                title={INJURY_RISK_SCORE}
                                                 desc={SafetyScoreDesc}
                                                 data={safetyGraphData}
                                                 labels={safetyGraphLabels}
-                                                Icon={Vector2Icon} columns={columns("Injury Risk Score")} showHeader={true}
+                                                Icon={Vector2Icon} columns={columns(INJURY_RISK_SCORE)} showHeader={true}
                                                 scoreType="All Jobs" />
                                         </Item>
                                     </Grid>
                                     <Grid item s={12} lg={6} className="chart">
                                         <Item>
                                             <AllJobSummary
-                                                title="Risk Frequency Score"
+                                                title={RISK_FREQUENCY_SCORE}
                                                 desc={RiskScoreDesc}
                                                 data={riskGraphData}
                                                 labels={riskGraphLabels}
-                                                Icon={PolygonIcon} columns={columns("Risk Frequency Score")} showHeader={true}
+                                                Icon={PolygonIcon} columns={columns(RISK_FREQUENCY_SCORE)} showHeader={true}
                                                 scoreType="All Jobs" />
                                         </Item>
                                     </Grid>
                                     <Grid item s={12} lg={6} className="chart">
                                         <Item>
                                             <AllJobSummary
-                                                title="Speed Score"
+                                                title={SPEED_SCORE}
                                                 desc={SpeedScoreDesc}
                                                 data={speedGraphData}
                                                 labels={speedGraphLabels}
-                                                Icon={StrokeIcon} columns={columns("Speed Score")} showHeader={true}
+                                                Icon={StrokeIcon} columns={columns(SPEED_SCORE)} showHeader={true}
                                                 scoreType="All Jobs" />
                                         </Item>
                                     </Grid>
                                     <Grid item s={12} lg={6} className="chart">
                                         <Item>
                                             <AllJobSummary
-                                                title="Active Score"
+                                                title={ACTIVE_SCORE}
                                                 desc={ActiveScoreDesc}
                                                 data={activeGraphData}
                                                 labels={activeGraphLabels}
-                                                Icon={SettingIcon} columns={columns("Active Score")} showHeader={true}
+                                                Icon={SettingIcon} columns={columns(ACTIVE_SCORE)} showHeader={true}
                                                 scoreType="All Jobs" />
                                         </Item>
                                     </Grid>
@@ -689,7 +690,7 @@ const Summary = (props) => {
                                             <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                     <Chart
-                                                        title="Injury Risk Score"
+                                                        title={INJURY_RISK_SCORE}
                                                         desc={SafetyScoreDesc}
                                                         data={safetyGraphData}
                                                         labels={safetyGraphLabels}
@@ -704,7 +705,7 @@ const Summary = (props) => {
                                             <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                     <Barchart
-                                                        title="Risk Frequency"
+                                                        title={RISK_FREQUENCY}
                                                         desc={RiskScoreDesc}
                                                         data={riskGraphData}
                                                         labels={riskGraphLabels}
@@ -716,7 +717,7 @@ const Summary = (props) => {
                                             <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                     <Chart
-                                                        title="Speed Score"
+                                                        title={SPEED_SCORE}
                                                         desc={SpeedScoreDesc}
                                                         data={speedGraphData}
                                                         labels={speedGraphLabels}
@@ -731,7 +732,7 @@ const Summary = (props) => {
                                             <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                     <Chart
-                                                        title="Active Score"
+                                                        title={ACTIVE_SCORE}
                                                         desc={ActiveScoreDesc}
                                                         data={activeGraphData}
                                                         labels={activeGraphLabels}
@@ -769,7 +770,7 @@ const Summary = (props) => {
                                             <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                     <AllJobSummary
-                                                        title="Injury Risk Score"
+                                                        title={INJURY_RISK_SCORE}
                                                         desc={SafetyScoreDesc}
                                                         data={safetyGraphData}
                                                         labels={safetyGraphLabels}
@@ -780,7 +781,7 @@ const Summary = (props) => {
                                             <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                     <AllJobSummary
-                                                        title="Risk Frequency Score"
+                                                        title={RISK_FREQUENCY_SCORE}
                                                         desc={RiskScoreDesc}
                                                         data={riskGraphData}
                                                         labels={riskGraphLabels}
@@ -791,7 +792,7 @@ const Summary = (props) => {
                                             <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                     <AllJobSummary
-                                                        title="Speed Score"
+                                                        title={SPEED_SCORE}
                                                         desc={SpeedScoreDesc}
                                                         data={speedGraphData}
                                                         labels={speedGraphLabels}
@@ -802,7 +803,7 @@ const Summary = (props) => {
                                             <Grid item s={12} lg={6} className="chart">
                                                 <Item>
                                                     <AllJobSummary
-                                                        title="Active Score"
+                                                        title={ACTIVE_SCORE}
                                                         desc={ActiveScoreDesc}
                                                         data={activeGraphData}
                                                         labels={activeGraphLabels}

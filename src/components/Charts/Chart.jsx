@@ -14,6 +14,7 @@ import { Line } from "react-chartjs-2";
 import "./chart.css";
 import { Typography } from "antd";
 import SettingIcon from "../../images/setting.png";
+import { ACTIVE_SCORE } from "../../utils/consts";
 
 ChartJS.register(
   CategoryScale,
@@ -66,7 +67,7 @@ const Chart = props => {
         },
         ticks: {
           callback: function (value, index, ticks) {
-            return props.title === "Active Score" ? value + '%' : value;
+            return props.title === ACTIVE_SCORE ? value + '%' : value;
           }
         },
         min: props.yAxisMin,

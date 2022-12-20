@@ -16,6 +16,7 @@ import UserProgressScore from "./UserProgressScore";
 import axios from "axios";
 import routes from "../../../features/Routes/URLs";
 import { sumBy } from "lodash";
+import { ACTIVE_SCORE, ANALYTICS, INJURY_RISK_SCORE, RISK_FREQUENCY, SPEED_SCORE } from "../../../utils/consts";
 
 
 export const ScoresTab = props => {
@@ -43,7 +44,7 @@ export const ScoresTab = props => {
     }
     setFilterBy("Day");
     getScoresData(scoreType, filterBy);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scoreType, history]);
 
   async function getScoresData(type, filterBy) {
@@ -51,7 +52,7 @@ export const ScoresTab = props => {
     const date = formatDate(current);
     const idToken = await getAuthData();
     let response = [];
-    if (type === "Active Score") {
+    if (type === ACTIVE_SCORE) {
       response = await axios.get(
         // "http://localhost:5051/api/user-admin/get-active-score",
         baseUrl + "userdetail",
@@ -66,7 +67,7 @@ export const ScoresTab = props => {
           },
         },
       );
-    } else if (type === "Injury Risk Score") {
+    } else if (type === INJURY_RISK_SCORE) {
       response = await axios.get(
         // "http://localhost:5051/api/user-admin/get-safety-score",
         baseUrl + "userdetail",
@@ -91,26 +92,26 @@ export const ScoresTab = props => {
 
   const getIcon = icon => {
     switch (icon) {
-      case "Active Score":
+      case ACTIVE_SCORE:
         if (history.location.pathname === "/user-admin/analytics/active-score") {
           return CurrActiveIcon;
         } else {
           return SettingIcon;
         }
 
-      case "Injury Risk Score":
+      case INJURY_RISK_SCORE:
         if (history.location.pathname === "/user-admin/analytics/safety-score") {
           return CurrSafetyIcon;
         } else {
           return Vector2Icon;
         }
-      case "Risk Frequency":
+      case RISK_FREQUENCY:
         if (history.location.pathname === "/user-admin/analytics/risk-score") {
           return CurrRiskIcon;
         } else {
           return PolygonIcon;
         }
-      case "Speed Score":
+      case SPEED_SCORE:
         if (history.location.pathname === "/user-admin/analytics/speed-score") {
           return CurrSpeedIcon;
         } else {
@@ -124,14 +125,14 @@ export const ScoresTab = props => {
   const handleScoreCard = async type => {
     setScoreType(() => type);
     switch (type) {
-      case "Injury Risk Score":
+      case INJURY_RISK_SCORE:
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
-      case "Active Score":
+      case ACTIVE_SCORE:
         setScoreType(type);
         return props?.history?.push(routes.ANALYTICS_ACTIVE_SCORE);
-      case "Speed Score":
+      case SPEED_SCORE:
         return props?.history?.push(routes.ANALYTICS_SPEED_SCORE);
-      case "Risk Frequency":
+      case RISK_FREQUENCY:
         return props?.history?.push(routes.ANALYTICS_RISK_SCORE);
       default:
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
@@ -238,7 +239,7 @@ export const ScoresTab = props => {
             </Row> 
             <UserProgressScore scoreName={props.title} minValue={minValue} maxValue={maxValue} userScore={props.data} />
             */}
-            <UserProgressScore scoreName={scoreType} minValue={minValue} maxValue={maxValue} userScore={userScoreData} totalAvgScore={sumBy(userScoreData, data => Number(data.user_score)) / userScoreData.length} />
+            <UserProgressScore inheritedFrom={ANALYTICS} scoreName={scoreType} minValue={minValue} maxValue={maxValue} userScore={userScoreData} totalAvgScore={sumBy(userScoreData, data => Number(data.user_score)) / userScoreData.length} />
           </>
         )}
     </div>
