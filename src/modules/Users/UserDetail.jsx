@@ -15,6 +15,7 @@ import StrokeIcon from "../../images/Stroke.png";
 import Vector2Icon from "../../images/Vector2.png";
 import { UserRoleContext } from "../../features/Routes";
 import Calendar from "../../components/Calendar/Calendar";
+import { ACTIVE, ACTIVE_SCORE, INJURY, INJURY_RISK_SCORE, RISK, RISK_FREQUENCY, SPEED, SPEED_SCORE } from "../../utils/consts";
 
 const Dashboard = props => {
   const location = useLocation();
@@ -153,13 +154,13 @@ const Dashboard = props => {
 
   const getIcon = icon => {
     switch (icon) {
-      case "Active":
+      case ACTIVE:
         return SettingIcon;
-      case "Injury":
+      case INJURY:
         return Vector2Icon;
-      case "Speed":
+      case SPEED:
         return StrokeIcon;
-      case "Risk":
+      case RISK:
         return PolygonIcon;
       default:
         return SettingIcon;
@@ -243,10 +244,10 @@ const Dashboard = props => {
                     <span className="imgSpan">
                       <img src={getIcon(row.type)} className="cardIcon" alt="" />
                     </span>
-                    {row.type !== "Risk" ? row.type : "Risk Frequency"}
+                    {row.type !== RISK ? row.type : RISK_FREQUENCY}
                   </Typography>
                   <Typography className="innerCardValue">
-                    {row.type !== "Active" ? row.value : row.value + "%"}
+                    {row.type !== ACTIVE ? row.value : row.value + "%"}
                   </Typography>
                   <Typography className={"innerCardTitle" + index} style={{ color: getColor(row) }}>
                     {row.color}
@@ -258,7 +259,7 @@ const Dashboard = props => {
               <Grid item s={12} lg={6} className="chart">
                 <Item>
                   <Chart
-                    title="Injury Risk Score"
+                    title={INJURY_RISK_SCORE}
                     data={safetyGraphData}
                     desc={SafetyScoreDesc}
                     labels={safetyGraphLabels}
@@ -273,7 +274,7 @@ const Dashboard = props => {
               <Grid item s={12} lg={6} className="chart">
                 <Item>
                   <Barchart
-                    title="Risk Frequency"
+                    title={RISK_FREQUENCY}
                     desc={RiskScoreDesc}
                     data={riskGraphData}
                     labels={riskGraphLabels}
@@ -284,7 +285,7 @@ const Dashboard = props => {
               <Grid item s={12} lg={6} className="chart">
                 <Item>
                   <Chart
-                    title="Speed Score"
+                    title={SPEED_SCORE}
                     desc={SpeedScoreDesc}
                     data={speedGraphData}
                     labels={speedGraphLabels}
@@ -299,7 +300,7 @@ const Dashboard = props => {
               <Grid item s={12} lg={6} className="chart">
                 <Item>
                   <Chart
-                    title="Active Score"
+                    title={ACTIVE_SCORE}
                     data={activeGraphData}
                     desc={ActiveScoreDesc}
                     labels={activeGraphLabels}

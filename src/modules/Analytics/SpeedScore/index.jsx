@@ -19,10 +19,11 @@ import CurrRiskIcon from "../../../images/risk-icon-white.png";
 import ScoreDetails from "../ActiveScore/ScoreDetails";
 import { round, sumBy } from "lodash";
 import HeaderCard from "../ActiveScore/HeaderCard";
+import { ACTIVE_SCORE, INJURY_RISK_SCORE, RISK_FREQUENCY, SPEED_SCORE } from "../../../utils/consts";
 
 const RiskScore = props => {
   const [loading, seLoading] = useState(true);
-  const [scoreType, setScoreType] = useState("Speed Score");
+  const [scoreType, setScoreType] = useState(SPEED_SCORE);
   const [selected, setSelected] = useState(0);
   const [speedScoreData, setSpeedScoreData] = useState([]);
   const [speedScoreCount, setSpeedScoreCount] = useState(0);
@@ -65,26 +66,26 @@ const RiskScore = props => {
   };
   const getIcon = icon => {
     switch (icon) {
-      case "Active Score":
+      case ACTIVE_SCORE:
         if (props.history.location.pathname === "/user-admin/analytics/active-score") {
           return CurrActiveIcon;
         } else {
           return SettingIcon;
         }
 
-      case "Injury Risk Score":
+      case INJURY_RISK_SCORE:
         if (props.history.location.pathname === "/user-admin/analytics/safety-score") {
           return CurrSafetyIcon;
         } else {
           return Vector2Icon;
         }
-      case "Risk Frequency":
+      case RISK_FREQUENCY:
         if (props.history.location.pathname === "/user-admin/analytics/risk-score") {
           return CurrRiskIcon;
         } else {
           return PolygonIcon;
         }
-      case "Speed Score":
+      case SPEED_SCORE:
         if (props.history.location.pathname === "/user-admin/analytics/speed-score") {
           return CurrSpeedIcon;
         } else {
@@ -96,28 +97,28 @@ const RiskScore = props => {
   };
   let scores = [
     {
-      type: "Injury Risk Score",
+      type: INJURY_RISK_SCORE,
     },
     {
-      type: "Risk Frequency",
+      type: RISK_FREQUENCY,
     },
     {
-      type: "Speed Score",
+      type: SPEED_SCORE,
     },
     {
-      type: "Active Score",
+      type: ACTIVE_SCORE,
     }
   ];
   const handleScoreCard = type => {
     setScoreType(type);
     switch (type) {
-      case "Active Score":
+      case ACTIVE_SCORE:
         return props?.history?.push(routes.ANALYTICS_ACTIVE_SCORE);
-      case "Injury Risk Score":
+      case INJURY_RISK_SCORE:
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
-      case "Speed Score":
+      case SPEED_SCORE:
         return props?.history?.push(routes.ANALYTICS_SPEED_SCORE);
-      case "Risk Frequency":
+      case RISK_FREQUENCY:
         return props?.history?.push(routes.ANALYTICS_RISK_SCORE);
       default:
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
@@ -268,7 +269,7 @@ const RiskScore = props => {
               </Typography>
             </div>
           </div> */}
-          <ScoreDetails detailsText="Speed Score" score={speedScoreCount} />
+          <ScoreDetails detailsText={SPEED_SCORE} score={speedScoreCount} />
           <Grid
             container
             spacing={0}

@@ -15,6 +15,7 @@ import UserIcon from "../../images/UserIcon.png";
 import { cardIconStyle } from "../../modules/Users/style";
 import Table from "../../components/Table/index";
 import Meta from "antd/lib/card/Meta";
+import { ACTIVE, ACTIVE_SCORE, RISK, SAFETY, SAFETY_SCORE, SPEED, SPEED_SCORE } from "../../utils/consts";
 
 const Dashboard = (props) => {
   const [loading, setLoading] = useState(true);
@@ -139,13 +140,13 @@ const Dashboard = (props) => {
 
   const getIcon = icon => {
     switch (icon) {
-      case "Active":
+      case ACTIVE:
         return SettingIcon;
-      case "Safety":
+      case SAFETY:
         return Vector2Icon;
-      case "Speed":
+      case SPEED:
         return StrokeIcon;
-      case "Risk":
+      case RISK:
         return PolygonIcon;
       default:
         return SettingIcon;
@@ -338,7 +339,7 @@ const Dashboard = (props) => {
               <>
                 <div className="chart">
                   <Chart
-                    title="Active Score"
+                    title={ACTIVE_SCORE}
                     desc={ActiveScoreDesc}
                     data={activeGraphData}
                     labels={activeGraphLabels}
@@ -346,7 +347,7 @@ const Dashboard = (props) => {
                     LinearGradientColor={["#05FF00", "#F3BE00", "#FF0000"]}
                   />
                   <Chart
-                    title="Safety Score"
+                    title={SAFETY_SCORE}
                     desc={SafetyScoreDesc}
                     data={safetyGraphData}
                     labels={safetyGraphLabels}
@@ -356,7 +357,7 @@ const Dashboard = (props) => {
                 </div>
                 <div className="chart">
                   <Chart
-                    title="Speed Score"
+                    title={SPEED_SCORE}
                     desc={SpeedScoreDesc}
                     data={speedGraphData}
                     labels={speedGraphLabels}
@@ -377,7 +378,7 @@ const Dashboard = (props) => {
               <>
                 <div className="chart">
                   <Chart
-                    title="Active Score"
+                    title={ACTIVE_SCORE}
                     desc={ActiveScoreDesc}
                     data={activeGraphData}
                     labels={activeGraphLabels}
@@ -385,7 +386,7 @@ const Dashboard = (props) => {
                     LinearGradientColor={["#05FF00", "#F3BE00", "#FF0000"]}
                   />
                   <Chart
-                    title="Safety Score"
+                    title={SAFETY_SCORE}
                     desc={SafetyScoreDesc}
                     data={safetyGraphData}
                     labels={safetyGraphLabels}
@@ -395,7 +396,7 @@ const Dashboard = (props) => {
                 </div>
                 <div className="chart">
                   <Chart
-                    title="Speed Score"
+                    title={SPEED_SCORE}
                     desc={SpeedScoreDesc}
                     data={speedGraphData}
                     labels={speedGraphLabels}

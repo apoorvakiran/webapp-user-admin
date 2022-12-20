@@ -8,33 +8,34 @@ import SettingIcon from "../../images/setting.png";
 import { cardIconStyle } from "../Users/style";
 import BasicLayout from "../../layouts/BasicLayout";
 import routes from "../../features/Routes/URLs";
+import { ACTIVE_SCORE, INJURY_RISK_SCORE, RISK_FREQUENCY, SAFETY_SCORE, SPEED_SCORE } from "../../utils/consts";
 
 const AalyticsMain = props => {
-  const [scoreType, setScoreType] = useState("Injury Risk Score");
+  const [scoreType, setScoreType] = useState(INJURY_RISK_SCORE);
   const scores = [
     {
-      type: "Active Score",
+      type: ACTIVE_SCORE,
     },
     {
-      type: "Injury Risk Score",
+      type: INJURY_RISK_SCORE,
     },
     {
-      type: "Speed Score",
+      type: SPEED_SCORE,
     },
     {
-      type: "Risk Frequency",
+      type: RISK_FREQUENCY,
     },
   ];
   const handleScoreCard = type => {
     setScoreType(type);
     switch (type) {
-      case "Active Score":
+      case ACTIVE_SCORE:
         return props?.history?.push(routes.ANALYTICS_ACTIVE_SCORE);
-      case "Safety Score":
+      case SAFETY_SCORE:
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
-      case "Speed Score":
+      case SPEED_SCORE:
         return props?.history?.push(routes.ANALYTICS_SPEED_SCORE);
-      case "Risk Frequency":
+      case RISK_FREQUENCY:
         return props?.history?.push(routes.ANALYTICS_RISK_SCORE);
       default:
         return props?.history?.push(routes.ANALYTICS_SAFETY_SCORE);
@@ -43,13 +44,13 @@ const AalyticsMain = props => {
 
   const getIcon = icon => {
     switch (icon) {
-      case "Active Score":
+      case ACTIVE_SCORE:
         return SettingIcon;
-      case "Injury Risk Score":
+      case INJURY_RISK_SCORE:
         return Vector2Icon;
-      case "Speed Score":
+      case SPEED_SCORE:
         return StrokeIcon;
-      case "Risk Frequency":
+      case RISK_FREQUENCY:
         return PolygonIcon;
       default:
         return SettingIcon;

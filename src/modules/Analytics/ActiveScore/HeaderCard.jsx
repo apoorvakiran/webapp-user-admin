@@ -1,13 +1,14 @@
 import React from "react";
 import { Select, Typography } from "antd";
 import "./analytics.css";
+import { RISK_FREQUENCY_SCORE, SUMMARY } from "../../../utils/consts";
 const { Option } = Select;
 
 const HeaderCard = props => {
     const { handleChange } = props;
 
     const renderMaxScore = {
-        display: props.inheritedFrom === "Summary" ? (props.scoreName !== "Risk Frequency Score" ? "block" : "none") : "none",
+        display: props.inheritedFrom === SUMMARY ? (props.scoreName !== RISK_FREQUENCY_SCORE ? "block" : "none") : "none",
     };
 
     return (

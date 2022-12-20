@@ -5,6 +5,7 @@ import { Typography } from "antd";
 import SettingIcon from "../../images/setting.png";
 import UserProgressScore from "../Analytics/ActiveScore/UserProgressScore";
 import { sumBy } from "lodash";
+import { ACTIVE_SCORE, INJURY_RISK_SCORE, RISK_FREQUENCY_SCORE, SPEED_SCORE } from "../../utils/consts";
 
 const AllJobSummary = props => {
   const { Icon } = props;
@@ -14,13 +15,13 @@ const AllJobSummary = props => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // console.log("title:::", props.title);
-    if (props.title === "Injury Risk Score" || props.title === "Speed Score") {
+    if (props.title === INJURY_RISK_SCORE || props.title === SPEED_SCORE) {
       setMaxValue(7);
       setMinValue(0);
-    } else if (props.title === "Risk Frequency Score") {
+    } else if (props.title === RISK_FREQUENCY_SCORE) {
       setMaxValue(props?.data?.[0]?.user_score);
       setMinValue(0);
-    } else if (props.title === "Active Score") {
+    } else if (props.title === ACTIVE_SCORE) {
       // console.log("Active")
       setMaxValue("100%");
       setMinValue("0%");

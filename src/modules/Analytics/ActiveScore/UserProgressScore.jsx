@@ -1,6 +1,7 @@
 import { Col, Progress, Row } from "antd";
 import { round } from "lodash";
 import React, { useEffect, useState } from "react";
+import { ACTIVE_SCORE, ANALYTICS, INJURY_RISK_SCORE, RISK_FREQUENCY_SCORE, SPEED_SCORE } from "../../../utils/consts";
 import HeaderCard from "./HeaderCard";
 
 const UserProgressScore = props => {
@@ -12,13 +13,13 @@ const UserProgressScore = props => {
 
   useEffect(() => {
     // setScores(ProgressBarChart);
-    if (props.scoreName === "Injury Risk Score") {
+    if (props.scoreName === INJURY_RISK_SCORE) {
       setAvgSafetyScore(props.totalAvgScore);
-    } else if (props.scoreName === "Speed Score") {
+    } else if (props.scoreName === SPEED_SCORE) {
       setAvgSpeedScore(props.totalAvgScore);
-    } else if (props.scoreName === "Risk Frequency Score") {
+    } else if (props.scoreName === RISK_FREQUENCY_SCORE) {
       setAvgRiskScore(props.totalAvgScore);
-    } else if (props.scoreName === "Active Score") {
+    } else if (props.scoreName === ACTIVE_SCORE) {
       setAvgActiveScore(props.totalAvgScore);
     }
   }, [props]);
@@ -31,22 +32,22 @@ const UserProgressScore = props => {
 
   const renderSafetySpeed = {
     display:
-      props.scoreName === "Injury Risk Score" ||
-        props.scoreName === "Speed Score"
+      props.scoreName === INJURY_RISK_SCORE ||
+        props.scoreName === SPEED_SCORE
         ? "block"
         : "none",
   };
 
   const renderRisk = {
-    display: props.scoreName === "Risk Frequency Score" ? "block" : "none",
+    display: props.scoreName === RISK_FREQUENCY_SCORE ? "block" : "none",
   };
 
   const renderActive = {
-    display: props.scoreName === "Active Score" ? "block" : "none",
+    display: props.scoreName === ACTIVE_SCORE ? "block" : "none",
   };
 
   const renderMaxScore = {
-    display: props.scoreName !== "Risk Frequency Score" ? "block" : "none",
+    display: (props.inheritedFrom !== ANALYTICS && props.scoreName !== RISK_FREQUENCY_SCORE) ? "block" : "none",
   };
 
   // const strokeColor = {
@@ -57,13 +58,13 @@ const UserProgressScore = props => {
 
   function calcAverage() {
     // console.log("props.scoreName", avgActiveScore);
-    if (props.scoreName === "Injury Risk Score") {
+    if (props.scoreName === INJURY_RISK_SCORE) {
       return 33 + (67 * avgSafetyScore) / 7 + "%";
-    } else if (props.scoreName === "Speed Score") {
+    } else if (props.scoreName === SPEED_SCORE) {
       return 33 + (67 * avgSpeedScore) / 7 + "%";
-    } else if (props.scoreName === "Risk Frequency Score") {
+    } else if (props.scoreName === RISK_FREQUENCY_SCORE) {
       return 33 + (67 * avgRiskScore) / props.maxValue + "%";
-    } else if (props.scoreName === "Active Score") {
+    } else if (props.scoreName === ACTIVE_SCORE) {
       return 33 + (67 * avgActiveScore) / 1 + "%";
     }
   }
@@ -124,7 +125,7 @@ const UserProgressScore = props => {
             </Col>
             <Col xs={3} xl={3}>
               <p className="maxScoreText" style={renderMaxScore}>
-                {props.scoreName !== "Active Score" ? row?.max_score : ((row?.max_score / 1) * 100) + "%"}
+                {props.scoreName !== ACTIVE_SCORE ? row?.max_score : ((row?.max_score / 1) * 100) + "%"}
               </p>
             </Col>
             <Col
