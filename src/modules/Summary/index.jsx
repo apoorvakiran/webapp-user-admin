@@ -456,13 +456,10 @@ const Summary = (props) => {
             }
         }
         );
-
-        //eslint-disable-next-line
-        const data = [{
-            category: dataType,
-            data: response.data.data
-        }];
-
+        // const data = [{
+        //     category: dataType,
+        //     data: response.data.data
+        // }]
         if (response?.data?.data?.length > 0) {
             setShowLoadingIcon(false);
             setExcelData(response.data.data);
