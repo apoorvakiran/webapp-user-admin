@@ -2,5 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # npx eslint '*/**/*.{js,jsx}'
-npx eslint "**/*.{js,jsx}"
+# npx eslint "**/*.{js,jsx}"
+npm run lint
 #npx react-scripts test --coverage
