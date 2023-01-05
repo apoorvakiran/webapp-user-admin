@@ -36,36 +36,6 @@ const Dashboard = props => {
   const [currentJobAssigned, setCurrentJobAssigned] = useState([]);
   const userRole = useContext(UserRoleContext);
 
-  const getUserCardDetails = async (value, userObj, jobId) => {
-    const current = new Date();
-    const date = formatDate(current);
-    const idToken = await getAuthData();
-    const userDataUpdated = { ...userObj };
-    let email = '';
-    if (userRole.userRole === UserRole) {
-      email = await getUserEmail();
-    }
-    const response = await axios.get(
-      // "http://localhost:3000/userdetail", {
-      baseUrl + "userdetail", {
-      headers: {
-        "Authorization": `Bearer ${idToken}`
-      },
-      params: {
-        "type": "get-user-card-details",
-        "userId": (Object.keys(userObj).length === 0) ? null : userDataUpdated?.[0]?.id,
-        "durationType": value,
-        "startdate": date,
-        "email": (Object.keys(userObj).length !== 0) ? null : email,
-        "jobId": jobId != null ? jobId : (Object.keys(userObj).length === 0) ? null : userDataUpdated?.[0]?.job_id,
-      }
-    });
-    // setLoading(false);
-    setScores(response?.data?.card_data || []);
-
-    return response.data;
-  };
-
   const getActiveScores = async (value, userObj, jobId) => {
     const current = new Date();
     const date = formatDate(current);
@@ -91,6 +61,7 @@ const Dashboard = props => {
       }
     });
     setLoading(false);
+    setScores(response?.data?.card_data || []);
     const data = response?.data?.data;
     let activeLabels = data["activescore"]?.x || [];
     let activeData = data["activescore"]?.y || [];
@@ -154,7 +125,6 @@ const Dashboard = props => {
 
   const handleChange = (value) => {
     setCurrentJobAssigned(value);
-    getUserCardDetails(durationType, userData, value);
     getActiveScores(durationType, userData, value);
   };
 
@@ -164,7 +134,6 @@ const Dashboard = props => {
       setUserData(userObj);
       if (Object.keys(userObj).length !== 0) {
         getJobsByUser(userObj);
-        getUserCardDetails("Day", userObj);
         getActiveScores("Day", userObj);
       }
     })();
@@ -180,7 +149,6 @@ const Dashboard = props => {
 
   const onGridSelection = async value => {
     setDurationType(value);
-    getUserCardDetails(value, userData, currentJobAssigned);
     getActiveScores(value, userData, currentJobAssigned);
   };
 
@@ -279,7 +247,7 @@ const Dashboard = props => {
                     {row.type !== RISK ? row.type : RISK_FREQUENCY}
                   </Typography>
                   <Typography className="innerCardValue">
-                    {row.type !== ACTIVE ? row.value : Math.round(row.value) + "%"}
+                    {row.type !== ACTIVE ? row.value : row.value + "%"}
                   </Typography>
                   <Typography className={"innerCardTitle" + index} style={{ color: getColor(row) }}>
                     {row.color}

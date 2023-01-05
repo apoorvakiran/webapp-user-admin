@@ -125,7 +125,7 @@ const UserProgressScore = props => {
             </Col>
             <Col xs={3} xl={3}>
               <p className="maxScoreText" style={renderMaxScore}>
-                {props.scoreName !== ACTIVE_SCORE ? row?.max_score : round((row?.max_score / 1) * 100) + "%"}
+                {props.scoreName !== ACTIVE_SCORE ? row?.max_score : ((row?.max_score / 1) * 100) + "%"}
               </p>
             </Col>
             <Col
