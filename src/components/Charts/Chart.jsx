@@ -88,6 +88,18 @@ const Chart = props => {
       legend: {
         display: false,
       },
+      tooltip: {
+        callbacks: {
+          label: function (datasetsItem) {
+            const bodyArray = [];
+            const avgValue = props.title === ACTIVE_SCORE ? (datasetsItem?.formattedValue !== '0' ? `Average:  ${datasetsItem?.formattedValue}%` : `Average:  ${datasetsItem?.formattedValue}`) : `Average:  ${datasetsItem?.formattedValue}`;
+            const peakValue = props.options !== undefined ? `Peak: ${props.options?.[datasetsItem?.dataIndex]}` : '';
+            bodyArray.push(avgValue);
+            if (peakValue !== '') { bodyArray.push(peakValue); }
+            return bodyArray;
+          }
+        }
+      }
     },
   };
 

@@ -47,6 +47,9 @@ const Summary = (props) => {
     const [excelData, setExcelData] = useState([]);
     const [showLoadingIcon, setShowLoadingIcon] = useState(false);
     const csvDownloadRef = useRef(null);
+    const [activePeakData, setActivePeakData] = useState([]);
+    const [safetyPeakData, setSafetyPeakData] = useState([]);
+    const [speedPeakData, setSpeedPeakData] = useState([]);
 
     useEffect(() => {
 
@@ -225,6 +228,9 @@ const Summary = (props) => {
         let speedData = data["speedscore"]?.y || [];
         let riskLabels = data["riskexposures"]?.x || [];
         let riskData = data["riskexposures"]?.y || [];
+        let peakActiveData = data["peakactivescore"]?.y || [];
+        let peakSafetyData = data["peaksafetyscore"]?.y || [];
+        let peakSpeedData = data["peakspeedscore"]?.y || [];
         setActiveGraphLabels(activeLabels);
         setActiveGraphData(activeData);
         setSafetyGraphLabels(safetyLabels);
@@ -233,6 +239,9 @@ const Summary = (props) => {
         setSpeedGraphData(speedData);
         setRiskGraphLabels(riskLabels);
         setRiskGraphData(riskData);
+        setActivePeakData(peakActiveData);
+        setSafetyPeakData(peakSafetyData);
+        setSpeedPeakData(peakSpeedData);
         return response.data;
     }
 
@@ -695,6 +704,7 @@ const Summary = (props) => {
                                                         data={safetyGraphData}
                                                         labels={safetyGraphLabels}
                                                         Icon={Vector2Icon}
+                                                        options={safetyPeakData}
                                                         LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
                                                         yAxisMax={7}
                                                         yAxisMin={0}
@@ -722,6 +732,7 @@ const Summary = (props) => {
                                                         data={speedGraphData}
                                                         labels={speedGraphLabels}
                                                         Icon={StrokeIcon}
+                                                        options={speedPeakData}
                                                         LinearGradientColor={["#FF0A0A", "#F3BE00", "#33FF00"]}
                                                         yAxisMax={7}
                                                         yAxisMin={0}
@@ -737,6 +748,7 @@ const Summary = (props) => {
                                                         data={activeGraphData}
                                                         labels={activeGraphLabels}
                                                         Icon={SettingIcon}
+                                                        options={activePeakData}
                                                         LinearGradientColor={["#05FF00", "#F3BE00", "#FF0000"]}
                                                         yAxisMax={100}
                                                         yAxisMin={0}
